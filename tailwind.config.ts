@@ -8,6 +8,25 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        // Sans-Serif Fonts
+        roboto: ['"Roboto"', 'sans-serif'],
+        inter: ['"Inter"', 'sans-serif'],
+        lato: ['"Lato"', 'sans-serif'],
+        openSans: ['"Open Sans"', 'sans-serif'],
+        poppins: ['"Poppins"', 'sans-serif'],
+        montserrat: ['"Montserrat"', 'sans-serif'],
+        
+        // Serif Fonts
+        merriweather: ['"Merriweather"', 'serif'],
+        playfair: ['"Playfair Display"', 'serif'],
+        georgia: ['"Georgia"', 'serif'],
+        
+        // Monospace Fonts
+        sourceCodePro: ['"Source Code Pro"', 'monospace'],
+        firaCode: ['"Fira Code"', 'monospace'],
+        courierNew: ['"Courier New"', 'monospace'],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -17,4 +36,5 @@ const config: Config = {
   },
   plugins: [],
 };
+
 export default config;
