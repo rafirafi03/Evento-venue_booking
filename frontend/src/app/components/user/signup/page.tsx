@@ -1,3 +1,5 @@
+'use client'
+
 import {
   FaLock,
   FaUserAlt,
@@ -7,14 +9,22 @@ import {
 } from "react-icons/fa";
 import Header from "../../login-header/header";
 import Image from "next/image";
+import { useState } from "react";
 
-const page = () => {
+const Page = () => {
+
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [pass, setPass] = useState('')
+  const [confirmPass, setConfirmPass] = useState('')
+
   return (
     <div>
       <Header />
       <div className="min-h-screen flex items-center justify-center bg-slate-100 pt-32 pb-10">
         <div className="flex display-flex transform transition duration-500 hover:scale-105">
-          <div className="shadow-lg w-full max-w-md">
+          <div className="shadow-lg shadow-black w-full max-w-md">
             <Image
               src="/assets/images/intrologin-user.jpeg"
               alt=""
@@ -33,9 +43,11 @@ const page = () => {
                 <FaUserAlt className="absolute left-3 top-3 text-gray-400" />
                 <input
                   className="pl-10 pr-4 py-2 rounded-lg font-light shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
+                  id="userName"
+                  type="text"
+                  placeholder="Enter your userName"
+                  value={userName}
+                  onChange={(e)=> setUserName(e.target.value)}
                 />
               </div>
               <div className="mb-4 relative">
@@ -51,8 +63,8 @@ const page = () => {
                 <FaUserAlt className="absolute left-3 top-3 text-gray-400" />
                 <input
                   className="pl-10 pr-4 py-2 rounded-lg font-light shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
-                  id="email"
-                  type="email"
+                  id="phone"
+                  type="number"
                   placeholder="Enter your phone"
                 />
               </div>
@@ -117,4 +129,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

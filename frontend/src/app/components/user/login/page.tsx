@@ -1,8 +1,23 @@
+'use client'
+
 import { FaLock, FaUserAlt, FaGoogle, FaApple, FaFacebook } from "react-icons/fa";
 import Header from "../../login-header/header";
 import Image from "next/image";
+import { useState } from "react";
 
-const page = () => {
+const Page = () => {
+
+  const [email, setEmail] = useState<string>("")
+  const [pass, setPass] = useState<string>('');
+
+
+  const handleLogin = async (e) => {
+
+    e.preventDefault()
+      console.log('email',email)
+      console.log('pass',pass)
+  }
+
   return (
     <div>
       <Header />
@@ -30,6 +45,8 @@ const page = () => {
                   id="email"
                   type="email"
                   placeholder="Enter your email"
+                  value={email}
+                  onChange={(e)=> setEmail(e.target.value)}
                 />
               </div>
               <div className="mb-6 relative">
@@ -39,10 +56,12 @@ const page = () => {
                   id="password"
                   type="password"
                   placeholder="Enter your password"
+                  value={pass}
+                  onChange={(e)=> setPass(e.target.value)}
                 />
               </div>
               <div className="flex items-center justify-between">
-                <button className="bg-[rgba(255,0,0)] hover:bg-black text-white font-bold py-2 w-full px-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105">
+                <button type="submit" onClick={(e) =>handleLogin(e)} className="bg-[rgba(255,0,0)] hover:bg-black text-white font-bold py-2 w-full px-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105">
                   Login
                 </button>
               </div>
@@ -87,4 +106,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -1,0 +1,5 @@
+export const baseUserUrl = 'http://localhost:3000/api/user'
+export const baseAdminUrl = 'http://localhost:3001/api/admin'
+export const baseCompanyUrl = 'http://localhost:3002/api/company'
+export const baseBookingUrl = 'http://localhost:3003/api/booking'
+export const baseChatUrl = 'http://localhost:3004/api/chat'
