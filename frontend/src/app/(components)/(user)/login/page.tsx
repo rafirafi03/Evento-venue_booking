@@ -14,8 +14,7 @@ const Page = () => {
   const handleLogin = async (e) => {
 
     e.preventDefault()
-      console.log('email',email)
-      console.log('pass',pass)
+      
   }
 
   return (

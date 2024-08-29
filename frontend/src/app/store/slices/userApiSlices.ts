@@ -3,15 +3,22 @@ import { baseUserUrl } from "@/app/constants/api";
 import { HttpMethod } from "@/app/schema/httpMethods";
 
 export const userApiSlice = createApi({
-    reducerPath: "userApi",
+    reducerPath: "api",
     baseQuery: fetchBaseQuery({
         baseUrl : baseUserUrl,
         credentials: "include"
     }),
-    endPoints: (builder) => ({
+    endpoints: (builder) => ({
         registerPost : builder.mutation({
             query: (postData) => ({
                 url:"/register",
+                method: HttpMethod.POST,
+                body: postData
+            })
+        }),
+        verifyOtp: builder.mutation({
+            query:(postData) => ({
+                url: '/verify-otp',
                 method: HttpMethod.POST,
                 body: postData
             })
@@ -20,5 +27,5 @@ export const userApiSlice = createApi({
 })
 
 export const {
-    registerPost
+    useRegisterPostMutation
 } = userApiSlice;
