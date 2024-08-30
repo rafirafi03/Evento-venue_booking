@@ -27,5 +27,6 @@ export const userApiSlice = createApi({
 })
 
 export const {
-    useRegisterPostMutation
+    useRegisterPostMutation,
+    useVerifyOtpMutation
 } = userApiSlice;

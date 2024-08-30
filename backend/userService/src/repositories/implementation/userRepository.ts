@@ -1,4 +1,3 @@
-import { BadRequestError } from "tune-up-library";
 import { IUser, userModel } from "../../infrastructure/db";
 import { IUserRepository } from "../interfaces";
 
@@ -10,7 +9,7 @@ export class UserRepository implements IUserRepository {
             if(!user) return null
             return user
         } catch (error) {
-            throw new BadRequestError('error in DB'+ error)
+            throw new Error('error in DB'+ error)
         }
     }
 }

@@ -7,6 +7,7 @@ export interface IUser extends Document {
   password: string;
   phone: string;
   isBlocked: boolean;
+  isVerified: boolean;
 }
 
 
@@ -30,6 +31,10 @@ const UserSchema: Schema = new Schema<IUser>({
   isBlocked: {
     type: Boolean,
     default: false,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
   }
 });
 

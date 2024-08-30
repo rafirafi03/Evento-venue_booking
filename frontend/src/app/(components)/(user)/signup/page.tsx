@@ -12,14 +12,15 @@ import OtpModal from '../OtpModal/page'
 import Skl from '../../skeleton/page'
 import Image from "next/image";
 import { useState } from "react";
-import { useRegisterPostMutation } from "@/app/store/slices/userApiSlices";
+import { useRegisterPostMutation, useVerifyOtpMutation } from "@/app/store/slices/userApiSlices";
 
 const Page = () => {
 
   const [registerUser] = useRegisterPostMutation()
+  const [confirmOtp] = useVerifyOtpMutation()
 
-  const [userName, setUserName] = useState('akiii')
-  const [email, setEmail] = useState('jhgjgjh')
+  const [userName, setUserName] = useState('')
+  const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [pass, setPass] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
@@ -35,7 +36,7 @@ const Page = () => {
       setError('userName required')
     } else {
       setLoading(true)
-      const res = await registerUser({userName,email,phone,pass,confirmPass}).unwrap()
+      const res = await registerUser(email).unwrap()
       setLoading(false)
       if(res) {
         setModal(true)
@@ -44,10 +45,21 @@ const Page = () => {
     }
   }
 
+  const handleOtp = async(event: React.FormEvent, otp: string) => {
+
+        const res = await confirmOtp({otp,email,userName,phone, pass}).unwrap()
+
+        if(res) {
+          console.log('true')
+        } else {
+          console.log('false')
+        }
+  };
+
   return (
     <div>
       { modal ? ( 
-        <OtpModal/>
+        <OtpModal email={email} handleOtp={handleOtp} />
        ) : (
         
         <>

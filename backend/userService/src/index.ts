@@ -19,11 +19,6 @@ app.use(cors({
 app.use(express.json())
 app.use('/api/user',userRoute)
 
-app.post('/api/user/register', (req,res) => {
-    console.log(req.body);
-    
-    res.send('hiii')
-})
 
 app.listen(PORT, () => {
     console.log(`server is running on http://localhost:${PORT}`);  

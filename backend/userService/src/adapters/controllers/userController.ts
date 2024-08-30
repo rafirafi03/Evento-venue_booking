@@ -1,11 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import { SignupUseCase } from "../../useCases/index";
+import { 
+    SignupUseCase,
+    VerifyOtpUsecase
+ } from "../../useCases/index";
 
 
 export class UserController {
     
     constructor(
-        private signupUseCase: SignupUseCase
+        private signupUseCase: SignupUseCase,
+        private verifyOtpUsecase : VerifyOtpUsecase
     ) {}
 
     async signup(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -17,6 +21,16 @@ export class UserController {
             res.status(200).json(response)
         } catch (error) {
             console.log(error);  
+        }
+    }
+
+    async verifyOtp(req: Request, res: Response, next: NextFunction) : Promise<void> {
+        const {otp,email,userName, password} = req.body;
+
+        try {
+            
+        } catch (error) {
+            
         }
     }
 }
