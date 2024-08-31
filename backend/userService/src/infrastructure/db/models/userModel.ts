@@ -2,17 +2,17 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 
 export interface IUser extends Document {
-  name: string;
+  userName: string;
   email: string;
   password: string;
-  phone: string;
+  phone: number;
   isBlocked: boolean;
   isVerified: boolean;
 }
 
 
 const UserSchema: Schema = new Schema<IUser>({
-  name: {
+  userName: {
     type: String,
     required: true,
   },
@@ -25,7 +25,7 @@ const UserSchema: Schema = new Schema<IUser>({
     required: true,
   },
   phone: {
-    type: String,
+    type: Number,
     required: true,
   },
   isBlocked: {

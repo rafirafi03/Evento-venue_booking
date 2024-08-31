@@ -1,3 +1,4 @@
+import { IUserData, User } from "../../entities";
 import { IUser, userModel } from "../../infrastructure/db";
 import { IUserRepository } from "../interfaces";
 
@@ -10,6 +11,16 @@ export class UserRepository implements IUserRepository {
             return user
         } catch (error) {
             throw new Error('error in DB'+ error)
+        }
+    }
+
+    async save(user:User): Promise<IUserData> {
+        try {
+            const newUser = new userModel(user);
+            await newUser.save();
+            return newUser;
+        } catch (error) {
+            throw new Error('Error' + error)
         }
     }
 }

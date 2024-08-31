@@ -1,12 +1,12 @@
 import { Router } from 'express';
 import {UserController} from '../../adapters/controllers';
-import { SignupUseCase } from '../../useCases';
+import { SignupUseCase,VerifyOtpUsecase } from '../../useCases';
 import { UserRepository,RedisClient } from '../../repositories';
 import { otpService } from '../services';
 
 const userRepository = new UserRepository()
 const otpRepository= new otpService()
-const redisRepository = new RedisClient
+const redisRepository = new RedisClient()
 
 const signupUseCase = new SignupUseCase(
     userRepository,
@@ -14,8 +14,14 @@ const signupUseCase = new SignupUseCase(
     otpRepository
 )
 
+const verifyOtpUsecase = new VerifyOtpUsecase(
+    redisRepository,
+    userRepository
+)
+
 const userController = new UserController(
-    signupUseCase
+    signupUseCase,
+    verifyOtpUsecase
 )
 
 const router = Router();

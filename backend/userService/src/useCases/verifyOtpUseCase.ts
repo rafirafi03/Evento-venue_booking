@@ -1,6 +1,7 @@
 import { IUserRepository } from "../repositories";
 import { IRedisClient } from "../repositories/interfaces/redisInterface";
-
+import User from "../infrastructure/db/models/userModel";
+import { hashPass } from "../utils";
 
 
 export class VerifyOtpUsecase {
@@ -27,6 +28,19 @@ export class VerifyOtpUsecase {
         }
 
         await this.verifyOtpRepository.deleteOTP(email);
+
+        const hashedPass = await hashPass(password);
+
+        const user = new User({
+            userName,
+            email,
+            phone,
+            password: hashedPass,
+        })
+
+        await this.userRepostitory.save(user)
+
+        return { success: true}
 
         
     }

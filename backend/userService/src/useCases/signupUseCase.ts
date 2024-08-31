@@ -12,8 +12,9 @@ export class SignupUseCase {
     ) {}
 
     async execute (email:string) : Promise<any> {
+        console.log(email,"emaillllllllllllllllllllllllll")
         if(!email) {
-            throw new Error('Invalid input')
+            throw new Error('Invalid input emaillllll')
         }
 
         const existingEmail = await this.userRepository.findByEmail(email);

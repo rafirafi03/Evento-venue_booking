@@ -35,6 +35,7 @@ const Page = () => {
     if(userName === "") {
       setError('userName required')
     } else {
+      console.log(email,'email frontend')
       setLoading(true)
       const res = await registerUser(email).unwrap()
       setLoading(false)

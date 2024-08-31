@@ -15,6 +15,8 @@ export class UserController {
     async signup(req: Request, res: Response, next: NextFunction): Promise<void> {
         const {email} = req.body;
 
+        console.log(req.body,"reqbodyusercontrollersignup")
+
         try {
             const response = await this.signupUseCase.execute(email)
 
@@ -25,12 +27,20 @@ export class UserController {
     }
 
     async verifyOtp(req: Request, res: Response, next: NextFunction) : Promise<void> {
-        const {otp,email,userName, password} = req.body;
+        const {otp,email,userName,phone, password} = req.body;
+
+        console.log(req.body,"reqbodyyyusercontroller")
 
         try {
-            
+            const response = await this.verifyOtpUsecase.execute(otp,email,userName,phone,password)
+
+            if(response.success) {
+                console.log('successfully saved to db')
+            }
+
+            res.status(200).json(response)
         } catch (error) {
-            
+            console.log(error)
         }
     }
 }
