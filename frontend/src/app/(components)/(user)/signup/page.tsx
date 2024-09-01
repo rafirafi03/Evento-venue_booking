@@ -13,6 +13,7 @@ import Skl from '../../skeleton/page'
 import Image from "next/image";
 import { useState } from "react";
 import { useRegisterPostMutation, useVerifyOtpMutation } from "@/app/store/slices/userApiSlices";
+import { CgPassword } from "react-icons/cg";
 
 const Page = () => {
 
@@ -22,7 +23,7 @@ const Page = () => {
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [pass, setPass] = useState('')
+  const [password, setPass] = useState('')
   const [confirmPass, setConfirmPass] = useState('')
 
   const [modal, setModal] = useState(false)
@@ -37,7 +38,7 @@ const Page = () => {
     } else {
       console.log(email,'email frontend')
       setLoading(true)
-      const res = await registerUser(email).unwrap()
+      const res = await registerUser({email}).unwrap()
       setLoading(false)
       if(res) {
         setModal(true)
@@ -48,7 +49,9 @@ const Page = () => {
 
   const handleOtp = async(event: React.FormEvent, otp: string) => {
 
-        const res = await confirmOtp({otp,email,userName,phone, pass}).unwrap()
+        console.log(password,"passpass")
+
+        const res = await confirmOtp({otp,email,userName,phone, password}).unwrap()
 
         if(res) {
           console.log('true')
@@ -128,7 +131,7 @@ const Page = () => {
                   id="password"
                   type="password"
                   placeholder="Enter your password"
-                  value={pass}
+                  value={password}
                   onChange={(e) => setPass(e.target.value)}
                 />
               </div>

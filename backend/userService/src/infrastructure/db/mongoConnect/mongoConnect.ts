@@ -5,7 +5,10 @@ const mongoURI = process.env.mongo_URI as string
 
 export const connectDB = async () => {
     try {
-        await mongoose.connect(mongoURI)
+        await mongoose.connect(mongoURI, {
+            serverSelectionTimeoutMS: 5000,
+            tlsAllowInvalidCertificates: false
+        })
         console.log('mongodb connected');
         
     } catch (error) {

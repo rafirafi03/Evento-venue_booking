@@ -32,7 +32,7 @@ export class UserController {
         console.log(req.body,"reqbodyyyusercontroller")
 
         try {
-            const response = await this.verifyOtpUsecase.execute(otp,email,userName,phone,password)
+            const response = await this.verifyOtpUsecase.execute({otp,userName,email,phone,password})
 
             if(response.success) {
                 console.log('successfully saved to db')

@@ -17,6 +17,11 @@ app.use(cors({
 }))
 
 app.use(express.json())
+
+// app.post('/api/user/register', (req,res) => {
+//     console.log(req.body,"reqbdyindex")
+//     res.send('hii')
+// })
 app.use('/api/user',userRoute)
 
 

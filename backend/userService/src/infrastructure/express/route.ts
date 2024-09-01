@@ -34,6 +34,7 @@ router.post('/register',
 
 router.post('/verify-otp',
     (req,res,next) => {
+        console.log(req.body,"reqbdyotppass")
         userController.verifyOtp(req,res,next)
     }
 )
