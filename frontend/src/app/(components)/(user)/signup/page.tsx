@@ -63,6 +63,9 @@ const Page = () => {
       }).unwrap();
   
       if(res.success) {
+        const token = res.token;
+        console.log(token,"frntendtokennnnnnn")
+        localStorage.setItem('authToken',token)
         router.push('/')
       }
     } catch (error) {

@@ -1,12 +1,21 @@
 'use client'
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
 
   const router = useRouter();
+
+  const [isToken, setToken] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken')
+    if(token) {
+      setToken(true)
+    }
+  },[])
 
   const handleOnClick = (method: string) => {
     if(method == 'login') {
@@ -37,9 +46,21 @@ export default function Page() {
             </span>
           </a>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <p onClick={()=> handleOnClick('login')} className="text-black cursor-pointer focus:ring-4 focus:outline-none font-bold rounded-full text-base px-3 py-2 text-center hover:text-[rgb(255,0,0)]">
-              Login
-            </p>
+          {isToken ? (
+        <p
+          
+          className="text-black cursor-pointer focus:ring-4 focus:outline-none font-bold rounded-full text-base px-3 py-2 text-center hover:text-[rgb(255,0,0)]"
+        >
+          Profile
+        </p>
+      ) : (
+        <p
+          onClick={() => handleOnClick('login')}
+          className="text-black cursor-pointer focus:ring-4 focus:outline-none font-bold rounded-full text-base px-3 py-2 text-center hover:text-[rgb(255,0,0)]"
+        >
+          Login
+        </p>
+      )}
           </div>
           <div
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"

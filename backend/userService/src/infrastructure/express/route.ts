@@ -28,4 +28,8 @@ router.post("/verify-otp", (req, res, next) => {
   userController.verifyOtp(req, res, next);
 });
 
+router.get('/adminLogin', (req,res,next) => {
+  userController.adminLogin(req,res,next)
+})
+
 export default router;

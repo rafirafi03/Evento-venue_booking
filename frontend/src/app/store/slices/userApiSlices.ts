@@ -22,11 +22,19 @@ export const userApiSlice = createApi({
                 method: HttpMethod.POST,
                 body: postData
             })
+        }),
+        adminLogin : builder.mutation({
+            query: (postData) => ({
+                url:'/adminLogin',
+                method: HttpMethod.GET,
+                body: postData
+            })
         })
     })
 })
 
 export const {
     useRegisterPostMutation,
-    useVerifyOtpMutation
+    useVerifyOtpMutation,
+    useAdminLoginMutation
 } = userApiSlice;
