@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from 'next/navigation';
+
 import {
   FaLock,
   FaUserAlt,
@@ -16,9 +18,11 @@ import {
   useRegisterPostMutation,
   useVerifyOtpMutation,
 } from "@/app/store/slices/userApiSlices";
-import { CgPassword } from "react-icons/cg";
 
 const Page = () => {
+
+  const router = useRouter();
+
   const [registerUser] = useRegisterPostMutation();
   const [confirmOtp] = useVerifyOtpMutation();
 
@@ -44,27 +48,32 @@ const Page = () => {
       if (res) {
         setModal(true);
       }
-      console.log(res, "ressssssssssssss");
     }
   };
 
   const handleOtp = async (event: React.FormEvent, otp: string) => {
-    console.log(password, "passpass");
 
-    const res = await confirmOtp({
-      otp,
-      email,
-      userName,
-      phone,
-      password,
-    }).unwrap();
-
-    if (res) {
-      console.log("true");
-    } else {
-      console.log("false");
+    try {
+      const res = await confirmOtp({
+        otp,
+        email,
+        userName,
+        phone,
+        password,
+      }).unwrap();
+  
+      if(res.success) {
+        router.push('/')
+      }
+    } catch (error) {
+      console.log(error)
     }
+    
   };
+
+  const handleOnClick = ()=> {
+    router.push('/login')
+  }
 
   return (
     <div>
@@ -161,13 +170,12 @@ const Page = () => {
                     <div className="mt-4 text-center">
                       <p className="text-gray-600">
                         already have an account?
-                        <a
-                          href="/login"
-                          className="text-indigo-500 hover:text-indigo-700 font-semibold"
+                        <span
+                          onClick={handleOnClick}
+                          className='text-[rgb(255,0,0)] font-bold cursor-pointer'
                         >
-                          {" "}
-                          Log in
-                        </a>
+                          {" "}  Log in
+                        </span>
                       </p>
                     </div>
 
@@ -185,12 +193,12 @@ const Page = () => {
                             size={24}
                           />
                         </button>
-                        <button className="flex items-center justify-center bg-white border border-gray-200  rounded-full p-2 shadow-md hover:bg-black transform transition duration-500 hover:scale-105">
+                        {/* <button className="flex items-center justify-center bg-white border border-gray-200  rounded-full p-2 shadow-md hover:bg-black transform transition duration-500 hover:scale-105">
                           <FaApple
                             className="text-black hover:text-white"
                             size={24}
                           />
-                        </button>
+                        </button> */}
                         <button className="flex items-center justify-center bg-white border border-gray-200  rounded-full p-2 shadow-md hover:bg-blue-800 transform transition duration-500 hover:scale-105">
                           <FaFacebook
                             className="text-black hover:text-white"

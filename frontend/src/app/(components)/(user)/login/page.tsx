@@ -4,8 +4,11 @@ import { FaLock, FaUserAlt, FaGoogle, FaApple, FaFacebook } from "react-icons/fa
 import Header from "../../login-header/header";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Page = () => {
+
+  const router = useRouter()
 
   const [email, setEmail] = useState<string>("")
   const [pass, setPass] = useState<string>('');
@@ -15,6 +18,10 @@ const Page = () => {
 
     e.preventDefault()
       
+  }
+
+  const handleOnClick = ()=> {
+    router.push('/signup')
   }
 
   return (
@@ -68,13 +75,13 @@ const Page = () => {
             <div className="mt-4 text-center">
               <p className="text-gray-600">
                 Don't have an account?
-                <a
-                  href="/signup"
-                  className="text-indigo-500 hover:text-indigo-700 font-semibold"
+                <span
+                  onClick={handleOnClick}
+                  className="text-[rgb(255,0,0)] font-bold cursor-pointer"
                 >
                   {" "}
                   Sign up
-                </a>
+                </span>
               </p>
             </div>
 
@@ -88,10 +95,10 @@ const Page = () => {
                   <FaGoogle className="mr-2" />
                   <span className="flex-grow text-center">Sign in with Google</span>
                 </button>
-                <button className="flex items-center justify-start bg-white text-black border border-gray-200 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-black hover:text-white transform transition duration-300 w-full">
+                {/* <button className="flex items-center justify-start bg-white text-black border border-gray-200 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-black hover:text-white transform transition duration-300 w-full">
                   <FaApple className="ml-0 items-start" />
                   <span className="flex-grow text-center">Sign in with Apple</span>
-                </button>
+                </button> */}
                 <button className="flex items-center justify-start bg-white text-black border border-gray-200 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-800 hover:text-white transform transition duration-300 w-full">
                   <FaFacebook className="mr-2" />
                   <span className="flex-grow text-center">Sign in with Facebook</span>
