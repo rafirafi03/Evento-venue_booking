@@ -1,30 +1,27 @@
-import express, {Request, Response} from 'express';
-import dotenv from 'dotenv';
-dotenv.config()
-import cors from 'cors'
-import {connectDB} from './infrastructure/db';
-import userRoute from './infrastructure/express/route'
+import express, { Request, Response } from "express";
+import dotenv from "dotenv";
+dotenv.config();
+import cors from "cors";
+import { connectDB } from "./infrastructure/db";
+import userRoute from "./infrastructure/express/route";
 
 const PORT = process.env.PORT;
 
 const app = express();
 
-connectDB()
+connectDB();
 
-app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials:true
-}))
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
 
-app.use(express.json())
+app.use(express.json());
 
-// app.post('/api/user/register', (req,res) => {
-//     console.log(req.body,"reqbdyindex")
-//     res.send('hii')
-// })
-app.use('/api/user',userRoute)
-
+app.use("/api/user", userRoute);
 
 app.listen(PORT, () => {
-    console.log(`server is running on http://localhost:${PORT}`);  
-})
+  console.log(`server is running on http://localhost:${PORT}`);
+});
