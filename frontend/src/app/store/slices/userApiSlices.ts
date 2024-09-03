@@ -26,7 +26,7 @@ export const userApiSlice = createApi({
         adminLogin : builder.mutation({
             query: (postData) => ({
                 url:'/adminLogin',
-                method: HttpMethod.GET,
+                method: HttpMethod.POST,
                 body: postData
             })
         })

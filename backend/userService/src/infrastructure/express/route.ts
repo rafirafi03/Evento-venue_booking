@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { UserController } from "../../adapters/controllers";
-import { SignupUseCase, VerifyOtpUsecase } from "../../useCases";
+import { AdminController, UserController } from "../../adapters/controllers";
+import { AdminLoginUseCase, SignupUseCase, VerifyOtpUsecase } from "../../useCases";
 import { UserRepository, RedisClient } from "../../repositories";
 import { otpService } from "../services";
 
@@ -14,9 +14,13 @@ const signupUseCase = new SignupUseCase(
   otpRepository
 );
 
+const adminLoginUseCase = new AdminLoginUseCase(userRepository)
+
 const verifyOtpUsecase = new VerifyOtpUsecase(redisRepository, userRepository);
 
 const userController = new UserController(signupUseCase, verifyOtpUsecase);
+
+const adminController = new AdminController(adminLoginUseCase)
 
 const router = Router();
 
@@ -28,8 +32,8 @@ router.post("/verify-otp", (req, res, next) => {
   userController.verifyOtp(req, res, next);
 });
 
-router.get('/adminLogin', (req,res,next) => {
-  userController.adminLogin(req,res,next)
+router.post('/adminLogin', (req,res,next) => {
+  adminController.adminLogin(req,res,next)
 })
 
 export default router;

@@ -19,7 +19,12 @@ const Page = () => {
     try {
       const res = await adminLogin({email,password}).unwrap()
 
+      console.log(res, "ressssss")
+
       if(res.success) {
+        console.log('adminscssssss')
+        const token = res.token
+        localStorage.setItem('authAdminToken',token)
         router.push('/admin/dashboard')
       }
     } catch (error) {
@@ -55,7 +60,7 @@ const Page = () => {
                   id="email"
                   type="email"
                   placeholder="Enter your email"
-                  value="email"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -66,13 +71,13 @@ const Page = () => {
                   id="password"
                   type="password"
                   placeholder="Enter your password"
-                  value="password"
+                  value={password}
                   onChange={(e)=> setPassword(e.target.value)}
                 />
               </div>
               <div className="flex items-center justify-between">
                 <button onClick={handleLogin} className="bg-[rgba(255,0,0)] hover:bg-black text-white font-bold py-2 w-full px-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105">
-                  Login
+                  Loginn
                 </button>
               </div>
 
