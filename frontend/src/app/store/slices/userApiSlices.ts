@@ -29,6 +29,11 @@ export const userApiSlice = createApi({
                 method: HttpMethod.POST,
                 body: postData
             })
+        }),
+        getUsers: builder.query({
+            query:() => ({
+                url: '/get-users',
+            })
         })
     })
 })
@@ -36,5 +41,6 @@ export const userApiSlice = createApi({
 export const {
     useRegisterPostMutation,
     useVerifyOtpMutation,
-    useAdminLoginMutation
+    useAdminLoginMutation,
+    useGetUsersQuery
 } = userApiSlice;
