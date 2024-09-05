@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from 'next/navigation';
-
 import {
   FaLock,
   FaUserAlt,
@@ -37,22 +36,51 @@ const Page = () => {
 
   const [error, setError] = useState("");
 
+  // Email validation regex
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleSubmit = async () => {
-    if (userName === "") {
-      setError("userName required");
-    } else {
-      console.log(email, "email frontend");
-      setLoading(true);
+    // Validation logic
+    if (!userName) {
+      setError("User name is required");
+      return;
+    }
+    if (!email || !validateEmail(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+    if (!phone || phone.length < 10) {
+      setError("Please enter a valid phone number");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+    if (password !== confirmPass) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    setError(""); // Clear any existing errors
+
+    setLoading(true);
+    try {
       const res = await registerUser({ email }).unwrap();
       setLoading(false);
       if (res) {
         setModal(true);
       }
+    } catch (err) {
+      setLoading(false);
+      setError("Registration failed. Please try again.");
     }
   };
 
   const handleOtp = async (event: React.FormEvent, otp: string) => {
-
     try {
       const res = await confirmOtp({
         otp,
@@ -61,22 +89,20 @@ const Page = () => {
         phone,
         password,
       }).unwrap();
-  
-      if(res.success) {
+
+      if (res.success) {
         const token = res.token;
-        console.log(token,"frntendtokennnnnnn")
-        localStorage.setItem('authToken',token)
-        router.push('/')
+        localStorage.setItem('authToken', token);
+        router.push('/');
       }
     } catch (error) {
-      console.log(error)
+      setError("OTP verification failed. Please try again.");
     }
-    
   };
 
-  const handleOnClick = ()=> {
-    router.push('/login')
-  }
+  const handleOnClick = () => {
+    router.push('/login');
+  };
 
   return (
     <div>
@@ -115,7 +141,6 @@ const Page = () => {
                         value={userName}
                         onChange={(e) => setUserName(e.target.value)}
                       />
-                      <div className="text-red-600 text-xs ml-5">{error}</div>
                     </div>
                     <div className="mb-4 relative">
                       <FaUserAlt className="absolute left-3 top-3 text-gray-400" />
@@ -156,28 +181,29 @@ const Page = () => {
                         className="pl-10 pr-4 py-2 rounded-lg font-light shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
                         id="confirmPassword"
                         type="password"
-                        placeholder="confirm password"
+                        placeholder="Confirm password"
                         value={confirmPass}
                         onChange={(e) => setConfirmPass(e.target.value)}
                       />
                     </div>
+                    <div className="text-red-600 text-xs mb-4 text-center">{error}</div>
                     <div className="flex items-center justify-between">
                       <button
                         onClick={handleSubmit}
                         type="button"
                         className="bg-[rgba(255,0,0)] hover:bg-black text-white font-bold py-2 w-full px-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105"
                       >
-                        signup
+                        Sign up
                       </button>
                     </div>
                     <div className="mt-4 text-center">
                       <p className="text-gray-600">
-                        already have an account?
+                        Already have an account?
                         <span
                           onClick={handleOnClick}
-                          className='text-[rgb(255,0,0)] font-bold cursor-pointer'
+                          className="text-[rgb(255,0,0)] font-bold cursor-pointer"
                         >
-                          {" "}  Log in
+                          {" "} Log in
                         </span>
                       </p>
                     </div>
@@ -190,19 +216,13 @@ const Page = () => {
                         Or sign in with
                       </p>
                       <div className="flex justify-center space-x-4">
-                        <button className="flex items-center justify-center bg-white border border-gray-200  rounded-full p-2 shadow-md hover:bg-blue-600 transform transition duration-500 hover:scale-105">
+                        <button className="flex items-center justify-center bg-white border border-gray-200 rounded-full p-2 shadow-md hover:bg-blue-600 transform transition duration-500 hover:scale-105">
                           <FaGoogle
                             className="text-black hover:text-white"
                             size={24}
                           />
                         </button>
-                        {/* <button className="flex items-center justify-center bg-white border border-gray-200  rounded-full p-2 shadow-md hover:bg-black transform transition duration-500 hover:scale-105">
-                          <FaApple
-                            className="text-black hover:text-white"
-                            size={24}
-                          />
-                        </button> */}
-                        <button className="flex items-center justify-center bg-white border border-gray-200  rounded-full p-2 shadow-md hover:bg-blue-800 transform transition duration-500 hover:scale-105">
+                        <button className="flex items-center justify-center bg-white border border-gray-200 rounded-full p-2 shadow-md hover:bg-blue-800 transform transition duration-500 hover:scale-105">
                           <FaFacebook
                             className="text-black hover:text-white"
                             size={24}

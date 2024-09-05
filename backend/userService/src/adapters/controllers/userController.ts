@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { SignupUseCase, VerifyOtpUsecase } from "../../useCases/index";
+import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase } from "../../useCases/index";
 
 export class UserController {
   constructor(
     private signupUseCase: SignupUseCase,
-    private verifyOtpUsecase: VerifyOtpUsecase
+    private verifyOtpUsecase: VerifyOtpUsecase,
+    private userLoginUseCase : UserLoginUseCase
   ) {}
 
   async signup(req: Request, res: Response, next: NextFunction): Promise<void> {
@@ -38,6 +39,20 @@ export class UserController {
       res.status(200).json(response);
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async login( req: Request, res: Response, next: NextFunction) : Promise<void> {
+    const {email, password} = req.body;
+
+    try {
+      const response = await this.userLoginUseCase.execute(
+        email, password
+      )
+
+      res.status(200).json(response)
+    } catch (error) {
+      console.log(error)
     }
   }
 }

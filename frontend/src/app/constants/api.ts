@@ -1,5 +1,5 @@
 export const baseUserUrl = 'http://localhost:4000/api/user'
-export const baseAdminUrl = 'http://localhost:4001/api/admin'
-export const baseCompanyUrl = 'http://localhost:4002/api/company'
+export const baseCompanyUrl = 'http://localhost:4001/api/company'
+export const baseAdminUrl = 'http://localhost:4002/api/admin'
 export const baseBookingUrl = 'http://localhost:4003/api/booking'
 export const baseChatUrl = 'http://localhost:4004/api/chat'

@@ -16,6 +16,13 @@ export const userApiSlice = createApi({
                 body: postData
             })
         }),
+        loginPost : builder.mutation({
+            query : (postData) => ({
+                url: '/login',
+                method: HttpMethod.POST,
+                body: postData
+            })
+        }),
         verifyOtp: builder.mutation({
             query:(postData) => ({
                 url: '/verify-otp',
@@ -40,6 +47,7 @@ export const userApiSlice = createApi({
 
 export const {
     useRegisterPostMutation,
+    useLoginPostMutation,
     useVerifyOtpMutation,
     useAdminLoginMutation,
     useGetUsersQuery

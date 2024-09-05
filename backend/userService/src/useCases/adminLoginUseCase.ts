@@ -16,7 +16,7 @@ export class AdminLoginUseCase {
 
         const user = await this.userRepository.findByEmail(email);
         
-        if(user) {
+        if(user?.isVerified) {
 
             console.log(user,"bcknduser")
 

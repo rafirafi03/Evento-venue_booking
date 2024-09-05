@@ -1,29 +1,29 @@
 "use client"
 
 import React, { useMemo, useState } from 'react'
-import Header from '../../login-header/header'
 import Image from 'next/image'
 import { FaLock, FaUserAlt } from 'react-icons/fa';
 import { FiUpload } from 'react-icons/fi'
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
-import Head from 'next/head';
+import { useRegisterPostMutation } from '@/app/store/slices/companyApiSlices';
 
 const Page = () => {
 
-  const [companyName, setCompanyName] = useState<string>('')
+  const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>("");
-  const [country, setCountry] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
+  const [country, setCountry] = useState<{label: string, value: string} | null>(null);
   const [phone, setPhone] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPass, setConfirmPass] = useState<string>("");
   const [license, setLicense] = useState<string>("");
 
-  const [value, setValue] = useState('')
+  const [registerCompany] = useRegisterPostMutation()
+
   const options = useMemo(() => countryList().getData(), [])
 
   const handleCountryChange = (selectedOption: any) => {
+    console.log(selectedOption)
     setCountry(selectedOption);
   };
 
@@ -34,9 +34,19 @@ const Page = () => {
     setSelectedFile(file);
   };
 
+  const handleSubmit = async ()=> {
+    try {
+      const res = await registerCompany({name,email,phone,country: country?.label,password}).unwrap()
+
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div className="flex h-screen">
-      {/* Left Side: Image */}
+     
       <div className="w-1/3 h-full">
         <Image
           src="/assets/images/intrologin-user.jpeg"
@@ -47,14 +57,13 @@ const Page = () => {
         />
       </div>
 
-      {/* Right Side: Signup Form */}
       <div className="w-2/3 h-full flex items-center justify-center bg-white">
         <div className="w-3/4 max-w-lg">
           {/* Logo and Company Name */}
           <div className="mb-6">
             <div className="flex items-center mb-7">
               <Image
-                src="/assets/images/evento-logo.png" // Replace with your logo path
+                src="/assets/images/evento-logo.png" 
                 alt="Company Logo"
                 className="h-12 w-12 mr-3"
                 width={50}
@@ -70,18 +79,19 @@ const Page = () => {
             </p>
           </div>
 
-          {/* Input Fields */}
-          <form>
+          
             <div className="flex flex-wrap -mx-2 mb-4">
               <div className="w-1/2 px-2">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="firstName">
-                  First Name
+                  Company Name
                 </label>
                 <input
-                  id="firstName"
+                  id="name"
                   type="text"
                   className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-purple-300"
-                  placeholder="First Name"
+                  placeholder="Company Name"
+                  value={name}
+                  onChange={(e)=> setName(e.target.value)}
                 />
               </div>
               <div className="w-1/2 px-2">
@@ -93,6 +103,8 @@ const Page = () => {
                   type="email"
                   className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
                   placeholder="Email"
+                  value={email}
+                  onChange={(e)=> setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -107,6 +119,8 @@ const Page = () => {
                   type="tel"
                   className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
                   placeholder="Phone Number"
+                  value={phone}
+                  onChange={(e)=> setPhone(e.target.value)}
                 />
               </div>
               <div className="w-1/2 px-2">
@@ -134,6 +148,8 @@ const Page = () => {
                   type="password"
                   className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e)=> setPassword(e.target.value)}
                 />
               </div>
               <div className="w-1/2 px-2">
@@ -145,6 +161,8 @@ const Page = () => {
                   type="password"
                   className="w-full px-3 py-2 border rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
                   placeholder="Confirm Password"
+                  value={confirmPass}
+                  onChange={(e) => setConfirmPass(e.target.value)}
                 />
               </div>
             </div>
@@ -177,13 +195,12 @@ const Page = () => {
 
             <div className="mb-6">
               <button
-                type="submit"
+                onClick={handleSubmit}
                 className="w-full bg-[rgb(255,0,0)] text-white py-2 rounded-md hover:bg-black focus:outline-none"
               >
                 Sign Up
               </button>
             </div>
-          </form>
         </div>
       </div>
     </div>
