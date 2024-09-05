@@ -6,7 +6,9 @@ import { FaLock, FaUserAlt } from 'react-icons/fa';
 import { FiUpload } from 'react-icons/fi'
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
-import { useRegisterPostMutation } from '@/app/store/slices/companyApiSlices';
+import { useConfirmOtpMutation, useRegisterPostMutation } from '@/app/store/slices/companyApiSlices';
+import OtpModal from '../otpModal/page'
+import {useRouter} from 'next/navigation';
 
 const Page = () => {
 
@@ -17,8 +19,15 @@ const Page = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPass, setConfirmPass] = useState<string>("");
   const [license, setLicense] = useState<string>("");
+  const [error, setError] = useState<string>("");
+
+  const router = useRouter()
+
+  const [modal, setModal] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const [registerCompany] = useRegisterPostMutation()
+  const [confirmOtp] = useConfirmOtpMutation()
 
   const options = useMemo(() => countryList().getData(), [])
 
@@ -36,7 +45,16 @@ const Page = () => {
 
   const handleSubmit = async ()=> {
     try {
-      const res = await registerCompany({name,email,phone,country: country?.label,password}).unwrap()
+      setLoading(true)
+      const res = await registerCompany({email}).unwrap()
+
+      console.log(res,'resssssssssssssss')
+
+      if(res) {
+        setLoading(false)
+        setModal(true)
+
+      }
 
       console.log(res)
     } catch (error) {
@@ -44,7 +62,45 @@ const Page = () => {
     }
   }
 
+  const handleOtp = async(event: React.FormEvent, otp: string)=> {
+    try {
+
+      console.log('hiiiiii')
+      const res = await confirmOtp({
+        otp,
+        name,
+        email,
+        phone,
+        country: country?.label,
+        password,
+      }).unwrap();
+
+      console.log(res,'resssfrntend')
+
+      if (res.success) {
+        console.log('ressuccessssss')
+        const token = res.token;
+        localStorage.setItem('authToken', token);
+        setModal(false)
+        router.push('/');
+      }
+    } catch (error) {
+      setError("OTP verification failed. Please try again.");
+    }
+  }
+  
+
   return (
+    <div>
+
+    {modal ? (
+      <OtpModal email={email} handleOtp={handleOtp} />
+    ) : (
+      <>
+        {loading ? (
+          <h1>Loading.....</h1>
+        ) : (
+          <>
     <div className="flex h-screen">
      
       <div className="w-1/3 h-full">
@@ -204,6 +260,12 @@ const Page = () => {
         </div>
       </div>
     </div>
+      </>
+          )}
+        </>
+      )}
+      </div>
+    
   )
 }
 

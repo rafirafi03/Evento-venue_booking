@@ -15,10 +15,18 @@ export const companyApiSlice = createApi({
                 method: HttpMethod.POST,
                 body: postData
             })
+        }),
+        confirmOtp : builder.mutation({
+            query: (postData) => ({
+                url: '/confirm-otp',
+                method: HttpMethod.POST,
+                body: postData
+            })
         })
     })
 })
 
 export const {
-    useRegisterPostMutation
+    useRegisterPostMutation,
+    useConfirmOtpMutation
 } = companyApiSlice
