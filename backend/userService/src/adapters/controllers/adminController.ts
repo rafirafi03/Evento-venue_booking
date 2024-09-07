@@ -1,5 +1,6 @@
-import { NextFunction, Request, response, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { AdminLoginUseCase, GetUsersUseCase } from "../../useCases";
+import { HttpStatusCode } from "../../constants";
 
 export class AdminController {
     constructor(
@@ -13,7 +14,7 @@ export class AdminController {
         try {
             const response = await this._adminLoginUseCase.execute(email, password)
 
-            res.status(200).json(response)
+            res.status(HttpStatusCode.OK).json(response)
         } catch (error) {
             console.log(error)
         }
