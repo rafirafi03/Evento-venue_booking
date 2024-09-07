@@ -1,0 +1,12 @@
+{
+  "name": "grand-evento",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint:all": "npm run lint --prefix backend/userService && npm run lint --prefix backend/companyService && npm run lint --prefix frontend"
+  },
+  "author": "",
+  "license": "ISC"
+}
