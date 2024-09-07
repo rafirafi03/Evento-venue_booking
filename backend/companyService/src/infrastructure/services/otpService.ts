@@ -5,9 +5,9 @@ require('dotenv').config()
 
 export class otpService {
 
-    private transporter: nodemailer.Transporter;
+    private _transporter: nodemailer.Transporter;
     constructor() {
-        this.transporter = nodemailer.createTransport({
+        this._transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: process.env.EMAIL_USER,
@@ -34,7 +34,7 @@ export class otpService {
 
         console.log(mailOptions,"msgmsgmsgmsg")
 
-        await this.transporter.sendMail(mailOptions)
+        await this._transporter.sendMail(mailOptions)
     }
 
 }

@@ -4,8 +4,8 @@ import { VerifyOtpUsecase } from "../../useCases/verifyOtpUseCase";
 
 export class CompanyController {
   constructor(
-    private registerUseCase : RegisterUseCase,
-    private verifyOtpUseCase : VerifyOtpUsecase
+    private _registerUseCase : RegisterUseCase,
+    private _verifyOtpUseCase : VerifyOtpUsecase
 
   ) {}
 
@@ -15,7 +15,7 @@ export class CompanyController {
     console.log(req.body,"reqbdyyycntrlrr")
 
     try {
-      const response = await this.registerUseCase.execute(email);
+      const response = await this._registerUseCase.execute(email);
 
       res.status(200).json(response);
     } catch (error) {
@@ -27,7 +27,7 @@ export class CompanyController {
     const {otp, name, email, phone, country, password} = req.body;
 
     try {
-      const response = await this.verifyOtpUseCase.execute({
+      const response = await this._verifyOtpUseCase.execute({
         otp,name,email,phone,country,password
       })
 

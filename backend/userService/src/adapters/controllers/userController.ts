@@ -3,16 +3,16 @@ import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase } from "../../useCase
 
 export class UserController {
   constructor(
-    private signupUseCase: SignupUseCase,
-    private verifyOtpUsecase: VerifyOtpUsecase,
-    private userLoginUseCase : UserLoginUseCase
+    private _signupUseCase: SignupUseCase,
+    private _verifyOtpUsecase: VerifyOtpUsecase,
+    private _userLoginUseCase : UserLoginUseCase
   ) {}
 
   async signup(req: Request, res: Response, next: NextFunction): Promise<void> {
     const { email } = req.body;
 
     try {
-      const response = await this.signupUseCase.execute(email);
+      const response = await this._signupUseCase.execute(email);
 
       res.status(200).json(response);
     } catch (error) {
@@ -28,7 +28,7 @@ export class UserController {
     const { otp, email, userName, phone, password } = req.body;
 
     try {
-      const response = await this.verifyOtpUsecase.execute({
+      const response = await this._verifyOtpUsecase.execute({
         otp,
         userName,
         email,
@@ -46,7 +46,7 @@ export class UserController {
     const {email, password} = req.body;
 
     try {
-      const response = await this.userLoginUseCase.execute(
+      const response = await this._userLoginUseCase.execute(
         email, password
       )
 

@@ -7,14 +7,14 @@ import bcrypt from 'bcrypt';
 
 export class AdminLoginUseCase {
     constructor(
-        private userRepository : IUserRepository
+        private _userRepository : IUserRepository
     ) {}
 
     async execute (email: string, password:string) : Promise<any> {
         
         const secretKey = process.env.JWTSECRETKEY as string
 
-        const user = await this.userRepository.findByEmail(email);
+        const user = await this._userRepository.findByEmail(email);
         
         if(user?.isVerified) {
 

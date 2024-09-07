@@ -16,8 +16,8 @@ interface data {
 
 export class VerifyOtpUsecase {
   constructor(
-    private verifyOtpRepository: IRedisClient,
-    private companyRepostitory: ICompanyRepository
+    private _verifyOtpRepository: IRedisClient,
+    private _companyRepostitory: ICompanyRepository
   ) {}
 
   async execute({ otp, name, email, phone, country, password }: data): Promise<any> {
@@ -28,13 +28,13 @@ export class VerifyOtpUsecase {
       throw new Error("Invalid otpaaaaa");
     }
 
-    const userOtp = await this.verifyOtpRepository.getOTP(email);
+    const userOtp = await this._verifyOtpRepository.getOTP(email);
 
     if (userOtp !== otp) {
       throw new Error("Invalid otp not matching");
     }
 
-    await this.verifyOtpRepository.deleteOTP(email);
+    await this._verifyOtpRepository.deleteOTP(email);
 
     console.log(password, "passsverifyhash");
 
@@ -48,7 +48,7 @@ export class VerifyOtpUsecase {
       password: hashedPass,
     });
 
-    await this.companyRepostitory.save(user);
+    await this._companyRepostitory.save(user);
 
     const tokenservice = new TokenService(secretKey)
 

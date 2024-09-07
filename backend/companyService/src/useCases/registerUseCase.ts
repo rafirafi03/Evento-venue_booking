@@ -11,9 +11,9 @@ interface data {
 
 export class RegisterUseCase {
     constructor(
-        private companyRepository : ICompanyRepository,
-        private otpRepository : otpService,
-        private redisRepository : RedisClient
+        private _companyRepository : ICompanyRepository,
+        private _otpRepository : otpService,
+        private _redisRepository : RedisClient
     ) {}
 
     async execute(email : string) : Promise<any> {
@@ -23,19 +23,19 @@ export class RegisterUseCase {
 
         }
 
-        const existingEmail = await this.companyRepository.findByEmail(email);
+        const existingEmail = await this._companyRepository.findByEmail(email);
 
         if(existingEmail) {
             throw new Error("user email already exists")
         }
         
-        const otp = this.otpRepository.generateOtp(4);
+        const otp = this._otpRepository.generateOtp(4);
 
         const subject = 'Your OTP Code';
         const message = otp;
         
-        await this.otpRepository.sendMail(email, subject, message);
-        await this.redisRepository.storeOTP(email, otp, 300);
+        await this._otpRepository.sendMail(email, subject, message);
+        await this._redisRepository.storeOTP(email, otp, 300);
 
         return { success: true}
         
