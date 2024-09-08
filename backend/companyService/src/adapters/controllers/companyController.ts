@@ -20,6 +20,7 @@ export class CompanyController {
       res.status(200).json(response);
     } catch (error) {
       console.log(error);
+      throw new Error('error' + error)
     }
   }
 
@@ -34,6 +35,7 @@ export class CompanyController {
       res.status(200).json(response)
     } catch (error) {
       console.log(error)
+      throw new Error('error' + error)
     }
   }
 

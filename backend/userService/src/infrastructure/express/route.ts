@@ -42,12 +42,12 @@ router.post('/login', (req,res) => {
   userController.login(req,res);
 })
 
-router.post('/adminLogin', (req,res,next) => {
-  adminController.adminLogin(req,res,next)
+router.post('/adminLogin', (req,res) => {
+  adminController.adminLogin(req,res)
 })
 
-router.get('/get-users', (req,res,next) => {
-  adminController.getUsers(req,res,next)
+router.get('/get-users', (req,res) => {
+  adminController.getUsers(req,res)
 })
 
 export default router;

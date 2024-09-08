@@ -18,26 +18,34 @@ export class RegisterUseCase {
 
     async execute(email : string) : Promise<{success: boolean}> {
 
-        if(!email) {
-            throw new Error('Invalid input emaillllll')
+        try {
+            
+            if(!email) {
+                throw new Error('Invalid input emaillllll')
+    
+            }
+    
+            const existingEmail = await this._companyRepository.findByEmail(email);
+    
+            if(existingEmail) {
+                throw new Error("user email already exists")
+            }
+            
+            const otp = this._otpRepository.generateOtp(4);
+    
+            const subject = 'Your OTP Code';
+            const message = otp;
+            
+            await this._otpRepository.sendMail(email, subject, message);
+            await this._redisRepository.storeOTP(email, otp, 300);
+    
+            return { success: true}
+        } catch (error) {
+            console.log(error)
 
+            throw new Error("error" + error)
         }
 
-        const existingEmail = await this._companyRepository.findByEmail(email);
-
-        if(existingEmail) {
-            throw new Error("user email already exists")
-        }
-        
-        const otp = this._otpRepository.generateOtp(4);
-
-        const subject = 'Your OTP Code';
-        const message = otp;
-        
-        await this._otpRepository.sendMail(email, subject, message);
-        await this._redisRepository.storeOTP(email, otp, 300);
-
-        return { success: true}
         
     }
 }

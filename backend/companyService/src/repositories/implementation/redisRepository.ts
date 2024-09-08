@@ -29,6 +29,8 @@ export class RedisClient implements IRedisClient {
         await this._redis.setex(`otp:${email}`, ttl, otp);
     } catch (error) {
        console.log(error);
+
+       throw new Error("error" + error)
     }
   }
 
@@ -46,6 +48,7 @@ export class RedisClient implements IRedisClient {
         await this._redis.del(`otp:${email}`);
     } catch (error) {
         console.log(error)
+        throw new Error("error" + error)
     }
   }
 }
