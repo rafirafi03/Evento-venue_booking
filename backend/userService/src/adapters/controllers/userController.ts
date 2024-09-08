@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase } from "../../useCases/index";
 
 export class UserController {
@@ -8,7 +8,7 @@ export class UserController {
     private _userLoginUseCase : UserLoginUseCase
   ) {}
 
-  async signup(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async signup(req: Request, res: Response): Promise<void> {
     const { email } = req.body;
 
     try {
@@ -23,7 +23,6 @@ export class UserController {
   async verifyOtp(
     req: Request,
     res: Response,
-    next: NextFunction
   ): Promise<void> {
     const { otp, email, userName, phone, password } = req.body;
 
@@ -42,7 +41,7 @@ export class UserController {
     }
   }
 
-  async login( req: Request, res: Response, next: NextFunction) : Promise<void> {
+  async login( req: Request, res: Response) : Promise<void> {
     const {email, password} = req.body;
 
     try {

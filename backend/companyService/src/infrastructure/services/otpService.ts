@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer';
 import { generateOtp } from '../../utils'
-require('dotenv').config()
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 
 export class otpService {

@@ -30,16 +30,16 @@ const adminController = new AdminController(adminLoginUseCase, getUsersUseCase)
 
 const router = Router();
 
-router.post("/register", (req, res, next) => {
-  userController.signup(req, res, next);
+router.post("/register", (req, res) => {
+  userController.signup(req, res);
 });
 
-router.post("/verify-otp", (req, res, next) => {
-  userController.verifyOtp(req, res, next);
+router.post("/verify-otp", (req, res) => {
+  userController.verifyOtp(req, res);
 });
 
-router.post('/login', (req,res,next) => {
-  userController.login(req,res,next);
+router.post('/login', (req,res) => {
+  userController.login(req,res);
 })
 
 router.post('/adminLogin', (req,res,next) => {

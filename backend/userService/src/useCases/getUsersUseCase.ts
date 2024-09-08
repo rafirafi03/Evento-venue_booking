@@ -1,4 +1,5 @@
 import { IAdminRepository } from "../repositories/interfaces/adminInterface";
+import { IUser } from "../repositories/interfaces/userInterface";
 
 
 export class GetUsersUseCase {
@@ -6,13 +7,19 @@ export class GetUsersUseCase {
         private _adminRepository: IAdminRepository
     ) {}
 
-    async execute() : Promise<any> {
-        const users = await this._adminRepository.getUsers()
+    async execute() : Promise<{ users: IUser[] } | null> {
 
-        if(!users) {
-            return null
-        } else {
-            return {users}
+        try {
+            const users = await this._adminRepository.getUsers()
+
+            if(!users || users.length === 0) {
+                return null
+            } else {
+                return { users }
+            } 
+        } catch (error) {
+            throw new Error("Error" + error)
         }
+        
     }
 }

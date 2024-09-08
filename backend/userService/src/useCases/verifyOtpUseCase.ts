@@ -3,7 +3,9 @@ import { IRedisClient } from "../repositories/interfaces/redisInterface";
 import User from "../infrastructure/db/models/userModel";
 import { hashPass } from "../utils";
 import { TokenService } from 'evento-library';
-require('dotenv').config()
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 interface data {
   otp: string;
@@ -16,10 +18,10 @@ interface data {
 export class VerifyOtpUsecase {
   constructor(
     private _verifyOtpRepository: IRedisClient,
-    private _userRepostitory: IUserRepository
+    private _userRepository: IUserRepository
   ) {}
 
-  async execute({ otp, userName, email, phone, password }: data): Promise<any> {
+  async execute({ otp, userName, email, phone, password }: data): Promise<{success: boolean; token: string}> {
 
     const secretKey = process.env.JWTSECRETKEY as string
 
@@ -46,7 +48,7 @@ export class VerifyOtpUsecase {
       password: hashedPass,
     });
 
-    await this._userRepostitory.save(user);
+    await this._userRepository.save(user);
 
     const tokenservice = new TokenService(secretKey)
 

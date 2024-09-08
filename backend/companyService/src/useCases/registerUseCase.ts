@@ -1,13 +1,13 @@
 import { otpService } from "../infrastructure/services";
 import { ICompanyRepository, RedisClient } from "../repositories";
 
-interface data {
-    name: string;
-    email: string;
-    phone: number;
-    country: string;
-    password: string
-}
+// interface data {
+//     name: string;
+//     email: string;
+//     phone: number;
+//     country: string;
+//     password: string
+// }
 
 export class RegisterUseCase {
     constructor(
@@ -16,7 +16,7 @@ export class RegisterUseCase {
         private _redisRepository : RedisClient
     ) {}
 
-    async execute(email : string) : Promise<any> {
+    async execute(email : string) : Promise<{success: boolean}> {
 
         if(!email) {
             throw new Error('Invalid input emaillllll')

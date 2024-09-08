@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { AdminLoginUseCase, GetUsersUseCase } from "../../useCases";
 import { HttpStatusCode } from "../../constants";
 
@@ -8,7 +8,7 @@ export class AdminController {
         private _getUsersUseCase : GetUsersUseCase
     ) {}
 
-    async adminLogin( req: Request, res: Response, next: NextFunction) : Promise<void> {
+    async adminLogin( req: Request, res: Response) : Promise<void> {
         const { email, password } = req.body;
 
         try {
@@ -20,13 +20,13 @@ export class AdminController {
         }
     }
 
-    async getUsers(req: Request, res: Response, next: NextFunction) : Promise<any> {
+    async getUsers(req: Request, res: Response) : Promise<any> {
         try {
             const users = await this._getUsersUseCase.execute()
-            res.status(200).json(users)
+            res.status(HttpStatusCode.OK).json({users})
         } catch (error) {
             console.log(error)
-            res.status(500).json({message: 'Internal error'})
+            res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({message: 'Internal error'})
         }
     }
 }

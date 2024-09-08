@@ -18,7 +18,7 @@ export class UserRepository implements IUserRepository {
         try {
             const newUser = new userModel(user);
             await newUser.save();
-            return newUser;
+            return newUser as IUserData;
         } catch (error) {
             throw new Error('Error' + error)
         }

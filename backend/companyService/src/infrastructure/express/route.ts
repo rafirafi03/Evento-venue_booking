@@ -15,12 +15,12 @@ const registerUseCase = new RegisterUseCase(companyRepository,otpRepository,redi
 const verifyOtpUseCase = new VerifyOtpUsecase(redisRepository,companyRepository)
 const companyController = new CompanyController(registerUseCase, verifyOtpUseCase)
 
-router.post("/register", (req,res,next) => {
-    companyController.signup(req,res,next)
+router.post("/register", (req,res) => {
+    companyController.signup(req,res)
 })
 
-router.post('/confirm-otp', (req,res,next) => {
-    companyController.confirmOtp(req,res,next)
+router.post('/confirm-otp', (req,res) => {
+    companyController.confirmOtp(req,res)
 })
 
 export default router

@@ -8,7 +8,7 @@ export class UserLoginUseCase {
         private _userRepository : IUserRepository
     ) {}
 
-    async execute( email: string, password: string) : Promise<any> {
+    async execute( email: string, password: string) : Promise<{success: boolean; token: string} | null> {
 
         const secretKey = process.env.JWTSECRETKEY as string
 
@@ -17,7 +17,7 @@ export class UserLoginUseCase {
         if(user) {
             const hashedPass = await hashPass(password)
 
-            const pass = bcrypt.compare(hashedPass, password)
+            const pass = bcrypt.compare(hashedPass, user.password)
 
             if(!pass) {
                 throw new Error('password doesnt match')
@@ -29,5 +29,7 @@ export class UserLoginUseCase {
                 return {success: true, token}
             }
         }
+
+        return null
     }
 }

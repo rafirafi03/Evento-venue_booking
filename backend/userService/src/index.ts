@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import morgan from 'morgan';
 import logger from './logger'
 import dotenv from "dotenv";

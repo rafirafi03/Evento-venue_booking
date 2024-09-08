@@ -1,6 +1,8 @@
 import Redis from 'ioredis';
 import { IRedisClient } from '../interfaces/redisInterface';
-require('dotenv').config()
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 export class RedisClient implements IRedisClient {
   private _redis: Redis;
@@ -27,6 +29,7 @@ export class RedisClient implements IRedisClient {
         await this._redis.setex(`otp:${email}`, ttl, otp);
     } catch (error) {
        console.log(error);
+       throw error
     }
   }
 
@@ -35,7 +38,7 @@ export class RedisClient implements IRedisClient {
         return await this._redis.get(`otp:${email}`);
     } catch (error) {
         console.log(error); 
-        return null
+        throw error
     }
   }
 
@@ -44,6 +47,7 @@ export class RedisClient implements IRedisClient {
         await this._redis.del(`otp:${email}`);
     } catch (error) {
         console.log(error)
+        throw error
     }
   }
 }

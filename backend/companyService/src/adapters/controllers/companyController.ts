@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { RegisterUseCase } from "../../useCases/index";
 import { VerifyOtpUsecase } from "../../useCases/verifyOtpUseCase";
 
@@ -9,7 +9,7 @@ export class CompanyController {
 
   ) {}
 
-  async signup(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async signup(req: Request, res: Response): Promise<void> {
     const { email } = req.body;
 
     console.log(req.body,"reqbdyyycntrlrr")
@@ -23,7 +23,7 @@ export class CompanyController {
     }
   }
 
-  async confirmOtp(req: Request, res: Response, next: NextFunction): Promise<void> {
+  async confirmOtp(req: Request, res: Response): Promise<void> {
     const {otp, name, email, phone, country, password} = req.body;
 
     try {

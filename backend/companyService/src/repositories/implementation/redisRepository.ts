@@ -1,7 +1,8 @@
 import Redis from 'ioredis';
 import { IRedisClient } from '../interfaces';
+import dotenv from 'dotenv';
 
-require('dotenv').config()
+dotenv.config()
 
 export class RedisClient implements IRedisClient {
   private _redis: Redis;

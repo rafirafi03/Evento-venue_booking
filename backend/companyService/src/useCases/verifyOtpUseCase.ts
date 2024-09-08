@@ -1,9 +1,11 @@
 import { ICompanyRepository } from "../repositories";
 import { IRedisClient } from "../repositories/interfaces/redisInterface";
-import Company from "../infrastructure/db/models/companyModel";
+import Company, {ICompany} from "../infrastructure/db/models/companyModel";
 import { hashPass } from "../utils";
 import { TokenService } from 'evento-library';
-require('dotenv').config()
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 interface data {
   otp: string;
@@ -17,10 +19,10 @@ interface data {
 export class VerifyOtpUsecase {
   constructor(
     private _verifyOtpRepository: IRedisClient,
-    private _companyRepostitory: ICompanyRepository
+    private _companyRepository: ICompanyRepository
   ) {}
 
-  async execute({ otp, name, email, phone, country, password }: data): Promise<any> {
+  async execute({ otp, name, email, phone, country, password }: data): Promise<{success: boolean; token: string}> {
 
     const secretKey = process.env.JWTSECRETKEY as string
 
@@ -28,9 +30,9 @@ export class VerifyOtpUsecase {
       throw new Error("Invalid otpaaaaa");
     }
 
-    const userOtp = await this._verifyOtpRepository.getOTP(email);
+    const companyOtp = await this._verifyOtpRepository.getOTP(email);
 
-    if (userOtp !== otp) {
+    if (companyOtp !== otp) {
       throw new Error("Invalid otp not matching");
     }
 
@@ -40,7 +42,7 @@ export class VerifyOtpUsecase {
 
     const hashedPass = await hashPass(password);
 
-    const user = new Company({
+    const company: ICompany = new Company({
       name,
       email,
       phone,
@@ -48,12 +50,18 @@ export class VerifyOtpUsecase {
       password: hashedPass,
     });
 
-    await this._companyRepostitory.save(user);
+    const savedCompany = await this._companyRepository.save(company);
 
-    const tokenservice = new TokenService(secretKey)
+    if (!savedCompany) {
+      throw new Error("Error saving company");
+    } else {
 
-    const token = tokenservice.generateToken({userId: user._id as string, email: user.email})
+      const tokenservice = new TokenService(secretKey)
+  
+      const token = tokenservice.generateToken({ userId: savedCompany._id as unknown as string, email: savedCompany.email })
+  
+      return { success: true, token };
+    }
 
-    return { success: true, token };
   }
 }

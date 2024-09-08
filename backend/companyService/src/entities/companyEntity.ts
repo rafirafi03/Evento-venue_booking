@@ -1,5 +1,7 @@
+import mongoose from "mongoose";
+
 export interface ICompanyData {
-    _id?: any;
+    _id?: mongoose.Types.ObjectId;
     name: string;
     email: string;
     phone: number | null;
@@ -8,7 +10,7 @@ export interface ICompanyData {
 }
 
 export class Company {
-    _id?: any;
+    _id?: mongoose.Types.ObjectId;
     name: string;
     email: string;
     phone: number | null;
