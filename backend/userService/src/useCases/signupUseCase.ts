@@ -22,7 +22,8 @@ export class SignupUseCase {
             const existingEmail = await this._userRepository.findByEmail(email);
     
             if(existingEmail) {
-                throw new Error("user email already exists")
+                console.log('already exists')
+                return { success: false };
             }
     
             const otp = this._otpRepository.generateOtp(4);

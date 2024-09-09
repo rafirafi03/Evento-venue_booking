@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase } from "../../useCases/index";
+import { HttpStatusCode } from "../../constants";
 
 export class UserController {
   constructor(
@@ -35,7 +36,7 @@ export class UserController {
         password,
       });
 
-      res.status(200).json(response);
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
     }
@@ -49,9 +50,12 @@ export class UserController {
         email, password
       )
 
-      res.status(200).json(response)
+      res.status(HttpStatusCode.OK).json(response)
     } catch (error) {
       console.log(error)
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: 'Login failed. Invalid email or password.',
+      });
     }
   }
 }

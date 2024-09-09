@@ -14,11 +14,11 @@ export class UserLoginUseCase {
       const secretKey = process.env.JWTSECRETKEY as string;
 
       const user = await this._userRepository.findByEmail(email);
+      
 
       if (user) {
-        const hashedPass = await hashPass(password);
 
-        const pass = bcrypt.compare(hashedPass, user.password);
+        const pass = await bcrypt.compare(password, user.password);
 
         if (!pass) {
           throw new Error("password doesnt match");

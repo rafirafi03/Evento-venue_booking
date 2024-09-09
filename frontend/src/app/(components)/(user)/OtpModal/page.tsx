@@ -102,14 +102,14 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
 
                     <div className="flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
                       {isTimerActive ? (
-                        <p>{timer} seconds remaining</p> // Show timer while active
+                        <p>{timer} seconds remaining</p> 
                       ) : (
                         <>
                         <br />
                         <p>Didn't receive code?</p>
                         <button
                           className="flex flex-row items-center text-blue-600"
-                          onClick={handleResendOTP} // Resend OTP when timer expires
+                          onClick={handleResendOTP} 
                         >
                           Resend
                         </button>

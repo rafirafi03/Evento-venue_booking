@@ -1,11 +1,12 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import {
   FaLock,
   FaUserAlt,
+  FaEnvelope,
+  FaPhone,
   FaGoogle,
-  FaApple,
   FaFacebook,
 } from "react-icons/fa";
 import Header from "../../login-header/header";
@@ -19,7 +20,6 @@ import {
 } from "@/app/store/slices/userApiSlices";
 
 const Page = () => {
-
   const router = useRouter();
 
   const [registerUser] = useRegisterPostMutation();
@@ -31,50 +31,98 @@ const Page = () => {
   const [password, setPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
 
+  const [nameError, setNameError] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [phoneError, setPhoneError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
+  const [confirmPassError, setConfirmPassError] = useState<string>("");
+
+  const [error, setError] = useState<string>("");
+
   const [modal, setModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
-  const [error, setError] = useState("");
-
-  // Email validation regex
   const validateEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    const re = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const isDisabled =
+    emailError !== "" ||
+    passwordError !== "" ||
+    email === "" ||
+    password === "" ||
+    error !== "";
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setError("");
+
+    if (name == "name") {
+      setUserName(value);
+
+      if (value.trim() == "") {
+        setNameError("username required");
+      } else if (value.length < 4) {
+        setNameError("min 4 characters required");
+      } else {
+        setNameError("");
+      }
+    } else if (name == "email") {
+      setEmail(value);
+
+      if (!validateEmail(value)) {
+        setEmailError("Invalid email address");
+      } else {
+        setEmailError("");
+      }
+    } else if (name == "phone") {
+      setPhone(value);
+
+      if (value.trim() == "") {
+        setPhoneError("phone required");
+      } else if (value.length < 10) {
+        setPhoneError("invalid phone number");
+      } else {
+        setPhoneError("");
+      }
+    } else if (name == "password") {
+      setPass(value);
+
+      if (value.trim() == "") {
+        setPasswordError("password required");
+      } else if (value.length < 6) {
+        setPasswordError("Password must be 6 characters");
+      } else if (value !== confirmPass) {
+        setPasswordError("not matchcing");
+      } else {
+        setPasswordError("");
+        setConfirmPassError("");
+      }
+    } else if (name == "confirmPass") {
+      setConfirmPass(value);
+      if (password !== value) {
+        setConfirmPassError("password not matching");
+      } else {
+        setConfirmPassError("");
+        setPasswordError("");
+      }
+    }
   };
 
   const handleSubmit = async () => {
-    // Validation logic
-    if (!userName) {
-      setError("User name is required");
-      return;
-    }
-    if (!email || !validateEmail(email)) {
-      setError("Please enter a valid email address");
-      return;
-    }
-    if (!phone || phone.length < 10) {
-      setError("Please enter a valid phone number");
-      return;
-    }
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
-      return;
-    }
-    if (password !== confirmPass) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    setError(""); // Clear any existing errors
-
     setLoading(true);
     try {
       const res = await registerUser({ email }).unwrap();
       setLoading(false);
-      if (res) {
+      if (res.success) {
         setModal(true);
+      } else if(!res.success) {
+        setError('user email already exists')
       }
     } catch (err) {
+      console.log(err);
       setLoading(false);
       setError("Registration failed. Please try again.");
     }
@@ -92,8 +140,8 @@ const Page = () => {
 
       if (res.success) {
         const token = res.token;
-        localStorage.setItem('authToken', token);
-        router.push('/');
+        localStorage.setItem("authToken", token);
+        router.push("/");
       }
     } catch (error) {
       setError("OTP verification failed. Please try again.");
@@ -101,7 +149,7 @@ const Page = () => {
   };
 
   const handleOnClick = () => {
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
@@ -131,67 +179,161 @@ const Page = () => {
                     <h4 className="text-xl font-sans font-bold mb-6 text-center text-gray-800">
                       Register your account
                     </h4>
+                    {error && (
+                      <p className="text-center mb-2 text-[rgb(255,0,0)] font-sans font-bold dark:text-[rgb(255,0,0)]">
+                        {" "}
+                        {error}
+                      </p>
+                    )}
                     <div className="mb-4 relative">
-                      <FaUserAlt className="absolute left-3 top-3 text-gray-400" />
+                      <FaUserAlt
+                        className={`${
+                          nameError
+                            ? "absolute left-3 top-2 text-[rgb(255,0,0)]"
+                            : "absolute left-3 top-2 text-gray-400"
+                        }`}
+                      />
                       <input
-                        className="pl-10 pr-4 py-2 rounded-lg font-light shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
+                        className={`${
+                          nameError
+                            ? "pl-10 pr-4 py-2 rounded-lg text-xs shadow-sm border border-[rgb(255,0,0)] text-[rgb(255,0,0)] placeholder-[rgb(255,0,0)] font-bold focus:outline-none focus:border-[rgb(255,0,0)] w-full"
+                            : "pl-10 pr-4 py-2 rounded-lg font-bold text-xs shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
+                        }`}
                         id="userName"
                         type="text"
-                        placeholder="Enter your userName"
+                        name="name"
+                        placeholder="Enter your user name"
                         value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
+                        onChange={handleChange}
                       />
+                      {nameError && (
+                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                          {" "}
+                          {nameError}
+                        </p>
+                      )}
                     </div>
                     <div className="mb-4 relative">
-                      <FaUserAlt className="absolute left-3 top-3 text-gray-400" />
+                      <FaEnvelope
+                        className={`${
+                          emailError
+                            ? "absolute left-3 top-2 text-[rgb(255,0,0)]"
+                            : "absolute left-3 top-2 text-gray-400"
+                        }`}
+                      />
                       <input
-                        className="pl-10 pr-4 py-2 rounded-lg font-light shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
+                        className={`${
+                          emailError
+                            ? "pl-10 pr-4 py-2 rounded-lg text-xs shadow-sm border border-[rgb(255,0,0)] text-[rgb(255,0,0)] placeholder-[rgb(255,0,0)] font-bold focus:outline-none focus:border-[rgb(255,0,0)] w-full"
+                            : "pl-10 pr-4 py-2 rounded-lg font-bold text-xs shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
+                        }`}
                         id="email"
                         type="email"
+                        name="email"
                         placeholder="Enter your email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleChange}
                       />
+                      {emailError && (
+                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                          {" "}
+                          {emailError}
+                        </p>
+                      )}
                     </div>
                     <div className="mb-4 relative">
-                      <FaUserAlt className="absolute left-3 top-3 text-gray-400" />
+                      <FaPhone
+                        className={`${
+                          phoneError
+                            ? "absolute left-3 top-2 text-[rgb(255,0,0)]"
+                            : "absolute left-3 top-2 text-gray-400"
+                        }`}
+                      />
                       <input
-                        className="pl-10 pr-4 py-2 rounded-lg font-light shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
+                        className={`${
+                          phoneError
+                            ? "pl-10 pr-4 py-2 rounded-lg text-xs shadow-sm border border-[rgb(255,0,0)] text-[rgb(255,0,0)] placeholder-[rgb(255,0,0)] font-bold focus:outline-none focus:border-[rgb(255,0,0)] w-full"
+                            : "pl-10 pr-4 py-2 rounded-lg font-bold text-xs shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
+                        }`}
                         id="phone"
                         type="number"
+                        name="phone"
                         placeholder="Enter your phone"
                         value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
+                        onChange={handleChange}
                       />
+                      {phoneError && (
+                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                          {" "}
+                          {phoneError}
+                        </p>
+                      )}
                     </div>
-                    <div className="mb-6 relative">
-                      <FaLock className="absolute left-3 top-3 text-gray-400" />
+                    <div className="mb-4 relative">
+                      <FaLock
+                        className={`${
+                          passwordError
+                            ? "absolute left-3 top-2 text-[rgb(255,0,0)]"
+                            : "absolute left-3 top-2 text-gray-400"
+                        }`}
+                      />
                       <input
-                        className="pl-10 pr-4 py-2 rounded-lg shadow-sm border font-light focus:outline-none focus:border-indigo-500 w-full"
+                        className={`${
+                          passwordError
+                            ? "pl-10 pr-4 py-2 rounded-lg text-xs shadow-sm border border-[rgb(255,0,0)] text-[rgb(255,0,0)] placeholder-[rgb(255,0,0)] font-bold focus:outline-none focus:border-[rgb(255,0,0)] w-full"
+                            : "pl-10 pr-4 py-2 rounded-lg font-bold text-xs shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
+                        }`}
                         id="password"
                         type="password"
+                        name="password"
                         placeholder="Enter your password"
                         value={password}
-                        onChange={(e) => setPass(e.target.value)}
+                        onChange={handleChange}
                       />
+                      {passwordError && (
+                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                          {" "}
+                          {passwordError}
+                        </p>
+                      )}
                     </div>
                     <div className="mb-6 relative">
-                      <FaLock className="absolute left-3 top-3 text-gray-400" />
+                      <FaLock
+                        className={`${
+                          confirmPassError
+                            ? "absolute left-3 top-2 text-[rgb(255,0,0)]"
+                            : "absolute left-3 top-2 text-gray-400"
+                        }`}
+                      />
                       <input
-                        className="pl-10 pr-4 py-2 rounded-lg font-light shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
+                        className={`${
+                          confirmPassError
+                            ? "pl-10 pr-4 py-2 rounded-lg text-xs shadow-sm border border-[rgb(255,0,0)] text-[rgb(255,0,0)] placeholder-[rgb(255,0,0)] font-bold focus:outline-none focus:border-[rgb(255,0,0)] w-full"
+                            : "pl-10 pr-4 py-2 rounded-lg font-bold text-xs shadow-sm border focus:outline-none focus:border-indigo-500 w-full"
+                        }`}
                         id="confirmPassword"
                         type="password"
+                        name="confirmPass"
                         placeholder="Confirm password"
                         value={confirmPass}
-                        onChange={(e) => setConfirmPass(e.target.value)}
+                        onChange={handleChange}
                       />
+                      {confirmPassError && (
+                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                          {" "}
+                          {confirmPassError}
+                        </p>
+                      )}
                     </div>
-                    <div className="text-red-600 text-xs mb-4 text-center">{error}</div>
+
                     <div className="flex items-center justify-between">
                       <button
                         onClick={handleSubmit}
+                        disabled={isDisabled}
                         type="button"
-                        className="bg-[rgba(255,0,0)] hover:bg-black text-white font-bold py-2 w-full px-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105"
+                        className={`bg-[rgba(255,0,0)] hover:bg-black text-white font-bold py-2 w-full px-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105" ${
+                          isDisabled ? "opacity-50 cursor-not-allowed" : ""
+                        }`}
                       >
                         Sign up
                       </button>
@@ -203,7 +345,8 @@ const Page = () => {
                           onClick={handleOnClick}
                           className="text-[rgb(255,0,0)] font-bold cursor-pointer"
                         >
-                          {" "} Log in
+                          {" "}
+                          Log in
                         </span>
                       </p>
                     </div>
