@@ -38,6 +38,7 @@ const Page = () => {
   const [confirmPassError, setConfirmPassError] = useState<string>("");
 
   const [error, setError] = useState<string>("");
+  const [otpError, setOtpError] = useState<string>("")
 
   const [modal, setModal] = useState(false);
   const [isLoading, setLoading] = useState(false);
@@ -142,6 +143,8 @@ const Page = () => {
         const token = res.token;
         localStorage.setItem("authToken", token);
         router.push("/");
+      } else {
+        setOtpError('Invalid otp')
       }
     } catch (error) {
       setError("OTP verification failed. Please try again.");
@@ -155,7 +158,7 @@ const Page = () => {
   return (
     <div>
       {modal ? (
-        <OtpModal email={email} handleOtp={handleOtp} />
+        <OtpModal email={email} handleOtp={handleOtp} otpError={otpError} clearError={() => setOtpError("")} />
       ) : (
         <>
           {isLoading ? (

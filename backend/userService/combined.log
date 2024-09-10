@@ -112,3 +112,5 @@
 2024-09-10T12:23:46.926Z [INFO]: server is running on http://localhost:4000
 2024-09-10T12:24:05.799Z [INFO]: ::1 - - [10/Sep/2024:12:24:05 +0000] "POST /api/user/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
 2024-09-10T12:25:10.562Z [INFO]: ::1 - - [10/Sep/2024:12:25:10 +0000] "POST /api/user/resend-otp HTTP/1.1" 404 159 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T12:26:08.447Z [INFO]: server is running on http://localhost:4000
+2024-09-10T12:26:50.120Z [INFO]: ::1 - - [10/Sep/2024:12:26:50 +0000] "POST /api/user/resend-otp HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"

@@ -14,7 +14,7 @@ export class VerifyOtpUsecase {
     private _userRepository: IUserRepository
   ) {}
 
-  async execute({ otp, userName, email, phone, password }: IOtpData): Promise<{success: boolean; token: string}> {
+  async execute({ otp, userName, email, phone, password }: IOtpData): Promise<{success: boolean; token?: string; error?: string}> {
 
     try {
       
@@ -27,7 +27,7 @@ export class VerifyOtpUsecase {
       const userOtp = await this._verifyOtpRepository.getOTP(email);
   
       if (userOtp !== otp) {
-        throw new Error("Invalid otp not matching");
+        return { success: false, error: 'Invalid otp'}
       }
   
       await this._verifyOtpRepository.deleteOTP(email);

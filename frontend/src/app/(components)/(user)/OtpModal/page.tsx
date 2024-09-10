@@ -4,9 +4,11 @@ import { useResendOtpMutation } from '@/app/store/slices/userApiSlices';
 interface PageProps {
   email: string;
   handleOtp: (event: React.FormEvent<Element>,otp: string) => void;
+  otpError: string;
+  clearError: ()=> void;
 }
 
-const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
+const Page: React.FC<PageProps> = ({ email, handleOtp, otpError, clearError }) => {
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [inputValues, setInputValues] = useState<string[]>(Array(4).fill(''));
   const [timer, setTimer] = useState<number>(60); 
@@ -31,6 +33,8 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
   const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
+    clearError()
+
     setInputValues((prev) => {
       const newValues = [...prev];
       newValues[index] = value; 
@@ -46,6 +50,8 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
         inputRefs.current[index - 1].focus(); 
       }
     }
+
+    
   };
 
   const handleResendOTP = async () => {
@@ -61,7 +67,7 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    
     const otp = inputValues.join('')
     handleOtp(e,otp)
   }
@@ -81,6 +87,9 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
                 ) : (
                   <p>oopsss. time over</p>
                 )}
+              </div>
+              <div className=" text-sm font-medium text-gray-400">
+                {otpError && <p className='text-[rgb(255,0,0)]'>{otpError}</p>}
               </div>
             </div>
 
