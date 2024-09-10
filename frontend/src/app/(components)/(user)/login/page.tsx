@@ -61,6 +61,8 @@ const Page = () => {
       const res = await loginMutation({ email, password }).unwrap();
 
       if (res.success) {
+        const token = res.token;
+        localStorage.setItem('authToken', token)
         router.push("/");
       }
     } catch (error) {

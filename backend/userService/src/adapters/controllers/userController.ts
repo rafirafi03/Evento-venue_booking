@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase } from "../../useCases/index";
 import { HttpStatusCode } from "../../constants";
+import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
 
 export class UserController {
   constructor(
     private _signupUseCase: SignupUseCase,
     private _verifyOtpUsecase: VerifyOtpUsecase,
-    private _userLoginUseCase : UserLoginUseCase
+    private _userLoginUseCase : UserLoginUseCase,
+    private _resendOtpUseCase : ResendOtpUseCase
   ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
@@ -40,6 +42,26 @@ export class UserController {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async resendOtp(
+    req: Request,
+    res: Response
+  ) : Promise<void> {
+    
+    try {
+      const { email } = req.body;
+      
+      const response = await this._resendOtpUseCase.execute(email)
+
+      res.status(HttpStatusCode.OK).json(response)
+
+    } catch (error) {
+      console.log(error);
+      throw new Error('error'+error)
+    }
+
+
   }
 
   async login( req: Request, res: Response) : Promise<void> {

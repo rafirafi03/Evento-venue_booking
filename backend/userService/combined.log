@@ -94,3 +94,21 @@
 2024-09-09T16:13:42.869Z [INFO]: ::1 - - [09/Sep/2024:16:13:42 +0000] "POST /api/user/register HTTP/1.1" 200 17 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
 2024-09-09T16:14:02.446Z [INFO]: server is running on http://localhost:4000
 2024-09-09T16:14:16.822Z [INFO]: ::1 - - [09/Sep/2024:16:14:16 +0000] "POST /api/user/register HTTP/1.1" 200 17 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-09T16:14:37.351Z [INFO]: server is running on http://localhost:4000
+2024-09-09T16:15:31.217Z [INFO]: ::1 - - [09/Sep/2024:16:15:31 +0000] "POST /api/user/register HTTP/1.1" 200 17 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-09T16:16:38.521Z [INFO]: ::1 - - [09/Sep/2024:16:16:38 +0000] "POST /api/user/login HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-09T16:16:51.009Z [INFO]: ::1 - - [09/Sep/2024:16:16:51 +0000] "POST /api/user/login HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T05:53:36.373Z [INFO]: server is running on http://localhost:4000
+2024-09-10T06:13:17.305Z [INFO]: ::1 - - [10/Sep/2024:06:13:17 +0000] "POST /api/user/login HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T06:16:09.547Z [INFO]: ::1 - - [10/Sep/2024:06:16:09 +0000] "POST /api/user/login HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T06:16:17.628Z [INFO]: ::1 - - [10/Sep/2024:06:16:17 +0000] "POST /api/user/login HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T07:04:59.688Z [INFO]: ::1 - - [10/Sep/2024:07:04:59 +0000] "POST /api/user/register HTTP/1.1" 200 17 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T07:05:26.217Z [INFO]: ::1 - - [10/Sep/2024:07:05:26 +0000] "POST /api/user/register HTTP/1.1" 200 17 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T10:18:32.165Z [INFO]: server is running on http://localhost:4000
+2024-09-10T12:15:53.663Z [INFO]: ::1 - - [10/Sep/2024:12:15:53 +0000] "POST /api/user/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T12:20:59.861Z [INFO]: server is running on http://localhost:4000
+2024-09-10T12:21:55.927Z [INFO]: ::1 - - [10/Sep/2024:12:21:55 +0000] "POST /api/user/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T12:23:12.097Z [INFO]: ::1 - - [10/Sep/2024:12:23:12 +0000] "POST /api/user/resend-otp HTTP/1.1" 404 159 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T12:23:46.926Z [INFO]: server is running on http://localhost:4000
+2024-09-10T12:24:05.799Z [INFO]: ::1 - - [10/Sep/2024:12:24:05 +0000] "POST /api/user/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-10T12:25:10.562Z [INFO]: ::1 - - [10/Sep/2024:12:25:10 +0000] "POST /api/user/resend-otp HTTP/1.1" 404 159 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"

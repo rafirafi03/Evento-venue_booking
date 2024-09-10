@@ -23,6 +23,11 @@ export default function Page() {
     }
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken')
+    setToken(false)
+  }
+
   return (
     <>
       <nav className="bg-white fixed w-full z-20 top-0 start-0 border-b border-gray-200">
@@ -47,12 +52,20 @@ export default function Page() {
           </a>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           {isToken ? (
+            <>
         <p
           
           className="text-black cursor-pointer focus:ring-4 focus:outline-none font-bold rounded-full text-base px-3 py-2 text-center hover:text-[rgb(255,0,0)]"
         >
           Profile
         </p>
+        <p
+          onClick={handleLogout}
+        className="text-black cursor-pointer focus:ring-4 focus:outline-none font-bold rounded-full text-base px-3 py-2 text-center hover:text-[rgb(255,0,0)]"
+      >
+        logout
+      </p>
+      </>
       ) : (
         <p
           onClick={() => handleOnClick('login')}

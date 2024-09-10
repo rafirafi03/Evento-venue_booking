@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useResendOtpMutation } from '@/app/store/slices/userApiSlices';
 
 interface PageProps {
   email: string;
@@ -10,6 +11,8 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
   const [inputValues, setInputValues] = useState<string[]>(Array(4).fill(''));
   const [timer, setTimer] = useState<number>(60); 
   const [isTimerActive, setIsTimerActive] = useState<boolean>(true);
+
+  const [resendOtp] = useResendOtpMutation()
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -45,10 +48,15 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
     }
   };
 
-  const handleResendOTP = () => {
+  const handleResendOTP = async () => {
     setTimer(60);
     setIsTimerActive(true);
     setInputValues(Array(4).fill(''));
+
+    const res = await resendOtp({email}).unwrap();
+
+    console.log(res);
+    
     console.log('OTP resent to:', email);
   };
 

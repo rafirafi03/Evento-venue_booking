@@ -4,6 +4,7 @@ import { AdminLoginUseCase, GetUsersUseCase, SignupUseCase, UserLoginUseCase, Ve
 import { UserRepository, RedisClient } from "../../repositories";
 import { otpService } from "../services";
 import { AdminRepository } from "../../repositories/implementation/adminRepository";
+import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
 
 const userRepository = new UserRepository();
 const adminRepository = new AdminRepository()
@@ -24,7 +25,9 @@ const userLoginUseCase = new UserLoginUseCase(userRepository)
 
 const verifyOtpUsecase = new VerifyOtpUsecase(redisRepository, userRepository);
 
-const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase);
+const resendOtpUseCase = new ResendOtpUseCase(otpRepository, redisRepository)
+
+const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase);
 
 const adminController = new AdminController(adminLoginUseCase, getUsersUseCase)
 
@@ -37,6 +40,10 @@ router.post("/register", (req, res) => {
 router.post("/verify-otp", (req, res) => {
   userController.verifyOtp(req, res);
 });
+
+router.post('/resend-otp', (req,res) => {
+  userController.resendOtp(req,res)
+})
 
 router.post('/login', (req,res) => {
   userController.login(req,res);
