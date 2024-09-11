@@ -14,3 +14,40 @@
 2024-09-11T14:58:35.861Z [INFO]: server is running on http://localhost:4001
 2024-09-11T14:58:43.514Z [INFO]: server is running on http://localhost:4001
 2024-09-11T14:58:57.144Z [INFO]: server is running on http://localhost:4001
+2024-09-11T18:17:42.510Z [INFO]: server is running on http://localhost:4001
+2024-09-11T18:22:42.464Z [INFO]: ::1 - - [11/Sep/2024:18:22:42 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T18:35:05.158Z [INFO]: server is running on http://localhost:4001
+2024-09-11T18:35:49.996Z [INFO]: ::1 - - [11/Sep/2024:18:35:49 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T18:43:46.313Z [INFO]: ::1 - - [11/Sep/2024:18:43:46 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T18:47:11.455Z [INFO]: server is running on http://localhost:4001
+2024-09-11T18:48:01.429Z [INFO]: ::1 - - [11/Sep/2024:18:48:01 +0000] "POST /api/company/resendOtp HTTP/1.1" 404 161 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T18:51:27.429Z [INFO]: ::1 - - [11/Sep/2024:18:51:27 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T18:53:48.468Z [INFO]: server is running on http://localhost:4001
+2024-09-11T18:54:14.260Z [INFO]: server is running on http://localhost:4001
+2024-09-11T18:57:07.057Z [INFO]: server is running on http://localhost:4001
+2024-09-11T18:58:28.911Z [INFO]: server is running on http://localhost:4001
+2024-09-11T18:59:19.206Z [INFO]: ::1 - - [11/Sep/2024:18:59:19 +0000] "POST /api/company/resendOtp HTTP/1.1" 404 161 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T18:59:58.312Z [INFO]: ::1 - - [11/Sep/2024:18:59:58 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:00:07.051Z [INFO]: ::1 - - [11/Sep/2024:19:00:07 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 39 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:09:16.099Z [INFO]: ::1 - - [11/Sep/2024:19:09:16 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:09:36.038Z [INFO]: ::1 - - [11/Sep/2024:19:09:36 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 39 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:11:13.467Z [INFO]: server is running on http://localhost:4001
+2024-09-11T19:12:34.487Z [INFO]: server is running on http://localhost:4001
+2024-09-11T19:13:03.261Z [INFO]: ::1 - - [11/Sep/2024:19:13:03 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:13:11.691Z [INFO]: ::1 - - [11/Sep/2024:19:13:11 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 39 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:15:59.121Z [INFO]: server is running on http://localhost:4001
+2024-09-11T19:16:35.864Z [INFO]: ::1 - - [11/Sep/2024:19:16:35 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:16:41.460Z [INFO]: ::1 - - [11/Sep/2024:19:16:41 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 39 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:23:06.164Z [INFO]: server is running on http://localhost:4001
+2024-09-11T19:24:49.540Z [INFO]: ::1 - - [11/Sep/2024:19:24:49 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:24:55.551Z [INFO]: ::1 - - [11/Sep/2024:19:24:55 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 39 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:31:55.351Z [INFO]: ::1 - - [11/Sep/2024:19:31:55 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:32:08.726Z [INFO]: ::1 - - [11/Sep/2024:19:32:08 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:36:38.173Z [INFO]: server is running on http://localhost:4001
+2024-09-11T19:38:10.277Z [INFO]: server is running on http://localhost:4001
+2024-09-11T19:38:29.414Z [INFO]: ::1 - - [11/Sep/2024:19:38:29 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:38:38.094Z [INFO]: ::1 - - [11/Sep/2024:19:38:38 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 39 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:39:37.275Z [INFO]: ::1 - - [11/Sep/2024:19:39:37 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:39:44.418Z [INFO]: ::1 - - [11/Sep/2024:19:39:44 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T19:54:20.581Z [INFO]: server is running on http://localhost:4001
+2024-09-11T20:11:07.611Z [INFO]: server is running on http://localhost:4001

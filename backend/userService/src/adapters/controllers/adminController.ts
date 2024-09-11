@@ -33,6 +33,16 @@ export class AdminController {
         }
     }
 
+    // async getCompanies(req: Request, res: Response) : Promise<any> {
+    //     try {
+    //         const companies = await this._getCompaniesUseCase.execute()
+    //         res.status(HttpStatusCode.OK).json({companies})
+    //     } catch (error) {
+    //         console.log(error)
+    //         res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({message: 'Internal error'})
+    //     }
+    // }
+
     async blockUser(req: Request, res: Response) : Promise<void> {
         const {id} = req.body;
 

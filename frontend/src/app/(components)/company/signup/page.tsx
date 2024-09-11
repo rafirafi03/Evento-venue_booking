@@ -31,6 +31,7 @@ const Page = () => {
   // const [licenseError, setLicenseError] = useState<string>("");
 
   const [error, setError] = useState<string>("");
+  const [otpError, setOtpError] = useState<string>("")
 
   const router = useRouter();
 
@@ -114,13 +115,13 @@ const Page = () => {
     }
   };
 
-  // const [license, setlicense] = useState<File | null>(null);
+  const [license, setlicense] = useState<File | null>(null);
 
-  // const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setLicenseError('')
-  //   const file = event.target.files ? event.target.files[0] : null;
-  //   setlicense(file);
-  // };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // setLicenseError('')
+    const file = event.target.files ? event.target.files[0] : null;
+    setlicense(file);
+  };
 
   const handleSubmit = async () => {
     try {
@@ -163,6 +164,7 @@ const Page = () => {
   
 
   const handleOtp = async (event: React.FormEvent, otp: string) => {
+    event.preventDefault()
     try {
       console.log("hiiiiii");
       const res = await confirmOtp({
@@ -176,12 +178,16 @@ const Page = () => {
 
       console.log(res, "resssfrntend");
 
-      if (res.success) {
+      if (!res.success) {
+        console.log('elsecase')
+        setOtpError('Invalid otp')
+        
+      } else {
         console.log("ressuccessssss");
         const token = res.token;
         localStorage.setItem("authToken", token);
         setModal(false);
-        router.push("/");
+        router.push("/company/signup");
       }
     } catch (error) {
       console.log(error);
@@ -192,7 +198,7 @@ const Page = () => {
   return (
     <div>
       {modal ? (
-        <OtpModal email={email} handleOtp={handleOtp} />
+        <OtpModal email={email} handleOtp={handleOtp} otpError={otpError} clearError={() => setOtpError("")}/>
       ) : (
         <>
           {loading ? (

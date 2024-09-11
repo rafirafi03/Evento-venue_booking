@@ -147,6 +147,7 @@ const Page = () => {
         setOtpError('Invalid otp')
       }
     } catch (error) {
+      console.log(error)
       setError("OTP verification failed. Please try again.");
     }
   };

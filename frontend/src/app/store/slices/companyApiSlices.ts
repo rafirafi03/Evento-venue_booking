@@ -22,11 +22,24 @@ export const companyApiSlice = createApi({
                 method: HttpMethod.POST,
                 body: postData
             })
+        }),
+        resendOtp : builder.mutation({
+            query: (postData) => ({
+                url: '/resendOtp', 
+                method: HttpMethod.POST,
+                body: postData
+            })
+        }),
+        getCompanies : builder.query({
+            query: () => ({
+                url: '/getCompanies',
+            })
         })
     })
 })
 
 export const {
     useRegisterPostMutation,
-    useConfirmOtpMutation
+    useConfirmOtpMutation,
+    useResendOtpMutation
 } = companyApiSlice

@@ -1,15 +1,20 @@
+import { useResendOtpMutation } from '@/app/store/slices/companyApiSlices';
 import React, { useRef, useState, useEffect } from 'react';
 
 interface PageProps {
   email: string;
   handleOtp: (event: React.FormEvent<Element>,otp: string) => void;
+  otpError: string;
+  clearError: () => void
 }
 
-const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
+const Page: React.FC<PageProps> = ({ email, handleOtp, otpError, clearError }) => {
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [inputValues, setInputValues] = useState<string[]>(Array(4).fill(''));
   const [timer, setTimer] = useState<number>(60); 
   const [isTimerActive, setIsTimerActive] = useState<boolean>(true);
+
+  const [resendOtp] = useResendOtpMutation()
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -26,7 +31,10 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
   }, [isTimerActive, timer]);
 
   const handleInputChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
+
     const value = event.target.value;
+
+    clearError()
 
     setInputValues((prev) => {
       const newValues = [...prev];
@@ -45,10 +53,15 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
     }
   };
 
-  const handleResendOTP = () => {
+  const handleResendOTP = async () => {
     setTimer(60);
     setIsTimerActive(true);
     setInputValues(Array(4).fill(''));
+
+    const res = await resendOtp({email}).unwrap();
+
+    console.log(res);
+    
     console.log('OTP resent to:', email);
   };
 
@@ -73,6 +86,9 @@ const Page: React.FC<PageProps> = ({ email, handleOtp }) => {
                 ) : (
                   <p>oopsss. time over</p>
                 )}
+              </div>
+              <div className=" text-sm font-medium text-gray-400">
+                {otpError && <p className='text-[rgb(255,0,0)]'>{otpError}</p>}
               </div>
             </div>
 

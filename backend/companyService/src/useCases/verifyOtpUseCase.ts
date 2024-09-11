@@ -14,7 +14,7 @@ interface data {
   phone: number;
   country: string;
   password: string;
-  license: File;
+  license?: File;
 }
 
 export class VerifyOtpUsecase {
@@ -30,7 +30,7 @@ export class VerifyOtpUsecase {
     phone,
     country,
     password,
-  }: data): Promise<{ success: boolean; token: string }> {
+  }: data): Promise<{ success: boolean; token?: string, error?: string }> {
     try {
       const secretKey = process.env.JWTSECRETKEY as string;
 
@@ -41,7 +41,7 @@ export class VerifyOtpUsecase {
       const companyOtp = await this._verifyOtpRepository.getOTP(email);
 
       if (companyOtp !== otp) {
-        throw new Error("Invalid otp not matching");
+        return { success: false, error: "Invalid Otp"}
       }
 
       await this._verifyOtpRepository.deleteOTP(email);
