@@ -13,40 +13,37 @@ export class AdminLoginUseCase {
         private _userRepository : IUserRepository
     ) {}
 
-    async execute (email: string, password:string) : Promise<ILoginResponse | null> {
-
+    async execute(email: string, password: string): Promise<ILoginResponse | null> {
         try {
-            const secretKey = process.env.JWTSECRETKEY as string
-
+            const secretKey = process.env.JWTSECRETKEY as string;
+    
             const user = await this._userRepository.findByEmail(email);
-            
-            if(user?.isVerified) {
     
-                console.log(user,"bcknduser")
+            if (!user) {
+                return { success: false, error: 'Invalid email' };
+            }
     
-                const hashedPass = await hashPass(password);
+            if (!user.isVerified) {
+                return { success: false, error: 'User is not verified' };
+            }
     
-                const pass = bcrypt.compare(hashedPass, password)
+            const pass = await bcrypt.compare(password, user.password);
     
-                if(!pass) {
-                    throw new Error('password doesnt match')
-                } else {
-                    const tokenservice = new TokenService(secretKey)
+            if (!pass) {
+                return { success: false, error: 'Incorrect password' };
+            }
     
-                    const token = tokenservice.generateToken({userId: user._id as string, email: user.email})
+            const tokenService = new TokenService(secretKey);
+            const token = tokenService.generateToken({
+                userId: user._id as string,
+                email: user.email
+            });
     
-                    return {success: true, token}
-                }
-    
-            } 
-
-            return null
+            return { success: true, token };
         } catch (error) {
-            console.log(error)
-
-            throw new Error('new Error'+error)
+            console.log(error);
+            throw new Error('Error: ' + error);
         }
-        
-        
     }
+    
 }

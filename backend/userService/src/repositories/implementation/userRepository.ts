@@ -14,6 +14,14 @@ export class UserRepository implements IUserRepository {
         }
     }
 
+    async findById(id: string): Promise<IUser | null> {
+        try {
+            return await userModel.findById(id)
+        } catch (error) {
+            throw new Error('error in DB'+ error)
+        }
+    }
+
     async save(user:User): Promise<IUserData> {
         try {
             const newUser = new userModel(user);
@@ -23,4 +31,23 @@ export class UserRepository implements IUserRepository {
             throw new Error('Error' + error)
         }
     }
+
+    async updateUser(email: string, updatedData: Partial<IUser>): Promise<IUser | null> {
+        try {
+            const updatedUser = await userModel.findOneAndUpdate(
+                { email }, 
+                { $set: updatedData }, 
+                { new: true, runValidators: true } 
+            );
+            
+            if (!updatedUser) {
+                return null; 
+            }
+    
+            return updatedUser;
+        } catch (error) {
+            throw new Error('Error updating user: ' + error);
+        }
+    }
+    
 }

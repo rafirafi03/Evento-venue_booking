@@ -1,6 +1,7 @@
 export interface ILoginResponse {
   success: boolean;
-  token: string;
+  token?: string;
+  error?: string;
 }
 
 export interface IOtpData {

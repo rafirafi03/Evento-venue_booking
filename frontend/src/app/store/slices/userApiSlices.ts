@@ -48,6 +48,13 @@ export const userApiSlice = createApi({
             query:() => ({
                 url: '/get-users',
             })
+        }),
+        blockUser: builder.mutation({
+            query:(postData) => ({
+                url: '/blockUser',
+                method: HttpMethod.POST,
+                body: postData
+            })
         })
     })
 })
@@ -58,5 +65,6 @@ export const {
     useVerifyOtpMutation,
     useResendOtpMutation,
     useAdminLoginMutation,
-    useGetUsersQuery
+    useGetUsersQuery,
+    useBlockUserMutation
 } = userApiSlice;

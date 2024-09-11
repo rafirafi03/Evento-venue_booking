@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { RegisterUseCase } from "../../useCases/index";
 import { VerifyOtpUsecase } from "../../useCases/verifyOtpUseCase";
 
+
 export class CompanyController {
   constructor(
     private _registerUseCase : RegisterUseCase,
@@ -26,6 +27,8 @@ export class CompanyController {
 
   async confirmOtp(req: Request, res: Response): Promise<void> {
     const {otp, name, email, phone, country, password} = req.body;
+
+    // const {license} = req.file;
 
     try {
       const response = await this._verifyOtpUseCase.execute({

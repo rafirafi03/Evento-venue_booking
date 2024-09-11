@@ -3,3 +3,14 @@
 2024-09-09T16:00:24.398Z [INFO]: server is running on http://localhost:4001
 2024-09-10T05:54:06.095Z [INFO]: server is running on http://localhost:4001
 2024-09-10T12:16:46.947Z [INFO]: server is running on http://localhost:4001
+2024-09-10T15:19:27.857Z [INFO]: server is running on http://localhost:4001
+2024-09-11T04:31:24.683Z [INFO]: server is running on http://localhost:4001
+2024-09-11T14:51:51.337Z [INFO]: server is running on http://localhost:4001
+2024-09-11T14:53:56.434Z [INFO]: server is running on http://localhost:4001
+2024-09-11T14:54:28.484Z [INFO]: ::1 - - [11/Sep/2024:14:54:28 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T14:55:00.930Z [INFO]: ::1 - - [11/Sep/2024:14:55:00 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-11T14:57:44.721Z [INFO]: server is running on http://localhost:4001
+2024-09-11T14:58:26.552Z [INFO]: server is running on http://localhost:4001
+2024-09-11T14:58:35.861Z [INFO]: server is running on http://localhost:4001
+2024-09-11T14:58:43.514Z [INFO]: server is running on http://localhost:4001
+2024-09-11T14:58:57.144Z [INFO]: server is running on http://localhost:4001

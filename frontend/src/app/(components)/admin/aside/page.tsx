@@ -13,7 +13,7 @@ export default function page({ handleLogout, changePage, page }: any) {
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-white">
           <ul className="space-y-5 ml-2 font-medium">
             <li className="cursor-pointer" onClick={() => changePage('dashboard')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'dashboard' ? 'bg-red-200' : ""}`}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${page == 'dashboard' ? 'bg-red-300' : ""}`}>
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900"
                   aria-hidden="true"
@@ -45,7 +45,7 @@ export default function page({ handleLogout, changePage, page }: any) {
             </li>
             
             <li className="cursor-pointer" onClick={() => changePage('users')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'users' ? 'bg-red-200' : ""}`}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'users' ? 'bg-red-300' : ""}`}>
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900 "
                   aria-hidden="true"
@@ -74,7 +74,7 @@ export default function page({ handleLogout, changePage, page }: any) {
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">
                   Inbox
                 </span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm text-white bg-blue-100 rounded-full font-bold dark:bg-black dark:text-white">
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm text-white bg-red-300 rounded-full font-bold dark:bg-black dark:text-white">
                   3
                 </span>
               </a>

@@ -5,6 +5,7 @@ import { UserRepository, RedisClient } from "../../repositories";
 import { otpService } from "../services";
 import { AdminRepository } from "../../repositories/implementation/adminRepository";
 import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
+import { BlockUserUseCase } from "../../useCases/blockUserUseCase";
 
 const userRepository = new UserRepository();
 const adminRepository = new AdminRepository()
@@ -27,9 +28,11 @@ const verifyOtpUsecase = new VerifyOtpUsecase(redisRepository, userRepository);
 
 const resendOtpUseCase = new ResendOtpUseCase(otpRepository, redisRepository)
 
+const blockUserUseCase = new BlockUserUseCase(userRepository)
+
 const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase);
 
-const adminController = new AdminController(adminLoginUseCase, getUsersUseCase)
+const adminController = new AdminController(adminLoginUseCase, getUsersUseCase, blockUserUseCase)
 
 const router = Router();
 
@@ -55,6 +58,11 @@ router.post('/adminLogin', (req,res) => {
 
 router.get('/get-users', (req,res) => {
   adminController.getUsers(req,res)
+})
+
+router.post('/blockUser', (req,res) => {
+  console.log(req.body,'1234567890-=')
+  adminController.blockUser(req,res)
 })
 
 export default router;

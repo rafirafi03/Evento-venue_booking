@@ -14,6 +14,7 @@ interface data {
   phone: number;
   country: string;
   password: string;
+  license: File;
 }
 
 export class VerifyOtpUsecase {

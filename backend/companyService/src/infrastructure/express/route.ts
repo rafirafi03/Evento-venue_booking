@@ -4,6 +4,7 @@ import { CompanyController } from '../../adapters/controllers';
 import { CompanyRepository }  from '../../repositories/implementation/companyRepository'
 import { otpService } from '../services';
 import { RedisClient } from '../../repositories';
+// import upload from '../multer/multerConfig'
 
 const router = Router();
 
