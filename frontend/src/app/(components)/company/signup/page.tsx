@@ -31,7 +31,7 @@ const Page = () => {
   // const [licenseError, setLicenseError] = useState<string>("");
 
   const [error, setError] = useState<string>("");
-  const [otpError, setOtpError] = useState<string>("")
+  const [otpError, setOtpError] = useState<string>("");
 
   const router = useRouter();
 
@@ -45,11 +45,11 @@ const Page = () => {
 
   const handleCountryChange = (selectedOption: any) => {
     console.log(selectedOption);
-    setCountryError("")
-    if(selectedOption) {
+    setCountryError("");
+    if (selectedOption) {
       setCountry(selectedOption);
     } else {
-      setCountryError('Country required')
+      setCountryError("Country required");
     }
   };
 
@@ -129,14 +129,26 @@ const Page = () => {
         { value: name, setError: setNameError, errorMsg: "Name required" },
         { value: email, setError: setEmailError, errorMsg: "Email required" },
         { value: phone, setError: setPhoneError, errorMsg: "Phone required" },
-        { value: country, setError: setCountryError, errorMsg: "Country required" },
-        { value: password, setError: setPasswordError, errorMsg: "Password required" },
-        { value: confirmPass, setError: setConfirmPassError, errorMsg: "Confirm password required" },
+        {
+          value: country,
+          setError: setCountryError,
+          errorMsg: "Country required",
+        },
+        {
+          value: password,
+          setError: setPasswordError,
+          errorMsg: "Password required",
+        },
+        {
+          value: confirmPass,
+          setError: setConfirmPassError,
+          errorMsg: "Confirm password required",
+        },
         // { value: license, setError: setLicenseError, errorMsg: "License required" },
       ];
-  
+
       let hasError = false;
-  
+
       fields.forEach(({ value, setError, errorMsg }) => {
         if (!value) {
           setError(errorMsg);
@@ -145,29 +157,28 @@ const Page = () => {
           setError("");
         }
       });
-  
+
       if (hasError) return;
-  
+
       setLoading(true);
       const res = await registerCompany({ email }).unwrap();
-  
+
       if (res) {
         setLoading(false);
         setModal(true);
       }
-  
+
       console.log(res);
     } catch (error) {
       console.log(error);
     }
   };
-  
 
   const handleOtp = async (event: React.FormEvent, otp: string) => {
-    event.preventDefault()
-    try {
+    event.preventDefault();
+
       console.log("hiiiiii");
-      const res = await confirmOtp({
+      const response = await confirmOtp({
         otp,
         name,
         email,
@@ -176,29 +187,35 @@ const Page = () => {
         password,
       }).unwrap();
 
-      console.log(res, "resssfrntend");
+      console.log(response, "resssfrntend");
 
-      if (!res.success) {
-        console.log('elsecase')
-        setOtpError('Invalid otp')
-        
+      if (!response || !response.token) {
+        if(!response.token) {
+          console.log('no token error')
+        } else {
+          console.log('no res error')
+        }
+        console.log("elsecase");
+        setOtpError("Invalid otp");
       } else {
         console.log("ressuccessssss");
-        const token = res.token;
+        const token = response.token;
         localStorage.setItem("authToken", token);
         setModal(false);
         router.push("/company/signup");
       }
-    } catch (error) {
-      console.log(error);
-      setError("OTP verification failed. Please try again.");
-    }
+
   };
 
   return (
     <div>
       {modal ? (
-        <OtpModal email={email} handleOtp={handleOtp} otpError={otpError} clearError={() => setOtpError("")}/>
+        <OtpModal
+          email={email}
+          handleOtp={handleOtp}
+          otpError={otpError}
+          clearError={() => setOtpError("")}
+        />
       ) : (
         <>
           {loading ? (
@@ -270,11 +287,11 @@ const Page = () => {
                           onChange={handleChange}
                         />
                         {nameError && (
-                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
-                          {" "}
-                          {nameError}
-                        </p>
-                      )}
+                          <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                            {" "}
+                            {nameError}
+                          </p>
+                        )}
                       </div>
                       <div className="w-1/2 px-2">
                         <label
@@ -297,11 +314,11 @@ const Page = () => {
                           onChange={handleChange}
                         />
                         {emailError && (
-                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
-                          {" "}
-                          {emailError}
-                        </p>
-                      )}
+                          <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                            {" "}
+                            {emailError}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -323,11 +340,11 @@ const Page = () => {
                           onChange={handleChange}
                         />
                         {phoneError && (
-                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
-                          {" "}
-                          {phoneError}
-                        </p>
-                      )}
+                          <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                            {" "}
+                            {phoneError}
+                          </p>
+                        )}
                       </div>
                       <div className="w-1/2 px-2">
                         <label
@@ -346,11 +363,11 @@ const Page = () => {
                           classNamePrefix="react-select"
                         />
                         {countryError && (
-                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
-                          {" "}
-                          {countryError}
-                        </p>
-                      )}
+                          <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                            {" "}
+                            {countryError}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -372,11 +389,11 @@ const Page = () => {
                           onChange={handleChange}
                         />
                         {passwordError && (
-                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
-                          {" "}
-                          {passwordError}
-                        </p>
-                      )}
+                          <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                            {" "}
+                            {passwordError}
+                          </p>
+                        )}
                       </div>
                       <div className="w-1/2 px-2">
                         <label
@@ -395,11 +412,11 @@ const Page = () => {
                           onChange={handleChange}
                         />
                         {confirmPassError && (
-                        <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
-                          {" "}
-                          {confirmPassError}
-                        </p>
-                      )}
+                          <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                            {" "}
+                            {confirmPassError}
+                          </p>
+                        )}
                       </div>
                     </div>
 

@@ -1,39 +1,26 @@
 import React from "react";
-import { useBlockUserMutation } from "@/app/store/slices/userApiSlices";
-import { toast } from "react-hot-toast";
+// import { useBlockUserMutation } from "@/app/store/slices/userApiSlices";
+// import { toast } from "react-hot-toast";
 
 interface ConfirmModalProps {
   blockModal: boolean;
   closeModal: () => void;
-  id: string;
+  confirmBlock: () => void;
   blockAction: string;
-  refetch: any
 }
+
+
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
   blockModal,
   closeModal,
-  id,
+  confirmBlock,
   blockAction,
-  refetch
 }) => {
-  const [userBlock] = useBlockUserMutation();
 
-  const handleBlock = async () => {
-    try {
-      console.log(id, "idfrontend");
-      const res = await userBlock({ id }).unwrap();
-
-      if (res.success) {
-        toast.success("user blocked");
-        refetch()
-      } else {
-        toast.error("something went wrong");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const confirm = () => {
+    confirmBlock()
+  }
 
   if (!blockModal) return null;
 
@@ -93,7 +80,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
               type="button"
               className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
               onClick={() => {
-                handleBlock();
+                confirm();
                 closeModal();
               }}
             >

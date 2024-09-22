@@ -3,7 +3,7 @@ import { baseCompanyUrl } from "@/app/constants/api";
 import { HttpMethod } from "@/app/schema/httpMethods";
 
 export const companyApiSlice = createApi({
-    reducerPath: 'api',
+    reducerPath: 'companyApi',
     baseQuery: fetchBaseQuery({
         baseUrl: baseCompanyUrl,
         credentials: 'include'
@@ -34,6 +34,18 @@ export const companyApiSlice = createApi({
             query: () => ({
                 url: '/getCompanies',
             })
+        }),
+        getRequests : builder.query({
+            query: () => ({
+                url: '/getRequests'
+            })
+        }),
+        blockCompany : builder.mutation({
+            query: (postData) => ({
+                url: '/blockCompany',
+                method: HttpMethod.POST,
+                body: postData
+            })
         })
     })
 })
@@ -41,5 +53,8 @@ export const companyApiSlice = createApi({
 export const {
     useRegisterPostMutation,
     useConfirmOtpMutation,
-    useResendOtpMutation
+    useResendOtpMutation,
+    useGetCompaniesQuery,
+    useGetRequestsQuery,
+    useBlockCompanyMutation
 } = companyApiSlice

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetCompaniesQuery } from "@/app/store/slices/companyApiSlices";
+import { useGetCompaniesQuery,useBlockCompanyMutation } from "@/app/store/slices/companyApiSlices";
 import ConfirmModal from '../confirmModal/page'
 
 export default function Page() {
@@ -13,9 +13,12 @@ export default function Page() {
     isBlocked: boolean;
   }
 
+  const [companyBlock] = useBlockCompanyMutation();
   const { data: companies, isLoading, isError ,refetch} = useGetCompaniesQuery(undefined);
 
-  const company = companies?.companies.companies || [];
+  console.log(companies,"cmpniesssss")
+
+  const company = companies?.companies?.companies || [];
 
   const [blockUser, setBlockUser] = useState<string>("");
   const [blockModal, setBlockModal] = useState<boolean>(false);
@@ -35,6 +38,23 @@ export default function Page() {
     }
     
   }
+
+
+  const confirmBlock = async () => {
+    try {
+      const id = blockUser
+      const res = await companyBlock({ id }).unwrap();
+
+      if (res.success) {
+        // toast.success("user blocked");
+        refetch()
+      } else {
+        console.error("something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const closeModal = ()=> {
     setBlockModal(false)
@@ -85,7 +105,7 @@ export default function Page() {
                   <td className="px-6 py-4">{company.phone}</td>
                   <td className="px-6 py-4">{company.country}</td>
                   <td className="px-6 py-4">
-                    { user.isBlocked ? 
+                    { company.isBlocked ? 
                     <button onClick={() => handleBlock(company._id, company.isBlocked)} className="bg-[rgb(255,0,0)] hover:bg-black text-white p-2 rounded-xl h-5 flex items-center">
                       unblock
                     </button>
@@ -111,7 +131,7 @@ export default function Page() {
           </tbody>
         </table>
       </div>
-      <ConfirmModal closeModal={closeModal} id={blockUser} blockModal={blockModal} blockAction={blockAction} refetch={refetch}/>
+      <ConfirmModal closeModal={closeModal} confirmBlock={confirmBlock} blockModal={blockModal} blockAction={blockAction}/>
       
     </div>
   );

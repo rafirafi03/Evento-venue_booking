@@ -4,13 +4,14 @@ import React, { useEffect, useState } from "react";
 import Header from "../../login-header/header";
 import Aside from "../aside/page";
 import UserList from "../userslist/page";
+import CompanyList from '../companyList/page'
+import Approval from "../approval/page";
 import { useRouter } from "next/navigation";
-
 
 export default function Page() {
   const router = useRouter();
 
-  const [page, setPage]  =useState('dashboard');
+  const [page, setPage] = useState("dashboard");
 
   useEffect(() => {
     const token = localStorage.getItem("authAdminToken");
@@ -24,11 +25,9 @@ export default function Page() {
     router.replace("/admin/login");
   };
 
-  const changePage = (arg : string) => {
-    
-      setPage(arg);
-
-  }
+  const changePage = (arg: string) => {
+    setPage(arg);
+  };
 
   return (
     <>
@@ -37,10 +36,24 @@ export default function Page() {
       </nav>
       <div className="flex mt-[64px]">
         <aside className="w-64 bg-white dark:bg-gray-800">
-          <Aside handleLogout={handleLogout} changePage={changePage} page={page} />
+          <Aside
+            handleLogout={handleLogout}
+            changePage={changePage}
+            page={page}
+          />
         </aside>
         <div className="flex-1 p-4">
-        {page === 'users' ? <UserList /> : <h1 className="text-2xl font-bold">Dashboard</h1>}
+          {page === "users" ? (
+            <UserList />
+          ) : page === "dashboard" ? (
+            <h1 className="text-2xl font-bold">Dashboard</h1>
+          ) : page === "inbox" ? (
+            <Approval />
+          ) : page === "companies" ? (
+            <CompanyList />
+          ) : (
+            <h1 className="text-2xl font-bold">Not Found</h1>
+          )}
         </div>
       </div>
     </>

@@ -66,5 +66,5 @@ export const {
     useResendOtpMutation,
     useAdminLoginMutation,
     useGetUsersQuery,
-    useBlockUserMutation
+    useBlockUserMutation,
 } = userApiSlice;

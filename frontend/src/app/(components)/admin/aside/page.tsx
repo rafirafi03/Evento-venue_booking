@@ -1,6 +1,6 @@
 import React from "react";
-import Image from "next/image";
-import Header from "../../login-header/header";
+// import Image from "next/image";
+// import Header from "../../login-header/header";
 
 export default function page({ handleLogout, changePage, page }: any) {
   return (
@@ -27,8 +27,8 @@ export default function page({ handleLogout, changePage, page }: any) {
                 <span className="ms-3 ml-6">Dashboard</span>
               </a>
             </li>
-            <li className="cursor-pointer">
-              <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group">
+            <li className="cursor-pointer" onClick={() => changePage('companies')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${page == 'companies' ? 'bg-red-300' : ""}`}>
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900"
                   aria-hidden="true"
@@ -60,8 +60,8 @@ export default function page({ handleLogout, changePage, page }: any) {
                 </span>
               </a>
             </li>
-            <li className="cursor-pointer">
-              <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group">
+            <li className="cursor-pointer" onClick={() => changePage('inbox')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'inbox' ? 'bg-red-300' : ""}`}>
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900"
                   aria-hidden="true"

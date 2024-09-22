@@ -1,6 +1,6 @@
 import { ICompanyRepository } from "../repositories";
 import { IRedisClient } from "../repositories/interfaces/redisInterface";
-import Company, { ICompany } from "../infrastructure/db/models/companyModel";
+import Company from "../infrastructure/db/models/companyModel";
 import { hashPass } from "../utils";
 import { TokenService } from "evento-library";
 import dotenv from "dotenv";
@@ -40,6 +40,9 @@ export class VerifyOtpUsecase {
 
       const companyOtp = await this._verifyOtpRepository.getOTP(email);
 
+      console.log(companyOtp,"companyotp")
+      console.log(otp,"otp")
+
       if (companyOtp !== otp) {
         return { success: false, error: "Invalid Otp"}
       }
@@ -50,7 +53,7 @@ export class VerifyOtpUsecase {
 
       const hashedPass = await hashPass(password);
 
-      const company: ICompany = new Company({
+      const company = new Company({
         name,
         email,
         phone,
@@ -63,6 +66,7 @@ export class VerifyOtpUsecase {
       if (!savedCompany) {
         throw new Error("Error saving company");
       } else {
+        console.log('success saved')
         const tokenservice = new TokenService(secretKey);
 
         const token = tokenservice.generateToken({

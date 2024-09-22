@@ -1,5 +1,4 @@
 import { TokenService } from "evento-library";
-import { hashPass } from "../utils";
 import bcrypt from "bcrypt";
 import { IUserRepository } from "../repositories";
 

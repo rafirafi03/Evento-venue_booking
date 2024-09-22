@@ -1,8 +1,6 @@
 import { IUserRepository,RedisClient } from '../repositories'
 import { otpService } from '../infrastructure/services';
 
-// import { BadRequestError } from 'evento-library';
-
 
 export class SignupUseCase {
     constructor(

@@ -7,7 +7,7 @@ export class AdminController {
     constructor(
         private _adminLoginUseCase : AdminLoginUseCase,
         private _getUsersUseCase : GetUsersUseCase,
-        private _blockUserUseCase : BlockUserUseCase
+        private _blockUserUseCase : BlockUserUseCase,
     ) {}
 
     async adminLogin( req: Request, res: Response) : Promise<void> {

@@ -1,7 +1,6 @@
 import { TokenService } from "evento-library";
 // import User from "../infrastructure/db/models/userModel";
 import { IUserRepository } from "../repositories";
-import { hashPass } from "../utils";
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import { ILoginResponse } from "./interfaces";
