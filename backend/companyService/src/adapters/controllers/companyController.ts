@@ -2,11 +2,13 @@ import { Request, Response } from "express";
 import { RegisterUseCase } from "../../useCases/index";
 import { VerifyOtpUsecase } from "../../useCases/verifyOtpUseCase";
 import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
+import { LoginUseCase } from '../../useCases'
 
 
 export class CompanyController {
   constructor(
     private _registerUseCase : RegisterUseCase,
+    private _loginUseCase : LoginUseCase,
     private _verifyOtpUseCase : VerifyOtpUsecase,
     private _resendOtpUseCase : ResendOtpUseCase,
   ) {}
@@ -20,6 +22,20 @@ export class CompanyController {
       const response = await this._registerUseCase.execute(email);
 
       res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      throw new Error('error' + error)
+    }
+  }
+
+  async login(req: Request, res: Response) : Promise<void> {
+    try {
+      const {email, password} = req.body;
+
+      console.log(email,"emailcontroller",password,"pass controller")
+      const response = await this._loginUseCase.execute(email,password)
+      res.status(200).json(response);
+      console.log(response)
     } catch (error) {
       console.log(error);
       throw new Error('error' + error)

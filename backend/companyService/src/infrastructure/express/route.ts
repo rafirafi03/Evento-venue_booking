@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { GetCompaniesUseCase, RegisterUseCase, VerifyOtpUsecase } from '../../useCases';
+import { GetCompaniesUseCase, LoginUseCase, RegisterUseCase, VerifyOtpUsecase } from '../../useCases';
 import { AdminController, CompanyController } from '../../adapters/controllers'; 
 import { CompanyRepository }  from '../../repositories/implementation/companyRepository'
 import { otpService } from '../services';
@@ -16,16 +16,21 @@ const otpRepository = new otpService()
 const redisRepository = new RedisClient()
 
 const registerUseCase = new RegisterUseCase(companyRepository,otpRepository,redisRepository)
+const loginUseCase = new LoginUseCase(companyRepository)
 const verifyOtpUseCase = new VerifyOtpUsecase(redisRepository,companyRepository)
 const resendOtpUseCase = new ResendOtpUseCase(otpRepository,redisRepository)
 const getCompaniesUseCase = new GetCompaniesUseCase(companyRepository)
 const getRequestsUseCase = new GetRequestsUseCase(companyRepository)
 const blockCompanyUseCase = new BlockCompanyUseCase(companyRepository)
-const companyController = new CompanyController(registerUseCase, verifyOtpUseCase, resendOtpUseCase)
+const companyController = new CompanyController(registerUseCase,loginUseCase, verifyOtpUseCase, resendOtpUseCase,)
 const adminController = new AdminController(getRequestsUseCase, getCompaniesUseCase, blockCompanyUseCase)
 
 router.post("/register", (req,res) => {
     companyController.signup(req,res)
+})
+
+router.post("/loginCompany", (req,res) => {
+    companyController.login(req,res)
 })
 
 router.post('/confirm-otp', (req,res) => {

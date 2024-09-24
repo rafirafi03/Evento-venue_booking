@@ -28,7 +28,7 @@ const Page = () => {
   const [passwordError, setPasswordError] = useState<string>("");
   const [confirmPass, setConfirmPass] = useState<string>("");
   const [confirmPassError, setConfirmPassError] = useState<string>("");
-  // const [licenseError, setLicenseError] = useState<string>("");
+  const [licenseError, setLicenseError] = useState<string>("");
 
   const [error, setError] = useState<string>("");
   const [otpError, setOtpError] = useState<string>("");
@@ -144,7 +144,7 @@ const Page = () => {
           setError: setConfirmPassError,
           errorMsg: "Confirm password required",
         },
-        // { value: license, setError: setLicenseError, errorMsg: "License required" },
+        { value: license, setError: setLicenseError, errorMsg: "License required" },
       ];
 
       let hasError = false;
@@ -177,34 +177,39 @@ const Page = () => {
   const handleOtp = async (event: React.FormEvent, otp: string) => {
     event.preventDefault();
 
-      console.log("hiiiiii");
-      const response = await confirmOtp({
-        otp,
-        name,
-        email,
-        phone,
-        country: country?.label,
-        password,
-      }).unwrap();
+    console.log("hiiiiii");
 
-      console.log(response, "resssfrntend");
+    const formData = new FormData();
+    formData.append('otp', otp);
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('phone', phone);
+    formData.append('password', password);
+    if(country) {
+      formData.append('country', country?.label);
+    }
+    if(license) {
+      formData.append('license', license);
+    }
+    const response = await confirmOtp(formData).unwrap();
 
-      if (!response || !response.token) {
-        if(!response.token) {
-          console.log('no token error')
-        } else {
-          console.log('no res error')
-        }
-        console.log("elsecase");
-        setOtpError("Invalid otp");
+    console.log(response, "resssfrntend");
+
+    if (!response || !response.token) {
+      if (!response.token) {
+        console.log("no token error");
       } else {
-        console.log("ressuccessssss");
-        const token = response.token;
-        localStorage.setItem("authToken", token);
-        setModal(false);
-        router.push("/company/signup");
+        console.log("no res error");
       }
-
+      console.log("elsecase");
+      setOtpError("Invalid otp");
+    } else {
+      console.log("ressuccessssss");
+      const token = response.token;
+      localStorage.setItem("authToken", token);
+      setModal(false);
+      router.push("/company/signup");
+    }
   };
 
   return (
@@ -447,12 +452,12 @@ const Page = () => {
                           Selected file: {license.name}
                         </p>
                       )}
-                      {/* {licenseError && (
+                      {licenseError && (
                         <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                           {" "}
                           {licenseError}
                         </p>
-                      )} */}
+                      )}
                     </div>
 
                     <div className="mb-6">
@@ -463,6 +468,11 @@ const Page = () => {
                         Sign Up
                       </button>
                     </div>
+                    <h1 className="text-center text-sm md:text-sm lg:text-sm xl:text-md my-6">
+                      Already have an account? <span className="text-[rgb(255,0,0)] font-bold hover:cursor-pointer" onClick={() => router.push('/company/login')}>
+                        Login
+                      </span>
+                    </h1>
                   </div>
                 </div>
               </div>

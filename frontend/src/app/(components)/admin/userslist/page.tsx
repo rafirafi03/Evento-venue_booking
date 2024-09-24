@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useGetUsersQuery } from "@/app/store/slices/userApiSlices";
+import { useBlockUserMutation, useGetUsersQuery } from "@/app/store/slices/userApiSlices";
 import ConfirmModal from '../confirmModal/page'
 
 export default function Page() {
@@ -12,6 +12,7 @@ export default function Page() {
     isBlocked: boolean;
   }
 
+  const [userBlock] = useBlockUserMutation()
   const { data: users, isLoading, isError ,refetch} = useGetUsersQuery(undefined);
 
   const user = users?.users.users || [];
@@ -34,6 +35,22 @@ export default function Page() {
     }
     
   }
+
+  const confirmBlock = async () => {
+    try {
+      const id = blockUser
+      const res = await userBlock({ id }).unwrap();
+
+      if (res.success) {
+        // toast.success("user blocked");
+        refetch()
+      } else {
+        console.error("something went wrong");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const closeModal = ()=> {
     setBlockModal(false)
@@ -106,7 +123,7 @@ export default function Page() {
           </tbody>
         </table>
       </div>
-      <ConfirmModal closeModal={closeModal} id={blockUser} blockModal={blockModal} blockAction={blockAction} refetch={refetch}/>
+      <ConfirmModal closeModal={closeModal} confirmBlock={confirmBlock} blockModal={blockModal} blockAction={blockAction}/>
       
     </div>
   );

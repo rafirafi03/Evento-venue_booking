@@ -86,6 +86,9 @@ export default function Page() {
               <th scope="col" className="px-6 py-3">
                 Status
               </th>
+              <th scope="col" className="px-6 py-3">
+                Action
+              </th>
               {/* <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit</span>
               </th> */}
@@ -106,15 +109,20 @@ export default function Page() {
                   <td className="px-6 py-4">{company.country}</td>
                   <td className="px-6 py-4">
                     { company.isBlocked ? 
-                    <button onClick={() => handleBlock(company._id, company.isBlocked)} className="bg-[rgb(255,0,0)] hover:bg-black text-white p-2 rounded-xl h-5 flex items-center">
+                    <button onClick={() => handleBlock(company._id, company.isBlocked)} className="bg-[rgb(255,0,0)] hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
                       unblock
                     </button>
                     :
-                    <button onClick={() => handleBlock(company._id, company.isBlocked)} className="bg-black hover:bg-[rgb(255,0,0)] text-white p-2 rounded-xl h-5 flex items-center">
+                    <button onClick={() => handleBlock(company._id, company.isBlocked)} className="bg-black hover:bg-[rgb(255,0,0)] transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
                       block
                     </button>
                     }
                     
+                  </td>
+                  <td className="px-6 py-4">
+                    <button className="bg-black transition-transform duration-300 hover:scale-110 text-xs text-white p-2 rounded-xl h-5 flex items-center">
+                      License
+                    </button>
                   </td>
                   {/* <td className="px-6 py-4 text-right">
                     <a className="hover:underline cursor-pointer">View</a>
