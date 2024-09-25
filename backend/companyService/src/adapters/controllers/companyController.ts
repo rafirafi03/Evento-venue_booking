@@ -44,13 +44,15 @@ export class CompanyController {
 
   async confirmOtp(req: Request, res: Response): Promise<void> {
     const {otp, name, email, phone, country, password} = req.body;
+    const license = req.file?.path;
 
     console.log(req.body,"reqbdyyyyycntrlrcpmny")
+    console.log(req.file,"reqfileeeecntrlrcpmny")
     // const {license} = req.file;
 
     try {
       const response = await this._verifyOtpUseCase.execute({
-        otp,name,email,phone,country,password
+        otp,name,email,phone,country,password,license
       })
 
       console.log(response,"response companycontroller")

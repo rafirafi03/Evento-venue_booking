@@ -412,3 +412,5 @@
 2024-09-23T12:42:55.500Z [INFO]: ::1 - - [23/Sep/2024:12:42:55 +0000] "GET /api/user/get-users HTTP/1.1" 200 475 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
 2024-09-23T12:42:58.890Z [INFO]: ::1 - - [23/Sep/2024:12:42:58 +0000] "POST /api/user/blockUser HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
 2024-09-23T12:42:58.928Z [INFO]: ::1 - - [23/Sep/2024:12:42:58 +0000] "GET /api/user/get-users HTTP/1.1" 200 476 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
+2024-09-24T06:34:08.208Z [INFO]: server is running on http://localhost:4000
+2024-09-24T06:36:37.675Z [INFO]: ::1 - - [24/Sep/2024:06:36:37 +0000] "GET /api/user/get-users HTTP/1.1" 200 476 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"

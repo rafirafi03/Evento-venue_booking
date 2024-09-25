@@ -7,6 +7,7 @@ export interface ICompany extends Document {
     phone: number;
     country: string;
     password: string;
+    license: string;
     isBlocked: boolean;
     isVerified: boolean;
 }
@@ -31,6 +32,10 @@ const CompanySchema: Schema = new Schema<ICompany>({
       password: {
         type: String,
         required: true,
+      },
+      license: {
+        type: String,
+        required: true
       },
       isBlocked: {
         type: Boolean,

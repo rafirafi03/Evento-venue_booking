@@ -14,7 +14,7 @@ interface data {
   phone: number;
   country: string;
   password: string;
-  license?: File;
+  license?: string;
 }
 
 export class VerifyOtpUsecase {
@@ -30,12 +30,13 @@ export class VerifyOtpUsecase {
     phone,
     country,
     password,
+    license
   }: data): Promise<{ success: boolean; token?: string, error?: string }> {
     try {
       const secretKey = process.env.JWTSECRETKEY as string;
 
       if (!otp) {
-        throw new Error("Invalid otpaaaaa");
+        return { success: false, error: "OTP is required" };
       }
 
       const companyOtp = await this._verifyOtpRepository.getOTP(email);
@@ -59,12 +60,15 @@ export class VerifyOtpUsecase {
         phone,
         country,
         password: hashedPass,
+        license: license
       });
+
+      console.log(company,"cmpnyyyyyyyyyyyyyyyyyyyy")
 
       const savedCompany = await this._companyRepository.save(company);
 
       if (!savedCompany) {
-        throw new Error("Error saving company");
+        return { success: false, error: "Error saving company" };
       } else {
         console.log('success saved')
         const tokenservice = new TokenService(secretKey);

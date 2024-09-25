@@ -7,7 +7,7 @@ import { RedisClient } from '../../repositories';
 import { ResendOtpUseCase } from '../../useCases/resendOtpUseCase';
 import { GetRequestsUseCase } from '../../useCases/getRequestsUseCase';
 import { BlockCompanyUseCase } from '../../useCases/blockCompanyUseCase';
-// import upload from '../multer/multerConfig'
+import { upload } from '../multer/multerConfig'
 
 const router = Router();
 
@@ -33,7 +33,7 @@ router.post("/loginCompany", (req,res) => {
     companyController.login(req,res)
 })
 
-router.post('/confirm-otp', (req,res) => {
+router.post('/confirm-otp', upload.single('license'), (req,res) => {
     companyController.confirmOtp(req,res)
 })
 

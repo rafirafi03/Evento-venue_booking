@@ -87,7 +87,7 @@ export default function Page() {
                 Status
               </th>
               <th scope="col" className="px-6 py-3">
-                Action
+                License
               </th>
               {/* <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit</span>
@@ -121,7 +121,7 @@ export default function Page() {
                   </td>
                   <td className="px-6 py-4">
                     <button className="bg-black transition-transform duration-300 hover:scale-110 text-xs text-white p-2 rounded-xl h-5 flex items-center">
-                      License
+                      View
                     </button>
                   </td>
                   {/* <td className="px-6 py-4 text-right">
