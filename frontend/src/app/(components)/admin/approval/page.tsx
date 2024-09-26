@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-import { useGetRequestsQuery } from "@/app/store/slices/companyApiSlices";
+import { useCompanyApprovalMutation, useGetRequestsQuery } from "@/app/store/slices/companyApiSlices";
 import Modal from '../modal/page'
 
 export default function Page() {
+
+  interface IVerification {
+    Pending: "pending",
+    Verified: 'verified',
+    Rejected: 'rejected'
+  }
+
   interface ICompany {
     _id: string;
     name: string;
@@ -12,13 +19,15 @@ export default function Page() {
     phone: number;
     license?: string;
     isBlocked: boolean;
-    isVerified: boolean;
+    isVerified: IVerification;
   }
 
   const { data: requests, isLoading, isError } = useGetRequestsQuery(undefined);
+  const [setApproval] = useCompanyApprovalMutation()
 
   const [isModal, setModal] = useState<boolean>(false);
   const [license, setLicense] = useState('')
+  const [userId, setUserId] = useState('')
 
   console.log(requests, "reqssss");
 
@@ -26,8 +35,9 @@ export default function Page() {
 
   console.log(user);
 
-  const handleClick = (license:string) => {
+  const handleClick = (license:string,_id:string) => {
     console.log("handleclick");
+    setUserId(_id)
     setModal(true);
     setLicense(license)
     console.log(isModal);
@@ -35,6 +45,20 @@ export default function Page() {
 
   const closeModal = () => {
     setModal(false)
+  }
+
+  const handleApproval = async (arg: string)=> {
+    try {
+      console.log('hi guysssss')
+      const approval = arg;
+
+      console.log(approval, userId,"aprvl useridddddd")
+      const res = await setApproval({approval, userId}).unwrap()
+
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   // const closeModal = ()=> {
@@ -48,8 +72,9 @@ export default function Page() {
   return (
       
       <div className="m-5">
-      
         <h1 className="font-extrabold text-2xl mt-5 mb-5">Requests</h1>
+      {user.length > 0 ? (
+        <>
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
           <table className="w-full text-sm text-left rtl:text-right text-black dark:text-black">
             <thead className="font-bold text-black uppercase bg-red-300 dark:bg-red-300 dark:text-black">
@@ -75,7 +100,7 @@ export default function Page() {
               </tr>
             </thead>
             <tbody className="dark:text-black font-bold">
-              {user.length > 0 ? (
+              
                 user.map((user: ICompany) => (
                   <tr
                     key={user._id}
@@ -89,7 +114,7 @@ export default function Page() {
                     <td className="px-6 py-4">{user.country}</td>
                     <td className="px-6 py-4">
                       <button
-                        onClick={()=>handleClick(user.license?user.license:"")}
+                        onClick={()=>handleClick(user.license?user.license:"",user._id)}
                         data-modal-target="default-modal"
                         data-modal-toggle="default-modal"
                         className="bg-black hover:bg-[rgb(255,0,0)] text-white p-2 rounded-xl h-5 flex items-center"
@@ -102,19 +127,22 @@ export default function Page() {
                   </td> */}
                   </tr>
                 ))
-              ) : (
-                <tr>
-                  <td colSpan={5} className="text-center px-6 py-4">
-                    No users found
-                  </td>
-                </tr>
-              )}
+              
             </tbody>
           </table>
         </div>
         {isModal && (
-        <Modal license={license?license:""} closeModal={closeModal}/>
+        <Modal license={license?license:""} handleApproval={handleApproval} closeModal={closeModal}/>
       )}
+      </>
+
+    ) : (
+      <div className="flex items-center justify-center">
+        <h1 >No Requests found</h1>  
+
+      </div>
+
+    )}
       </div>
 
       

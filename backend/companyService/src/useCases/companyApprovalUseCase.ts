@@ -1,23 +1,24 @@
 import { ICompanyRepository } from "../repositories";
+import { VerificationStatus } from "../infrastructure/db";
 
-export class BlockCompanyUseCase {
+export class CompanyApprovalUseCase {
     constructor(
         private _companyRepository : ICompanyRepository
     ) {}
 
-    async execute(id: string) : Promise<{success: boolean}> {
+    async execute(approval: string, userId: string) : Promise<{success: boolean}> {
         try {
-            console.log(id,"id in cpmyusecase")
-            const company = await this._companyRepository.findById(id)
+            console.log(approval,"approval in cpmyusecase")
+            const company = await this._companyRepository.findById(userId)
 
             console.log(company, "companyusecase")
             if(!company) {
                 return { success: false } 
             }
-            if(company.isBlocked) {
-                company.isBlocked = false
+            if(approval == 'accept') {
+                company.isVerified = VerificationStatus.Verified
             } else {
-                company.isBlocked = true
+                company.isVerified = VerificationStatus.Rejected
             }
 
             await company.save()

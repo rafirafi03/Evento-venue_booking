@@ -53,6 +53,13 @@ export const companyApiSlice = createApi({
                 method: HttpMethod.POST,
                 body: postData
             })
+        }),
+        companyApproval : builder.mutation({
+            query: (postData) => ({
+                url: '/companyApproval',
+                method: HttpMethod.PATCH,
+                body: postData
+            })
         })
     })
 })
@@ -64,5 +71,6 @@ export const {
     useResendOtpMutation,
     useGetCompaniesQuery,
     useGetRequestsQuery,
-    useBlockCompanyMutation
+    useBlockCompanyMutation,
+    useCompanyApprovalMutation
 } = companyApiSlice

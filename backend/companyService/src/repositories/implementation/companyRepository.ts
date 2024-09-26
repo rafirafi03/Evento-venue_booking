@@ -40,7 +40,7 @@ export class CompanyRepository implements ICompanyRepository {
 
     async getRequests(): Promise<ICompany[]> {
         try {
-            const requests = await companyModel.find({isVerified: false})
+            const requests = await companyModel.find({isVerified: 'pending'})
 
             console.log(requests,"reqssssssss")
 
@@ -53,7 +53,7 @@ export class CompanyRepository implements ICompanyRepository {
 
     async getCompanies(): Promise<ICompany[]> {
         try {
-            const requests = await companyModel.find({isVerified: true})
+            const requests = await companyModel.find({isVerified: 'verified'})
 
             console.log(requests,"reqssssssss")
 

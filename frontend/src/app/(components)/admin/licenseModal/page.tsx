@@ -3,14 +3,10 @@ import Image from "next/image";
 
 interface pageProps {
   license: string;
-  closeModal: () => void;
-  handleApproval: (arg: string)=> void
+  closeLicenseModal: () => void;
 }
-export default function page({ license, closeModal, handleApproval }: pageProps) {
+export default function page({ license, closeLicenseModal }: pageProps) {
 
-  const handleOnclick = (args:string) => {
-    handleApproval(args)
-  }
   return (
     <div>
       <div
@@ -25,7 +21,7 @@ export default function page({ license, closeModal, handleApproval }: pageProps)
                 License
               </h3>
               <button
-              onClick={closeModal}
+              onClick={closeLicenseModal}
                 className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                 data-modal-hide="default-modal"
               >
@@ -51,24 +47,6 @@ export default function page({ license, closeModal, handleApproval }: pageProps)
             </div>
             <div className="p-4 md:p-5 space-y-4">
               <Image alt="img" src={license} width={500} height={500} />
-            </div>
-            <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-              <button
-                onClick={()=>handleOnclick('accept')}
-                data-modal-hide="default-modal"
-                type="button"
-                className="text-white bg-green-500 hover:bg-black focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium text-sm px-3 py-1 rounded-2xl text-center dark:bg-green-500 dark:hover:bg-black dark:focus:ring-green-800"
-              >
-                accept
-              </button>
-              <button
-              onClick={()=>handleOnclick('reject')}
-                data-modal-hide="default-modal"
-                type="button"
-                className="py-1 px-3 ms-3 text-sm font-medium text-white focus:outline-none bg-[rgb(255,0,0)] rounded-2xl border border-gray-200 hover:bg-black focus:z-10 focus:ring-2 focus:ring-blue-300 dark:focus:ring-gray-700 dark:bg-[rgb(255,0,0)] dark:text-white dark:border-gray-600 dark:hover:text-white dark:hover:bg-black"
-              >
-                Reject
-              </button>
             </div>
           </div>
         </div>

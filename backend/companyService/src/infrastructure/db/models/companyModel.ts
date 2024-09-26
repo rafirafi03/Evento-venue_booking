@@ -1,5 +1,11 @@
 import mongoose, { Document, Schema} from 'mongoose';
 
+export enum VerificationStatus {
+    Pending = "pending",
+    Verified = "verified",
+    Rejected = "rejected"
+}
+
 export interface ICompany extends Document {
     _id: mongoose.Types.ObjectId;
     name: string;
@@ -9,7 +15,7 @@ export interface ICompany extends Document {
     password: string;
     license: string;
     isBlocked: boolean;
-    isVerified: boolean;
+    isVerified: VerificationStatus;
 }
 
 const CompanySchema: Schema = new Schema<ICompany>({
@@ -42,8 +48,9 @@ const CompanySchema: Schema = new Schema<ICompany>({
         default: false,
       },
       isVerified: {
-        type: Boolean,
-        default: false
+        type: String,
+        enum: Object.values(VerificationStatus),
+        default: VerificationStatus.Pending
       }
 })
 

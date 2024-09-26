@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { useGetCompaniesQuery,useBlockCompanyMutation } from "@/app/store/slices/companyApiSlices";
 import ConfirmModal from '../confirmModal/page'
+import LicenseModal from '../licenseModal/page'
 
 export default function Page() {
+
+  interface IVerification {
+    Pending: "pending",
+    Verified: 'verified',
+    Rejected: 'rejected'
+  }
+
   interface ICompany {
     _id: string;
     name: string;
@@ -10,6 +18,8 @@ export default function Page() {
     password: string;
     country: string;
     phone: number;
+    license: string;
+    isVerified: IVerification;
     isBlocked: boolean;
   }
 
@@ -23,6 +33,9 @@ export default function Page() {
   const [blockUser, setBlockUser] = useState<string>("");
   const [blockModal, setBlockModal] = useState<boolean>(false);
   const [blockAction, setBlockAction] = useState<string>("");
+  const [userId, setUserId] = useState<string>('')
+  const [licenseModal, setLicenseModal] = useState<boolean>('');
+  const [license, setLicense] = useState<string>('')
 
   console.log(company);
 
@@ -37,6 +50,12 @@ export default function Page() {
       console.log(error)
     }
     
+  }
+
+  const handleClick = (license: string,_id: string)=> {
+    setUserId(_id)
+    setLicenseModal(true);
+    setLicense(license)
   }
 
 
@@ -56,6 +75,10 @@ export default function Page() {
     }
   };
 
+  const closeLicenseModal = ()=> {
+    setLicenseModal(false)
+  }
+
   const closeModal = ()=> {
     setBlockModal(false)
   }
@@ -65,8 +88,15 @@ export default function Page() {
   if (isError) return <div>Error fetching users.</div>;
 
   return (
+
+    
     <div className="m-5">
+      { licenseModal && (
+      <LicenseModal license={license?license:""} closeLicenseModal={closeLicenseModal}/>
+    ) }
       <h1 className="font-extrabold text-2xl mt-5 mb-5">Companies</h1>
+      {company.length > 0 ? (
+        <>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-black dark:text-black">
           <thead className="font-bold text-black uppercase bg-red-300 dark:bg-red-300 dark:text-black">
@@ -95,8 +125,8 @@ export default function Page() {
             </tr>
           </thead>
           <tbody className="dark:text-black font-bold">
-            {company.length > 0 ? (
-              company.map((company: ICompany) => (
+            
+              {company.map((company: ICompany) => (
                 <tr
                   key={company._id}
                   className="bg-red-100 dark:bg-red-100 hover:bg-red-200"
@@ -120,7 +150,7 @@ export default function Page() {
                     
                   </td>
                   <td className="px-6 py-4">
-                    <button className="bg-black transition-transform duration-300 hover:scale-110 text-xs text-white p-2 rounded-xl h-5 flex items-center">
+                    <button onClick={()=>handleClick(company.license?company.license:"",company._id)} className="bg-black transition-transform duration-300 hover:scale-110 text-xs text-white p-2 rounded-xl h-5 flex items-center">
                       View
                     </button>
                   </td>
@@ -128,19 +158,20 @@ export default function Page() {
                     <a className="hover:underline cursor-pointer">View</a>
                   </td> */}
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={5} className="text-center px-6 py-4">
-                  No companies found
-                </td>
-              </tr>
-            )}
+              ))}
+            
           </tbody>
         </table>
       </div>
       <ConfirmModal closeModal={closeModal} confirmBlock={confirmBlock} blockModal={blockModal} blockAction={blockAction}/>
+
       
+      </>
+    ) : (
+      
+          <h1>No companies found</h1> 
+
+    )}
     </div>
   );
 }

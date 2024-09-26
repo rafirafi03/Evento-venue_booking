@@ -7,6 +7,7 @@ import { RedisClient } from '../../repositories';
 import { ResendOtpUseCase } from '../../useCases/resendOtpUseCase';
 import { GetRequestsUseCase } from '../../useCases/getRequestsUseCase';
 import { BlockCompanyUseCase } from '../../useCases/blockCompanyUseCase';
+import { CompanyApprovalUseCase } from '../../useCases/companyApprovalUseCase';
 import { upload } from '../multer/multerConfig'
 
 const router = Router();
@@ -22,8 +23,9 @@ const resendOtpUseCase = new ResendOtpUseCase(otpRepository,redisRepository)
 const getCompaniesUseCase = new GetCompaniesUseCase(companyRepository)
 const getRequestsUseCase = new GetRequestsUseCase(companyRepository)
 const blockCompanyUseCase = new BlockCompanyUseCase(companyRepository)
+const companyApprovalUseCase = new CompanyApprovalUseCase(companyRepository)
 const companyController = new CompanyController(registerUseCase,loginUseCase, verifyOtpUseCase, resendOtpUseCase,)
-const adminController = new AdminController(getRequestsUseCase, getCompaniesUseCase, blockCompanyUseCase)
+const adminController = new AdminController(getRequestsUseCase, getCompaniesUseCase, blockCompanyUseCase, companyApprovalUseCase)
 
 router.post("/register", (req,res) => {
     companyController.signup(req,res)
@@ -51,6 +53,10 @@ router.get('/getRequests', (req,res) => {
 
 router.post('/blockCompany', (req,res) => {
     adminController.blockCompany(req,res)
+})
+
+router.patch('/companyApproval', (req,res) => {
+    adminController.companyApproval(req,res)
 })
 
 export default router
