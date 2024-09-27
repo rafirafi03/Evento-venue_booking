@@ -305,3 +305,56 @@
 2024-09-26T09:51:35.439Z [INFO]: server is running on http://localhost:4001
 2024-09-26T09:51:38.355Z [INFO]: ::1 - - [26/Sep/2024:09:51:38 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-09-26T09:51:49.907Z [INFO]: server is running on http://localhost:4001
+2024-09-26T09:51:54.972Z [INFO]: ::1 - - [26/Sep/2024:09:51:54 +0000] "GET /api/company/getCompanies HTTP/1.1" 200 414 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T09:55:02.168Z [INFO]: ::1 - - [26/Sep/2024:09:55:02 +0000] "POST /api/company/blockCompany HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T09:55:02.226Z [INFO]: ::1 - - [26/Sep/2024:09:55:02 +0000] "GET /api/company/getCompanies HTTP/1.1" 200 413 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T09:55:06.893Z [INFO]: ::1 - - [26/Sep/2024:09:55:06 +0000] "POST /api/company/blockCompany HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T09:55:10.223Z [INFO]: ::1 - - [26/Sep/2024:09:55:10 +0000] "GET /api/company/getCompanies HTTP/1.1" 200 414 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T09:55:12.061Z [INFO]: ::1 - - [26/Sep/2024:09:55:12 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:14:02.929Z [INFO]: ::1 - - [26/Sep/2024:11:14:02 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:14:05.020Z [INFO]: ::1 - - [26/Sep/2024:11:14:05 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:22:56.088Z [INFO]: ::1 - - [26/Sep/2024:11:22:56 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:22:58.444Z [INFO]: ::1 - - [26/Sep/2024:11:22:58 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:23:31.352Z [INFO]: ::1 - - [26/Sep/2024:11:23:31 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:26:52.451Z [INFO]: ::1 - - [26/Sep/2024:11:26:52 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:28:14.309Z [INFO]: ::1 - - [26/Sep/2024:11:28:14 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:30:32.510Z [INFO]: ::1 - - [26/Sep/2024:11:30:32 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:30:47.248Z [INFO]: ::1 - - [26/Sep/2024:11:30:47 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:31:53.970Z [INFO]: ::1 - - [26/Sep/2024:11:31:53 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:31:54.877Z [INFO]: ::1 - - [26/Sep/2024:11:31:54 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:32:19.936Z [INFO]: ::1 - - [26/Sep/2024:11:32:19 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:33:23.009Z [INFO]: ::1 - - [26/Sep/2024:11:33:23 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:34:41.997Z [INFO]: ::1 - - [26/Sep/2024:11:34:41 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:35:51.627Z [INFO]: ::1 - - [26/Sep/2024:11:35:51 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:36:08.694Z [INFO]: ::1 - - [26/Sep/2024:11:36:08 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T04:44:08.737Z [INFO]: server is running on http://localhost:4001
+2024-09-27T04:50:34.254Z [INFO]: ::1 - - [27/Sep/2024:04:50:34 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:14:54.001Z [INFO]: ::1 - - [27/Sep/2024:05:14:54 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:15:18.176Z [INFO]: ::1 - - [27/Sep/2024:05:15:18 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 46 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:17:34.224Z [INFO]: ::1 - - [27/Sep/2024:05:17:34 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 46 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:19:42.152Z [INFO]: ::1 - - [27/Sep/2024:05:19:42 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:19:48.496Z [INFO]: ::1 - - [27/Sep/2024:05:19:48 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 46 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:21:04.757Z [INFO]: ::1 - - [27/Sep/2024:05:21:04 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 46 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:22:18.754Z [INFO]: ::1 - - [27/Sep/2024:05:22:18 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 46 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:22:47.324Z [INFO]: ::1 - - [27/Sep/2024:05:22:47 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 46 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:23:03.998Z [INFO]: ::1 - - [27/Sep/2024:05:23:03 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 46 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:25:11.520Z [INFO]: ::1 - - [27/Sep/2024:05:25:11 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:25:15.427Z [INFO]: ::1 - - [27/Sep/2024:05:25:15 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:25:28.022Z [INFO]: ::1 - - [27/Sep/2024:05:25:28 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 46 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:31:53.253Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:32:14.696Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:32:24.552Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:33:52.490Z [INFO]: ::1 - - [27/Sep/2024:05:33:52 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 52 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:34:14.730Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:34:30.055Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:34:34.026Z [INFO]: ::1 - - [27/Sep/2024:05:34:34 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 80 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T05:52:35.705Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:53:29.899Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:53:55.256Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:54:06.460Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:54:40.188Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:54:50.855Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:55:13.923Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:55:26.049Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:55:44.930Z [INFO]: server is running on http://localhost:4001
+2024-09-27T05:55:53.244Z [INFO]: server is running on http://localhost:4001

@@ -4,12 +4,15 @@ import Image from "next/image";
 interface pageProps {
   license: string;
   closeModal: () => void;
-  handleApproval: (arg: string)=> void
+  handleApproval: (arg: string)=> void;
+  refetch : ()=> void
 }
-export default function page({ license, closeModal, handleApproval }: pageProps) {
+export default function page({ license, closeModal, handleApproval, refetch }: pageProps) {
 
   const handleOnclick = (args:string) => {
+    closeModal()
     handleApproval(args)
+    refetch()
   }
   return (
     <div>

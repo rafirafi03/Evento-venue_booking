@@ -23,7 +23,7 @@ const resendOtpUseCase = new ResendOtpUseCase(otpRepository,redisRepository)
 const getCompaniesUseCase = new GetCompaniesUseCase(companyRepository)
 const getRequestsUseCase = new GetRequestsUseCase(companyRepository)
 const blockCompanyUseCase = new BlockCompanyUseCase(companyRepository)
-const companyApprovalUseCase = new CompanyApprovalUseCase(companyRepository)
+const companyApprovalUseCase = new CompanyApprovalUseCase(companyRepository, otpRepository)
 const companyController = new CompanyController(registerUseCase,loginUseCase, verifyOtpUseCase, resendOtpUseCase,)
 const adminController = new AdminController(getRequestsUseCase, getCompaniesUseCase, blockCompanyUseCase, companyApprovalUseCase)
 

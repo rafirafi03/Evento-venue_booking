@@ -417,3 +417,6 @@
 2024-09-25T04:06:09.123Z [INFO]: server is running on http://localhost:4000
 2024-09-25T04:06:58.828Z [INFO]: ::1 - - [25/Sep/2024:04:06:58 +0000] "GET /api/user/get-users HTTP/1.1" 200 476 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-09-26T04:04:02.555Z [INFO]: server is running on http://localhost:4000
+2024-09-26T11:15:41.021Z [INFO]: ::1 - - [26/Sep/2024:11:15:41 +0000] "GET /api/user/get-users HTTP/1.1" 200 476 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-26T11:36:04.356Z [INFO]: ::1 - - [26/Sep/2024:11:36:04 +0000] "GET /api/user/get-users HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-27T04:43:50.291Z [INFO]: server is running on http://localhost:4000

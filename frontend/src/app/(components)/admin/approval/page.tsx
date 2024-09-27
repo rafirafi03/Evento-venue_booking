@@ -22,7 +22,7 @@ export default function Page() {
     isVerified: IVerification;
   }
 
-  const { data: requests, isLoading, isError } = useGetRequestsQuery(undefined);
+  const { data: requests, isLoading, isError, refetch } = useGetRequestsQuery(undefined);
   const [setApproval] = useCompanyApprovalMutation()
 
   const [isModal, setModal] = useState<boolean>(false);
@@ -101,7 +101,7 @@ export default function Page() {
             </thead>
             <tbody className="dark:text-black font-bold">
               
-                user.map((user: ICompany) => (
+                {user.map((user: ICompany) => (
                   <tr
                     key={user._id}
                     className="bg-red-100 dark:bg-red-100 hover:bg-red-200"
@@ -126,13 +126,13 @@ export default function Page() {
                     <a className="hover:underline cursor-pointer">View</a>
                   </td> */}
                   </tr>
-                ))
+                ))}
               
             </tbody>
           </table>
         </div>
         {isModal && (
-        <Modal license={license?license:""} handleApproval={handleApproval} closeModal={closeModal}/>
+        <Modal license={license?license:""} handleApproval={handleApproval} closeModal={closeModal} refetch={refetch}/>
       )}
       </>
 

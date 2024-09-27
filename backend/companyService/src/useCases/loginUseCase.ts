@@ -22,9 +22,11 @@ async execute(email: string, password: string) : Promise<ILoginResponse | null> 
             return { success: false, error: 'Invalid email' };
         }
 
-        if (!company.isVerified) {
+        if (company.isVerified == 'pending') {
             console.log('not verified')
-            return { success: false, error: 'Request is still pending' };
+            return { success: false, error: 'Request is still pending, wait for admin to approve.' };
+        } else if( company.isVerified == 'rejected') {
+            return { success: false, error: 'Your request has been rejected' };
         }
 
         const pass = await bcrypt.compare(password, company.password);

@@ -13,33 +13,65 @@ const Page = () => {
   const [loginMutation] = useLoginPostMutation()
   
   const [email, setEmail] = useState<string>("");
-  // const [emailError, setEmailError] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  // const [passwordError, setPasswordError] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
 
 
-  // const [error, setError] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const router = useRouter();
 
-  // const validateEmail = (email: string) => {
-  //   const re = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-  //   return re.test(String(email).toLowerCase());
-  // };
+  const validateEmail = (email: string) => {
+    const re = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    return re.test(String(email).toLowerCase());
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       const {name, value} = e.target;
 
+      setError('')
+
       if(name == 'email') {
-        setEmail(value)
+        setEmail(value);
+
+        if (!validateEmail(value)) {
+          setEmailError("Invalid email address");
+        } else {
+          setEmailError("");
+        }
       } else {
-        setPassword(value)
+        setPassword(value);
+
+      if (value.trim() == "") {
+        setPasswordError("password required");
+      } else if (value.length < 6) {
+        setPasswordError("Password must be 6 characters");
+      } else {
+        setPasswordError("");
+      }
       }
   }
 
   const handleSubmit = async ()=> {
     try {
-      let res = await loginMutation({email,password}).unwrap()
+
+      let hasError = false;
+      
+      if(emailError || passwordError) {
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      const res = await loginMutation({email,password}).unwrap()
+
+      if(!res.success) {
+        console.log(res,"resinerror")
+        setError(res.error)
+      } else {
+        router.push('/company/main')
+      }
 
       console.log(res,"ress")
     } catch (error) {
@@ -83,6 +115,9 @@ const Page = () => {
                         <h5 className="text-xl font-medium text-gray-900 dark:text-white">
                           Sign in to our platform
                         </h5>
+                        {error && (
+                        <p className="text-[rgb(255,0,0)] mt-2">{error}</p>
+                       )}
                         <div>
                           <label
                             htmlFor="email"
@@ -99,6 +134,12 @@ const Page = () => {
                             value={email}
                             onChange={handleChange}
                           />
+                          {emailError && (
+                          <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                            {" "}
+                            {emailError}
+                          </p>
+                        )}
                         </div>
                         <div>
                           <label
@@ -116,6 +157,12 @@ const Page = () => {
                             value={password}
                             onChange={handleChange}
                           />
+                          {passwordError && (
+                          <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                            {" "}
+                            {passwordError}
+                          </p>
+                        )}
                         </div>
                         <div className="flex items-start">
                           <div className="flex items-start">
