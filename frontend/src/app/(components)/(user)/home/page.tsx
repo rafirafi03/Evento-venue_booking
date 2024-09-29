@@ -2,8 +2,9 @@ import React from "react";
 import Image from "next/image";
 import Header from "../header/page";
 import Footer from "../footer/page";
+// import Auth from '../../../auth/auth'
 
-export default function page() {
+const Page = ()=> {
   return (
     <>
       <Header />
@@ -129,3 +130,5 @@ export default function page() {
     </>
   );
 }
+
+export default Page
