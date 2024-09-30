@@ -438,3 +438,4 @@
 2024-09-29T14:28:14.754Z [INFO]: ::1 - - [29/Sep/2024:14:28:14 +0000] "POST /api/user/login HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-09-29T14:29:01.960Z [INFO]: server is running on http://localhost:4000
 2024-09-29T14:29:03.116Z [INFO]: ::1 - - [29/Sep/2024:14:29:03 +0000] "GET /api/user/get-users HTTP/1.1" 200 476 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-09-30T14:22:40.299Z [INFO]: server is running on http://localhost:4000
