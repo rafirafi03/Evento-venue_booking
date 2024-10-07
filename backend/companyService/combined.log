@@ -413,3 +413,11 @@
 2024-09-29T14:28:54.999Z [INFO]: ::1 - - [29/Sep/2024:14:28:54 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-09-29T14:29:05.614Z [INFO]: ::1 - - [29/Sep/2024:14:29:05 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-09-30T14:22:51.216Z [INFO]: server is running on http://localhost:4001
+2024-10-03T07:54:46.098Z [INFO]: server is running on http://localhost:4001
+2024-10-03T11:14:05.174Z [INFO]: ::1 - - [03/Oct/2024:11:14:05 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-03T18:20:19.373Z [INFO]: ::1 - - [03/Oct/2024:18:20:19 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-03T18:20:21.344Z [INFO]: ::1 - - [03/Oct/2024:18:20:21 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-04T06:16:27.421Z [INFO]: server is running on http://localhost:4001
+2024-10-04T09:41:09.565Z [INFO]: ::1 - - [04/Oct/2024:09:41:09 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-04T09:41:19.678Z [INFO]: ::1 - - [04/Oct/2024:09:41:19 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-07T10:08:48.039Z [INFO]: server is running on http://localhost:4001

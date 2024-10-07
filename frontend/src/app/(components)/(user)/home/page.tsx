@@ -1,10 +1,24 @@
-import React from "react";
+"use client"
+
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Header from "../header/page";
 import Footer from "../footer/page";
+import { useRouter } from "next/navigation";
 // import Auth from '../../../auth/auth'
 
 const Page = ()=> {
+
+  const router = useRouter()
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken')
+
+    if (!token) {
+      router.push('/login')
+    }
+  },[router])
+
   return (
     <>
       <Header />
