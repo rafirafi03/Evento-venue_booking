@@ -58,52 +58,112 @@ export default function page({changePage}:PageProps) {
   ];
 
   return (
-    <>
-      <h1 className="font-extrabold text-2xl mt-5 mb-5">Venues</h1>
+    <div className="m-5">
+      <h1 className="font-extrabold text-2xl mt-5">Venues</h1>
       <div className="flex justify-end mb-5">
       <button
       onClick={handleChange}
-        className="text-white bg-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center dark:bg-red-500 dark:hover:bg-red-500 dark:focus:ring-red-300"
+        className="text-white bg-red-500 hover:bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-2 py-1 text-center inline-flex items-center dark:bg-red-500 dark:hover:bg-red-500 dark:focus:ring-red-300"
       >
         Add Venue
         <FontAwesomeIcon icon={faAdd} className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-white ml-2" />
 
       </button>
       </div>
-      <div className="gap-5 grid grid-cols-3 sm:grid-cols-4">
-        {list.map((item, index) => (
-          <div
-            key={index}
-            className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-          >
-            <a href="#">
-              <Image
-                className="rounded-t-lg"
-                width={500}
-                height={100}
-                src={item.img}
-                alt="img"
-              />
-            </a>
-            <div className="p-5">
-              <a href="#">
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {item.title}
-                </h5>
-              </a>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-                {item.location}
-              </p>
-              {/* <a href="#" className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-red-300 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-red-300 dark:hover:bg-red-300 dark:focus:ring-red-300">
-            Details
-             <svg className="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-            </svg>
-        </a> */}
-            </div>
-          </div>
-        ))}
+      {list.length > 0 ? (
+        <>
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left rtl:text-right text-black dark:text-black">
+          <thead className="font-bold text-black uppercase bg-red-300 dark:bg-red-300 dark:text-black">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                No
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Company
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Email
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Phone
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Offers
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Status
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Action
+              </th>
+              {/* <th scope="col" className="px-6 py-3">
+                <span className="sr-only">Edit</span>
+              </th> */}
+            </tr>
+          </thead>
+          <tbody className="dark:text-black font-bold">
+            
+              {list.map((company,index) => (
+                <tr
+                  key={index}
+                  className="bg-red-100 dark:bg-red-100 hover:bg-red-200 border-b-2 border-red-200"
+                >
+                  <th scope="row" className="px-6 py-4 whitespace-nowrap">
+                    {index+1}
+                  </th>
+                  <th scope="row" className="px-6 py-4 whitespace-nowrap">
+                    {company.title}
+                  </th>
+                  <td className="px-6 py-4">{company.location}</td>
+                  <td className="px-6 py-4">{company.location}</td>
+                  <td className="px-6 py-4">
+                    { company.location ? 
+                    <button  className="bg-[rgb(255,0,0)] hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
+                      unblock
+                    </button>
+                    :
+                    <button className="bg-black hover:bg-[rgb(255,0,0)] transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
+                      block
+                    </button>
+                    }
+                    
+                  </td>
+                  <td className="px-6 py-4">
+                    { company.location ? 
+                    <button  className="bg-[rgb(255,0,0)] hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
+                      unblock
+                    </button>
+                    :
+                    <button className="bg-black hover:bg-[rgb(255,0,0)] transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
+                      block
+                    </button>
+                    }
+                    
+                  </td>
+                  <td className="px-6 py-4">
+                    <button  className="bg-black transition-transform duration-300 hover:scale-110 text-xs text-white p-2 rounded-xl h-5 flex items-center">
+                      View
+                    </button>
+                  </td>
+                  {/* <td className="px-6 py-4 text-right">
+                    <a className="hover:underline cursor-pointer">View</a>
+                  </td> */}
+                </tr>
+              ))}
+            
+          </tbody>
+        </table>
       </div>
-    </>
+      {/* <ConfirmModal closeModal={closeModal} confirmBlock={confirmBlock} blockModal={blockModal} blockAction={blockAction}/> */}
+
+      
+      </>
+    ) : (
+      
+          <h1>No companies found</h1> 
+
+    )}
+    </div>
   );
 }

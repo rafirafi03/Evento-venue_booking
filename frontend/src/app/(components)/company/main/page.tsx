@@ -44,7 +44,7 @@ export default function Page() {
             page={page}
           />
         </aside>
-        <div className="flex-1 p-4">
+        <div className="flex-1 p-4 bg-slate-100">
           {page === "addVenue" ? (
             <AddVenue />
           ) : page === "dashboard" ? (

@@ -8,7 +8,7 @@ import Select from "react-select";
 import {
   useConfirmOtpMutation,
   useRegisterPostMutation,
-} from "@/app/store/slices/companyApiSlices";
+} from "../../../store/slices/companyApiSlices";
 import OtpModal from "../otpModal/page";
 import { useRouter } from "next/navigation";
 

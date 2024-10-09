@@ -1,4 +1,4 @@
-import { useResendOtpMutation } from '@/app/store/slices/companyApiSlices';
+import { useResendOtpMutation } from '../../../store/slices/companyApiSlices';
 import React, { useRef, useState, useEffect } from 'react';
 
 interface PageProps {

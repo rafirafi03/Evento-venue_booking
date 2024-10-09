@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import { baseCompanyUrl } from "@/app/constants/api";
-import { HttpMethod } from "@/app/schema/httpMethods";
+import { baseCompanyUrl } from "../../constants/api";
+import { HttpMethod } from "../../schema/httpMethods";
 
 export const companyApiSlice = createApi({
     reducerPath: 'companyApi',
@@ -60,6 +60,13 @@ export const companyApiSlice = createApi({
                 method: HttpMethod.PATCH,
                 body: postData
             })
+        }),
+        addVenue : builder.mutation({
+            query: (postData) => ({
+                url: '/addVenue',
+                method: HttpMethod.POST,
+                body: postData
+            })
         })
     })
 })
@@ -72,5 +79,6 @@ export const {
     useGetCompaniesQuery,
     useGetRequestsQuery,
     useBlockCompanyMutation,
-    useCompanyApprovalMutation
+    useCompanyApprovalMutation,
+    useAddVenueMutation
 } = companyApiSlice
