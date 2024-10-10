@@ -9,6 +9,8 @@ import { GetRequestsUseCase } from '../../useCases/getRequestsUseCase';
 import { BlockCompanyUseCase } from '../../useCases/blockCompanyUseCase';
 import { CompanyApprovalUseCase } from '../../useCases/companyApprovalUseCase';
 import { upload } from '../multer/multerConfig'
+import { AddVenueUseCase } from '../../useCases/addVenueUseCase';
+import { GetVenuesUseCase } from '../../useCases/getVenuesUseCase';
 
 const router = Router();
 
@@ -24,7 +26,9 @@ const getCompaniesUseCase = new GetCompaniesUseCase(companyRepository)
 const getRequestsUseCase = new GetRequestsUseCase(companyRepository)
 const blockCompanyUseCase = new BlockCompanyUseCase(companyRepository)
 const companyApprovalUseCase = new CompanyApprovalUseCase(companyRepository, otpRepository)
-const companyController = new CompanyController(registerUseCase,loginUseCase, verifyOtpUseCase, resendOtpUseCase,)
+const addVenueUseCase = new AddVenueUseCase(companyRepository)
+const getVenuesUseCase = new GetVenuesUseCase(companyRepository)
+const companyController = new CompanyController(registerUseCase,loginUseCase, verifyOtpUseCase, resendOtpUseCase, addVenueUseCase, getVenuesUseCase)
 const adminController = new AdminController(getRequestsUseCase, getCompaniesUseCase, blockCompanyUseCase, companyApprovalUseCase)
 
 router.post("/register", (req,res) => {
@@ -57,6 +61,14 @@ router.post('/blockCompany', (req,res) => {
 
 router.patch('/companyApproval', (req,res) => {
     adminController.companyApproval(req,res)
+})
+
+router.post('/addVenue', upload.array('images'),(req,res) => {
+    companyController.addVenue(req,res)
+})
+
+router.get('/getVenues', (req,res) => {
+    companyController.getVenues(req,res)
 })
 
 export default router

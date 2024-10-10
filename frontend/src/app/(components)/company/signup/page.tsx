@@ -185,6 +185,7 @@ const Page = () => {
     formData.append('email', email);
     formData.append('phone', phone);
     formData.append('password', password);
+    formData.append('folderName',"companyLicenses")
     if(country) {
       formData.append('country', country?.label);
     }

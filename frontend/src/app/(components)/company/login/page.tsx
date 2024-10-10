@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import {
   useLoginPostMutation
-} from "@/app/store/slices/companyApiSlices";
+} from "../../../store/slices/companyApiSlices";
 // import OtpModal from "../otpModal/page";
 import { useRouter } from "next/navigation";
 

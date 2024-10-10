@@ -1,5 +1,5 @@
-import { Company, ICompanyData } from "../../entities";
-import { ICompany } from "../../infrastructure/db";
+import { Company, ICompanyData, IVenueData, Venue } from "../../entities";
+import { ICompany, IVenue } from "../../infrastructure/db";
 
 
 export interface ICompanyRepository {
@@ -8,4 +8,6 @@ export interface ICompanyRepository {
     save(company: Company) : Promise<ICompanyData | null>
     getRequests() : Promise<ICompany[]>
     getCompanies() : Promise<ICompany[]>
+    addVenue(venue: Venue) : Promise<IVenueData | null>
+    getVenues() : Promise<IVenue[]>
 }

@@ -67,6 +67,11 @@ export const companyApiSlice = createApi({
                 method: HttpMethod.POST,
                 body: postData
             })
+        }),
+        getVenues: builder.query({
+            query: () => ({
+                url: '/getVenues'
+            })
         })
     })
 })
@@ -80,5 +85,6 @@ export const {
     useGetRequestsQuery,
     useBlockCompanyMutation,
     useCompanyApprovalMutation,
-    useAddVenueMutation
+    useAddVenueMutation,
+    useGetVenuesQuery
 } = companyApiSlice

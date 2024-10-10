@@ -5,6 +5,7 @@ import Header from "../../login-header/header";
 import Aside from "../aside/page";
 import Venues from '../venues/page'
 import AddVenue from '../addVenue/page'
+import Dashboard from '../dashboard/page'
 // import UserList from "../userslist/page";
 // import CompanyList from '../companyList/page'
 // import Approval from "../approval/page";
@@ -37,7 +38,7 @@ export default function Page() {
         <Header />
       </nav>
       <div className="flex mt-[64px]">
-        <aside className="w-64 bg-white dark:bg-gray-800">
+        <aside className="w-64 bg-slate-white dark:bg-gray-800">
           <Aside
             handleLogout={handleLogout}
             changePage={changePage}
@@ -48,7 +49,7 @@ export default function Page() {
           {page === "addVenue" ? (
             <AddVenue />
           ) : page === "dashboard" ? (
-            <AddVenue/>
+            <Dashboard/>
           ) : page === "inbox" ? (
             <Venues changePage={changePage}/>
           ) : page === "addVenue" ? (

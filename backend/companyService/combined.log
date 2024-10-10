@@ -433,3 +433,83 @@
 2024-10-08T08:03:10.071Z [INFO]: ::1 - - [08/Oct/2024:08:03:10 +0000] "GET /api/company/getRequests HTTP/1.1" 200 17 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-10-08T08:03:13.270Z [INFO]: ::1 - - [08/Oct/2024:08:03:13 +0000] "GET /api/company/getCompanies HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
 2024-10-09T05:56:57.220Z [INFO]: server is running on http://localhost:4001
+2024-10-09T12:34:05.266Z [INFO]: server is running on http://localhost:4001
+2024-10-10T05:47:10.395Z [INFO]: server is running on http://localhost:4001
+2024-10-10T05:49:55.494Z [INFO]: ::1 - - [10/Oct/2024:05:49:55 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T05:50:09.304Z [INFO]: ::1 - - [10/Oct/2024:05:50:09 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T05:50:40.534Z [INFO]: ::1 - - [10/Oct/2024:05:50:40 +0000] "GET /api/company/getRequests HTTP/1.1" 200 407 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T05:50:51.820Z [INFO]: ::1 - - [10/Oct/2024:05:50:51 +0000] "GET /api/company/getRequests HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T05:50:56.161Z [INFO]: ::1 - - [10/Oct/2024:05:50:56 +0000] "PATCH /api/company/companyApproval HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T05:52:17.261Z [INFO]: ::1 - - [10/Oct/2024:05:52:17 +0000] "POST /api/company/loginCompany HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T05:58:25.435Z [INFO]: server is running on http://localhost:4001
+2024-10-10T05:58:45.811Z [INFO]: server is running on http://localhost:4001
+2024-10-10T06:01:30.114Z [INFO]: server is running on http://localhost:4001
+2024-10-10T06:07:27.880Z [INFO]: ::1 - - [10/Oct/2024:06:07:27 +0000] "POST /api/company/addVenue HTTP/1.1" - - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T06:11:32.566Z [INFO]: server is running on http://localhost:4001
+2024-10-10T06:12:20.865Z [INFO]: server is running on http://localhost:4001
+2024-10-10T06:16:46.835Z [INFO]: server is running on http://localhost:4001
+2024-10-10T06:19:06.739Z [INFO]: server is running on http://localhost:4001
+2024-10-10T06:19:21.125Z [INFO]: server is running on http://localhost:4001
+2024-10-10T06:22:19.637Z [INFO]: ::1 - - [10/Oct/2024:06:22:19 +0000] "POST /api/company/addVenue HTTP/1.1" - - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T08:41:28.485Z [INFO]: server is running on http://localhost:4001
+2024-10-10T08:54:09.210Z [INFO]: server is running on http://localhost:4001
+2024-10-10T08:54:57.908Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:03:51.251Z [INFO]: ::1 - - [10/Oct/2024:09:03:51 +0000] "POST /api/company/addVenue HTTP/1.1" - - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T09:07:18.168Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:07:36.745Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:08:31.866Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:15:23.569Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:16:39.087Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:17:21.121Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:17:36.796Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:19:18.619Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:19:28.650Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:19:43.053Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:20:06.432Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:22:34.393Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:32:40.511Z [INFO]: ::1 - - [10/Oct/2024:09:32:40 +0000] "POST /api/company/register HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T09:32:49.512Z [INFO]: ::1 - - [10/Oct/2024:09:32:49 +0000] "POST /api/company/confirm-otp HTTP/1.1" 200 252 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T09:47:00.154Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:48:25.841Z [INFO]: server is running on http://localhost:4001
+2024-10-10T09:48:47.428Z [INFO]: ::1 - - [10/Oct/2024:09:48:47 +0000] "POST /api/company/addVenue HTTP/1.1" - - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T10:08:54.886Z [INFO]: ::1 - - [10/Oct/2024:10:08:54 +0000] "POST /api/company/addVenue HTTP/1.1" - - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T11:30:10.669Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:30:20.590Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:30:28.865Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:30:35.161Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:30:41.055Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:30:48.108Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:31:13.099Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:31:19.793Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:31:32.040Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:31:45.175Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:31:55.090Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:32:02.014Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:32:15.615Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:32:30.930Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:32:35.458Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:32:43.815Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:32:56.208Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:33:05.851Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:33:26.432Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:33:52.757Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:34:13.067Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:34:38.808Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:34:49.078Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:37:27.263Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:40:53.620Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:41:46.410Z [INFO]: server is running on http://localhost:4001
+2024-10-10T11:42:22.635Z [INFO]: server is running on http://localhost:4001
+2024-10-10T13:58:45.879Z [INFO]: server is running on http://localhost:4001
+2024-10-10T13:59:01.558Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:02:52.174Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:03:14.300Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:04:01.955Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:04:08.048Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:04:25.192Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:04:42.225Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:05:06.847Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:07:02.127Z [INFO]: ::1 - - [10/Oct/2024:14:07:02 +0000] "POST /api/company/addVenue HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"
+2024-10-10T14:11:29.272Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:11:47.101Z [INFO]: server is running on http://localhost:4001
+2024-10-10T14:11:55.143Z [INFO]: ::1 - - [10/Oct/2024:14:11:55 +0000] "POST /api/company/addVenue HTTP/1.1" 200 16 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36"

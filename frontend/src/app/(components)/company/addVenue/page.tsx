@@ -4,7 +4,6 @@ import { FaUpload } from "react-icons/fa";
 import { useAddVenueMutation } from "app/store/slices/companyApiSlices";
 
 export default function page() {
-
   const [addVenue] = useAddVenueMutation();
 
   const [name, setName] = useState<string>("");
@@ -22,28 +21,26 @@ export default function page() {
   const [passwordError, setPassError] = useState<string>("");
   const [confirmPassError, setConfirmPassError] = useState<string>("");
 
-  const [selectedImages, setSelectedImages] = useState<string[]>([]);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
   const [imageToReplace, setImageToReplace] = useState<number | null>(null); // Track which image to replace
 
   // Handle image addition or replacement
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const newImage = URL.createObjectURL(e.target.files[0]);
+      const filesArray = Array.from(e.target.files);
 
       if (imageToReplace !== null) {
-        // Replace the selected image
-        const updatedImages = [...selectedImages];
-        updatedImages[imageToReplace] = newImage;
-        setSelectedImages(updatedImages);
+        // Replace the selected image at the specified index
+        const updatedFiles = [...selectedImages];
+        updatedFiles[imageToReplace] = filesArray[0]; // Replace the file at the specified index
+        setSelectedImages(updatedFiles);
         setImageToReplace(null); // Reset the replace index
       } else {
         // Add new images (limiting to 6)
-        const newImages = Array.from(e.target.files).map((file) =>
-          URL.createObjectURL(file)
-        );
-        setSelectedImages((prevImages) =>
-          [...prevImages, ...newImages].slice(0, 6)
+        const newFiles = Array.from(e.target.files);
+        setSelectedImages(
+          (prevFiles) => [...prevFiles, ...newFiles].slice(0, 6) // Limit to 6 files
         );
       }
     }
@@ -55,25 +52,26 @@ export default function page() {
     document.getElementById("imageInput")?.click(); // Trigger file input
   };
 
-  const handleSubmit = async ()=> {
+  const handleSubmit = async () => {
     const formData = new FormData();
 
-    formData.append('name',name);
-    formData.append('type',type);
-    formData.append('description',description);
-    formData.append('capacity',capacity.toString());
-    formData.append('address',address);
-    formData.append('phone',phone.toString());
-    formData.append('city',city);
-    formData.append('state',state);
+    formData.append("name", name);
+    formData.append("type", type);
+    formData.append("description", description);
+    formData.append("capacity", capacity.toString());
+    formData.append("address", address);
+    formData.append("phone", phone.toString());
+    formData.append("city", city);
+    formData.append("state", state);
+    formData.append("folderName", "venueImages");
     selectedImages.forEach((image) => {
-      formData.append('images', image);
+      formData.append("images", image);
     });
 
     const response = await addVenue(formData).unwrap();
 
-    console.log(response)
-  }
+    console.log(response);
+  };
 
   return (
     <div className="m-5">
@@ -294,29 +292,34 @@ export default function page() {
         </h1>
 
         <div className="flex justify-center items-center flex-wrap gap-4 mb-5">
-          {selectedImages.map((image, index) => (
-            <div
-              key={index}
-              className="relative w-1/4 h-48 border-2 border-dashed border-gray-300 rounded-lg shadow-md cursor-pointer"
-              onClick={() => handleImageReplace(index)} // Click to replace the image
-            >
-              <img
-                src={image}
-                alt={`Selected ${index}`}
-                className="w-full h-full object-cover rounded-lg transition-transform duration-300 transform hover:scale-105"
-              />
-            </div>
-          ))}
+          {selectedImages.map((image, index) => {
+            // Create a URL for each image file to display it
+            const imageUrl = URL.createObjectURL(image);
+
+            return (
+              <div
+                key={index}
+                className="relative w-1/4 h-48 border-2 border-dashed border-gray-300 rounded-lg shadow-md cursor-pointer"
+                onClick={() => handleImageReplace(index)} // Click to replace the image
+              >
+                <img
+                  src={imageUrl}
+                  alt={`Selected ${index}`}
+                  className="w-full h-full object-cover rounded-lg transition-transform duration-300 transform hover:scale-105"
+                />
+              </div>
+            );
+          })}
 
           {selectedImages.length < 6 && (
             <div
-              className="relative w-1/4 h-48 border-2 border-dashed border-gray-300 rounded-lg shadow-md flex items-center justify-center cursor-pointer hover:border-blue-500 transition-all duration-300 bg-gray-50 hover:bg-gray-100"
+              className="relative w-1/4 h-48 border-2 border-dashed border-gray-300 rounded-lg shadow-md flex items-center justify-center cursor-pointer hover:border-red-300 transition-all duration-300 bg-gray-50 hover:bg-gray-100"
               onClick={() => document.getElementById("imageInput")?.click()}
             >
               <div className="flex flex-col items-center justify-center text-gray-400 text-center">
                 <FaUpload className="text-4xl mb-2" />
                 <p className="text-base font-semibold">Click to upload</p>
-                <p className="text-xs">or drag and drop</p>
+                <p className="text-xs">add you venue images</p>
               </div>
             </div>
           )}
@@ -331,7 +334,10 @@ export default function page() {
           />
         </div>
         <div className="flex justify-center items-center">
-          <button onClick={handleSubmit} className="focus:outline-none text-white bg-[rgb(255,0,0)] hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 dark:bg-[rgb(255,0,0)] dark:hover:bg-red-700 dark:focus:ring-red-900 transition-transform duration-300 transform hover:scale-105">
+          <button
+            onClick={handleSubmit}
+            className="focus:outline-none text-white bg-[rgb(255,0,0)] hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 dark:bg-[rgb(255,0,0)] dark:hover:bg-red-700 dark:focus:ring-red-900 transition-transform duration-300 transform hover:scale-105"
+          >
             Add
           </button>
         </div>

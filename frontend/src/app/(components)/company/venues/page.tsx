@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useGetVenuesQuery } from "app/store/slices/companyApiSlices";
 
 interface PageProps {
     changePage: (page: string) => void;
@@ -9,53 +10,17 @@ interface PageProps {
 
 export default function page({changePage}:PageProps) {
 
+  const { data: venues, isLoading, isError, refetch} = useGetVenuesQuery(undefined);
+
+  console.log(venues?.venues)
+
+  const venue = venues?.venues?.venues
+
 
     const handleChange = ()=> {
         changePage('addVenue')
     }
 
-  const list = [
-    {
-      title: "Orange",
-      img: "/assets/images/homepage-image.jpg",
-      location: "kasaragod,kerala",
-    },
-    {
-      title: "Tangerine",
-      img: "/assets/images/homepage-image.jpg",
-      location: "kasaragod,kerala",
-    },
-    {
-      title: "Raspberry",
-      img: "/assets/images/homepage-image.jpg",
-      location: "kozhikkode,kerala",
-    },
-    {
-      title: "Lemon",
-      img: "/assets/images/homepage-image.jpg",
-      location: "kochi,kerala",
-    },
-    {
-      title: "Avocado",
-      img: "/assets/images/homepage-image.jpg",
-      location: "malappuram,kerala",
-    },
-    {
-      title: "Lemon 2",
-      img: "/assets/images/homepage-image.jpg",
-      location: "wayanad,kerala",
-    },
-    {
-      title: "Banana",
-      img: "/assets/images/homepage-image.jpg",
-      location: "thrissur,kerala",
-    },
-    {
-      title: "Watermelon",
-      img: "/assets/images/homepage-image.jpg",
-      location: "alappuzha,kerala",
-    },
-  ];
 
   return (
     <div className="m-5">
@@ -70,32 +35,35 @@ export default function page({changePage}:PageProps) {
 
       </button>
       </div>
-      {list.length > 0 ? (
+      {venue?.length > 0 ? (
         <>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-black dark:text-black">
-          <thead className="font-bold text-black uppercase bg-red-300 dark:bg-red-300 dark:text-black">
+          <thead className="font-bold text-black uppercase bg-white dark:bg-white dark:text-black">
             <tr>
               <th scope="col" className="px-6 py-3">
                 No
               </th>
               <th scope="col" className="px-6 py-3">
-                Company
+                Name
               </th>
               <th scope="col" className="px-6 py-3">
-                Email
+                type
               </th>
               <th scope="col" className="px-6 py-3">
-                Phone
+                city
               </th>
               <th scope="col" className="px-6 py-3">
-                Offers
+                state
               </th>
               <th scope="col" className="px-6 py-3">
-                Status
+                offers
               </th>
               <th scope="col" className="px-6 py-3">
-                Action
+                status
+              </th>
+              <th scope="col" className="px-6 py-3">
+                action
               </th>
               {/* <th scope="col" className="px-6 py-3">
                 <span className="sr-only">Edit</span>
@@ -104,21 +72,22 @@ export default function page({changePage}:PageProps) {
           </thead>
           <tbody className="dark:text-black font-bold">
             
-              {list.map((company,index) => (
+              {venue.map((company,index) => (
                 <tr
                   key={index}
-                  className="bg-red-100 dark:bg-red-100 hover:bg-red-200 border-b-2 border-red-200"
+                  className="bg-slate-100 dark:bg-slate-100 hover:bg-slate-200 border-b-2 border"
                 >
                   <th scope="row" className="px-6 py-4 whitespace-nowrap">
                     {index+1}
                   </th>
                   <th scope="row" className="px-6 py-4 whitespace-nowrap">
-                    {company.title}
+                    {company.name}
                   </th>
-                  <td className="px-6 py-4">{company.location}</td>
-                  <td className="px-6 py-4">{company.location}</td>
+                  <td className="px-6 py-4">{company.type}</td>
+                  <td className="px-6 py-4">{company.city}</td>
+                  <td className="px-6 py-4">{company.state}</td>
                   <td className="px-6 py-4">
-                    { company.location ? 
+                    { company.city ? 
                     <button  className="bg-[rgb(255,0,0)] hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
                       unblock
                     </button>
@@ -130,7 +99,7 @@ export default function page({changePage}:PageProps) {
                     
                   </td>
                   <td className="px-6 py-4">
-                    { company.location ? 
+                    { company.city ? 
                     <button  className="bg-[rgb(255,0,0)] hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
                       unblock
                     </button>

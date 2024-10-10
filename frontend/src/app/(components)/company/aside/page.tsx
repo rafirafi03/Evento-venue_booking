@@ -10,13 +10,13 @@ export default function page({ handleLogout, changePage, page }: any) {
     <div>
       <aside
         id="logo-sidebar"
-        className="fixed top-7 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-white shadow-xl"
+        className="fixed top-7 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-slate-100 border-r border-gray-200 sm:translate-x-0 dark:bg-white shadow-xl"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-white">
+        <div className="h-full px-3 pb-4 overflow-y-auto bg-slate-100 dark:bg-slate-100">
           <ul className="space-y-5 ml-2 font-medium">
             <li className="cursor-pointer" onClick={() => changePage('dashboard')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${page == 'dashboard' ? 'bg-red-300' : ""}`}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${page == 'dashboard' ? 'bg-red-200' : ""}`}>
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900"
                   aria-hidden="true"
@@ -31,7 +31,7 @@ export default function page({ handleLogout, changePage, page }: any) {
               </a>
             </li>
             <li className="cursor-pointer" onClick={() => changePage('users')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'users' ? 'bg-red-300' : ""}`}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'users' ? 'bg-red-200' : ""}`}>
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900 "
                   aria-hidden="true"
@@ -47,8 +47,8 @@ export default function page({ handleLogout, changePage, page }: any) {
               </a>
             </li>
             
-            <li className="cursor-pointer" onClick={() => changePage('users')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'users' ? 'bg-red-300' : ""}`}>
+            <li className="cursor-pointer" onClick={() => changePage('venues')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-200 dark:hover:bg-red-200 group ${page == 'venues' ? 'bg-red-300' : ""}`}>
               <FontAwesomeIcon icon={faBuilding} className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900" />
 
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">
@@ -56,8 +56,8 @@ export default function page({ handleLogout, changePage, page }: any) {
                 </span>
               </a>
             </li>
-            <li className="cursor-pointer" onClick={() => changePage('users')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'users' ? 'bg-red-300' : ""}`}>
+            <li className="cursor-pointer" onClick={() => changePage('bookings')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'bookings' ? 'bg-red-300' : ""}`}>
               <FontAwesomeIcon icon={faFileAlt} className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900" />
 
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">
@@ -66,7 +66,7 @@ export default function page({ handleLogout, changePage, page }: any) {
               </a>
             </li>
             <li className="cursor-pointer" onClick={() => changePage('users')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'users' ? 'bg-red-300' : ""}`}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'offers' ? 'bg-red-300' : ""}`}>
               <FontAwesomeIcon icon={faTags} className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900" />
 
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">
