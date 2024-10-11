@@ -90,4 +90,29 @@ export class CompanyRepository implements ICompanyRepository {
     }
   }
 
+  async getListedVenues(): Promise<IVenue[]> {
+    try {
+      const venues = await venueModel.find({isListed: true});
+
+      console.log(venues, "vnssssss");
+
+      return venues as IVenue[];
+    } catch (error) {
+      console.error("Error fetching venues:", error);
+      throw new Error("Failed to fetch venues");
+    }
+  }
+
+  async findVenueById(id: string): Promise<IVenue | null> {
+    try {
+      const venue = await venueModel.findById({ _id: id });
+      console.log(id, "idd123 at cmpnyrepo");
+      console.log(venue, "cmpny123 at cmpnyrepo");
+      if (!venue) return null;
+      return venue;
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
 }

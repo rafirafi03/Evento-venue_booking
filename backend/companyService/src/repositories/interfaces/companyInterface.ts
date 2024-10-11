@@ -10,4 +10,6 @@ export interface ICompanyRepository {
     getCompanies() : Promise<ICompany[]>
     addVenue(venue: Venue) : Promise<IVenueData | null>
     getVenues() : Promise<IVenue[]>
+    getListedVenues() : Promise<IVenue[]>
+    findVenueById(_id: string) : Promise<IVenue | null>
 }

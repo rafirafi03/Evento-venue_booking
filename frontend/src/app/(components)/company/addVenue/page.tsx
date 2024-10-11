@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "@radix-ui/themes/styles.css";
 import { FaUpload } from "react-icons/fa";
 import { useAddVenueMutation } from "app/store/slices/companyApiSlices";
+import { useRouter } from "next/navigation";
 
 export default function page() {
   const [addVenue] = useAddVenueMutation();
@@ -24,6 +25,8 @@ export default function page() {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
   const [imageToReplace, setImageToReplace] = useState<number | null>(null); // Track which image to replace
+
+  const router = useRouter()
 
   // Handle image addition or replacement
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +72,8 @@ export default function page() {
     });
 
     const response = await addVenue(formData).unwrap();
+
+    router.push('/company/main')
 
     console.log(response);
   };

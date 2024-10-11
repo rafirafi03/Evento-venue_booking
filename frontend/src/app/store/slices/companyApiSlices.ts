@@ -72,7 +72,19 @@ export const companyApiSlice = createApi({
             query: () => ({
                 url: '/getVenues'
             })
-        })
+        }),
+        updateVenueStatus : builder.mutation({
+            query: (postData) => ({
+                url: '/venueStatus',
+                method: HttpMethod.POST,
+                body: postData
+            })
+        }),
+        getListedVenues: builder.query({
+            query: () => ({
+                url: '/getListedVenues'
+            })
+        }),
     })
 })
 
@@ -86,5 +98,7 @@ export const {
     useBlockCompanyMutation,
     useCompanyApprovalMutation,
     useAddVenueMutation,
-    useGetVenuesQuery
+    useGetVenuesQuery,
+    useUpdateVenueStatusMutation,
+    useGetListedVenuesQuery
 } = companyApiSlice

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useGetVenuesQuery } from "app/store/slices/companyApiSlices";
-
+import { useGetVenuesQuery, useUpdateVenueStatusMutation } from "app/store/slices/companyApiSlices";
+import ConfirmModal from '../confirmModal/page'
 interface PageProps {
     changePage: (page: string) => void;
   }
@@ -11,6 +11,12 @@ interface PageProps {
 export default function page({changePage}:PageProps) {
 
   const { data: venues, isLoading, isError, refetch} = useGetVenuesQuery(undefined);
+  const [updateVenueStatus] = useUpdateVenueStatusMutation()
+
+  const [modalTitle, setModalTitle] = useState<string>('')
+  const [modalButton, setModalButton] = useState<string>('')
+  const [venueId, setVenueId] = useState<string>('')
+  const [isConfirmModal, setConfirmModal] = useState<boolean>(false)
 
   console.log(venues?.venues)
 
@@ -21,9 +27,34 @@ export default function page({changePage}:PageProps) {
         changePage('addVenue')
     }
 
+    const handleConfrimModal = (title: string, button: string, id: string)=> {
+      setModalTitle(title) 
+      setModalButton(button)
+      setVenueId(id)
+      setConfirmModal(true)
+    }
+
+    const closeModal = ()=> {
+      setConfirmModal(false)
+    }
+
+    const confirmVenueListing = async()=> {
+      try {
+        console.log('confirmvenuelisting')
+        const response = await updateVenueStatus({venueId}).unwrap()
+        refetch()
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
 
   return (
     <div className="m-5">
+      {isConfirmModal && (
+        <ConfirmModal title={modalTitle} button={modalButton} isOpen={isConfirmModal} closeModal={closeModal} confirm={confirmVenueListing} />
+      )}
       <h1 className="font-extrabold text-2xl mt-5">Venues</h1>
       <div className="flex justify-end mb-5">
       <button
@@ -72,7 +103,7 @@ export default function page({changePage}:PageProps) {
           </thead>
           <tbody className="dark:text-black font-bold">
             
-              {venue.map((company,index) => (
+              {venue.map((ven,index) => (
                 <tr
                   key={index}
                   className="bg-slate-100 dark:bg-slate-100 hover:bg-slate-200 border-b-2 border"
@@ -81,31 +112,24 @@ export default function page({changePage}:PageProps) {
                     {index+1}
                   </th>
                   <th scope="row" className="px-6 py-4 whitespace-nowrap">
-                    {company.name}
+                    {ven.name}
                   </th>
-                  <td className="px-6 py-4">{company.type}</td>
-                  <td className="px-6 py-4">{company.city}</td>
-                  <td className="px-6 py-4">{company.state}</td>
+                  <td className="px-6 py-4">{ven.type}</td>
+                  <td className="px-6 py-4">{ven.city}</td>
+                  <td className="px-6 py-4">{ven.state}</td>
                   <td className="px-6 py-4">
-                    { company.city ? 
-                    <button  className="bg-[rgb(255,0,0)] hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
-                      unblock
+                    <button  className="bg-slate-700 hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
+                      Offers
                     </button>
-                    :
-                    <button className="bg-black hover:bg-[rgb(255,0,0)] transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
-                      block
-                    </button>
-                    }
-                    
                   </td>
                   <td className="px-6 py-4">
-                    { company.city ? 
-                    <button  className="bg-[rgb(255,0,0)] hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
-                      unblock
+                    { ven.isListed ? 
+                    <button onClick={()=> handleConfrimModal('you want to unlist this venue?','unlist',ven._id)} className="bg-gray-500 hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
+                      Unlist
                     </button>
                     :
-                    <button className="bg-black hover:bg-[rgb(255,0,0)] transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
-                      block
+                    <button onClick={()=> handleConfrimModal('you want to list this venue?','list', ven._id)} className="bg-black hover:bg-[rgb(255,0,0)] transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center">
+                      List
                     </button>
                     }
                     

@@ -5,11 +5,11 @@ import Image from "next/image";
 import Header from "../header/page";
 import Footer from "../footer/page";
 import { useRouter } from "next/navigation";
-import { useGetVenuesQuery } from "app/store/slices/companyApiSlices";
+import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
 // import Auth from '../../../auth/auth'
 
 const Page = () => {
-  const { data: venues, refetch } = useGetVenuesQuery(undefined);
+  const { data: venues, refetch } = useGetListedVenuesQuery(undefined);
 
   const venue = venues?.venues?.venues;
 
@@ -21,10 +21,10 @@ const Page = () => {
     if (!token) {
       router.push("/login");
     }
-  }, [router]);
+  }, [router,refetch]);
 
   return (
-    <>
+    <div className="bg-slate-50">
       <Header />
       <div className="flex w-full bg-white border-b border-slate-100">
         <div className="bg-slate-100 w-1/2 flex items-center justify-center">
@@ -98,34 +98,39 @@ const Page = () => {
         </div>
       </div>
 
-      <h1 className="">Featured venues</h1>
-      <div className="flex justify-center items-center mb-5">
+      <div className="max-w-5xl mx-auto my-5 p-4">
+        <h1 className="font-bold font-georgia text-2xl mb-2">Featured venues</h1>
+        <p className="text-sm font-georgia">start planning events with us. Explore <span className="text-[rgb(255,0,0)]">Evento</span></p>
+      </div>
+      <div className="min-h-screen flex justify-center items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {venue?.length && (
           <>
             {venue.map((ven, index) => (
               <div className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <a href="#">
-                  <img
-                    className="rounded-t-lg max-w-xs max-h-min"
-                    src={ven.images[0]}
-                    alt=""
+                  <Image
+                  className="rounded-t-lg"
+                  src={ven.images[0]}
+                  alt="img"
+                  width={500}
+                  height={500}
                   />
                 </a>
                 <div className="p-5">
                   <a href="#">
                     <h5 className="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
-                      Noteworthy technology acquisitions 2021
+                      {ven.name}
                     </h5>
                   </a>
                   <p className="mb-3 font-normal text-xs text-gray-700 dark:text-gray-400">
-                    Here are the biggest enterprise technology acquisitions of
-                    2021 so far, in reverse chronological order.
+                    {ven.description}
                   </p>
                   <a
                     href="#"
-                    className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    Read more
+                    View Details
                     <svg
                       className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                       aria-hidden="true"
@@ -149,17 +154,18 @@ const Page = () => {
         )}
 
       </div>
-      <div className="flex items-center justify-center mb-5">
+      </div>
+      <div className="flex items-center justify-center mb-5 mt-5">
             <button
                 type="submit"
                 className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[rgb(255,0,0)] rounded-lg border border-slate-200"
               >
-                Show More
+                Show More Venues
               </button>
 
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
