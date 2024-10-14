@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useResendOtpMutation } from '@/app/store/slices/userApiSlices';
+import { useResendOtpMutation } from 'app/store/slices/userApiSlices';
 
 interface PageProps {
   email: string;

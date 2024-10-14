@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useBlockUserMutation, useGetUsersQuery } from "../../../store/slices/userApiSlices";
+import { useBlockUserMutation, useGetUsersQuery } from "app/store/slices/userApiSlices";
 import ConfirmModal from '../confirmModal/page'
 
 export default function Page() {

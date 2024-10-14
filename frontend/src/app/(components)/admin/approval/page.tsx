@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useCompanyApprovalMutation, useGetRequestsQuery } from "../../../store/slices/companyApiSlices";
+import { useCompanyApprovalMutation, useGetRequestsQuery } from "app/store/slices/companyApiSlices";
 import Modal from '../modal/page'
 
 export default function Page() {

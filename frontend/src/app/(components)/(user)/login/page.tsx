@@ -5,7 +5,7 @@ import Header from "../../login-header/header";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useLoginPostMutation } from "../../../store/slices/userApiSlices";
+import { useLoginPostMutation } from "app/store/slices/userApiSlices";
 
 const Page = () => {
   const router = useRouter();

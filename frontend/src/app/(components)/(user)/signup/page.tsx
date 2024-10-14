@@ -17,7 +17,7 @@ import { useState } from "react";
 import {
   useRegisterPostMutation,
   useVerifyOtpMutation,
-} from "../../../store/slices/userApiSlices";
+} from "app/store/slices/userApiSlices";
 
 const Page = () => {
   const router = useRouter();

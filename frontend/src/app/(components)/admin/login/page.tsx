@@ -4,7 +4,7 @@ import { FaLock, FaEnvelope } from "react-icons/fa";
 import Header from "../../login-header/header";
 import Image from "next/image";
 import { useState } from "react";
-import { useAdminLoginMutation } from "../../../store/slices/userApiSlices";
+import { useAdminLoginMutation } from "app/store/slices/userApiSlices";
 import { useRouter } from "next/navigation";
 
 const Page = () => {
