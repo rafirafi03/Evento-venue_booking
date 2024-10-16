@@ -22,6 +22,10 @@ const Page = () => {
       router.push("/login");
     }
   }, [router,refetch]);
+  
+  const handleOnClick = (id: string) => {
+    router.push(`/venueDetails/${id}`)
+  }
 
   return (
     <div className="bg-slate-50">
@@ -107,7 +111,7 @@ const Page = () => {
         {venue?.length && (
           <>
             {venue.map((ven, index) => (
-              <div className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <div onClick={()=>handleOnClick(ven._id)} className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <a href="#">
                   <Image
                   className="rounded-t-lg"

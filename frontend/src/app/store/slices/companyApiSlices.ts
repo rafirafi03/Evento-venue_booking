@@ -85,6 +85,12 @@ export const companyApiSlice = createApi({
                 url: '/getListedVenues'
             })
         }),
+        getVenueDetails: builder.query({
+            query:(id) => ({
+                url: `/getVenueDetails/${id}`,
+                method: HttpMethod.GET
+            })
+        }),
     })
 })
 
@@ -100,5 +106,6 @@ export const {
     useAddVenueMutation,
     useGetVenuesQuery,
     useUpdateVenueStatusMutation,
-    useGetListedVenuesQuery
+    useGetListedVenuesQuery,
+    useGetVenueDetailsQuery
 } = companyApiSlice

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { RegisterUseCase } from "../../useCases/index";
 import { VerifyOtpUsecase } from "../../useCases/verifyOtpUseCase";
 import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
-import { LoginUseCase } from "../../useCases";
+import { LoginUseCase, GetVenueDetailsUseCase } from "../../useCases";
 import { AddVenueUseCase } from "../../useCases/addVenueUseCase";
 import { HttpStatusCode } from "../../constants";
 import { GetVenuesUseCase } from "../../useCases/getVenuesUseCase";
@@ -18,7 +18,8 @@ export class CompanyController {
     private _addVenueUseCase: AddVenueUseCase,
     private _getVenues: GetVenuesUseCase,
     private _getListedVenues: GetListedVenuesUseCase,
-    private _updateVenueStatus: VenueStatusUseCase
+    private _updateVenueStatus: VenueStatusUseCase,
+    private _getVenueDetailsUseCase : GetVenueDetailsUseCase
   ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
@@ -155,6 +156,25 @@ export class CompanyController {
       const response = await this._updateVenueStatus.execute(id);
 
       res.status(HttpStatusCode.OK).json(response);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async getVenueDetails(req: Request, res: Response) : Promise<void> {
+    try {
+      const {id} = req.params 
+
+      if (!id) {
+        res.status(400).json({ message: 'Invalid ID' });
+      }
+      
+      const response = await this._getVenueDetailsUseCase.execute(id);
+      res.status(HttpStatusCode.OK).json(response);
+
     } catch (error) {
       console.log(error);
       res

@@ -6,4 +6,7 @@ export * from './verifyLoginUseCases'
 export * from './blockUserUseCase';
 // export * from './getCompaniesUseCase'
 export * from './resendOtpUseCase'
+export * from './getUserDetailsUseCase'
+export * from './resetPassUseCase'
+export * from './editUserProfileUseCase'
 // export * from './getRequestsUseCase'

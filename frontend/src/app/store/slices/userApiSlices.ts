@@ -49,11 +49,31 @@ export const userApiSlice = createApi({
                 url: '/get-users',
             })
         }),
+        getUserDetails: builder.query({
+            query:(userId) => ({
+                url: `/getUserDetails/${userId}`,
+                method: HttpMethod.GET
+            })
+        }),
         blockUser: builder.mutation({
             query:(postData) => ({
                 url: '/blockUser',
                 method: HttpMethod.POST,
                 body: postData
+            })
+        }),
+        editUserProfile: builder.mutation({
+            query:(postData) => ({
+                url: '/editUserProfile',
+                method: HttpMethod.PATCH,
+                body: postData
+            })
+        }),
+        resetPassword: builder.mutation({
+            query: (patchData) => ({
+                url: '/resetPassword',
+                method: HttpMethod.PATCH,
+                body: patchData
             })
         })
     })
@@ -67,4 +87,7 @@ export const {
     useAdminLoginMutation,
     useGetUsersQuery,
     useBlockUserMutation,
+    useEditUserProfileMutation,
+    useGetUserDetailsQuery,
+    useResetPasswordMutation
 } = userApiSlice;

@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AdminController, UserController } from "../../adapters/controllers";
-import { AdminLoginUseCase, GetUsersUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase } from "../../useCases";
+import { AdminLoginUseCase, EditUserProfileUseCase, GetUsersUseCase, ResetPasswordUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase, GetUserDetailsUseCase } from "../../useCases";
 import { UserRepository, RedisClient } from "../../repositories";
 import { otpService } from "../services";
 import { AdminRepository } from "../../repositories/implementation/adminRepository";
@@ -30,7 +30,13 @@ const resendOtpUseCase = new ResendOtpUseCase(otpRepository, redisRepository)
 
 const blockUserUseCase = new BlockUserUseCase(userRepository)
 
-const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase);
+const getUserDetailsUseCase = new GetUserDetailsUseCase(userRepository)
+
+const resetPassUseCase = new ResetPasswordUseCase(userRepository)
+
+const editUserProfile = new EditUserProfileUseCase(userRepository)
+
+const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase, getUserDetailsUseCase, resetPassUseCase, editUserProfile);
 
 const adminController = new AdminController(adminLoginUseCase, getUsersUseCase, blockUserUseCase)
 
@@ -60,9 +66,20 @@ router.get('/get-users', (req,res) => {
   adminController.getUsers(req,res)
 })
 
+router.get('/getUserDetails/:userId', (req,res) => {
+  userController.getUserDetails(req,res)
+})
+
 router.post('/blockUser', (req,res) => {
-  console.log(req.body,'1234567890-=')
   adminController.blockUser(req,res)
+})
+
+router.patch('/resetPassword', (req,res) => {
+  userController.resetPassword(req,res)
+})
+
+router.patch('/editUserProfile', (req,res) => {
+  userController.editUserProfile(req,res)
 })
 
 export default router;

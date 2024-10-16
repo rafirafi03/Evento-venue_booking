@@ -20,7 +20,7 @@ export class ResendOtpUseCase {
             await this._otpRepository.sendMail(email, subject, message);
             await this._redisRepository.storeOTP(email, otp, 300)
 
-            return { success: true }
+            return { success: true }    
         } catch (error) {
             throw new Error("error" + error)
         }

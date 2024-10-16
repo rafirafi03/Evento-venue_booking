@@ -12,6 +12,7 @@ import {
   AddVenueUseCase,
   GetVenuesUseCase,
   VenueStatusUseCase,
+  GetVenueDetailsUseCase,
 } from "../../useCases";
 import { AdminController, CompanyController } from "../../adapters/controllers";
 import { CompanyRepository } from "../../repositories/implementation/companyRepository";
@@ -47,6 +48,7 @@ const addVenueUseCase = new AddVenueUseCase(companyRepository);
 const getVenuesUseCase = new GetVenuesUseCase(companyRepository);
 const venueStatusUseCase = new VenueStatusUseCase(companyRepository);
 const getListedVenuesUseCase = new GetListedVenuesUseCase(companyRepository);
+const getVenueDetailsUseCase = new GetVenueDetailsUseCase(companyRepository)
 const companyController = new CompanyController(
   registerUseCase,
   loginUseCase,
@@ -56,6 +58,7 @@ const companyController = new CompanyController(
   getVenuesUseCase,
   getListedVenuesUseCase,
   venueStatusUseCase,
+  getVenueDetailsUseCase
 );
 const adminController = new AdminController(
   getRequestsUseCase,
@@ -111,5 +114,9 @@ router.get("/getListedVenues", (req, res) => {
 router.post("/venueStatus", (req, res) => {
   companyController.updateVenueStatus(req, res);
 });
+
+router.get('/getVenueDetails/:id', (req, res) => {
+  companyController.getVenueDetails(req,res)
+})
 
 export default router;
