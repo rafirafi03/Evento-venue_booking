@@ -29,6 +29,10 @@ export default function Page() {
   };
 
   const changePage = (arg: string) => {
+
+    if(arg == "venueDetails") {
+      router.push('/company/venueDetails/:6')
+    }
     setPage(arg);
   };
 

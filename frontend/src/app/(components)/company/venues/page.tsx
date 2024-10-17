@@ -1,9 +1,12 @@
+"use client"
 import React, { useState } from "react";
 import Image from "next/image";
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useGetVenuesQuery, useUpdateVenueStatusMutation } from "app/store/slices/companyApiSlices";
-import ConfirmModal from '../confirmModal/page'
+import ConfirmModal from '../confirmModal/page';
+import { useRouter } from "next/navigation";
+
 interface PageProps {
     changePage: (page: string) => void;
   }
@@ -17,6 +20,8 @@ export default function page({changePage}:PageProps) {
   const [modalButton, setModalButton] = useState<string>('')
   const [venueId, setVenueId] = useState<string>('')
   const [isConfirmModal, setConfirmModal] = useState<boolean>(false)
+
+  const router = useRouter()
 
   console.log(venues?.venues)
 
@@ -135,7 +140,7 @@ export default function page({changePage}:PageProps) {
                     
                   </td>
                   <td className="px-6 py-4">
-                    <button  className="bg-black transition-transform duration-300 hover:scale-110 text-xs text-white p-2 rounded-xl h-5 flex items-center">
+                    <button onClick={()=> router.push(`/company/venueDetails/${ven._id}`)} className="bg-black transition-transform duration-300 hover:scale-110 text-xs text-white p-2 rounded-xl h-5 flex items-center">
                       View
                     </button>
                   </td>

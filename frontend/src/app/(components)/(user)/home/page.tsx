@@ -112,7 +112,7 @@ const Page = () => {
           <>
             {venue.map((ven, index) => (
               <div onClick={()=>handleOnClick(ven._id)} className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <a href="#">
+                <a>
                   <Image
                   className="rounded-t-lg"
                   src={ven.images[0]}

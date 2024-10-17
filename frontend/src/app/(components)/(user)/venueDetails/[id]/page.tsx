@@ -93,7 +93,7 @@ export default function page({ params }: { params: { id: string } }) {
           </div>
 
           <div className="w-1/4 p-6 ml-5 right-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <a href="#">
+            <a>
               <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {venue?.name}
               </h5>
@@ -137,7 +137,7 @@ export default function page({ params }: { params: { id: string } }) {
             <span className="text-red-500">{venue?.name}</span>
           </h3>
 
-          <p className="text-sm text-start">{venue?.description}.</p>
+          <p className="text-sm text-center">{venue?.description}.</p>
         </div>
 
         <hr className="my-5" />
