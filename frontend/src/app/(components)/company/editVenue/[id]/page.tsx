@@ -1,9 +1,9 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "@radix-ui/themes/styles.css";
 import { FaUpload } from "react-icons/fa";
-import { useAddVenueMutation } from "app/store/slices/companyApiSlices";
+import { useGetVenueDetailsQuery, useEditVenueMutation } from "app/store/slices/companyApiSlices";
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
 import Aside from '../../aside/page'
@@ -13,7 +13,9 @@ export default function page({ params }: { params: { id: string } }) {
   const {id} = params
 
   console.log(id)
-  const [addVenue] = useAddVenueMutation();
+  const [editVenue] = useEditVenueMutation();
+  const {data: venue, isLoading, isError, refetch} = useGetVenueDetailsQuery(id)
+
 
   const [name, setName] = useState<string>("");
   const [type, setType] = useState<string>("");
@@ -32,9 +34,23 @@ export default function page({ params }: { params: { id: string } }) {
 
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  const [imageToReplace, setImageToReplace] = useState<number | null>(null); // Track which image to replace
+  const [imageToReplace, setImageToReplace] = useState<number | null>(null);
 
   const router = useRouter()
+
+  useEffect(() => {
+
+    setName(venue?.name)
+    setType(venue?.type)
+    setDescription(venue?.description)
+    setCapacity(venue?.capacity)
+    setAddress(venue?.address)
+    setPhone(venue?.phone)
+    setCity(venue?.city)
+    setState(venue?.state)
+    setSelectedImages(venue?.images)
+
+  },[venue])
 
   // Handle image addition or replacement
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,6 +82,7 @@ export default function page({ params }: { params: { id: string } }) {
   const handleSubmit = async () => {
     const formData = new FormData();
 
+    formData.append('id',id)
     formData.append("name", name);
     formData.append("type", type);
     formData.append("description", description);
@@ -76,12 +93,22 @@ export default function page({ params }: { params: { id: string } }) {
     formData.append("state", state);
     formData.append("folderName", "venueImages");
     selectedImages.forEach((image) => {
-      formData.append("images", image);
+      if (typeof image === 'string') {
+        formData.append("existingImages",image);
+      } else {
+        formData.append('images', image);
+      }
     });
 
-    const response = await addVenue(formData).unwrap();
+    const response = await editVenue(formData).unwrap();
 
-    router.push('/company/main')
+    console.log(response.data,"response in frontend")
+
+    if(response.success) {
+      console.log('succes true in frontend')
+      router.push('/company/main')
+    }
+
 
     console.log(response);
   };
@@ -132,9 +159,9 @@ export default function page({ params }: { params: { id: string } }) {
               id="name"
               type="text"
               name="name"
-              placeholder="Venue Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="Enter name here"
             />
             {nameError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
@@ -327,9 +354,9 @@ export default function page({ params }: { params: { id: string } }) {
         </h1>
 
         <div className="flex justify-center items-center flex-wrap gap-4 mb-5">
-          {selectedImages.map((image, index) => {
+          {selectedImages?.map((image, index) => {
             // Create a URL for each image file to display it
-            const imageUrl = URL.createObjectURL(image);
+            const imageUrl = typeof image === 'string' ? image : URL.createObjectURL(image);
 
             return (
               <div
@@ -346,7 +373,7 @@ export default function page({ params }: { params: { id: string } }) {
             );
           })}
 
-          {selectedImages.length < 6 && (
+          {selectedImages?.length < 6 && (
             <div
               className="relative w-1/4 h-48 border-2 border-dashed border-gray-300 rounded-lg shadow-md flex items-center justify-center cursor-pointer hover:border-red-300 transition-all duration-300 bg-gray-50 hover:bg-gray-100"
               onClick={() => document.getElementById("imageInput")?.click()}
@@ -354,7 +381,7 @@ export default function page({ params }: { params: { id: string } }) {
               <div className="flex flex-col items-center justify-center text-gray-400 text-center">
                 <FaUpload className="text-4xl mb-2" />
                 <p className="text-base font-semibold">Click to upload</p>
-                <p className="text-xs">add you venue images</p>
+                <p className="text-xs">add your venue images</p>
               </div>
             </div>
           )}
@@ -373,7 +400,7 @@ export default function page({ params }: { params: { id: string } }) {
             onClick={handleSubmit}
             className="focus:outline-none text-white bg-[rgb(255,0,0)] hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-10 py-2.5 me-2 mb-2 dark:bg-[rgb(255,0,0)] dark:hover:bg-red-700 dark:focus:ring-red-900 transition-transform duration-300 transform hover:scale-105"
           >
-            Add
+            Save Changes
           </button>
         </div>
       </div>

@@ -106,12 +106,26 @@ export class CompanyRepository implements ICompanyRepository {
   async findVenueById(id: string): Promise<IVenue | null> {
     try {
       const venue = await venueModel.findById({ _id: id });
-      console.log(id, "idd123 at cmpnyrepo");
-      console.log(venue, "cmpny123 at cmpnyrepo");
       if (!venue) return null;
       return venue;
     } catch (error) {
       throw new Error("error in DB" + error);
+    }
+  }
+
+  async updateVenue(venueId: string, venueData: IVenue): Promise<void> {
+    try {
+      await venueModel.findByIdAndUpdate(venueId, venueData, { new: true });
+    } catch (error) {
+      throw new Error('error in DB' + error)
+    }
+  }
+
+  async deleteVenue(venueId: string): Promise<void> {
+    try {
+      await venueModel.findByIdAndDelete({_id: venueId})
+    } catch (error) {
+      throw new Error('error in DB' + error)
     }
   }
 

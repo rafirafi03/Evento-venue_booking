@@ -13,6 +13,8 @@ import {
   GetVenuesUseCase,
   VenueStatusUseCase,
   GetVenueDetailsUseCase,
+  EditVenueUseCase,
+  DeleteVenueUseCase,
 } from "../../useCases";
 import { AdminController, CompanyController } from "../../adapters/controllers";
 import { CompanyRepository } from "../../repositories/implementation/companyRepository";
@@ -48,7 +50,9 @@ const addVenueUseCase = new AddVenueUseCase(companyRepository);
 const getVenuesUseCase = new GetVenuesUseCase(companyRepository);
 const venueStatusUseCase = new VenueStatusUseCase(companyRepository);
 const getListedVenuesUseCase = new GetListedVenuesUseCase(companyRepository);
-const getVenueDetailsUseCase = new GetVenueDetailsUseCase(companyRepository)
+const getVenueDetailsUseCase = new GetVenueDetailsUseCase(companyRepository);
+const editVenueUseCase = new EditVenueUseCase(companyRepository);
+const deleteVenueUseCase = new DeleteVenueUseCase(companyRepository)
 const companyController = new CompanyController(
   registerUseCase,
   loginUseCase,
@@ -58,7 +62,9 @@ const companyController = new CompanyController(
   getVenuesUseCase,
   getListedVenuesUseCase,
   venueStatusUseCase,
-  getVenueDetailsUseCase
+  getVenueDetailsUseCase,
+  editVenueUseCase,
+  deleteVenueUseCase
 );
 const adminController = new AdminController(
   getRequestsUseCase,
@@ -117,6 +123,14 @@ router.post("/venueStatus", (req, res) => {
 
 router.get('/getVenueDetails/:id', (req, res) => {
   companyController.getVenueDetails(req,res)
+})
+
+router.put('/editVenue', upload.array('images'), (req, res) => {
+  companyController.editVenue(req,res)
+})
+
+router.delete('/deleteVenue/:venueId', (req, res) => {
+  companyController.deleteVenue(req,res)
 })
 
 export default router;

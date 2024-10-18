@@ -3,8 +3,10 @@
 import { MapPin, Users, DollarSign, Phone, Mail, Edit, Calendar, Trash } from 'lucide-react'
 import Header from 'app/(components)/login-header/header';
 import Aside from 'app/(components)/company/aside/page';
-import { useGetVenueDetailsQuery } from 'app/store/slices/companyApiSlices';
+import { useGetVenueDetailsQuery, useDeleteVenueMutation } from 'app/store/slices/companyApiSlices';
+import ConfirmModal from '../../confirmModal/page';
 import {useRouter} from 'next/navigation';
+import { useState } from 'react';
 
 export default function VenueDetails({ params }: { params: { id: string } }) {
 
@@ -13,10 +15,21 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
     const {id} = params
 
     const { data: venue, isLoading, isError } = useGetVenueDetailsQuery(id);
+    const [deleteVenue] = useDeleteVenueMutation()
 
     const images = venue?.images
 
     console.log(venue)
+
+    const [isConfirmModal, setConfirmModal] = useState<boolean>(false)
+    const [modalTitle, setModalTitle] = useState<string>("")
+    const [modalButton, setModalButton] = useState<string>("")
+
+    const handleConfrimModal = (title: string, button: string)=> {
+      setModalTitle(title) 
+      setModalButton(button)
+      setConfirmModal(true)
+    }
 
     const handleLogout = ()=> {
         console.log('hii');
@@ -31,8 +44,29 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
         console.log(arg);
         
     }
+
+    const closeModal = ()=> {
+      setConfirmModal(false)
+    }
+
+    const confirmDelete = async()=> {
+      try {
+        const response = await deleteVenue(id).unwrap()
+
+        if(response.success) {
+          router.push('/company/main')
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+
   return (
     <>
+    {isConfirmModal && (
+        <ConfirmModal title={modalTitle} button={modalButton} isOpen={isConfirmModal} closeModal={closeModal} confirm={confirmDelete} />
+      )}
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
       </nav>
@@ -115,7 +149,7 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
               <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center">
                 <Calendar className="w-4 h-4 mr-2" /> Manage Availability
               </button>
-              <button className="w-full border border-red-600 text-red-600 hover:bg-red-50 font-bold py-2 px-4 rounded flex items-center justify-center">
+              <button onClick={()=> handleConfrimModal('you want to delete this venue?','delete')} className="w-full border border-red-600 text-red-600 hover:bg-red-50 font-bold py-2 px-4 rounded flex items-center justify-center">
                 <Trash className="w-4 h-4 mr-2" /> Delete Venue
               </button>
             </div>

@@ -1,13 +1,18 @@
 import { Request, Response } from "express";
-import { RegisterUseCase } from "../../useCases/index";
-import { VerifyOtpUsecase } from "../../useCases/verifyOtpUseCase";
-import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
-import { LoginUseCase, GetVenueDetailsUseCase } from "../../useCases";
-import { AddVenueUseCase } from "../../useCases/addVenueUseCase";
+import {
+  RegisterUseCase,
+  VerifyOtpUsecase,
+  ResendOtpUseCase,
+  LoginUseCase,
+  AddVenueUseCase,
+  GetVenuesUseCase,
+  VenueStatusUseCase,
+  GetListedVenuesUseCase,
+  EditVenueUseCase,
+  GetVenueDetailsUseCase,
+  DeleteVenueUseCase
+} from "../../useCases";
 import { HttpStatusCode } from "../../constants";
-import { GetVenuesUseCase } from "../../useCases/getVenuesUseCase";
-import { VenueStatusUseCase } from "../../useCases/venueStatusUseCase";
-import { GetListedVenuesUseCase } from "../../useCases/index";
 
 export class CompanyController {
   constructor(
@@ -19,7 +24,9 @@ export class CompanyController {
     private _getVenues: GetVenuesUseCase,
     private _getListedVenues: GetListedVenuesUseCase,
     private _updateVenueStatus: VenueStatusUseCase,
-    private _getVenueDetailsUseCase : GetVenueDetailsUseCase
+    private _getVenueDetailsUseCase: GetVenueDetailsUseCase,
+    private _editVenueUseCase: EditVenueUseCase,
+    private _deleteVenueUseCase : DeleteVenueUseCase
   ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
@@ -152,7 +159,7 @@ export class CompanyController {
     try {
       const { venueId } = req.body;
 
-      const id = venueId
+      const id = venueId;
       const response = await this._updateVenueStatus.execute(id);
 
       res.status(HttpStatusCode.OK).json(response);
@@ -164,17 +171,72 @@ export class CompanyController {
     }
   }
 
-  async getVenueDetails(req: Request, res: Response) : Promise<void> {
+  async getVenueDetails(req: Request, res: Response): Promise<void> {
     try {
-      const {id} = req.params 
+      const { id } = req.params;
 
       if (!id) {
-        res.status(400).json({ message: 'Invalid ID' });
+        res.status(400).json({ message: "Invalid ID" });
       }
-      
+
       const response = await this._getVenueDetailsUseCase.execute(id);
       res.status(HttpStatusCode.OK).json(response);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
 
+  async editVenue(req: Request, res: Response): Promise<void> {
+    try {
+      const {
+        id,
+        name,
+        type,
+        description,
+        capacity,
+        address,
+        phone,
+        city,
+        state,
+        existingImages,
+      } = req.body;
+      const files = req.files as Express.Multer.File[];
+
+      const imagePaths = files?.map((image) => image.path);
+
+      const response = await this._editVenueUseCase.execute({
+        id,
+        name,
+        type,
+        description,
+        capacity,
+        address,
+        phone,
+        city,
+        state,
+        existingImages,
+        imagePaths,
+      });
+
+      res.status(HttpStatusCode.OK).json(response);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async deleteVenue(req: Request, res: Response): Promise<void> {
+    try {
+      const { venueId } = req.params;
+
+      const response = await this._deleteVenueUseCase.execute(venueId);
+
+      res.status(HttpStatusCode.OK).json(response)
     } catch (error) {
       console.log(error);
       res
