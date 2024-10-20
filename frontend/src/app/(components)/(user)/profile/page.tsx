@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   CalendarDays,
   MapPin,
@@ -11,24 +12,28 @@ import {
   Building,
   DollarSign,
   Users,
+  LocateIcon
 } from "lucide-react";
 import Header from "app/(components)/(user)/header/page";
 import {
   useGetUserDetailsQuery,
   useResetPasswordMutation,
-  useEditUserProfileMutation
+  useEditUserProfileMutation,
+  useGetFavouritesQuery
 } from "app/store/slices/userApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function UserProfile() {
+
+  const router = useRouter()
   const token = localStorage.getItem("authToken");
 
   console.log(token, "tknnnnn in forntend ye yey ey ey eye yy ey");
 
   // const [editUserProfile] = useEditUserProfileMutation()
 
-  const userId = getUserIdFromToken();
+  const userId = getUserIdFromToken('authToken');
 
   const {
     data: userDetails,
@@ -36,6 +41,9 @@ export default function UserProfile() {
     isLoading,
     refetch
   } = useGetUserDetailsQuery(userId);
+  const { data: favourites} = useGetFavouritesQuery(userId)
+
+  console.log(favourites,"favrts in frontend")
   const [resetPass] = useResetPasswordMutation();
   const [editUser] = useEditUserProfileMutation();
 
@@ -354,43 +362,49 @@ export default function UserProfile() {
               )}
               {activeTab === "favourites" && (
                 <div className="space-y-4">
-                  {upcomingBookings.map((booking) => (
-                    <div
-                      key={booking.id}
-                      className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
-                    >
-                      <div className="flex items-center space-x-4">
-                        <img
-                          src="/assets/images/homepage-image.jpg"
-                          alt={booking.venue}
-                          className="w-24 h-16 object-cover rounded"
-                        />
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900">
-                            {booking.venue}
-                          </h3>
-                          <div className="text-sm text-gray-500">
-                            <div className="flex items-center">
-                              <Calendar className="w-4 h-4 mr-2" />
-                              {booking.date}
-                            </div>
-                            <div className="flex items-center mt-1">
-                              <Clock className="w-4 h-4 mr-2" />
-                              {booking.time}
+                  { favourites ? (
+                    <>
+                    {favourites?.map((fav) => (
+                      <div
+                        key={fav.id}
+                        className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
+                      >
+                        <div className="flex items-center space-x-4">
+                          <img
+                            src={fav.venueImage}
+                            alt={fav.venueName}
+                            className="w-24 h-16 object-cover rounded"
+                          />
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900">
+                              {fav.venueName}
+                            </h3>
+                            <div className="text-sm text-gray-500">
+                              <div className="flex items-center">
+                                <MapPin className="w-4 h-4 mr-2" />
+                                {fav.venueAddress}
+                              </div>
+                              
                             </div>
                           </div>
                         </div>
+                        <div className="mt-4 flex space-x-2">
+                          <button onClick={()=>router.push(`venueDetails/${fav.venueId}`)} className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                            View Details
+                          </button>
+                          <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                            Remove
+                          </button>
+                        </div>
                       </div>
-                      <div className="mt-4 flex space-x-2">
-                        <button className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                          View Details
-                        </button>
-                        <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                          Cancel Booking
-                        </button>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                    </>
+                  ) : (
+                    <>
+                    <h5>No favourites</h5>
+                    </>
+                  )}
+                  
                 </div>
               )}
               {activeTab === "settings" && (

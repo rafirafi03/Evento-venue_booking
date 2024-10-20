@@ -1,5 +1,5 @@
-import { IUserData, User } from "../../entities";
-import { IUser, userModel } from "../../infrastructure/db";
+import { Favourites, IFavouritesData, IUserData, User } from "../../entities";
+import { FavouritesModel, IUser, userModel } from "../../infrastructure/db";
 import { IUserRepository } from "../interfaces";
 
 export class UserRepository implements IUserRepository {
@@ -49,5 +49,49 @@ export class UserRepository implements IUserRepository {
             throw new Error('Error updating user: ' + error);
         }
     }
+
+    async saveFavourites(favouritesData: Favourites) : Promise<IFavouritesData> {
+        try {
+            const newFavourites = new FavouritesModel(favouritesData)
+            await newFavourites.save()
+            return newFavourites.toObject() as IFavouritesData
+        } catch (error) {
+            throw new Error('Error adding to favourites: ' + error);
+        }
+    }
     
+    async checkFavourites(userId: string, venueId: string): Promise<boolean> {
+
+        try {
+            const isFavorited = await FavouritesModel.exists({ userId, venueId });
+
+            console.log(isFavorited,"isfavourtied in repository ")
+
+            return !!isFavorited
+        } catch (error) {
+            throw new Error('Error fetching favourites: ' + error);
+        }
+        
+    }
+
+    async deleteFromFavourites(userId: string, venueId: string) : Promise<void>{
+        try {
+            await FavouritesModel.findOneAndDelete({ userId, venueId });
+        } catch (error) {
+            throw new Error('Error fetching favourites: ' + error);
+        }
+    }
+
+    async getFavouritesByUserId(userId: string): Promise<IFavouritesData[]> {
+        try {
+            console.log(userId, " userid in repostry")
+            const favourites = await FavouritesModel.find({userId: userId})
+
+            console.log(favourites,"get favrtes in repo ")
+
+            return favourites
+        } catch (error) {
+            throw new Error('Error fetching favourites: ' + error);
+        }
+    }
 }

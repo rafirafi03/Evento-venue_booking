@@ -101,8 +101,21 @@ export const companyApiSlice = createApi({
         deleteVenue: builder.mutation({
             query: (venueId) => ({
                 url: `deleteVenue/${venueId}`,
-                method: 'DELETE',
+                method: HttpMethod.DELETE,
               }),
+        }),
+        getCompanyDetails: builder.query({
+            query: (companyId) => ({
+                url: `getCompanyDetails/${companyId}`,
+                method: HttpMethod.GET,
+              }),
+        }),
+        editCompanyProfile: builder.mutation({
+            query: (data) => ({
+                url: '/editCompanyProfile',
+                method: HttpMethod.PATCH,
+                body: data
+            })
         })
     })
 })
@@ -122,5 +135,7 @@ export const {
     useGetListedVenuesQuery,
     useGetVenueDetailsQuery,
     useEditVenueMutation,
-    useDeleteVenueMutation
+    useDeleteVenueMutation,
+    useGetCompanyDetailsQuery,
+    useEditCompanyProfileMutation
 } = companyApiSlice

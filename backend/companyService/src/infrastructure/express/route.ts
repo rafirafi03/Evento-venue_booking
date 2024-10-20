@@ -15,6 +15,8 @@ import {
   GetVenueDetailsUseCase,
   EditVenueUseCase,
   DeleteVenueUseCase,
+  EditCompanyUseCase,
+  GetCompanyDetailsUseCase
 } from "../../useCases";
 import { AdminController, CompanyController } from "../../adapters/controllers";
 import { CompanyRepository } from "../../repositories/implementation/companyRepository";
@@ -52,7 +54,11 @@ const venueStatusUseCase = new VenueStatusUseCase(companyRepository);
 const getListedVenuesUseCase = new GetListedVenuesUseCase(companyRepository);
 const getVenueDetailsUseCase = new GetVenueDetailsUseCase(companyRepository);
 const editVenueUseCase = new EditVenueUseCase(companyRepository);
-const deleteVenueUseCase = new DeleteVenueUseCase(companyRepository)
+const deleteVenueUseCase = new DeleteVenueUseCase(companyRepository);
+const getCompanyDetailsUseCase = new GetCompanyDetailsUseCase(companyRepository);
+const editCompanyUseCase = new EditCompanyUseCase(companyRepository)
+
+
 const companyController = new CompanyController(
   registerUseCase,
   loginUseCase,
@@ -64,7 +70,9 @@ const companyController = new CompanyController(
   venueStatusUseCase,
   getVenueDetailsUseCase,
   editVenueUseCase,
-  deleteVenueUseCase
+  deleteVenueUseCase,
+  getCompanyDetailsUseCase,
+  editCompanyUseCase
 );
 const adminController = new AdminController(
   getRequestsUseCase,
@@ -131,6 +139,14 @@ router.put('/editVenue', upload.array('images'), (req, res) => {
 
 router.delete('/deleteVenue/:venueId', (req, res) => {
   companyController.deleteVenue(req,res)
+})
+
+router.get('/getCompanyDetails/:companyId' , (req, res) => {
+  companyController.getCompanyDetails(req,res)
+})
+
+router.patch('/editCompanyProfile', (req,res) => {
+  companyController.editCompanyProfile(req,res)
 })
 
 export default router;

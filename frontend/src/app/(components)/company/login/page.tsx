@@ -70,6 +70,8 @@ const Page = () => {
         console.log(res,"resinerror")
         setError(res.error)
       } else {
+        const token = res.token;
+        localStorage.setItem('authCompanyToken', token)
         router.push('/company/main')
       }
 

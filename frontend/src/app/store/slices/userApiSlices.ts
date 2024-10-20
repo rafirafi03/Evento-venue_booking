@@ -75,6 +75,24 @@ export const userApiSlice = createApi({
                 method: HttpMethod.PATCH,
                 body: patchData
             })
+        }),
+        addToFavourites: builder.mutation({
+            query: (postData) => ({
+                url: '/addToFavourites',
+                method: HttpMethod.POST,
+                body: postData
+            })
+        }),
+        checkIfFavourited: builder.query({
+            query: ({userId, venueId}) => ({
+                url: `/checkFavourites/${userId}/${venueId}`,
+                method: HttpMethod.GET
+            })
+        }),
+        getFavourites: builder.query({
+            query:(userId)=>({
+                url: `/getFavourites/${userId}`
+            })
         })
     })
 })
@@ -89,5 +107,8 @@ export const {
     useBlockUserMutation,
     useEditUserProfileMutation,
     useGetUserDetailsQuery,
-    useResetPasswordMutation
+    useResetPasswordMutation,
+    useAddToFavouritesMutation,
+    useCheckIfFavouritedQuery,
+    useGetFavouritesQuery
 } = userApiSlice;

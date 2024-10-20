@@ -1,11 +1,12 @@
 import { Router } from "express";
 import { AdminController, UserController } from "../../adapters/controllers";
-import { AdminLoginUseCase, EditUserProfileUseCase, GetUsersUseCase, ResetPasswordUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase, GetUserDetailsUseCase } from "../../useCases";
+import { AdminLoginUseCase, EditUserProfileUseCase, GetUsersUseCase, ResetPasswordUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase, GetUserDetailsUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase } from "../../useCases";
 import { UserRepository, RedisClient } from "../../repositories";
 import { otpService } from "../services";
 import { AdminRepository } from "../../repositories/implementation/adminRepository";
 import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
 import { BlockUserUseCase } from "../../useCases/blockUserUseCase";
+import { GetFavouritesUseCase } from "../../useCases/getFavouritesUseCase";
 
 const userRepository = new UserRepository();
 const adminRepository = new AdminRepository()
@@ -34,9 +35,15 @@ const getUserDetailsUseCase = new GetUserDetailsUseCase(userRepository)
 
 const resetPassUseCase = new ResetPasswordUseCase(userRepository)
 
+const addToFavouritesUseCase = new AddToFavouritesUseCase(userRepository)
+
+const checkFavouritesUseCase = new CheckFavouritesUseCase(userRepository)
+
 const editUserProfile = new EditUserProfileUseCase(userRepository)
 
-const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase, getUserDetailsUseCase, resetPassUseCase, editUserProfile);
+const getFavouritesUseCase = new GetFavouritesUseCase(userRepository)
+
+const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase, getUserDetailsUseCase, resetPassUseCase, editUserProfile, addToFavouritesUseCase, checkFavouritesUseCase, getFavouritesUseCase);
 
 const adminController = new AdminController(adminLoginUseCase, getUsersUseCase, blockUserUseCase)
 
@@ -80,6 +87,18 @@ router.patch('/resetPassword', (req,res) => {
 
 router.patch('/editUserProfile', (req,res) => {
   userController.editUserProfile(req,res)
+})
+
+router.post('/addToFavourites', (req, res) => {
+  userController.addToFavourites(req,res)
+})
+
+router.get('/checkFavourites/:userId/:venueId', (req, res) => {
+  userController.checkFavourites(req,res)
+})
+
+router.get('/getFavourites/:userId', (req,res) => {
+  userController.getFavourites(req, res)
 })
 
 export default router;

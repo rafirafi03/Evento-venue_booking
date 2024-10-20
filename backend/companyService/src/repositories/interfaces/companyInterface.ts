@@ -12,6 +12,8 @@ export interface ICompanyRepository {
     getVenues() : Promise<IVenue[]>
     getListedVenues() : Promise<IVenue[]>
     findVenueById(_id: string) : Promise<IVenue | null>
-    updateVenue(venueId: string, venueData: any): Promise<any>;
+    updateVenue(venueId: string, venueData: any): Promise<void>;
     deleteVenue(venueId: string) : Promise<void>
+    findCompanyById(companyId: string) : Promise<ICompany | null>
+    editCompanyProfile(companyId: string, companyData: Partial<ICompany> | null) : Promise<void>
 }

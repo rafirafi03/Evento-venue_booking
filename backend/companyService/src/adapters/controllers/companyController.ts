@@ -10,9 +10,11 @@ import {
   GetListedVenuesUseCase,
   EditVenueUseCase,
   GetVenueDetailsUseCase,
-  DeleteVenueUseCase
+  DeleteVenueUseCase,
+  EditCompanyUseCase
 } from "../../useCases";
 import { HttpStatusCode } from "../../constants";
+import { GetCompanyDetailsUseCase } from "../../useCases/getCompanyDetailsUseCase";
 
 export class CompanyController {
   constructor(
@@ -26,13 +28,13 @@ export class CompanyController {
     private _updateVenueStatus: VenueStatusUseCase,
     private _getVenueDetailsUseCase: GetVenueDetailsUseCase,
     private _editVenueUseCase: EditVenueUseCase,
-    private _deleteVenueUseCase : DeleteVenueUseCase
+    private _deleteVenueUseCase : DeleteVenueUseCase,
+    private _getCompanyDetailsUseCase : GetCompanyDetailsUseCase,
+    private _editCompanyUseCase : EditCompanyUseCase
   ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
     const { email } = req.body;
-
-    console.log(req.body, "reqbdyyycntrlrr");
 
     try {
       const response = await this._registerUseCase.execute(email);
@@ -47,8 +49,6 @@ export class CompanyController {
   async login(req: Request, res: Response): Promise<void> {
     try {
       const { email, password } = req.body;
-
-      console.log(email, "emailcontroller", password, "pass controller");
       const response = await this._loginUseCase.execute(email, password);
       res.status(200).json(response);
       console.log(response);
@@ -62,10 +62,6 @@ export class CompanyController {
     const { otp, name, email, phone, country, password } = req.body;
     const license = req.file?.path;
 
-    console.log(req.body, "reqbdyyyyycntrlrcpmny");
-    console.log(req.file, "reqfileeeecntrlrcpmny");
-    // const {license} = req.file;
-
     try {
       const response = await this._verifyOtpUseCase.execute({
         otp,
@@ -76,8 +72,6 @@ export class CompanyController {
         password,
         license,
       });
-
-      console.log(response, "response companycontroller");
 
       res.status(200).json(response);
     } catch (error) {
@@ -100,8 +94,6 @@ export class CompanyController {
 
   async addVenue(req: Request, res: Response): Promise<void> {
     try {
-      console.log(req.body, "reqbdyyyyyyyyyy");
-      console.log(req.files, "reqflssssssssss1234");
 
       const { name, type, description, capacity, address, phone, city, state } =
         req.body;
@@ -129,9 +121,7 @@ export class CompanyController {
 
   async getVenues(req: Request, res: Response): Promise<void> {
     try {
-      console.log("hiiii iam in companycntrllr");
       const venues = await this._getVenues.execute();
-      console.log(venues, "vnssss companycntrllr");
       res.status(HttpStatusCode.OK).json({ venues });
     } catch (error) {
       console.log(error);
@@ -143,9 +133,7 @@ export class CompanyController {
 
   async getListedVenues(req: Request, res: Response): Promise<void> {
     try {
-      console.log("hiiii iam in companycntrllr");
       const venues = await this._getListedVenues.execute();
-      console.log(venues, "vnssss companycntrllr");
       res.status(HttpStatusCode.OK).json({ venues });
     } catch (error) {
       console.log(error);
@@ -244,4 +232,39 @@ export class CompanyController {
         .json({ message: "Internal error" });
     }
   }
+
+  async getCompanyDetails(req: Request, res: Response): Promise<void> {
+    try {
+      const { companyId } = req.params;
+
+      const response = await this._getCompanyDetailsUseCase.execute(companyId);
+
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async editCompanyProfile(req: Request, res: Response) : Promise<void> {
+    try {
+      const { companyId, name, phone } = req.body;
+
+      console.log(req.body," reqbdyy in edit company")
+
+      const response = await this._editCompanyUseCase.execute({companyId, name, phone});
+
+      console.log(response);
+      res.status(HttpStatusCode.OK).json(response)
+
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
 }

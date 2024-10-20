@@ -1,8 +1,8 @@
 import { jwtDecode } from 'jwt-decode';
 
-export const getUserIdFromToken = () => {
+export const getUserIdFromToken = (tokenName: string) => {
   // Retrieve token from localStorage
-  const token = localStorage.getItem('authToken');
+  const token = localStorage.getItem(tokenName);
 
   if (token) {
     try {
@@ -21,5 +21,3 @@ export const getUserIdFromToken = () => {
   }
 };
 
-const userId = getUserIdFromToken();
-console.log('User ID:', userId);

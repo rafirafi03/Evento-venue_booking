@@ -1,15 +1,26 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Header from "../header/page";
 import Footer from "../footer/page";
 import { useRouter } from "next/navigation";
 import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
+import { useAddToFavouritesMutation } from "app/store/slices/userApiSlices";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { Heart } from "lucide-react"
+import { getUserIdFromToken } from "utils/tokenHelper";
+import FavouriteButton from "../favouriteButton/page";
+
 // import Auth from '../../../auth/auth'
 
 const Page = () => {
+
+  const userId = getUserIdFromToken('authToken');
+  
   const { data: venues, refetch } = useGetListedVenuesQuery(undefined);
+  // const [addToFavourites] = useAddToFavouritesMutation()
 
   const venue = venues?.venues?.venues;
 
@@ -26,6 +37,18 @@ const Page = () => {
   const handleOnClick = (id: string) => {
     router.push(`/venueDetails/${id}`)
   }
+
+  // const [isWishlisted, setIsWishlisted] = useState(false)
+
+  // const handleFavourites = async (venueId : string) => {
+  //   try {
+  //     const response = await  addToFavourites({venueId, userId}).unwrap()
+
+  //     console.log(response)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   return (
     <div className="bg-slate-50">
@@ -111,7 +134,7 @@ const Page = () => {
         {venue?.length && (
           <>
             {venue.map((ven, index) => (
-              <div onClick={()=>handleOnClick(ven._id)} className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+              <div  className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <a>
                   <Image
                   className="rounded-t-lg"
@@ -122,36 +145,42 @@ const Page = () => {
                   />
                 </a>
                 <div className="p-5">
-                  <a href="#">
-                    <h5 className="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
-                      {ven.name}
-                    </h5>
-                  </a>
-                  <p className="mb-3 font-normal text-xs text-gray-700 dark:text-gray-400">
-                    {ven.description}
-                  </p>
-                  <a
-                    href="#"
-                    className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  >
-                    View Details
-                    <svg
-                      className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 14 10"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M1 5h12m0 0L9 1m4 4L9 9"
-                      />
-                    </svg>
-                  </a>
-                </div>
+      <a>
+        <h5 className="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
+          {ven.name}
+        </h5>
+      </a>
+      <p className="mb-3 font-normal text-xs text-gray-700 dark:text-gray-400">
+        {ven.description}
+      </p>
+      <div className="flex justify-between items-center">
+      
+        <a
+          onClick={()=> handleOnClick(ven._id)}
+          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          View Details
+          <svg
+            className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 10"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M1 5h12m0 0L9 1m4 4L9 9"
+            />
+          </svg>
+        </a>
+
+        <FavouriteButton userId={userId} venueId={ven._id}/>
+        
+      </div>
+    </div>
               </div>
             ))}
           </>

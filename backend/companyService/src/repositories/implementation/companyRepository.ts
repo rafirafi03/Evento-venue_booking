@@ -129,4 +129,26 @@ export class CompanyRepository implements ICompanyRepository {
     }
   }
 
+  async findCompanyById(id: string): Promise<ICompany | null> {
+    try {
+      const company = await companyModel.findById({ _id: id });
+      if (!company) return null;
+      return company;
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
+  async editCompanyProfile(companyId: string, company: ICompany | null): Promise<void> {
+    try {
+      if(company) {
+        await companyModel.findByIdAndUpdate(companyId, company, { new: true })
+      } else {
+        throw new Error('company data is null')
+      }
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
 }
