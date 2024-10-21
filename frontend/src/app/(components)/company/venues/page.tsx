@@ -6,14 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useGetVenuesQuery, useUpdateVenueStatusMutation } from "app/store/slices/companyApiSlices";
 import ConfirmModal from '../confirmModal/page';
 import { useRouter } from "next/navigation";
+import Header from "app/(components)/login-header/header";
+import Aside from 'app/(components)/company/aside/page';
+import { getUserIdFromToken } from "utils/tokenHelper";
 
-interface PageProps {
-    changePage: (page: string) => void;
-  }
 
-export default function page({changePage}:PageProps) {
+export default function page() {
 
-  const { data: venues, isLoading, isError, refetch} = useGetVenuesQuery(undefined);
+  const companyId = getUserIdFromToken('authCompanyToken')
+
+  const { data: venues, isLoading, isError, refetch} = useGetVenuesQuery(companyId);
   const [updateVenueStatus] = useUpdateVenueStatusMutation()
 
   const [modalTitle, setModalTitle] = useState<string>('')
@@ -29,7 +31,7 @@ export default function page({changePage}:PageProps) {
 
 
     const handleChange = ()=> {
-        changePage('addVenue')
+        router.push('/company/addVenue')
     }
 
     const handleConfrimModal = (title: string, button: string, id: string)=> {
@@ -56,7 +58,17 @@ export default function page({changePage}:PageProps) {
 
 
   return (
-    <div className="m-5">
+
+    <>
+      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
+        <Header />
+      </nav>
+      <div className="flex mt-[64px]">
+        <aside className="w-64 bg-slate-white dark:bg-gray-800">
+          <Aside/>
+        </aside>
+        <div className="flex-1 p-4 bg-slate-100">
+        <div className="m-5">
       {isConfirmModal && (
         <ConfirmModal title={modalTitle} button={modalButton} isOpen={isConfirmModal} closeModal={closeModal} confirm={confirmVenueListing} />
       )}
@@ -159,9 +171,13 @@ export default function page({changePage}:PageProps) {
       </>
     ) : (
       
-          <h1>No companies found</h1> 
+          <h1>No venues found</h1> 
 
     )}
     </div>
+        </div>
+      </div>
+    </>
+    
   );
 }

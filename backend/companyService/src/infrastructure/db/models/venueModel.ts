@@ -2,6 +2,7 @@ import mongoose, { Document, Schema} from 'mongoose';
 
 export interface IVenue extends Document {
     _id: mongoose.Types.ObjectId;
+    companyId: string;
     name: string;
     type: string;
     description: string;
@@ -11,10 +12,15 @@ export interface IVenue extends Document {
     city: string;
     state: string;
     images: string[]
-    isListed: boolean
+    isListed: boolean;
+    isCompanyBlocked: boolean;
 }
 
 const VenueSchema: Schema = new Schema<IVenue>({
+      companyId: {
+        type: String,
+        required: true
+      },
       name: {
         type: String,
         required: true,
@@ -54,6 +60,10 @@ const VenueSchema: Schema = new Schema<IVenue>({
       isListed: {
         type: Boolean,
         default: true
+      },
+      isCompanyBlocked: {
+        type: Boolean,
+        default: false
       }
 })
 

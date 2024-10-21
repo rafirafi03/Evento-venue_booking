@@ -37,7 +37,7 @@ export class AdminController {
     async blockCompany(req:Request, res: Response) : Promise<void> {
         try {
             const {id} = req.body;
-            console.log(req.body,"reqbdyyyyyyyin admincntrllr")
+            console.log(req.body,"reqbdyyyyyyyin admincntrllr of block company")
 
             const response = await this._blockCompany.execute(id)
 

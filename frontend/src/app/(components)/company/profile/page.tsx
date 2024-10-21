@@ -75,11 +75,7 @@ export default function Page() {
       </nav>
       <div className="flex mt-[64px]">
         <aside className="w-64 bg-slate-white dark:bg-gray-800">
-          <Aside
-            handleLogout={handleLogout}
-            changePage={changePage}
-            page={page}
-          />
+          <Aside/>
         </aside>
         <div className="flex-1 p-5 bg-slate-100 my-3">
           <h1 className="font-extrabold text-2xl my-3">Profile</h1>

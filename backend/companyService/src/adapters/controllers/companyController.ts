@@ -95,13 +95,14 @@ export class CompanyController {
   async addVenue(req: Request, res: Response): Promise<void> {
     try {
 
-      const { name, type, description, capacity, address, phone, city, state } =
+      const { companyId, name, type, description, capacity, address, phone, city, state } =
         req.body;
       const files = req.files as Express.Multer.File[];
 
       const imagePaths = files?.map((image) => image.path);
 
       const response = await this._addVenueUseCase.execute({
+        companyId,
         name,
         type,
         description,
@@ -121,7 +122,9 @@ export class CompanyController {
 
   async getVenues(req: Request, res: Response): Promise<void> {
     try {
-      const venues = await this._getVenues.execute();
+
+      const { companyId } = req.params
+      const venues = await this._getVenues.execute(companyId);
       res.status(HttpStatusCode.OK).json({ venues });
     } catch (error) {
       console.log(error);

@@ -82,9 +82,9 @@ export default function Page() {
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white  dark:border-gray-700">
               <li>
                 <a
-                  href="#"
+                  onClick={()=> router.push('/')}
                   style={{ color: "rgba(255, 0, 0, 1)" }}
-                  className="block py-2 px-3 font-bold text-black rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                  className="block py-2 px-3 font-bold text-black rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 cursor-pointer"
                   aria-current="page"
                 >
                   Home

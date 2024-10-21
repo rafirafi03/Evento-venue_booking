@@ -1,6 +1,6 @@
 
 import { Heart } from "lucide-react"
-import { useAddToFavouritesMutation, useCheckIfFavouritedQuery } from 'app/store/slices/userApiSlices';
+import { useAddToFavouritesMutation, useCheckIfFavouritedQuery, useDeleteFromFavouritesMutation } from 'app/store/slices/userApiSlices';
 
 interface propsData {
     userId: string | null;
@@ -11,14 +11,21 @@ const FavouriteButton = ({ userId, venueId } : propsData) => {
 
     const { data: isFavourited, error, isLoading, refetch } = useCheckIfFavouritedQuery({ userId, venueId });
     const [addToFavourites] = useAddToFavouritesMutation()
+    const [deleteFromFavourites] = useDeleteFromFavouritesMutation()
 
     console.log(isFavourited,"isfavourited in frontedn")
 
 
   const handleFavouriteToggle = async () => {
     try {
-        const response = await addToFavourites({userId, venueId}).unwrap()
-        console.log(response)
+        if(isFavourited) {
+          console.log('hiiiiiiiiiiiiii')
+          const response = await deleteFromFavourites({userId, venueId}).unwrap()
+          console.log(response,"res from delte")
+        } else {
+          const response = await addToFavourites({userId, venueId}).unwrap()
+          console.log(response)
+        }
         refetch()
       } catch (error) {
         console.error("Error toggling favourite", error);

@@ -9,8 +9,9 @@ export class BlockCompanyUseCase {
         try {
             console.log(id,"id in cpmyusecase")
             const company = await this._companyRepository.findById(id)
+            const venueByCompany = await this._companyRepository.findVenueByCompanyId(id)
 
-            console.log(company, "companyusecase")
+            console.log(company, "companyusecase block cmpany")
             if(!company) {
                 return { success: false } 
             }
@@ -18,6 +19,13 @@ export class BlockCompanyUseCase {
                 company.isBlocked = false
             } else {
                 company.isBlocked = true
+            }
+
+            if(!venueByCompany) return {success: false}
+
+            for (const venue of venueByCompany) {
+                venue.isCompanyBlocked = !venue.isCompanyBlocked; 
+                await venue.save(); 
             }
 
             await company.save()

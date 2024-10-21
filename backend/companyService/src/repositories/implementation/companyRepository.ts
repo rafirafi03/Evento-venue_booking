@@ -41,6 +41,16 @@ export class CompanyRepository implements ICompanyRepository {
     }
   }
 
+  async findVenueByCompanyId(id: string): Promise<IVenue[] | null> {
+    try {
+      const venueByCompany = await venueModel.find({ companyId: id });
+      if (!venueByCompany) return null;
+      return venueByCompany;
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
   async getRequests(): Promise<ICompany[]> {
     try {
       const requests = await companyModel.find({ isVerified: "pending" });
@@ -77,9 +87,9 @@ export class CompanyRepository implements ICompanyRepository {
     }
   }
 
-  async getVenues(): Promise<IVenue[]> {
+  async getVenues(companyId: string): Promise<IVenue[]> {
     try {
-      const venues = await venueModel.find();
+      const venues = await venueModel.find({companyId: companyId});
 
       console.log(venues, "vnssssss");
 
@@ -92,7 +102,7 @@ export class CompanyRepository implements ICompanyRepository {
 
   async getListedVenues(): Promise<IVenue[]> {
     try {
-      const venues = await venueModel.find({isListed: true});
+      const venues = await venueModel.find({isListed: true, isCompanyBlocked: false});
 
       console.log(venues, "vnssssss");
 

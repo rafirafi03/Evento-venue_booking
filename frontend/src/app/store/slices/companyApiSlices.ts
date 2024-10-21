@@ -69,8 +69,8 @@ export const companyApiSlice = createApi({
             })
         }),
         getVenues: builder.query({
-            query: () => ({
-                url: '/getVenues'
+            query: (companyId) => ({
+                url: `/getVenues/${companyId}`
             })
         }),
         updateVenueStatus : builder.mutation({

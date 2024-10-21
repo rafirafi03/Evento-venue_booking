@@ -2,6 +2,7 @@ import Venue from "../infrastructure/db/models/venueModel";
 import { ICompanyRepository } from "../repositories";
 
 interface data {
+  companyId: string;
   name: string;
   type: string;
   description: string;
@@ -17,6 +18,7 @@ export class AddVenueUseCase {
   constructor(private _companyRepository: ICompanyRepository) {}
 
   async execute({
+    companyId,
     name,
     type,
     description,
@@ -29,6 +31,7 @@ export class AddVenueUseCase {
   }: data): Promise<{ success: boolean }> {
     try {
       const venue = new Venue({
+        companyId,
         name,
         type,
         description,

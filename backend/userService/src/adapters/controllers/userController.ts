@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase, ResendOtpUseCase, GetUserDetailsUseCase, ResetPasswordUseCase, EditUserProfileUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase} from "../../useCases";
 import { HttpStatusCode } from "../../constants";
 import { GetFavouritesUseCase } from "../../useCases/getFavouritesUseCase";
+import { DeleteFromFavouritesUseCase } from "../../useCases/delteFromFavouritesUseCase";
+import { ForgetPasswordRequest } from "../../useCases/forgetPasswordRequestUseCase";
 
 export class UserController {
   constructor(
@@ -14,7 +16,9 @@ export class UserController {
     private _editUserProfileUseCase: EditUserProfileUseCase,
     private _addToFavouritesUseCase : AddToFavouritesUseCase,
     private _checkFavouritesUseCase : CheckFavouritesUseCase,
-    private _getFavouritesUseCase : GetFavouritesUseCase
+    private _getFavouritesUseCase : GetFavouritesUseCase,
+    private _deleteFromFavouritesUseCase : DeleteFromFavouritesUseCase,
+    private _forgetPasswordRequestUseCase : ForgetPasswordRequest
   ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
@@ -113,7 +117,6 @@ export class UserController {
 
       res.status(HttpStatusCode.OK).json(response)
 
-      console.log(response,"response in resetpasss in controller")
     } catch (error) {
       console.log(error)
       res.status(HttpStatusCode.UNAUTHORIZED).json({
@@ -131,7 +134,6 @@ export class UserController {
 
       res.status(HttpStatusCode.OK).json(response)
 
-      console.log(response,"response in resetpasss in controller")
     } catch (error) {
       console.log(error)
       res.status(HttpStatusCode.UNAUTHORIZED).json({
@@ -143,9 +145,6 @@ export class UserController {
   async addToFavourites(req: Request, res: Response) : Promise<void> {
     try {
       const { userId, venueId } = req.body;
-
-      console.log(userId, "userid in controller of favourites")
-      console.log(venueId, "venue in controller of favourites")
       
       const response = await this._addToFavouritesUseCase.execute(userId, venueId)
 
@@ -164,11 +163,7 @@ export class UserController {
     try {
       const {userId, venueId} = req.params
 
-      console.log(userId, venueId, "user and venue id in controller")
-
       const response = await this._checkFavouritesUseCase.execute(userId, venueId)
-
-      console.log(response,"controller fro is favourtie")
 
       res.status(HttpStatusCode.OK).json(response)
     } catch (error) {
@@ -183,8 +178,6 @@ export class UserController {
     try {
       const {userId} = req.params;
 
-      console.log(userId," userid in controller of get favrts")
-
       const response = await this._getFavouritesUseCase.execute(userId)
 
       res.status(HttpStatusCode.OK).json(response)
@@ -192,6 +185,38 @@ export class UserController {
       console.log(error)
       res.status(HttpStatusCode.UNAUTHORIZED).json({
         message: 'failed to fetch favourites',
+      });
+    }
+  }
+
+  async deleteFromFavourites(req: Request, res: Response) : Promise<void> {
+    try {
+      const {userId, venueId} = req.params;
+
+      const response = await this._deleteFromFavouritesUseCase.execute(userId, venueId)
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error)
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: 'failed to delete favourites',
+      });
+    }
+  }
+
+  async forgetPasswordRequest( req: Request, res: Response) : Promise<void> {
+    try {
+      const {email} = req.body
+
+      console.log(email," email in forget pass controller")
+
+      const response = await this._forgetPasswordRequestUseCase.execute(email)
+
+      console.log(response)
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error)
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: 'failed to send request',
       });
     }
   }

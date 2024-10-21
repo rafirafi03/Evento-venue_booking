@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export interface IVenueData {
     _id?: mongoose.Types.ObjectId;
+    companyId : string;
     name: string;
     type: string;
     description: string;
@@ -14,6 +15,7 @@ export interface IVenueData {
 
 export class Venue {
     _id?: mongoose.Types.ObjectId;
+    companyId : string;
     name: string;
     type: string;
     description: string;
@@ -23,8 +25,9 @@ export class Venue {
     city: string;
     state: string;
 
-    constructor({ _id,name,type,description,capacity,address,phone,city,state} : IVenueData) {
+    constructor({ _id,companyId,name,type,description,capacity,address,phone,city,state} : IVenueData) {
         this._id = _id;
+        this.companyId = companyId
         this.name = name;
         this.type = type;
         this.description = description;

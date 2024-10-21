@@ -93,6 +93,19 @@ export const userApiSlice = createApi({
             query:(userId)=>({
                 url: `/getFavourites/${userId}`
             })
+        }),
+        deleteFromFavourites: builder.mutation({
+            query: ({userId, venueId})=> ({
+                url: `/deleteFromFavourites/${userId}/${venueId}`,
+                method: HttpMethod.DELETE
+            })
+        }),
+        forgetPasswordRequest: builder.mutation({
+            query: (email) => ({
+                url: '/forgetPasswordRequest',
+                method: HttpMethod.POST,
+                body: email
+            })
         })
     })
 })
@@ -110,5 +123,7 @@ export const {
     useResetPasswordMutation,
     useAddToFavouritesMutation,
     useCheckIfFavouritedQuery,
-    useGetFavouritesQuery
+    useGetFavouritesQuery,
+    useDeleteFromFavouritesMutation,
+    useForgetPasswordRequestMutation
 } = userApiSlice;

@@ -13,14 +13,6 @@ export class AddToFavouritesUseCase {
         throw new Error("Id not found");
       }
 
-      const existingFavourite = await this._userRepository.checkFavourites(
-        userId,
-        venueId
-      );
-
-      if (existingFavourite) {
-        await this._userRepository.deleteFromFavourites(userId, venueId)
-      } else {
         const venueDetails = await axios.get(
           `http://localhost:4001/api/company/getVenueDetails/${venueId}`
         );
@@ -43,7 +35,6 @@ export class AddToFavouritesUseCase {
 
         await this._userRepository.saveFavourites(favouritesData);
         console.log(favouritesData, "fvritesdata in usecase");
-      }
 
       return { success: true };
     } catch (error) {

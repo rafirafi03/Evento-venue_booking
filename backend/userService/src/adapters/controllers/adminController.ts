@@ -25,7 +25,6 @@ export class AdminController {
     async getUsers(req: Request, res: Response) : Promise<any> {
         try {
             const users = await this._getUsersUseCase.execute()
-            console.log(users,"getusrsssssssssssss")
             res.status(HttpStatusCode.OK).json({users})
         } catch (error) {
             console.log(error)

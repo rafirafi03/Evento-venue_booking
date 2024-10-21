@@ -117,7 +117,7 @@ router.post("/addVenue", upload.array("images"), (req, res) => {
   companyController.addVenue(req, res);
 });
 
-router.get("/getVenues", (req, res) => {
+router.get("/getVenues/:companyId", (req, res) => {
   companyController.getVenues(req, res);
 });
 

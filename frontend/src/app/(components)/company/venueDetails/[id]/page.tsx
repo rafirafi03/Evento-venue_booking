@@ -46,9 +46,6 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
     console.log("hii");
   };
 
-  const changePage = (arg) => {
-    console.log(arg);
-  };
 
   const page = (arg) => {
     console.log(arg);
@@ -86,11 +83,7 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
       </nav>
       <div className="flex mt-[64px]">
         <aside className="w-64 bg-slate-white dark:bg-gray-800">
-          <Aside
-            handleLogout={handleLogout}
-            changePage={changePage}
-            page={page}
-          />
+          <Aside/>
         </aside>
         <div className="flex-1 p-4 bg-slate-100 my-3">
           <div className="min-h-screen bg-white shadow-lg rounded-lg">

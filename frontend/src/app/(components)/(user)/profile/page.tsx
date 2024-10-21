@@ -19,7 +19,8 @@ import {
   useGetUserDetailsQuery,
   useResetPasswordMutation,
   useEditUserProfileMutation,
-  useGetFavouritesQuery
+  useGetFavouritesQuery,
+  useDeleteFromFavouritesMutation
 } from "app/store/slices/userApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
@@ -39,13 +40,14 @@ export default function UserProfile() {
     data: userDetails,
     error,
     isLoading,
-    refetch
+    refetch: refetchUserDetails
   } = useGetUserDetailsQuery(userId);
-  const { data: favourites} = useGetFavouritesQuery(userId)
+  const { data: favourites, refetch: refetchGetFavourites} = useGetFavouritesQuery(userId)
 
   console.log(favourites,"favrts in frontend")
   const [resetPass] = useResetPasswordMutation();
   const [editUser] = useEditUserProfileMutation();
+  const [deleteFromFavourites] = useDeleteFromFavouritesMutation()
 
   console.log(userDetails, "userdetils in fronend hurreyey");
 
@@ -126,7 +128,7 @@ export default function UserProfile() {
 
       if (res.success) {
         toast.success(<b>user details updated!</b>);
-        refetch()
+        refetchUserDetails()
       } else {
         toast.error(<b>Could not save.</b>);
       }
@@ -165,6 +167,19 @@ export default function UserProfile() {
       console.log(error);
     }
   };
+
+  const handleDeleteFromFavourites = async(userId: string, venueId: string) => {
+    try {
+      const response = await deleteFromFavourites({userId, venueId}).unwrap()
+
+      console.log(response,"response in delete fvrst handler")
+      refetchGetFavourites()
+
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <div>
@@ -362,7 +377,7 @@ export default function UserProfile() {
               )}
               {activeTab === "favourites" && (
                 <div className="space-y-4">
-                  { favourites ? (
+                  { favourites.length > 0 ? (
                     <>
                     {favourites?.map((fav) => (
                       <div
@@ -392,7 +407,7 @@ export default function UserProfile() {
                           <button onClick={()=>router.push(`venueDetails/${fav.venueId}`)} className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                             View Details
                           </button>
-                          <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                          <button onClick={()=>handleDeleteFromFavourites(userId, fav.venueId)} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                             Remove
                           </button>
                         </div>
@@ -401,7 +416,12 @@ export default function UserProfile() {
                     </>
                   ) : (
                     <>
-                    <h5>No favourites</h5>
+                    <div
+                        className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
+                      >
+                    <h2 className="my-10 text-center text-gray-400">No favourites</h2>
+
+                      </div>
                     </>
                   )}
                   

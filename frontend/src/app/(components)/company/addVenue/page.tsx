@@ -1,11 +1,18 @@
+"use client"
+
 import React, { useState } from "react";
 import "@radix-ui/themes/styles.css";
 import { FaUpload } from "react-icons/fa";
 import { useAddVenueMutation } from "app/store/slices/companyApiSlices";
 import { useRouter } from "next/navigation";
+import Header from "app/(components)/login-header/header";
+import Aside from 'app/(components)/company/aside/page';
+import { getUserIdFromToken } from "utils/tokenHelper"
 
 export default function page() {
   const [addVenue] = useAddVenueMutation();
+
+  const companyId = getUserIdFromToken('authCompanyToken')
 
   const [name, setName] = useState<string>("");
   const [type, setType] = useState<string>("");
@@ -24,40 +31,41 @@ export default function page() {
 
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  const [imageToReplace, setImageToReplace] = useState<number | null>(null); // Track which image to replace
+  const [imageToReplace, setImageToReplace] = useState<number | null>(null);
 
   const router = useRouter()
 
-  // Handle image addition or replacement
+  
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
 
       if (imageToReplace !== null) {
-        // Replace the selected image at the specified index
+        
         const updatedFiles = [...selectedImages];
-        updatedFiles[imageToReplace] = filesArray[0]; // Replace the file at the specified index
+        updatedFiles[imageToReplace] = filesArray[0]; 
         setSelectedImages(updatedFiles);
-        setImageToReplace(null); // Reset the replace index
+        setImageToReplace(null); 
       } else {
-        // Add new images (limiting to 6)
+        
         const newFiles = Array.from(e.target.files);
         setSelectedImages(
-          (prevFiles) => [...prevFiles, ...newFiles].slice(0, 6) // Limit to 6 files
+          (prevFiles) => [...prevFiles, ...newFiles].slice(0, 6) 
         );
       }
     }
   };
 
-  // Handle image replacement click
+
   const handleImageReplace = (index: number) => {
-    setImageToReplace(index); // Set the image index to be replaced
-    document.getElementById("imageInput")?.click(); // Trigger file input
+    setImageToReplace(index); 
+    document.getElementById("imageInput")?.click();
   };
 
   const handleSubmit = async () => {
     const formData = new FormData();
 
+    formData.append('companyId', companyId);
     formData.append("name", name);
     formData.append("type", type);
     formData.append("description", description);
@@ -73,13 +81,23 @@ export default function page() {
 
     const response = await addVenue(formData).unwrap();
 
-    router.push('/company/main')
+    router.push('/company/venues')
 
     console.log(response);
   };
 
   return (
-    <div className="m-5">
+
+    <>
+      <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
+        <Header />
+      </nav>
+      <div className="flex mt-[64px]">
+        <aside className="w-64 bg-slate-white dark:bg-gray-800">
+          <Aside/>
+        </aside>
+        <div className="flex-1 p-4 bg-slate-100">
+        <div className="m-5">
       <h1 className="font-extrabold text-2xl mt-5 mb-5">Add Venue</h1>
       <div className="max-w-full rounded overflow-hidden shadow-lg p-6 bg-white">
         <h1 className="font-extrabold text-lg mb-7 text-center font-sans">
@@ -348,5 +366,8 @@ export default function page() {
         </div>
       </div>
     </div>
+        </div>
+      </div>
+    </>
   );
 }

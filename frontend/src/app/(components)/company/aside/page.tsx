@@ -1,14 +1,30 @@
 "use client"
 
-import React from "react";
+import React, { useState } from "react";
 // import Image from "next/image";
 // import Header from "../../login-header/header";
+import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faFileAlt, faTags, faComments, faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 
 
 
-export default function page({ handleLogout, changePage, page }: any) {
+export default function page() {
+
+  const router = useRouter()
+
+  const [currPage, setCurrpage] = useState<string>('dashboard')
+
+  const handleOnClick = (page: string)=> {
+    setCurrpage(page)
+    router.push(`/company/${page}`)
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("authAdminToken");
+    router.replace("/company/login");
+  };
+
   return (
     <div>
       <aside
@@ -18,8 +34,10 @@ export default function page({ handleLogout, changePage, page }: any) {
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-white">
           <ul className="space-y-5 ml-2 font-medium">
-            <li className="cursor-pointer" onClick={() => changePage('dashboard')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${page == 'dashboard' ? 'bg-red-200' : ""}`}>
+            <li className="cursor-pointer" onClick={() =>
+                handleOnClick('main')
+               }>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${currPage == 'main' ? 'bg-red-200' : ""}`}>
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900"
                   aria-hidden="true"
@@ -33,15 +51,15 @@ export default function page({ handleLogout, changePage, page }: any) {
                 <span className="ms-3 ml-6">Dashboard</span>
               </a>
             </li>
-            <li className="cursor-pointer" onClick={() => changePage('profile')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${page == 'profile' ? 'bg-red-200' : ""}`}>
+            <li className="cursor-pointer" onClick={() => handleOnClick('profile')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${currPage == 'profile' ? 'bg-red-200' : ""}`}>
               <FontAwesomeIcon icon={faUser} className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900" />
 
                 <span className="ms-3 ml-6">Profile</span>
               </a>
             </li>
-            <li className="cursor-pointer" onClick={() => changePage('users')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'users' ? 'bg-red-200' : ""}`}>
+            <li className="cursor-pointer" onClick={() => handleOnClick('users')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${currPage == 'users' ? 'bg-red-200' : ""}`}>
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900 "
                   aria-hidden="true"
@@ -57,8 +75,8 @@ export default function page({ handleLogout, changePage, page }: any) {
               </a>
             </li>
             
-            <li className="cursor-pointer" onClick={() => changePage('venues')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-200 dark:hover:bg-red-200 group ${page == 'venues' ? 'bg-red-300' : ""}`}>
+            <li className="cursor-pointer" onClick={() => handleOnClick('venues')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-200 dark:hover:bg-red-200 group ${currPage == 'venues' ? 'bg-red-300' : ""}`}>
               <FontAwesomeIcon icon={faBuilding} className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900" />
 
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">
@@ -66,8 +84,8 @@ export default function page({ handleLogout, changePage, page }: any) {
                 </span>
               </a>
             </li>
-            <li className="cursor-pointer" onClick={() => changePage('bookings')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'bookings' ? 'bg-red-300' : ""}`}>
+            <li className="cursor-pointer" onClick={() => handleOnClick('bookings')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${currPage == 'bookings' ? 'bg-red-300' : ""}`}>
               <FontAwesomeIcon icon={faFileAlt} className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900" />
 
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">
@@ -75,8 +93,8 @@ export default function page({ handleLogout, changePage, page }: any) {
                 </span>
               </a>
             </li>
-            <li className="cursor-pointer" onClick={() => changePage('users')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'offers' ? 'bg-red-300' : ""}`}>
+            <li className="cursor-pointer" onClick={() => handleOnClick('offers')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${currPage == 'offers' ? 'bg-red-300' : ""}`}>
               <FontAwesomeIcon icon={faTags} className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900" />
 
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">
@@ -84,8 +102,8 @@ export default function page({ handleLogout, changePage, page }: any) {
                 </span>
               </a>
             </li>
-            <li className="cursor-pointer" onClick={() => changePage('inbox')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'inbox' ? 'bg-red-300' : ""}`}>
+            <li className="cursor-pointer" onClick={() => handleOnClick('inbox')}>
+              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${currPage == 'inbox' ? 'bg-red-300' : ""}`}>
               <FontAwesomeIcon icon={faComments} className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900" />
 
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">

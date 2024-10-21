@@ -129,7 +129,7 @@ const Page = () => {
         <h1 className="font-bold font-georgia text-2xl mb-2">Featured venues</h1>
         <p className="text-sm font-georgia">start planning events with us. Explore <span className="text-[rgb(255,0,0)]">Evento</span></p>
       </div>
-      <div className="min-h-screen flex justify-center items-center">
+      <div className="flex justify-center items-center">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {venue?.length && (
           <>

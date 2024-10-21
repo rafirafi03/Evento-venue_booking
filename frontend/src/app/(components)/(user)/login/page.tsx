@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLoginPostMutation } from "app/store/slices/userApiSlices";
+import EmailModal from 'app/(components)/(user)/emailModal/page'
 
 const Page = () => {
   const router = useRouter();
@@ -17,6 +18,8 @@ const Page = () => {
   const [emailError, setEmailError] = useState<string>("");
   const [passwordError, setPassError] = useState<string>("");
   const [error, setError] = useState<string>("");
+
+  const [isForgotEmailModal, setForgotEmailModal] = useState<boolean>(false)
 
   const validateEmail = (email: string) => {
     const re = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -77,6 +80,11 @@ const Page = () => {
 
   return (
     <div>
+      <>
+      {isForgotEmailModal && (
+        <EmailModal/>
+      )}
+      </>
       <Header />
       <div className="min-h-screen flex items-center justify-center bg-slate-100 pt-20">
         <div className="flex display-flex transform transition duration-500 hover:scale-105">
@@ -180,6 +188,7 @@ const Page = () => {
                 Login
               </button>
             </div>
+              <p onClick={()=> setForgotEmailModal(true)} className="text-xs my-2 mx-1 text-red-600 hover:cursor-pointer">forgot password?</p>
             <div className="mt-4 text-center">
               <p className="text-gray-600">
                 Don't have an account?

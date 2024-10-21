@@ -9,11 +9,12 @@ export interface ICompanyRepository {
     getRequests() : Promise<ICompany[]>
     getCompanies() : Promise<ICompany[]>
     addVenue(venue: Venue) : Promise<IVenueData | null>
-    getVenues() : Promise<IVenue[]>
+    getVenues(companyId: string) : Promise<IVenue[]>
     getListedVenues() : Promise<IVenue[]>
     findVenueById(_id: string) : Promise<IVenue | null>
     updateVenue(venueId: string, venueData: any): Promise<void>;
     deleteVenue(venueId: string) : Promise<void>
     findCompanyById(companyId: string) : Promise<ICompany | null>
     editCompanyProfile(companyId: string, companyData: Partial<ICompany> | null) : Promise<void>
+    findVenueByCompanyId(id: string) : Promise<IVenue[] | null>
 }

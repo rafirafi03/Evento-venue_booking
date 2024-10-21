@@ -6,10 +6,10 @@ export class GetVenuesUseCase {
         private _companyRepository: ICompanyRepository
     ) {}
 
-    async execute() : Promise<{ venues: IVenue[] } | null> {
+    async execute(companyId: string) : Promise<{ venues: IVenue[] } | null> {
 
         try {
-            const venues = await this._companyRepository.getVenues()
+            const venues = await this._companyRepository.getVenues(companyId)
 
             console.log(venues,"cmpniessss cmpnyusecase")
 

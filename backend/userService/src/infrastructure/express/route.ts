@@ -1,12 +1,13 @@
 import { Router } from "express";
 import { AdminController, UserController } from "../../adapters/controllers";
-import { AdminLoginUseCase, EditUserProfileUseCase, GetUsersUseCase, ResetPasswordUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase, GetUserDetailsUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase } from "../../useCases";
+import { AdminLoginUseCase, EditUserProfileUseCase, GetUsersUseCase, ResetPasswordUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase, GetUserDetailsUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase, ForgetPasswordRequest } from "../../useCases";
 import { UserRepository, RedisClient } from "../../repositories";
 import { otpService } from "../services";
 import { AdminRepository } from "../../repositories/implementation/adminRepository";
 import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
 import { BlockUserUseCase } from "../../useCases/blockUserUseCase";
 import { GetFavouritesUseCase } from "../../useCases/getFavouritesUseCase";
+import { DeleteFromFavouritesUseCase } from "../../useCases/delteFromFavouritesUseCase";
 
 const userRepository = new UserRepository();
 const adminRepository = new AdminRepository()
@@ -43,7 +44,11 @@ const editUserProfile = new EditUserProfileUseCase(userRepository)
 
 const getFavouritesUseCase = new GetFavouritesUseCase(userRepository)
 
-const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase, getUserDetailsUseCase, resetPassUseCase, editUserProfile, addToFavouritesUseCase, checkFavouritesUseCase, getFavouritesUseCase);
+const delteFromFavouritesUseCase = new DeleteFromFavouritesUseCase(userRepository)
+
+const forgetPasswordRequest = new ForgetPasswordRequest(otpRepository)
+
+const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase, getUserDetailsUseCase, resetPassUseCase, editUserProfile, addToFavouritesUseCase, checkFavouritesUseCase, getFavouritesUseCase, delteFromFavouritesUseCase, forgetPasswordRequest);
 
 const adminController = new AdminController(adminLoginUseCase, getUsersUseCase, blockUserUseCase)
 
@@ -100,5 +105,14 @@ router.get('/checkFavourites/:userId/:venueId', (req, res) => {
 router.get('/getFavourites/:userId', (req,res) => {
   userController.getFavourites(req, res)
 })
+
+router.delete('/deleteFromFavourites/:userId/:venueId', (req, res) => {
+  userController.deleteFromFavourites(req, res)
+})
+
+router.post('/forgetPasswordRequest', (req, res) => {
+  userController.forgetPasswordRequest(req, res)
+})
+
 
 export default router;
