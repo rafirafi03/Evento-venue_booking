@@ -24,13 +24,14 @@ export class VerifyOtpUsecase {
         throw new Error("Invalid otpaaaaa");
       }
   
-      const userOtp = await this._verifyOtpRepository.getOTP(email);
+      const userOtp = await this._verifyOtpRepository.get(email);
+      
   
       if (userOtp !== otp) {
         return { success: false, error: 'Invalid otp'}
       }
   
-      await this._verifyOtpRepository.deleteOTP(email);
+      await this._verifyOtpRepository.delete(email);
   
       console.log(password, "passsverifyhash");
   
@@ -47,7 +48,7 @@ export class VerifyOtpUsecase {
   
       const tokenservice = new TokenService(secretKey)
   
-      const token = tokenservice.generateToken({userId: user._id as string, email: user.email})
+      const token = tokenservice.generateToken({userId: user._id as string, role: 'user'})
   
       console.log(token,"tknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
   

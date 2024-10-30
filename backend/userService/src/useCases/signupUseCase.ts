@@ -1,11 +1,11 @@
-import { IUserRepository,RedisClient } from '../repositories'
+import { IUserRepository,IRedisClient } from '../repositories'
 import { otpService } from '../infrastructure/services';
 
 
 export class SignupUseCase {
     constructor(
         private _userRepository : IUserRepository,
-        private _redisRepository : RedisClient,
+        private _redisRepository : IRedisClient,
         private _otpRepository : otpService,
     ) {}
 
@@ -30,7 +30,7 @@ export class SignupUseCase {
             const message = otp;
             
             await this._otpRepository.sendMail(email, subject, message);
-            await this._redisRepository.storeOTP(email, otp, 300);
+            await this._redisRepository.store(email, otp, 300);
     
             return { success: true} 
         } catch (error) {

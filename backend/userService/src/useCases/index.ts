@@ -11,4 +11,8 @@ export * from './resetPassUseCase'
 export * from './editUserProfileUseCase'
 export * from './addToFavouritesUseCase'
 export * from './checkFavouritesUseCase'
-export * from './forgetPasswordRequestUseCase'
+export * from './forgetPasswordRequestUseCase';
+export * from './changePasswordUseCase'
+export * from './deleteFromFavouritesUseCase';
+export * from './getFavouritesUseCase';
+export * from './forgetPasswordRequestUseCase';

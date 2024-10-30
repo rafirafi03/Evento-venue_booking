@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Header from "../header/page";
 import Footer from "../footer/page";
@@ -9,16 +8,15 @@ import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
 import { useAddToFavouritesMutation } from "app/store/slices/userApiSlices";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { Heart } from "lucide-react"
 import { getUserIdFromToken } from "utils/tokenHelper";
 import FavouriteButton from "../favouriteButton/page";
+import AuthHOC from "app/(components)/auth/authHoc";
 
 // import Auth from '../../../auth/auth'
 
 const Page = () => {
+  const userId = getUserIdFromToken("authToken");
 
-  const userId = getUserIdFromToken('authToken');
-  
   const { data: venues, refetch } = useGetListedVenuesQuery(undefined);
   // const [addToFavourites] = useAddToFavouritesMutation()
 
@@ -26,17 +24,9 @@ const Page = () => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-
-    if (!token) {
-      router.push("/login");
-    }
-  }, [router,refetch]);
-  
   const handleOnClick = (id: string) => {
-    router.push(`/venueDetails/${id}`)
-  }
+    router.push(`/venueDetails/${id}`);
+  };
 
   // const [isWishlisted, setIsWishlisted] = useState(false)
 
@@ -53,13 +43,14 @@ const Page = () => {
   return (
     <div className="bg-slate-50">
       <Header />
-      <div className="flex w-full bg-white border-b border-slate-100">
-        <div className="bg-slate-100 w-1/2 flex items-center justify-center">
+      <div className="flex w-full h-full bg-white border-b border-slate-100 p-5 my-16">
+        <div className=" w-1/2 flex items-center justify-center rounded-l-xl p-5 bg-gradient-to-br from-purple-100 via-white to-red-100">
           <div>
-            <h1 className="font-georgia font-extrabold text-2xl mb-5 mt-16">
+            <h1 className="font-georgia font-extrabold text-xl sm:text-md md:text-xl lg:text-2xl mb-5">
               Everything you need to plan your event
             </h1>
-            <p className="font-georgia mb-5">
+
+            <p className="font-georgia mb-5 sm:text-xs md:text-sm lg:text-md">
               search venues with reviews, pricing and more..
             </p>
 
@@ -117,6 +108,7 @@ const Page = () => {
         </div>
         <div className="w-1/2 h-[45vh] relative">
           <Image
+            className="rounded-r-xl"
             src="/assets/images/homepage-image.jpg"
             alt="/assets/images/intrologin-user.jpeg"
             layout="fill"
@@ -126,76 +118,77 @@ const Page = () => {
       </div>
 
       <div className="max-w-5xl mx-auto my-5 p-4">
-        <h1 className="font-bold font-georgia text-2xl mb-2">Featured venues</h1>
-        <p className="text-sm font-georgia">start planning events with us. Explore <span className="text-[rgb(255,0,0)]">Evento</span></p>
+        <h1 className="font-bold font-georgia text-2xl mb-2">
+          Featured venues
+        </h1>
+        <p className="text-sm font-georgia">
+          start planning events with us. Explore{" "}
+          <span className="text-[rgb(255,0,0)]">Evento</span>
+        </p>
       </div>
       <div className="flex justify-center items-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {venue?.length && (
-          <>
-            {venue.map((ven, index) => (
-              <div  className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                <a>
-                  <Image
-                  className="rounded-t-lg"
-                  src={ven.images[0]}
-                  alt="img"
-                  width={500}
-                  height={500}
-                  />
-                </a>
-                <div className="p-5">
-      <a>
-        <h5 className="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
-          {ven.name}
-        </h5>
-      </a>
-      <p className="mb-3 font-normal text-xs text-gray-700 dark:text-gray-400">
-        {ven.description}
-      </p>
-      <div className="flex justify-between items-center">
-      
-        <a
-          onClick={()=> handleOnClick(ven._id)}
-          className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        >
-          View Details
-          <svg
-            className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 14 10"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M1 5h12m0 0L9 1m4 4L9 9"
-            />
-          </svg>
-        </a>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          {venue?.length && (
+            <>
+              {venue.map((ven, index) => (
+                <div className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                  <a>
+                    <Image
+                      className="rounded-t-lg"
+                      src={ven.images[0]}
+                      alt="img"
+                      width={500}
+                      height={500}
+                    />
+                  </a>
+                  <div className="p-5">
+                    <a>
+                      <h5 className="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
+                        {ven.name}
+                      </h5>
+                    </a>
+                    <p className="mb-3 font-normal text-xs text-gray-700 dark:text-gray-400">
+                      {ven.description}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <a
+                        onClick={() => handleOnClick(ven._id)}
+                        className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        View Details
+                        <svg
+                          className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                          aria-hidden="true"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 14 10"
+                        >
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M1 5h12m0 0L9 1m4 4L9 9"
+                          />
+                        </svg>
+                      </a>
 
-        <FavouriteButton userId={userId} venueId={ven._id}/>
-        
-      </div>
-    </div>
-              </div>
-            ))}
-          </>
-        )}
-
-      </div>
+                      <FavouriteButton userId={userId} venueId={ven._id} />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </>
+          )}
+        </div>
       </div>
       <div className="flex items-center justify-center mb-5 mt-5">
-            <button
-                type="submit"
-                className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[rgb(255,0,0)] rounded-lg border border-slate-200"
-              >
-                Show More Venues
-              </button>
-
+        <button
+          type="submit"
+          className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[rgb(255,0,0)] rounded-lg border border-slate-200"
+        >
+          Show More Venues
+        </button>
       </div>
       <Footer />
     </div>

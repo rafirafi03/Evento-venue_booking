@@ -18,7 +18,7 @@ export class ResendOtpUseCase {
             const message = otp
 
             await this._otpRepository.sendMail(email, subject, message);
-            await this._redisRepository.storeOTP(email, otp, 300)
+            await this._redisRepository.store(email, otp, 300)
 
             return { success: true }    
         } catch (error) {

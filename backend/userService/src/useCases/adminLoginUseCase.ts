@@ -35,7 +35,7 @@ export class AdminLoginUseCase {
             const tokenService = new TokenService(secretKey);
             const token = tokenService.generateToken({
                 userId: user._id as string,
-                email: user.email
+                role: 'admin'
             });
     
             return { success: true, token };

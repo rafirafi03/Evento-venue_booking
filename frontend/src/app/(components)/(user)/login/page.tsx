@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLoginPostMutation } from "app/store/slices/userApiSlices";
 import EmailModal from 'app/(components)/(user)/emailModal/page'
+import AuthHOC from "app/(components)/auth/authHoc";
 
 const Page = () => {
   const router = useRouter();
@@ -79,7 +80,7 @@ const Page = () => {
   };
 
   return (
-    <div>
+    <AuthHOC role="user">
       <>
       {isForgotEmailModal && (
         <EmailModal/>
@@ -224,7 +225,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AuthHOC>
   );
 };
 

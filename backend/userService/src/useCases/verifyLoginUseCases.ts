@@ -26,7 +26,7 @@ export class UserLoginUseCase {
 
           const token = tokenservice.generateToken({
             userId: user._id as string,
-            email: user.email,
+            role: 'user',
           });
 
           return { success: true, token };

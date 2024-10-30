@@ -38,7 +38,7 @@ async execute(email: string, password: string) : Promise<ILoginResponse | null> 
         const tokenService = new TokenService(secretKey);
         const token = tokenService.generateToken({
             userId: company.id as string,
-            email: company.email
+            role: "company"
         });
 
         return { success: true, token }; 

@@ -106,6 +106,13 @@ export const userApiSlice = createApi({
                 method: HttpMethod.POST,
                 body: email
             })
+        }),
+        changePassword: builder.mutation({
+            query:(data) => ({
+                url: '/changePassword',
+                method: HttpMethod.PUT,
+                body: data
+            })
         })
     })
 })
@@ -125,5 +132,6 @@ export const {
     useCheckIfFavouritedQuery,
     useGetFavouritesQuery,
     useDeleteFromFavouritesMutation,
-    useForgetPasswordRequestMutation
+    useForgetPasswordRequestMutation,
+    useChangePasswordMutation
 } = userApiSlice;

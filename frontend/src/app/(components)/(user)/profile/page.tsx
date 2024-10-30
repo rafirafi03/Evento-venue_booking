@@ -24,6 +24,7 @@ import {
 } from "app/store/slices/userApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
+import AuthHOC from "app/(components)/auth/authHoc";
 
 export default function UserProfile() {
 
@@ -182,6 +183,7 @@ export default function UserProfile() {
   }
 
   return (
+    <AuthHOC role="user">
     <div>
       <div>
         <Toaster position="bottom-center" reverseOrder={false} />
@@ -252,7 +254,6 @@ export default function UserProfile() {
                   "history",
                   "reviews",
                   "favourites",
-                  "settings",
                 ].map((tab) => (
                   <button
                     key={tab}
@@ -560,5 +561,6 @@ export default function UserProfile() {
         </div>
       </div>
     </div>
+    </AuthHOC>
   );
 }

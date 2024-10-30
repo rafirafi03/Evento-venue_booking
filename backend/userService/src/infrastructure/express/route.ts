@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { AdminController, UserController } from "../../adapters/controllers";
-import { AdminLoginUseCase, EditUserProfileUseCase, GetUsersUseCase, ResetPasswordUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase, GetUserDetailsUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase, ForgetPasswordRequest } from "../../useCases";
+import { AdminLoginUseCase, EditUserProfileUseCase, GetUsersUseCase, ResetPasswordUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase, GetUserDetailsUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase, ForgetPasswordRequest, ChangePasswordUseCase } from "../../useCases";
 import { UserRepository, RedisClient } from "../../repositories";
 import { otpService } from "../services";
 import { AdminRepository } from "../../repositories/implementation/adminRepository";
 import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
 import { BlockUserUseCase } from "../../useCases/blockUserUseCase";
 import { GetFavouritesUseCase } from "../../useCases/getFavouritesUseCase";
-import { DeleteFromFavouritesUseCase } from "../../useCases/delteFromFavouritesUseCase";
+import { DeleteFromFavouritesUseCase } from "../../useCases/deleteFromFavouritesUseCase";
 
 const userRepository = new UserRepository();
 const adminRepository = new AdminRepository()
@@ -46,9 +46,11 @@ const getFavouritesUseCase = new GetFavouritesUseCase(userRepository)
 
 const delteFromFavouritesUseCase = new DeleteFromFavouritesUseCase(userRepository)
 
-const forgetPasswordRequest = new ForgetPasswordRequest(otpRepository)
+const forgetPasswordRequest = new ForgetPasswordRequest(otpRepository, userRepository, redisRepository)
 
-const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase, getUserDetailsUseCase, resetPassUseCase, editUserProfile, addToFavouritesUseCase, checkFavouritesUseCase, getFavouritesUseCase, delteFromFavouritesUseCase, forgetPasswordRequest);
+const changePasswordUseCase = new ChangePasswordUseCase(userRepository, redisRepository)
+
+const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase, getUserDetailsUseCase, resetPassUseCase, editUserProfile, addToFavouritesUseCase, checkFavouritesUseCase, getFavouritesUseCase, delteFromFavouritesUseCase, forgetPasswordRequest, changePasswordUseCase);
 
 const adminController = new AdminController(adminLoginUseCase, getUsersUseCase, blockUserUseCase)
 
@@ -112,6 +114,10 @@ router.delete('/deleteFromFavourites/:userId/:venueId', (req, res) => {
 
 router.post('/forgetPasswordRequest', (req, res) => {
   userController.forgetPasswordRequest(req, res)
+})
+
+router.put('/changePassword', (req, res) => {
+  userController.changePassword(req, res)
 })
 
 

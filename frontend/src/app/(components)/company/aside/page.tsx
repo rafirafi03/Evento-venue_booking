@@ -21,7 +21,7 @@ export default function page() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("authAdminToken");
+    localStorage.removeItem("authCompanyToken");
     router.replace("/company/login");
   };
 

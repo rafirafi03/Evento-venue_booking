@@ -35,26 +35,80 @@ export default function page() {
 
   const router = useRouter()
 
+  const resizeImage = (file: File, width: number, height: number): Promise<File | null> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
   
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        const img = new Image();
+        img.src = e.target?.result as string;
+  
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+  
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            canvas.toBlob(
+              (blob) => {
+                if (blob) {
+                  // Convert Blob to File
+                  const resizedFile = new File([blob], file.name, {
+                    type: 'image/jpeg',
+                    lastModified: Date.now(),
+                  });
+                  resolve(resizedFile); // Returns the resized image file
+                } else {
+                  resolve(null);
+                }
+              },
+              'image/jpeg',
+              0.8 // Adjust quality as needed
+            );
+          } else {
+            resolve(null);
+          }
+        };
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  };
+  
+  
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
-
+  
       if (imageToReplace !== null) {
-        
-        const updatedFiles = [...selectedImages];
-        updatedFiles[imageToReplace] = filesArray[0]; 
-        setSelectedImages(updatedFiles);
-        setImageToReplace(null); 
+        // Resize the image before replacing it
+        const resizedImage = await resizeImage(filesArray[0], 5000, 3000); // Adjust width and height as needed
+  
+        if (resizedImage) {
+          const updatedFiles = [...selectedImages];
+          updatedFiles[imageToReplace] = resizedImage; // Only assign if resizedImage is not null
+          setSelectedImages(updatedFiles);
+          setImageToReplace(null);
+        } else {
+          console.error("Failed to resize image.");
+        }
       } else {
-        
-        const newFiles = Array.from(e.target.files);
-        setSelectedImages(
-          (prevFiles) => [...prevFiles, ...newFiles].slice(0, 6) 
+        const newFiles = await Promise.all(
+          filesArray.map((file) => resizeImage(file, 5000, 3000)) // Resize each file
         );
+  
+        // Filter out any null values in case resizing failed for any image
+        setSelectedImages((prevFiles) => [
+          ...prevFiles,
+          ...newFiles.filter((file): file is File => file !== null),
+        ].slice(0, 6));
       }
     }
   };
+  
 
 
   const handleImageReplace = (index: number) => {

@@ -75,7 +75,7 @@ export class VerifyOtpUsecase {
 
         const token = tokenservice.generateToken({
           userId: savedCompany._id as unknown as string,
-          email: savedCompany.email,
+          role: "company",
         });
 
         return { success: true, token };

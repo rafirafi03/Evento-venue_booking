@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { useForgetPasswordRequestMutation } from 'app/store/slices/userApiSlices'
+import { useForgetPasswordRequestMutation } from 'app/store/slices/userApiSlices';
+import AuthHOC from 'app/(components)/auth/authHoc';
 
 export default function pagge() {
 
@@ -27,6 +28,7 @@ export default function pagge() {
   }
 
   return (
+    <AuthHOC role='user'>
     <div className="fixed inset-0 z-10 overflow-y-auto">
       <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -80,5 +82,6 @@ export default function pagge() {
         </div>
       </div>
     </div>
+    </AuthHOC>
   )
 }

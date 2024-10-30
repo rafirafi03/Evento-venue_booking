@@ -24,7 +24,7 @@ export class RedisClient implements IRedisClient {
     })
   }
 
-  async storeOTP(email: string, otp: string, ttl: number): Promise<void> {
+  async store(email: string, otp: string, ttl: number): Promise<void> {
     try {
         await this._redis.setex(`otp:${email}`, ttl, otp);
     } catch (error) {
@@ -33,7 +33,7 @@ export class RedisClient implements IRedisClient {
     }
   }
 
-  async getOTP(email: string): Promise<string | null> {
+  async get(email: string): Promise<string | null> {
     try {
         return await this._redis.get(`otp:${email}`);
     } catch (error) {
@@ -42,7 +42,7 @@ export class RedisClient implements IRedisClient {
     }
   }
 
-  async deleteOTP(email: string): Promise<void> {
+  async delete(email: string): Promise<void> {
     try {
         await this._redis.del(`otp:${email}`);
     } catch (error) {

@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
-import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase, ResendOtpUseCase, GetUserDetailsUseCase, ResetPasswordUseCase, EditUserProfileUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase} from "../../useCases";
+import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase, ResendOtpUseCase, GetUserDetailsUseCase, ResetPasswordUseCase, EditUserProfileUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase, ChangePasswordUseCase, DeleteFromFavouritesUseCase, GetFavouritesUseCase, ForgetPasswordRequest} from "../../useCases";
 import { HttpStatusCode } from "../../constants";
-import { GetFavouritesUseCase } from "../../useCases/getFavouritesUseCase";
-import { DeleteFromFavouritesUseCase } from "../../useCases/delteFromFavouritesUseCase";
-import { ForgetPasswordRequest } from "../../useCases/forgetPasswordRequestUseCase";
 
 export class UserController {
   constructor(
@@ -18,7 +15,8 @@ export class UserController {
     private _checkFavouritesUseCase : CheckFavouritesUseCase,
     private _getFavouritesUseCase : GetFavouritesUseCase,
     private _deleteFromFavouritesUseCase : DeleteFromFavouritesUseCase,
-    private _forgetPasswordRequestUseCase : ForgetPasswordRequest
+    private _forgetPasswordRequestUseCase : ForgetPasswordRequest,
+    private _changePasswordUseCase : ChangePasswordUseCase
   ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
@@ -212,6 +210,20 @@ export class UserController {
       const response = await this._forgetPasswordRequestUseCase.execute(email)
 
       console.log(response)
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error)
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: 'failed to send request',
+      });
+    }
+  }
+
+  async changePassword(req: Request, res: Response) : Promise<void> {
+    try {
+      const {token, password} = req.body;
+      const response = await this._changePasswordUseCase.execute(token, password)
+
       res.status(HttpStatusCode.OK).json(response)
     } catch (error) {
       console.log(error)

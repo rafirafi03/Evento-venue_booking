@@ -1,6 +1,6 @@
 export interface IRedisClient {
-    storeOTP(email: string, otp: string, ttl: number): Promise<void>;
-    getOTP(email: string): Promise<string | null>;
-    deleteOTP(email: string): Promise<void>;
+    store(email: string, otp: string, ttl: number): Promise<void>;
+    get(email: string): Promise<string | null>;
+    delete(email: string): Promise<void>;
   }
   
