@@ -68,6 +68,8 @@ const Page = () => {
         const token = res.token;
         localStorage.setItem('authToken', token)
         router.push("/");
+      } else {
+        setError(res.error)
       }
     } catch (error) {
       console.log(error);

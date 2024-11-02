@@ -2,19 +2,25 @@
 
 import React, { useState } from "react";
 import { useChangePasswordMutation } from "app/store/slices/userApiSlices";
+import { useRouter } from "next/navigation";
 
 export default function page({ params }: { params: { token: string } }) {
 
     const [password, setPass] = useState<string>('');
     const [confirmPass, setConfirmPass] = useState<string>("");
 
-    const [changePassword] = useChangePasswordMutation()
+    const [changePassword] = useChangePasswordMutation();
+    const router = useRouter()
 
     const { token } = params
 
     const handleSubmit = async()=> {
         try {
             const response = await changePassword({token, password}).unwrap()
+
+            if (response.success) {
+              router.push('/login')
+            }
             console.log(response)
         } catch (error) {
             console.log(error)

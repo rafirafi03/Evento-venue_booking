@@ -120,5 +120,4 @@ router.put('/changePassword', (req, res) => {
   userController.changePassword(req, res)
 })
 
-
 export default router;

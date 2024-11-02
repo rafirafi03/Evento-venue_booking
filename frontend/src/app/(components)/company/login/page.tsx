@@ -73,7 +73,7 @@ const Page = () => {
       } else {
         const token = res.token;
         localStorage.setItem('authCompanyToken', token)
-        router.push('/company/main')
+        router.push('/company')
       }
 
       console.log(res,"ress")

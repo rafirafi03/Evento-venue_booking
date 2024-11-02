@@ -15,3 +15,8 @@ export * from './editVenueUseCase'
 export * from './deleteVenueUseCase'
 export * from './editCompanyUseCase'
 export * from './getCompanyDetailsUseCase'
+export * from './addOfferUseCase';
+export * from './getOffersUseCase';
+export * from './deleteOfferUseCase';
+export * from './applyOfferUseCase';
+export * from './removeOfferUseCase'

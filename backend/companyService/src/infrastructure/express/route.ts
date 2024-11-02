@@ -16,7 +16,12 @@ import {
   EditVenueUseCase,
   DeleteVenueUseCase,
   EditCompanyUseCase,
-  GetCompanyDetailsUseCase
+  GetCompanyDetailsUseCase,
+  AddOfferUseCase,
+  GetOffersUseCase,
+  DeleteOfferUseCase,
+  ApplyOfferUseCase,
+  RemoveOfferUseCase
 } from "../../useCases";
 import { AdminController, CompanyController } from "../../adapters/controllers";
 import { CompanyRepository } from "../../repositories/implementation/companyRepository";
@@ -56,7 +61,12 @@ const getVenueDetailsUseCase = new GetVenueDetailsUseCase(companyRepository);
 const editVenueUseCase = new EditVenueUseCase(companyRepository);
 const deleteVenueUseCase = new DeleteVenueUseCase(companyRepository);
 const getCompanyDetailsUseCase = new GetCompanyDetailsUseCase(companyRepository);
-const editCompanyUseCase = new EditCompanyUseCase(companyRepository)
+const editCompanyUseCase = new EditCompanyUseCase(companyRepository);
+const addOfferUseCase = new AddOfferUseCase(companyRepository);
+const getOffersUseCase = new GetOffersUseCase(companyRepository);
+const deleteOfferUseCase = new DeleteOfferUseCase(companyRepository);
+const applyOfferUseCase = new ApplyOfferUseCase(companyRepository);
+const removeOfferUseCase = new RemoveOfferUseCase(companyRepository);
 
 
 const companyController = new CompanyController(
@@ -72,7 +82,12 @@ const companyController = new CompanyController(
   editVenueUseCase,
   deleteVenueUseCase,
   getCompanyDetailsUseCase,
-  editCompanyUseCase
+  editCompanyUseCase,
+  addOfferUseCase,
+  getOffersUseCase,
+  deleteOfferUseCase,
+  applyOfferUseCase,
+  removeOfferUseCase
 );
 const adminController = new AdminController(
   getRequestsUseCase,
@@ -147,6 +162,26 @@ router.get('/getCompanyDetails/:companyId' , (req, res) => {
 
 router.patch('/editCompanyProfile', (req,res) => {
   companyController.editCompanyProfile(req,res)
+})
+
+router.post('/addOffer', (req, res) => {
+  companyController.addOffer(req, res);
+})
+
+router.get('/getOffers/:companyId', (req, res) => {
+  companyController.getOffers(req, res)
+})
+
+router.delete('/deleteOffer/:offerId', (req, res) => {
+  companyController.deleteOffer(req, res)
+})
+
+router.patch('/applyOffer', (req, res) => {
+  companyController.applyOffer(req, res)
+})
+
+router.patch('/removeOffer', (req, res) => {
+  companyController.removeOffer(req, res)
 })
 
 export default router;

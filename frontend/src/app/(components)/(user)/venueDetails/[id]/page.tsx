@@ -6,8 +6,8 @@ import Footer from "../../footer/page";
 import { useRouter } from "next/navigation";
 import { useGetVenueDetailsQuery } from "app/store/slices/companyApiSlices";
 import AuthHOC from "app/(components)/auth/authHoc";
-import {DateRangePicker} from "@nextui-org/react";
-import {parseDate} from "@internationalized/date";
+import { DateRangePicker } from "@nextui-org/react";
+import { parseDate } from "@internationalized/date";
 
 export default function page({ params }: { params: { id: string } }) {
   // const router = useRouter();
@@ -123,15 +123,15 @@ export default function page({ params }: { params: { id: string } }) {
                   upto {venue?.capacity} guests
                 </p>
               </a>
-              <DateRangePicker 
-      label="booking duration" 
-      isRequired
-      defaultValue={{
-        start: parseDate("2024-04-01"),
-        end: parseDate("2024-04-08"),
-      }}
-      className="max-w-xs"
-    />
+              <DateRangePicker
+                label="booking duration"
+                isRequired
+                defaultValue={{
+                  start: parseDate("2024-04-01"),
+                  end: parseDate("2024-04-08"),
+                }}
+                className="max-w-xs"
+              />
               <button className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Schedule Booking
               </button>

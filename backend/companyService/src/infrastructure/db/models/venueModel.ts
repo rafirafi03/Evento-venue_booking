@@ -13,6 +13,7 @@ export interface IVenue extends Document {
     state: string;
     images: string[]
     isListed: boolean;
+    offerId: string;
     isCompanyBlocked: boolean;
 }
 
@@ -60,6 +61,9 @@ const VenueSchema: Schema = new Schema<IVenue>({
       isListed: {
         type: Boolean,
         default: true
+      },
+      offerId: {
+        type: String
       },
       isCompanyBlocked: {
         type: Boolean,

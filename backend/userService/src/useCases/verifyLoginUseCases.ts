@@ -1,6 +1,7 @@
 import { TokenService } from "evento-library";
 import bcrypt from "bcrypt";
 import { IUserRepository } from "../repositories";
+import { ILoginResponse } from "./interfaces";
 
 export class UserLoginUseCase {
   constructor(private _userRepository: IUserRepository) {}
@@ -8,7 +9,7 @@ export class UserLoginUseCase {
   async execute(
     email: string,
     password: string
-  ): Promise<{ success: boolean; token: string } | null> {
+  ): Promise<ILoginResponse | null> {
     try {
       const secretKey = process.env.JWTSECRETKEY as string;
 
@@ -17,10 +18,13 @@ export class UserLoginUseCase {
 
       if (user) {
 
+        if(user.isBlocked) {
+          return {success: false, error: 'this account is blocked by admin'}
+        }
         const pass = await bcrypt.compare(password, user.password);
 
         if (!pass) {
-          throw new Error("password doesnt match");
+          return {success: false, error: 'incorrect password entered'}
         } else {
           const tokenservice = new TokenService(secretKey);
 

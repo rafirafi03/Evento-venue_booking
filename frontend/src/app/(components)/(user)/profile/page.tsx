@@ -9,10 +9,6 @@ import {
   Clock,
   Calendar,
   Edit,
-  Building,
-  DollarSign,
-  Users,
-  LocateIcon
 } from "lucide-react";
 import Header from "app/(components)/(user)/header/page";
 import {

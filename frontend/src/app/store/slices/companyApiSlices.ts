@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import { baseCompanyUrl } from "../../constants/api";
-import { HttpMethod } from "../../schema/httpMethods";
+import { HttpMethod } from "../../constants/httpMethods";
 
 export const companyApiSlice = createApi({
     reducerPath: 'companyApi',
@@ -116,6 +116,37 @@ export const companyApiSlice = createApi({
                 method: HttpMethod.PATCH,
                 body: data
             })
+        }),
+        addOffer: builder.mutation({
+            query: (postData) => ({
+                url: '/addOffer',
+                method: HttpMethod.POST,
+                body: postData
+            })
+        }),
+        getOffers: builder.query({
+            query: (companyId) => ({
+                url: `/getOffers/${companyId}`,
+            })
+        }),
+        deleteOffer: builder.mutation({
+            query: (offerId)=> ({
+                url: `/deleteOffer/${offerId}`,
+                method: HttpMethod.DELETE
+            })
+        }),
+        applyOffer: builder.mutation({
+            query: (datas) => ({
+                url: '/applyOffer',
+                method: HttpMethod.PATCH,
+                body: datas
+            })
+        }),
+        removeOffer: builder.mutation({
+            query:(venueId)=> ({
+                url: `/removeOffer/${venueId}`,
+                method: HttpMethod.PATCH
+            })
         })
     })
 })
@@ -137,5 +168,9 @@ export const {
     useEditVenueMutation,
     useDeleteVenueMutation,
     useGetCompanyDetailsQuery,
-    useEditCompanyProfileMutation
+    useEditCompanyProfileMutation,
+    useAddOfferMutation,
+    useGetOffersQuery,
+    useDeleteOfferMutation,
+    useApplyOfferMutation
 } = companyApiSlice

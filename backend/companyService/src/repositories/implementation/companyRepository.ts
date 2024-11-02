@@ -1,9 +1,11 @@
-import { ICompanyData, Company, Venue, IVenueData } from "../../entities";
+import { ICompanyData, Company, Venue, IVenueData, IOfferData, Offer } from "../../entities";
 import {
   companyModel,
   ICompany,
   IVenue,
   venueModel,
+  offerModel,
+  IOffer
 } from "../../infrastructure/db";
 import { ICompanyRepository } from "../interfaces/companyInterface";
 
@@ -156,6 +158,45 @@ export class CompanyRepository implements ICompanyRepository {
       } else {
         throw new Error('company data is null')
       }
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
+  async addOffer(offer: Offer): Promise<IOfferData | null> {
+    try {
+      console.log(offer," offer in repo")
+      const newOffer = new offerModel(offer);
+      await newOffer.save();
+      return newOffer as IOfferData;
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
+  async getOffers(companyId: string): Promise<IOffer[] | null> {
+    try {
+      const offers = await offerModel.find({companyId: companyId})
+
+      console.log(offers,"offers in repo")
+
+      return offers as IOffer[]
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
+  async deleteOffer(offerId: string): Promise<void> {
+    try {
+      await offerModel.findByIdAndDelete({_id: offerId})
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
+  async removeOffer(venueId: string): Promise<void> {
+    try {
+      await venueModel.updateOne({ _id: venueId }, { $unset: { offerId: "" } })
     } catch (error) {
       throw new Error("error in DB" + error);
     }

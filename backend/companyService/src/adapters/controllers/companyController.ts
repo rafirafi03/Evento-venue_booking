@@ -11,7 +11,12 @@ import {
   EditVenueUseCase,
   GetVenueDetailsUseCase,
   DeleteVenueUseCase,
-  EditCompanyUseCase
+  EditCompanyUseCase,
+  AddOfferUseCase,
+  GetOffersUseCase,
+  DeleteOfferUseCase,
+  ApplyOfferUseCase,
+  RemoveOfferUseCase
 } from "../../useCases";
 import { HttpStatusCode } from "../../constants";
 import { GetCompanyDetailsUseCase } from "../../useCases/getCompanyDetailsUseCase";
@@ -30,7 +35,12 @@ export class CompanyController {
     private _editVenueUseCase: EditVenueUseCase,
     private _deleteVenueUseCase : DeleteVenueUseCase,
     private _getCompanyDetailsUseCase : GetCompanyDetailsUseCase,
-    private _editCompanyUseCase : EditCompanyUseCase
+    private _editCompanyUseCase : EditCompanyUseCase,
+    private _addOfferUseCase : AddOfferUseCase,
+    private _getOffersUseCase : GetOffersUseCase,
+    private _deleteOfferUseCase : DeleteOfferUseCase,
+    private _applyOfferUseCase : ApplyOfferUseCase,
+    private _removeOfferUseCase : RemoveOfferUseCase
   ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
@@ -262,6 +272,82 @@ export class CompanyController {
       console.log(response);
       res.status(HttpStatusCode.OK).json(response)
 
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async addOffer(req: Request, res: Response) : Promise<void> {
+    try {
+      const { companyId, values} = req.body;
+      const { name, percentage, validity } = values
+
+      console.log(req.body,"reqbdy in controller of offer")
+
+      const response = await this._addOfferUseCase.execute({companyId, name, percentage, validity})
+
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async getOffers(req: Request, res: Response) : Promise<void> {
+    try {
+
+      const { companyId } = req.params;
+      const response = await this._getOffersUseCase.execute(companyId)
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async deleteOffer(req: Request, res: Response) : Promise<void> {
+    try {
+
+      const { offerId } = req.params;
+      console.log(offerId," offerId from contoller in offer")
+      const response = await this._deleteOfferUseCase.execute(offerId)
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async applyOffer(req: Request, res: Response) : Promise<void> {
+    try {
+      const {venueId, offerId} = req.body;
+
+      const response = await this._applyOfferUseCase.execute(venueId, offerId);
+
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async removeOffer(req: Request, res: Response) : Promise<void> {
+    try {
+      const {venueId} = req.params;
+
+      const response = await this._removeOfferUseCase.execute(venueId);
+      res.send(HttpStatusCode.OK).json(response)
     } catch (error) {
       console.log(error);
       res

@@ -27,6 +27,8 @@ async execute(email: string, password: string) : Promise<ILoginResponse | null> 
             return { success: false, error: 'Request is still pending, wait for admin to approve.' };
         } else if( company.isVerified == 'rejected') {
             return { success: false, error: 'Your request has been rejected' };
+        } else if(company.isBlocked) {
+            return {success : false, error: 'this acount is blocked by admin'}
         }
 
         const pass = await bcrypt.compare(password, company.password);
