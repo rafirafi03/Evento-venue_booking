@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useForgetPasswordRequestMutation } from 'app/store/slices/userApiSlices';
-import AuthHOC from 'app/(components)/auth/authHoc';
+import AuthHOC from 'components/common/auth/authHoc';
 
 export default function pagge() {
 

@@ -31,7 +31,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/api/company",companyRoute);
+app.use("/",companyRoute);
 
 app.listen(PORT, () => {
   logger.info(`server is running on http://localhost:${PORT}`);

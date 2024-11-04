@@ -20,14 +20,14 @@ import {
 } from "app/store/slices/userApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
-import AuthHOC from "app/(components)/auth/authHoc";
+import AuthHOC from "components/common/auth/authHoc";
 
 export default function UserProfile() {
+  // useAuth()
+
 
   const router = useRouter()
   const token = localStorage.getItem("authToken");
-
-  console.log(token, "tknnnnn in forntend ye yey ey ey eye yy ey");
 
   // const [editUserProfile] = useEditUserProfileMutation()
 

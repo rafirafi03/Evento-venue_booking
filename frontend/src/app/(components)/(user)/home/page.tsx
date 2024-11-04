@@ -10,7 +10,7 @@ import { useAddToFavouritesMutation } from "app/store/slices/userApiSlices";
 // import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { getUserIdFromToken } from "utils/tokenHelper";
 import FavouriteButton from "../favouriteButton/page";
-import AuthHOC from "app/(components)/auth/authHoc";
+import AuthHOC from "components/common/auth/authHoc";
 
 // import Auth from '../../../auth/auth'
 

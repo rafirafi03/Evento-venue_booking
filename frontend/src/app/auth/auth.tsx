@@ -1,25 +1,18 @@
-import React, { ComponentType, useEffect } from 'react';
-import { useRouter } from 'next/router';
+'use client'
+import { useLayoutEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-// Auth HOC
-export default function Auth<T extends React.JSX.IntrinsicAttributes>(WrappedComponent: ComponentType<T>) {
-  const AuthenticatedPage = (props: T) => {
+const useAuth = () => {
     const router = useRouter();
-    const isAuthenticated = typeof window !== 'undefined' && localStorage.getItem('authToken');
+    
+    useLayoutEffect(() => {
+        const token = false
 
-    useEffect(() => {
-      if (!isAuthenticated) {
-        router.push('/login'); // Redirect if not authenticated
-      }
-    }, [isAuthenticated]);
+        if (!token) {
+            
+            router.push('/login');
+        }
+    }, [router]);
+};
 
-    if (!isAuthenticated) {
-      return null; // Show nothing or a loading spinner while redirecting
-    }
-
-    // Pass props to the WrappedComponent, including any intrinsic attributes
-    return <WrappedComponent {...props} />;
-  };
-
-  return AuthenticatedPage;
-}
+export default useAuth;

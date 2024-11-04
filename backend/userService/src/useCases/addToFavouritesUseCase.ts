@@ -14,7 +14,7 @@ export class AddToFavouritesUseCase {
       }
 
         const venueDetails = await axios.get(
-          `http://localhost:4001/api/company/getVenueDetails/${venueId}`
+          `http://localhost:4001/getVenueDetails/${venueId}`
         );
 
         console.log(venueDetails.data, "venuedetails in usecase favourties");

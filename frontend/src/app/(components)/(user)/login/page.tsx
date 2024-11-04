@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLoginPostMutation } from "app/store/slices/userApiSlices";
 import EmailModal from 'app/(components)/(user)/emailModal/page'
-import AuthHOC from "app/(components)/auth/authHoc";
+import AuthHOC from "components/common/auth/authHoc";
 
 const Page = () => {
   const router = useRouter();

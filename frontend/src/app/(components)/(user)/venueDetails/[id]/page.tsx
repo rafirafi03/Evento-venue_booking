@@ -5,7 +5,7 @@ import Header from "../../header/page";
 import Footer from "../../footer/page";
 import { useRouter } from "next/navigation";
 import { useGetVenueDetailsQuery } from "app/store/slices/companyApiSlices";
-import AuthHOC from "app/(components)/auth/authHoc";
+import AuthHOC from "components/common/auth/authHoc";
 import { DateRangePicker } from "@nextui-org/react";
 import { parseDate } from "@internationalized/date";
 

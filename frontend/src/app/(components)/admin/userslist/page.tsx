@@ -64,7 +64,7 @@ export default function Page() {
     <div className="m-5">
       <h1 className="font-extrabold text-2xl mt-5 mb-5">Users</h1>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-black dark:text-black">
+        <table className="w-full text-sm text-center rtl:text-right text-black dark:text-black">
           <thead className="font-bold text-black uppercase bg-red-300 dark:bg-red-300 dark:text-black">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -98,11 +98,11 @@ export default function Page() {
                   <td className="px-6 py-4">{user.phone}</td>
                   <td className="px-6 py-4">
                     { user.isBlocked ? 
-                    <button onClick={() => handleBlock(user._id, user.isBlocked)} className="bg-[rgb(255,0,0)] hover:bg-black text-white p-2 rounded-xl h-5 flex items-center">
+                    <button onClick={() => handleBlock(user._id, user.isBlocked)} className="bg-[rgb(255,0,0)] hover:bg-black text-white text-xs px-2.5 py-1 rounded-xl">
                       unblock
                     </button>
                     :
-                    <button onClick={() => handleBlock(user._id, user.isBlocked)} className="bg-black hover:bg-[rgb(255,0,0)] text-white p-2 rounded-xl h-5 flex items-center">
+                    <button onClick={() => handleBlock(user._id, user.isBlocked)} className="bg-black hover:bg-[rgb(255,0,0)] text-white text-xs px-2.5 py-1 rounded-xl">
                       block
                     </button>
                     }

@@ -143,6 +143,9 @@ export class UserController {
   async addToFavourites(req: Request, res: Response) : Promise<void> {
     try {
       const { userId, venueId } = req.body;
+
+      console.log(userId, 'userid in usercontolerr api gateway')
+      console.log(venueId, 'venuid in usercontolerr api gateway')
       
       const response = await this._addToFavouritesUseCase.execute(userId, venueId)
 

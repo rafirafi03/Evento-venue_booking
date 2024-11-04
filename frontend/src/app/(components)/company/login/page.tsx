@@ -7,7 +7,7 @@ import {
 } from "app/store/slices/companyApiSlices";
 // import OtpModal from "../otpModal/page";
 import { useRouter } from "next/navigation";
-import AuthHOC from "app/(components)/auth/authHoc";
+import AuthHOC from "components/common/auth/authHoc";
 
 const Page = () => {
 
