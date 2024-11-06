@@ -6,6 +6,7 @@ dotenv.config();
 import cors from "cors";
 import { connectDB } from "./infrastructure/db";
 import companyRoute from "./infrastructure/express/route";
+import cookieParser from 'cookie-parser'
 
 const PORT = process.env.PORT;
 
@@ -30,6 +31,7 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser())
 
 app.use("/",companyRoute);
 

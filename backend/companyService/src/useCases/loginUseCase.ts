@@ -41,9 +41,16 @@ async execute(email: string, password: string) : Promise<ILoginResponse | null> 
         const token = tokenService.generateToken({
             userId: company.id as string,
             role: "company"
-        });
+        }, '15m');
 
-        return { success: true, token }; 
+        const refreshToken = tokenService.generateToken({
+            userId: company.id as string,
+            role: "company"
+        },'7d');
+
+        
+
+        return { success: true, token, refreshToken }; 
     } catch (error) {
         console.log(error);
         throw new Error('Error: ' + error);

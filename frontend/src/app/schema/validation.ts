@@ -1,4 +1,6 @@
 import * as Yup from 'yup';
+import * as z from 'zod';
+
 
 export interface LoginFormInputs {
   email: string;
@@ -66,14 +68,19 @@ export const NewPasswordSchema = Yup.object().shape({
 });
 
 
-export const editProfileSchema = Yup.object().shape({
-  userName: Yup.string().required('Last Name is required'),
-  phone: Yup.string()
-  .required('Phone number is required')
-  .matches(/^[0-9]+$/, 'Phone number must be a number')
-  .min(10, 'Phone number must be at least 10 digits')
-  .max(15, 'Phone number must be at most 15 digits'), 
-});  
+export const editProfileSchema = z.object({
+  name: z
+    .string()
+    .min(2, { message: "Name must be at least 2 characters" })
+    .max(50, { message: "Name can't be longer than 50 characters" }),
+});
+type EditProfileData = z.infer<typeof editProfileSchema>;
+
+export interface EditProfileProps {
+  userDetails: EditProfileData;
+  onSubmit: (data: EditProfileData) => Promise<void>;
+}
+
 
 export interface editProfileFormInputs{
   userName:string,
@@ -112,3 +119,33 @@ export const offerValidationSchema = Yup.object({
     .min(1, 'Validity must be at least 1 day')
     .required('Offer validity is required'),
 });
+
+
+export const venueValidationSchema = Yup.object({
+  name: Yup.string()
+    .required('Venue name is required')
+    .min(3, 'Venue name must be at least 3 characters long'),
+  type: Yup.string()
+    .required('Venue type is required')
+    .oneOf(['conference', 'wedding', 'party', 'meeting'], 'Invalid venue type'),
+  description: Yup.string()
+    .required('Description is required')
+    .min(10, 'Description must be at least 10 characters long'),
+  capacity: Yup.number()
+    .required('Capacity is required')
+    .min(1, 'Capacity must be at least 1')
+    .max(5000, 'Capacity cannot exceed 5000'),
+  address: Yup.string()
+    .required('Address is required')
+    .min(10, 'Address must be at least 10 characters long'),
+  phone: Yup.string()
+    .required('Phone number is required')
+    .matches(/^\+?[1-9]\d{1,14}$/, 'Invalid phone number format'),
+  city: Yup.string()
+    .required('City is required')
+    .min(2, 'City must be at least 2 characters long'),
+  state: Yup.string()
+    .required('State is required')
+    .min(2, 'State must be at least 2 characters long'),
+});
+

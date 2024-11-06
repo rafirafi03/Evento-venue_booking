@@ -80,6 +80,19 @@ export class UserController {
         email, password
       )
 
+      res.cookie("userToken", response?.token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 15 * 60 * 1000,
+    });
+    res.cookie("userRefreshToken", response?.refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
       res.status(HttpStatusCode.OK).json(response)
     } catch (error) {
       console.log(error)

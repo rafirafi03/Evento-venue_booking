@@ -8,6 +8,7 @@ import { ResendOtpUseCase } from "../../useCases/resendOtpUseCase";
 import { BlockUserUseCase } from "../../useCases/blockUserUseCase";
 import { GetFavouritesUseCase } from "../../useCases/getFavouritesUseCase";
 import { DeleteFromFavouritesUseCase } from "../../useCases/deleteFromFavouritesUseCase";
+import { authMiddleware } from "evento-library";
 
 const userRepository = new UserRepository();
 const adminRepository = new AdminRepository()

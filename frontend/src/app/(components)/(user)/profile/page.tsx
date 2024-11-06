@@ -21,6 +21,7 @@ import {
 import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
 import AuthHOC from "components/common/auth/authHoc";
+import { editProfileSchema } from "app/schema/validation";
 
 export default function UserProfile() {
   // useAuth()
@@ -51,7 +52,8 @@ export default function UserProfile() {
   const [currPass, setCurrPass] = useState<string>("");
   const [newPass, setNewPass] = useState<string>("");
   const [confirmPass, setComfirmPass] = useState<string>("");
-  const [userName, setUserName] = useState<string>('')
+  const [userName, setUserName] = useState<string>('');
+  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
 
   useEffect(() => {
     if(userDetails) {
@@ -117,15 +119,33 @@ export default function UserProfile() {
     },
   ];
 
-  const handleEditUserProfile = async ()=> {
+  const handleEditUserProfile = async (e)=> {
+
+    e.preventDefault();
+    
+    // Validate the input data with Zod
+    const validationResult = editProfileSchema.safeParse({ name: userName, });
+    
+    if (!validationResult.success) {
+      // If validation fails, set errors and exit
+      const fieldErrors = validationResult.error.flatten().fieldErrors;
+      setErrors({
+        name: fieldErrors.name ? fieldErrors.name[0] : '',
+      });
+      return;
+    }
+    
+    // Clear previous errors if validation succeeds
+    setErrors({ name: ''});
     try {
       const loadingToast = toast.loading('Saving...');
+      setUserName(userName)
       const res = await editUser({ userId, userName }).unwrap();
       toast.dismiss(loadingToast);
 
       if (res.success) {
         toast.success(<b>user details updated!</b>);
-        refetchUserDetails()
+        
       } else {
         toast.error(<b>Could not save.</b>);
       }
@@ -200,7 +220,7 @@ export default function UserProfile() {
                   />
                 </div>
                 <h2 className="mt-4 text-2xl font-bold text-gray-900">
-                  {userDetails?.userName}
+                  {userName? userName : userDetails?.userName}
                 </h2>
                 <p className="text-gray-600">{userDetails?.email}</p>
               </div>
@@ -374,7 +394,7 @@ export default function UserProfile() {
               )}
               {activeTab === "favourites" && (
                 <div className="space-y-4">
-                  { favourites.length > 0 ? (
+                  { favourites?.length > 0 ? (
                     <>
                     {favourites?.map((fav) => (
                       <div
@@ -446,6 +466,7 @@ export default function UserProfile() {
                           onChange={(e)=> setUserName(e.target.value)}
                           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-400 focus:border-gray-400 sm:text-sm"
                         />
+                        {errors.name && <div className="text-sm text-bold text-[rgb(255,0,0)]">{errors.name}</div>}
                       </div>
                       <div>
                         <label

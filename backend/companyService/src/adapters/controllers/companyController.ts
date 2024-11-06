@@ -60,6 +60,21 @@ export class CompanyController {
     try {
       const { email, password } = req.body;
       const response = await this._loginUseCase.execute(email, password);
+
+      res.cookie("companyToken", response?.token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 60 * 60 * 1000,
+    });
+
+    res.cookie("companyRefreshToken", response?.refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
       res.status(200).json(response);
       console.log(response);
     } catch (error) {

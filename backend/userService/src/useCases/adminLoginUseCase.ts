@@ -36,9 +36,14 @@ export class AdminLoginUseCase {
             const token = tokenService.generateToken({
                 userId: user._id as string,
                 role: 'admin'
-            });
+            },'15m');
+
+            const refreshToken = tokenService.generateToken({
+                userId: user._id as string,
+                role: 'admin'
+              }, '7d')
     
-            return { success: true, token };
+            return { success: true, token, refreshToken };
         } catch (error) {
             console.log(error);
             throw new Error('Error: ' + error);

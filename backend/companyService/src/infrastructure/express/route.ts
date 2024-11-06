@@ -28,6 +28,7 @@ import { CompanyRepository } from "../../repositories/implementation/companyRepo
 import { otpService } from "../services";
 import { RedisClient } from "../../repositories";
 import { upload } from "../multer/multerConfig";
+import { authMiddleware } from "evento-library";
 
 const router = Router();
 
@@ -136,7 +137,7 @@ router.get("/getVenues/:companyId", (req, res) => {
   companyController.getVenues(req, res);
 });
 
-router.get("/getListedVenues", (req, res) => {
+router.get("/getListedVenues", authMiddleware(['user','company']), (req, res) => {
   companyController.getListedVenues(req, res);
 });
 
@@ -144,7 +145,7 @@ router.post("/venueStatus", (req, res) => {
   companyController.updateVenueStatus(req, res);
 });
 
-router.get('/getVenueDetails/:id', (req, res) => {
+router.get('/getVenueDetails/:id', authMiddleware(['user','company']), (req, res) => {
   companyController.getVenueDetails(req,res)
 })
 

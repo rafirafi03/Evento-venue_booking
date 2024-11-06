@@ -31,9 +31,14 @@ export class UserLoginUseCase {
           const token = tokenservice.generateToken({
             userId: user._id as string,
             role: 'user',
-          });
+          }, '15m');
 
-          return { success: true, token };
+          const refreshToken = tokenservice.generateToken({
+            userId: user._id as string,
+            role: 'user'
+          }, '7d')
+
+          return { success: true, token, refreshToken };
         }
       }
 
