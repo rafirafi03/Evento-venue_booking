@@ -11,8 +11,6 @@ export class GetCompaniesUseCase {
         try {
             const companies = await this._companyRepository.getCompanies()
 
-            console.log(companies,"cmpniessss cmpnyusecase")
-
             if(!companies || companies.length === 0) {
                 return null
             } else {

@@ -11,8 +11,6 @@ export class GetVenuesUseCase {
         try {
             const venues = await this._companyRepository.getVenues(companyId)
 
-            console.log(venues,"cmpniessss cmpnyusecase")
-
             if(!venues || venues.length === 0) {
                 return null
             } else {

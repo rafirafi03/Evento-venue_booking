@@ -20,6 +20,9 @@ import {
 } from "../../useCases";
 import { HttpStatusCode } from "../../constants";
 import { GetCompanyDetailsUseCase } from "../../useCases/getCompanyDetailsUseCase";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export class CompanyController {
   constructor(
@@ -122,9 +125,11 @@ export class CompanyController {
 
       const { companyId, name, type, description, capacity, address, phone, city, state } =
         req.body;
-      const files = req.files as Express.Multer.File[];
+      const files = req.files as Express.MulterS3.File[];
 
-      const imagePaths = files?.map((image) => image.path);
+      const imagePaths = files?.map((image) => `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${image.key}`);
+
+      console.log(imagePaths," image pathsssssssssssssssssssssssssssssssssssssssssssssssssssss")
 
       const response = await this._addVenueUseCase.execute({
         companyId,

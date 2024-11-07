@@ -57,8 +57,6 @@ export class CompanyRepository implements ICompanyRepository {
     try {
       const requests = await companyModel.find({ isVerified: "pending" });
 
-      console.log(requests, "reqssssssss");
-
       return requests as ICompany[];
     } catch (error) {
       console.error("Error fetching unverified company requests:", error);
@@ -69,8 +67,6 @@ export class CompanyRepository implements ICompanyRepository {
   async getCompanies(): Promise<ICompany[]> {
     try {
       const requests = await companyModel.find({ isVerified: "verified" });
-
-      console.log(requests, "reqssssssss");
 
       return requests as ICompany[];
     } catch (error) {
@@ -93,8 +89,6 @@ export class CompanyRepository implements ICompanyRepository {
     try {
       const venues = await venueModel.find({companyId: companyId});
 
-      console.log(venues, "vnssssss");
-
       return venues as IVenue[];
     } catch (error) {
       console.error("Error fetching venues:", error);
@@ -105,8 +99,6 @@ export class CompanyRepository implements ICompanyRepository {
   async getListedVenues(): Promise<IVenue[]> {
     try {
       const venues = await venueModel.find({isListed: true, isCompanyBlocked: false});
-
-      console.log(venues, "vnssssss");
 
       return venues as IVenue[];
     } catch (error) {
@@ -165,7 +157,6 @@ export class CompanyRepository implements ICompanyRepository {
 
   async addOffer(offer: Offer): Promise<IOfferData | null> {
     try {
-      console.log(offer," offer in repo")
       const newOffer = new offerModel(offer);
       await newOffer.save();
       return newOffer as IOfferData;
@@ -177,8 +168,6 @@ export class CompanyRepository implements ICompanyRepository {
   async getOffers(companyId: string): Promise<IOffer[] | null> {
     try {
       const offers = await offerModel.find({companyId: companyId})
-
-      console.log(offers,"offers in repo")
 
       return offers as IOffer[]
     } catch (error) {

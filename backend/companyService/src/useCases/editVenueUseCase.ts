@@ -1,5 +1,4 @@
-import Venue from "../infrastructure/db/models/venueModel";
-import { ICompanyRepository } from "../repositories";
+import { ICompanyRepository } from '../repositories/interfaces';
 
 interface data {
   id: string

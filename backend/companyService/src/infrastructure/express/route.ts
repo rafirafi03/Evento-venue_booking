@@ -137,7 +137,7 @@ router.get("/getVenues/:companyId", (req, res) => {
   companyController.getVenues(req, res);
 });
 
-router.get("/getListedVenues", authMiddleware(['user','company']), (req, res) => {
+router.get("/getListedVenues", (req, res) => {
   companyController.getListedVenues(req, res);
 });
 
@@ -145,7 +145,7 @@ router.post("/venueStatus", (req, res) => {
   companyController.updateVenueStatus(req, res);
 });
 
-router.get('/getVenueDetails/:id', authMiddleware(['user','company']), (req, res) => {
+router.get('/getVenueDetails/:id', (req, res) => {
   companyController.getVenueDetails(req,res)
 })
 

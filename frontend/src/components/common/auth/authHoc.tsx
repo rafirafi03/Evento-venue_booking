@@ -2,9 +2,15 @@ import { useRouter } from 'next/navigation';
 import { useLayoutEffect, useState } from 'react';
 import Loader from '../../../app/(components)/loader';
 
+enum Role {
+  Admin = 'admin',
+  User = 'user',
+  Company = 'company'
+}
+
 type AuthHOCProps = {
   children: React.ReactNode;
-  role: 'admin' | 'user' | 'company';
+  role: Role;
 };
 
 export default function AuthHOC({ children, role }: AuthHOCProps) {
@@ -13,13 +19,13 @@ export default function AuthHOC({ children, role }: AuthHOCProps) {
 
   
   useLayoutEffect(() => {
-    const tokenKey = role === 'admin' ? 'adminToken' : role === 'user' ? 'authToken' : 'companyToken';
+    const tokenKey = role === Role.Admin ? 'adminToken' : role === Role.User ? 'authToken' : 'companyToken';
     const token = localStorage.getItem(tokenKey);
     let redirectTo;
 
     
     if (!token) {
-      redirectTo = role === 'admin' ? '/admin/login' : role === 'user' ? '/login' : '/company/login';
+      redirectTo = role === Role.Admin ? '/admin/login' : role === Role.User ? '/login' : '/company/login';
       router.push(redirectTo);
       setLoading(false)
     } else {

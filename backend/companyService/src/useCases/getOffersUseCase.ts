@@ -11,8 +11,6 @@ export class GetOffersUseCase {
         try {
             const offers = await this._companyRepository.getOffers(companyId)
 
-            console.log(offers,"cmpniessss cmpnyusecase")
-
             if(!offers || offers.length === 0) {
                 return null
             } else {

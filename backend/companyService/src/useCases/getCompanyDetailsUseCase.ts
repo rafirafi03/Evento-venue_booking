@@ -11,8 +11,6 @@ export class GetCompanyDetailsUseCase {
         try {
             const company = await this._companyRepository.findCompanyById(id)
 
-            console.log(company,"cmpniessss cmpnyusecase")
-
             if(!company) {
                 return null
             } else {

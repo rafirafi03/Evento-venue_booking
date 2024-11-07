@@ -5,12 +5,12 @@ import Header from "../header/page";
 import Footer from "../footer/page";
 import { useRouter } from "next/navigation";
 import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
-import { useAddToFavouritesMutation } from "app/store/slices/userApiSlices";
+// import { useAddToFavouritesMutation } from "app/store/slices/userApiSlices";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { getUserIdFromToken } from "utils/tokenHelper";
 import FavouriteButton from "../favouriteButton/page";
-import AuthHOC from "components/common/auth/authHoc";
+// import AuthHOC from "components/common/auth/authHoc";
 
 // import Auth from '../../../auth/auth'
 
@@ -21,6 +21,8 @@ const Page = () => {
   // const [addToFavourites] = useAddToFavouritesMutation()
 
   const venue = venues?.venues?.venues;
+
+  console.log(venue," venueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
   const router = useRouter();
 
@@ -130,12 +132,12 @@ const Page = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {venue?.length && (
             <>
-              {venue.map((ven, index) => (
+              {venue?.map((ven, index) => (
                 <div className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                   <a>
                     <Image
                       className="rounded-t-lg"
-                      src={ven.images[0]}
+                      src={ven?.images[0]}
                       alt="img"
                       width={500}
                       height={500}
@@ -144,15 +146,15 @@ const Page = () => {
                   <div className="p-5">
                     <a>
                       <h5 className="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
-                        {ven.name}
+                        {ven?.name}
                       </h5>
                     </a>
                     <p className="mb-3 font-normal text-xs text-gray-700 dark:text-gray-400">
-                      {ven.description}
+                      {ven?.description}
                     </p>
                     <div className="flex justify-between items-center">
                       <a
-                        onClick={() => handleOnClick(ven._id)}
+                        onClick={() => handleOnClick(ven?._id)}
                         className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                       >
                         View Details
@@ -173,7 +175,7 @@ const Page = () => {
                         </svg>
                       </a>
 
-                      <FavouriteButton userId={userId} venueId={ven._id} />
+                      <FavouriteButton userId={userId} venueId={ven?._id} />
                     </div>
                   </div>
                 </div>
