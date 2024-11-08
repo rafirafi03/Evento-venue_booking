@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase, ResendOtpUseCase, GetUserDetailsUseCase, ResetPasswordUseCase, EditUserProfileUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase, ChangePasswordUseCase, DeleteFromFavouritesUseCase, GetFavouritesUseCase, ForgetPasswordRequest} from "../../useCases";
+import { SignupUseCase, VerifyOtpUsecase, UserLoginUseCase, ResendOtpUseCase, GetUserDetailsUseCase, ResetPasswordUseCase, EditUserProfileUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase, ChangePasswordUseCase, DeleteFromFavouritesUseCase, GetFavouritesUseCase, ForgetPasswordRequest, MakePaymentUseCase} from "../../useCases";
 import { HttpStatusCode } from "../../constants";
 
 export class UserController {
@@ -16,7 +16,8 @@ export class UserController {
     private _getFavouritesUseCase : GetFavouritesUseCase,
     private _deleteFromFavouritesUseCase : DeleteFromFavouritesUseCase,
     private _forgetPasswordRequestUseCase : ForgetPasswordRequest,
-    private _changePasswordUseCase : ChangePasswordUseCase
+    private _changePasswordUseCase : ChangePasswordUseCase,
+    private _makePaymentUseCase : MakePaymentUseCase
   ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
@@ -239,6 +240,20 @@ export class UserController {
     try {
       const {token, password} = req.body;
       const response = await this._changePasswordUseCase.execute(token, password)
+
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error)
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: 'failed to send request',
+      });
+    }
+  }
+
+  async makePaymentRequest(req: Request, res: Response) : Promise<void> {
+    try {
+      const {name, venueId} = req.body;
+      const response = await this._makePaymentUseCase.execute(name, venueId)
 
       res.status(HttpStatusCode.OK).json(response)
     } catch (error) {

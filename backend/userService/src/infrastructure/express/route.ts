@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AdminController, UserController } from "../../adapters/controllers";
-import { AdminLoginUseCase, EditUserProfileUseCase, GetUsersUseCase, ResetPasswordUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase, GetUserDetailsUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase, ForgetPasswordRequest, ChangePasswordUseCase } from "../../useCases";
+import { AdminLoginUseCase, EditUserProfileUseCase, GetUsersUseCase, ResetPasswordUseCase, SignupUseCase, UserLoginUseCase, VerifyOtpUsecase, GetUserDetailsUseCase, AddToFavouritesUseCase, CheckFavouritesUseCase, ForgetPasswordRequest, ChangePasswordUseCase, MakePaymentUseCase } from "../../useCases";
 import { UserRepository, RedisClient } from "../../repositories";
 import { otpService } from "../services";
 import { AdminRepository } from "../../repositories/implementation/adminRepository";
@@ -49,9 +49,11 @@ const delteFromFavouritesUseCase = new DeleteFromFavouritesUseCase(userRepositor
 
 const forgetPasswordRequest = new ForgetPasswordRequest(otpRepository, userRepository, redisRepository)
 
-const changePasswordUseCase = new ChangePasswordUseCase(userRepository, redisRepository)
+const changePasswordUseCase = new ChangePasswordUseCase(userRepository, redisRepository);
 
-const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase, getUserDetailsUseCase, resetPassUseCase, editUserProfile, addToFavouritesUseCase, checkFavouritesUseCase, getFavouritesUseCase, delteFromFavouritesUseCase, forgetPasswordRequest, changePasswordUseCase);
+const makePaymentUseCase = new MakePaymentUseCase()
+
+const userController = new UserController(signupUseCase, verifyOtpUsecase, userLoginUseCase, resendOtpUseCase, getUserDetailsUseCase, resetPassUseCase, editUserProfile, addToFavouritesUseCase, checkFavouritesUseCase, getFavouritesUseCase, delteFromFavouritesUseCase, forgetPasswordRequest, changePasswordUseCase, makePaymentUseCase);
 
 const adminController = new AdminController(adminLoginUseCase, getUsersUseCase, blockUserUseCase)
 
@@ -119,6 +121,10 @@ router.post('/forgetPasswordRequest', (req, res) => {
 
 router.put('/changePassword', (req, res) => {
   userController.changePassword(req, res)
+})
+
+router.post('/makePayment', (req, res) => {
+  userController.makePaymentRequest(req, res)
 })
 
 export default router;

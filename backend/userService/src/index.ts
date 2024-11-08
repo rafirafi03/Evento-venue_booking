@@ -6,7 +6,7 @@ dotenv.config();
 import cors from "cors";
 import { connectDB } from "./infrastructure/db";
 import userRoute from "./infrastructure/express/route";
-import cookieParser from 'cookie-parser'
+import cookieParser from 'cookie-parser';
 
 const PORT = process.env.PORT;
 

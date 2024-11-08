@@ -8,8 +8,14 @@ import { useGetVenueDetailsQuery } from "app/store/slices/companyApiSlices";
 import AuthHOC from "components/common/auth/authHoc";
 import { DateRangePicker } from "@nextui-org/react";
 import { parseDate } from "@internationalized/date";
+import {loadStripe} from '@stripe/stripe-js';
+import { useMakePaymentMutation } from "app/store/slices/userApiSlices";
+import dotenv from 'dotenv';
+
+dotenv.config()
 
 export default function page({ params }: { params: { id: string } }) {
+  const [makePayment] = useMakePaymentMutation()
   // const router = useRouter();
   const venueId = params.id;
 
@@ -21,6 +27,27 @@ export default function page({ params }: { params: { id: string } }) {
   console.log(venue, "venue in frontend");
 
   const images = venue?.images;
+
+  const name = 'rafi'
+
+  const handlePayment = async() => {
+
+    try {
+      const stripe = await loadStripe('pk_test_51QIW2Z04vhsHHnxMXq9wq2BPsf5Lsy3LgQLC6quw5HKBS2aaVofHBiGzsZKQBG4oiKrNkEMBvHJNvvC5KlCyQCnB00dRuVASgF');
+
+    const response = await makePayment({name, venueId}).unwrap();
+
+    const result = stripe?.redirectToCheckout({
+      sessionId: response.id
+    })
+
+    console.log(result," stripe result in frontend")
+    } catch (error) {
+      console.log(error)
+    }
+    
+    
+  }
 
   return (
     <AuthHOC role="user">
@@ -132,7 +159,7 @@ export default function page({ params }: { params: { id: string } }) {
                 }}
                 className="max-w-xs"
               />
-              <button className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <button onClick={handlePayment} className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Schedule Booking
               </button>
 
