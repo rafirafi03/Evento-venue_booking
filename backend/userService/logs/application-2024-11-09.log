@@ -1,0 +1,7 @@
+2024-11-09T06:00:53.375Z [INFO]: server is running on http://localhost:4000
+2024-11-09T06:03:55.271Z [INFO]: ::1 - - [09/Nov/2024:06:03:55 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c531dfbddbb8f9f297c36 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-09T06:03:55.276Z [INFO]: ::1 - - [09/Nov/2024:06:03:55 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c5408fbddbb8f9f297c4a HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-09T06:03:55.621Z [INFO]: ::1 - - [09/Nov/2024:06:03:55 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c5f5596ae5d6b9fcd61e3 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-09T06:03:55.641Z [INFO]: ::1 - - [09/Nov/2024:06:03:55 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c55cc96ae5d6b9fcd61d6 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-09T14:03:51.605Z [INFO]: server is running on http://localhost:4000
+2024-11-09T14:04:12.302Z [INFO]: server is running on http://localhost:4000

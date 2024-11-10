@@ -16,4 +16,3 @@ export * from './changePasswordUseCase'
 export * from './deleteFromFavouritesUseCase';
 export * from './getFavouritesUseCase';
 export * from './forgetPasswordRequestUseCase';
-export * from './makePaymentUseCase'

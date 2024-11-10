@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { userProxy } from './routes/userRoute';
 import { companyProxy } from './routes/companyRoute';
+import { bookingProxy } from './routes/bookingRoute'
 
 import errorHandler from './middlewares/errorHandler';
 import cors from 'cors';
@@ -24,7 +25,7 @@ app.use(cors(corsOptions));
 // Apply proxies
 app.use('/api/user', userProxy);
 app.use('/api/company', companyProxy);
-// app.use('/api/bookings', bookingProxy);
+app.use('/api/booking', bookingProxy);
 // app.use('/api/chats', chatProxy);
 
 app.get('/', (req, res) => {

@@ -114,13 +114,6 @@ export const userApiSlice = createApi({
                 body: data
             })
         }),
-        makePayment: builder.mutation({
-            query: (postData) => ({
-                url: '/user/makePayment',
-                method: HttpMethod.POST,
-                body: postData
-            })
-        })
     })
 })
 
@@ -141,5 +134,4 @@ export const {
     useDeleteFromFavouritesMutation,
     useForgetPasswordRequestMutation,
     useChangePasswordMutation,
-    useMakePaymentMutation
 } = userApiSlice;

@@ -1,21 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../header/page";
 import Footer from "../../footer/page";
 import { useRouter } from "next/navigation";
 import { useGetVenueDetailsQuery } from "app/store/slices/companyApiSlices";
 import AuthHOC from "components/common/auth/authHoc";
-import { DateRangePicker } from "@nextui-org/react";
-import { parseDate } from "@internationalized/date";
 import {loadStripe} from '@stripe/stripe-js';
-import { useMakePaymentMutation } from "app/store/slices/userApiSlices";
+import { useMakePaymentMutation } from "app/store/slices/bookingApiSlices";
 import dotenv from 'dotenv';
+import BookingModal from 'components/userComponents/bookingModal'
 
 dotenv.config()
 
 export default function page({ params }: { params: { id: string } }) {
   const [makePayment] = useMakePaymentMutation()
+  const [isBookingModal, setBookingModal] = useState(false)
   // const router = useRouter();
   const venueId = params.id;
 
@@ -28,14 +28,12 @@ export default function page({ params }: { params: { id: string } }) {
 
   const images = venue?.images;
 
-  const name = 'rafi'
-
-  const handlePayment = async() => {
+  const handlePayment = async(event, guests, bookingDuration) => {
 
     try {
       const stripe = await loadStripe('pk_test_51QIW2Z04vhsHHnxMXq9wq2BPsf5Lsy3LgQLC6quw5HKBS2aaVofHBiGzsZKQBG4oiKrNkEMBvHJNvvC5KlCyQCnB00dRuVASgF');
 
-    const response = await makePayment({name, venueId}).unwrap();
+    const response = await makePayment({name: venue.name, venueId, event, guests, bookingDuration}).unwrap();
 
     const result = stripe?.redirectToCheckout({
       sessionId: response.id
@@ -57,6 +55,9 @@ export default function page({ params }: { params: { id: string } }) {
         </div>
 
         <div className="mx-auto px-6 max-w-7xl items-center justify-center p-6 rounded-lg">
+          { isBookingModal && 
+            <BookingModal isOpen={isBookingModal} handleBooking={handlePayment} />
+          }
           {/* <div className="max-w-lg mx-auto mb-5">
           <div className="flex">
             <div className="relative w-full">
@@ -150,16 +151,7 @@ export default function page({ params }: { params: { id: string } }) {
                   upto {venue?.capacity} guests
                 </p>
               </a>
-              <DateRangePicker
-                label="booking duration"
-                isRequired
-                defaultValue={{
-                  start: parseDate("2024-04-01"),
-                  end: parseDate("2024-04-08"),
-                }}
-                className="max-w-xs"
-              />
-              <button onClick={handlePayment} className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <button onClick={() => setBookingModal(true)} className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Schedule Booking
               </button>
 

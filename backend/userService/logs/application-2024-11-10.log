@@ -1,0 +1,71 @@
+2024-11-10T07:47:39.904Z [INFO]: server is running on http://localhost:4000
+2024-11-10T07:47:53.173Z [INFO]: ::1 - - [10/Nov/2024:07:47:53 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c5408fbddbb8f9f297c4a HTTP/1.1" 200 5 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T07:47:53.178Z [INFO]: ::1 - - [10/Nov/2024:07:47:53 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c531dfbddbb8f9f297c36 HTTP/1.1" 200 5 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T07:47:53.376Z [INFO]: ::1 - - [10/Nov/2024:07:47:53 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c5f5596ae5d6b9fcd61e3 HTTP/1.1" 200 5 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T07:47:53.396Z [INFO]: ::1 - - [10/Nov/2024:07:47:53 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c55cc96ae5d6b9fcd61d6 HTTP/1.1" 200 5 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T07:48:21.233Z [INFO]: ::1 - - [10/Nov/2024:07:48:21 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T07:51:05.015Z [INFO]: server is running on http://localhost:4000
+2024-11-10T07:51:23.473Z [INFO]: ::1 - - [10/Nov/2024:07:51:23 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T07:52:27.020Z [INFO]: ::1 - - [10/Nov/2024:07:52:27 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:32:13.174Z [INFO]: server is running on http://localhost:4000
+2024-11-10T08:32:26.736Z [INFO]: ::1 - - [10/Nov/2024:08:32:26 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:32:52.896Z [INFO]: server is running on http://localhost:4000
+2024-11-10T08:33:36.462Z [INFO]: server is running on http://localhost:4000
+2024-11-10T08:33:41.563Z [INFO]: server is running on http://localhost:4000
+2024-11-10T08:33:55.476Z [INFO]: ::1 - - [10/Nov/2024:08:33:55 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:34:33.442Z [INFO]: server is running on http://localhost:4000
+2024-11-10T08:34:45.321Z [INFO]: ::1 - - [10/Nov/2024:08:34:45 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:34:47.692Z [INFO]: ::1 - - [10/Nov/2024:08:34:47 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:34:48.156Z [INFO]: ::1 - - [10/Nov/2024:08:34:48 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:34:48.418Z [INFO]: ::1 - - [10/Nov/2024:08:34:48 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:34:54.054Z [INFO]: server is running on http://localhost:4000
+2024-11-10T08:35:21.182Z [INFO]: server is running on http://localhost:4000
+2024-11-10T08:35:25.154Z [INFO]: ::1 - - [10/Nov/2024:08:35:25 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:36:51.295Z [INFO]: ::1 - - [10/Nov/2024:08:36:51 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:37:19.593Z [INFO]: ::1 - - [10/Nov/2024:08:37:19 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:38:39.641Z [INFO]: ::1 - - [10/Nov/2024:08:38:39 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:38:58.817Z [INFO]: server is running on http://localhost:4000
+2024-11-10T08:39:13.281Z [INFO]: ::1 - - [10/Nov/2024:08:39:13 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T08:40:14.099Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:48:46.523Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:49:27.564Z [INFO]: ::1 - - [10/Nov/2024:10:49:27 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:49:45.798Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:50:07.317Z [INFO]: ::1 - - [10/Nov/2024:10:50:07 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:51:01.420Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:52:10.727Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:52:20.443Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:52:29.550Z [INFO]: ::1 - - [10/Nov/2024:10:52:29 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:31.924Z [INFO]: ::1 - - [10/Nov/2024:10:52:31 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:32.349Z [INFO]: ::1 - - [10/Nov/2024:10:52:32 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:32.464Z [INFO]: ::1 - - [10/Nov/2024:10:52:32 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:32.625Z [INFO]: ::1 - - [10/Nov/2024:10:52:32 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:32.764Z [INFO]: ::1 - - [10/Nov/2024:10:52:32 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:32.778Z [INFO]: ::1 - - [10/Nov/2024:10:52:32 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:33.089Z [INFO]: ::1 - - [10/Nov/2024:10:52:33 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:33.116Z [INFO]: ::1 - - [10/Nov/2024:10:52:33 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:33.214Z [INFO]: ::1 - - [10/Nov/2024:10:52:33 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:33.445Z [INFO]: ::1 - - [10/Nov/2024:10:52:33 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:52:33.499Z [INFO]: ::1 - - [10/Nov/2024:10:52:33 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:53:24.198Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:53:42.622Z [INFO]: ::1 - - [10/Nov/2024:10:53:42 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:54:26.043Z [INFO]: ::1 - - [10/Nov/2024:10:54:26 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:56:03.444Z [INFO]: ::1 - - [10/Nov/2024:10:56:03 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:56:32.344Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:56:37.196Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:56:47.735Z [INFO]: ::1 - - [10/Nov/2024:10:56:47 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T10:57:10.404Z [INFO]: server is running on http://localhost:4000
+2024-11-10T10:59:59.282Z [INFO]: ::1 - - [10/Nov/2024:10:59:59 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T11:00:28.814Z [INFO]: ::1 - - [10/Nov/2024:11:00:28 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c531dfbddbb8f9f297c36 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T11:00:28.817Z [INFO]: ::1 - - [10/Nov/2024:11:00:28 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c5408fbddbb8f9f297c4a HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T11:00:29.093Z [INFO]: ::1 - - [10/Nov/2024:11:00:29 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c5f5596ae5d6b9fcd61e3 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T11:00:29.127Z [INFO]: ::1 - - [10/Nov/2024:11:00:29 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c55cc96ae5d6b9fcd61d6 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T16:31:42.910Z [INFO]: server is running on http://localhost:4000
+2024-11-10T16:33:23.186Z [INFO]: ::1 - - [10/Nov/2024:16:33:23 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c531dfbddbb8f9f297c36 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T16:33:23.188Z [INFO]: ::1 - - [10/Nov/2024:16:33:23 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c5408fbddbb8f9f297c4a HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T16:33:23.468Z [INFO]: ::1 - - [10/Nov/2024:16:33:23 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c5f5596ae5d6b9fcd61e3 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T16:33:23.470Z [INFO]: ::1 - - [10/Nov/2024:16:33:23 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/672c55cc96ae5d6b9fcd61d6 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T16:33:35.937Z [INFO]: ::1 - - [10/Nov/2024:16:33:35 +0000] "POST /makePayment HTTP/1.1" 404 151 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T16:37:30.424Z [INFO]: ::1 - - [10/Nov/2024:16:37:30 +0000] "POST /makePayment HTTP/1.1" 404 151 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T16:37:55.110Z [INFO]: server is running on http://localhost:4000
+2024-11-10T16:38:08.180Z [INFO]: ::1 - - [10/Nov/2024:16:38:08 +0000] "POST /makePayment HTTP/1.1" 404 151 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-10T16:38:53.884Z [INFO]: server is running on http://localhost:4000
