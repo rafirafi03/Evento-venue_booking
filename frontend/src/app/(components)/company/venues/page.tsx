@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,6 +30,10 @@ export default function page() {
   const { data: offers, refetch: offerRefetch } = useGetOffersQuery(companyId);
   const [updateVenueStatus] = useUpdateVenueStatusMutation();
   const [applyOffer] = useApplyOfferMutation()
+
+  useEffect(() => {
+    refetch()
+  },[venues])
 
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalButton, setModalButton] = useState<string>("");

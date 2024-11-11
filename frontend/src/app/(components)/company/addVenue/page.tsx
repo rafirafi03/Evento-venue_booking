@@ -19,15 +19,18 @@ export default function page() {
   const [description, setDescription] = useState<string>("");
   const [capacity, setCapacity] = useState<number>(0);
   const [address, setAddress] = useState<string>("");
-  const [phone, setPhone] = useState<number>(0);
+  const [phone, setPhone] = useState<string>('');
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("");
 
   const [nameError, setNameError] = useState<string>("");
-  const [emailError, setEmailError] = useState<string>("");
+  const [typeError, setTypeError] = useState<string>("");
+  const [descriptionError, setDescriptionError] = useState<string>("");
+  const [capacityError, setCapacityError] = useState<string>("");
+  const [addressError, setAddressError] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
-  const [passwordError, setPassError] = useState<string>("");
-  const [confirmPassError, setConfirmPassError] = useState<string>("");
+  const [cityError, setCityError] = useState<string>("");
+  const [stateError, setStateError] = useState<string>("");
 
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
@@ -116,7 +119,76 @@ export default function page() {
     document.getElementById("imageInput")?.click();
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+
+    e.preventDefault()
+
+    let isValid = true
+
+    if(name.trim() == "") {
+      setNameError('venue name required')
+      isValid = false
+    } else if(name.length < 3) {
+      setNameError('name is too short. min 3 length')
+      isValid = false
+    }
+
+    if(type.trim() == "") {
+      setTypeError('type required')
+      isValid = false
+    }
+
+    if(description.trim() == "") {
+      setDescriptionError('venue description required')
+      isValid = false
+    } else if(description.length < 3) {
+      setDescriptionError('description is too short. min 50 length')
+      isValid = false
+    }
+
+    if(capacity < 1) {
+      setCapacityError('Invalid capacity')
+      isValid = false
+    } else if(capacity > 5000) {
+      setCapacityError('capacity is too high')
+      isValid = false
+    }
+    if(address.trim() == "") {
+      setAddressError('venue address required')
+      isValid = false
+    } else if(address.length < 3) {
+      setAddressError('address is too short. min 5 length')
+      isValid = false
+    }
+    
+    if(phone.trim() == "") {
+      setPhoneError('phone required')
+      isValid = false
+    } else if(phone.length < 10) {
+      setPhoneError('Invalid phone')
+      isValid = false
+    }
+    
+    if(city.trim() == "") {
+      setCityError('venue city required')
+      isValid = false
+    } else if(city.length < 3) {
+      setCityError('city is too short. min 3 length')
+      isValid = false
+    }
+    
+    if(state.trim() == "") {
+      setStateError('venue state required')
+      isValid = false
+    } else if(state.length < 3) {
+      setStateError('state is too short. min 3 length')
+      isValid = false
+    }
+
+    if (!isValid) {
+      return 
+    } else {
+
     const formData = new FormData();
 
     formData.append('companyId', companyId);
@@ -138,6 +210,7 @@ export default function page() {
     router.push('/company/venues')
 
     console.log(response);
+  }
   };
 
   return (
@@ -199,16 +272,16 @@ export default function page() {
               value={type}
               onChange={(e) => setType(e.target.value)}
               className={`${
-                emailError
+                typeError
                   ? "w-full px-3 py-2 rounded-md text-[rgb(255,0,0)] border-[rgb(255,0,0)] focus:outline-none focus:border-[rgb(255,0,0)]"
                   : "w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-purple-300"
               }`}
               placeholder="Type of Venue"
             />
-            {emailError && (
+            {typeError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {emailError}
+                {typeError}
               </p>
             )}
           </div>
@@ -231,10 +304,10 @@ export default function page() {
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Description"
             />
-            {phoneError && (
+            {descriptionError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {phoneError}
+                {descriptionError}
               </p>
             )}
           </div>
@@ -254,10 +327,10 @@ export default function page() {
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Capacity of Venue"
             />
-            {phoneError && (
+            {capacityError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {phoneError}
+                {capacityError}
               </p>
             )}
           </div>
@@ -279,10 +352,10 @@ export default function page() {
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Address"
             />
-            {phoneError && (
+            {addressError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {phoneError}
+                {addressError}
               </p>
             )}
           </div>
@@ -298,7 +371,7 @@ export default function page() {
               type="tel"
               name="phone"
               value={phone}
-              onChange={(e) => setPhone(Number(e.target.value))}
+              onChange={(e) => setPhone(e.target.value)}
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Phone Number"
             />
@@ -330,10 +403,10 @@ export default function page() {
               // value={password}
               // onChange={handleChange}
             />
-            {passwordError && (
+            {cityError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {passwordError}
+                {cityError}
               </p>
             )}
           </div>
@@ -355,10 +428,10 @@ export default function page() {
               // value={confirmPass}
               // onChange={handleChange}
             />
-            {confirmPassError && (
+            {stateError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {confirmPassError}
+                {stateError}
               </p>
             )}
           </div>
