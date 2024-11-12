@@ -28,12 +28,16 @@ export default function page({ params }: { params: { id: string } }) {
 
   const images = venue?.images;
 
-  const handlePayment = async(event, guests, bookingDuration) => {
+  const isClose = ()=> {
+    setBookingModal(false);
+  }
+
+  const handlePayment = async(event: string, guests: number, bookingDuration) => {
 
     try {
       const stripe = await loadStripe('pk_test_51QIW2Z04vhsHHnxMXq9wq2BPsf5Lsy3LgQLC6quw5HKBS2aaVofHBiGzsZKQBG4oiKrNkEMBvHJNvvC5KlCyQCnB00dRuVASgF');
 
-    const response = await makePayment({name: venue.name, venueId, event, guests, bookingDuration}).unwrap();
+    const response = await makePayment({name: venue.name, venueId,amount: venue.amount, event, guests, bookingDuration}).unwrap();
 
     const result = stripe?.redirectToCheckout({
       sessionId: response.id
@@ -56,7 +60,7 @@ export default function page({ params }: { params: { id: string } }) {
 
         <div className="mx-auto px-6 max-w-7xl items-center justify-center p-6 rounded-lg">
           { isBookingModal && 
-            <BookingModal isOpen={isBookingModal} handleBooking={handlePayment} />
+            <BookingModal isOpen={isBookingModal} isClose={isClose} handleBooking={handlePayment} />
           }
           {/* <div className="max-w-lg mx-auto mb-5">
           <div className="flex">
@@ -144,14 +148,14 @@ export default function page({ params }: { params: { id: string } }) {
 
               <a className="block my-3 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                  Price per day ₹6000
+                  Price per day ₹{venue?.amount}
                 </h5>
                 <hr className="my-2" />
                 <p className="font-normal text-gray-700 dark:text-gray-400">
                   upto {venue?.capacity} guests
                 </p>
               </a>
-              <button onClick={() => setBookingModal(true)} className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+              <button onClick={() => setBookingModal(true)} className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                 Schedule Booking
               </button>
 

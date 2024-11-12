@@ -1,0 +1,14 @@
+2024-11-12T04:40:49.419Z [INFO]: server is running on http://localhost:4001
+2024-11-12T04:41:22.862Z [INFO]: ::1 - - [12/Nov/2024:04:41:22 +0000] "GET /getListedVenues HTTP/1.1" 200 5292 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T04:41:43.437Z [INFO]: ::1 - - [12/Nov/2024:04:41:43 +0000] "GET /getListedVenues HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T04:42:52.946Z [INFO]: ::1 - - [12/Nov/2024:04:42:52 +0000] "GET /getListedVenues HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T04:50:43.688Z [INFO]: ::1 - - [12/Nov/2024:04:50:43 +0000] "GET /getVenueDetails/6 HTTP/1.1" 500 28 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T04:50:48.817Z [INFO]: ::1 - - [12/Nov/2024:04:50:48 +0000] "GET /getVenueDetails/6 HTTP/1.1" 500 28 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T04:50:53.208Z [INFO]: ::1 - - [12/Nov/2024:04:50:53 +0000] "GET /getVenueDetails/6 HTTP/1.1" 500 28 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T05:02:32.160Z [INFO]: ::1 - - [12/Nov/2024:05:02:32 +0000] "GET /getListedVenues HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T05:03:01.309Z [INFO]: ::1 - - [12/Nov/2024:05:03:01 +0000] "GET /getListedVenues HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T05:03:05.206Z [INFO]: ::1 - - [12/Nov/2024:05:03:05 +0000] "GET /getListedVenues HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T09:33:25.394Z [INFO]: ::1 - - [12/Nov/2024:09:33:25 +0000] "GET /getVenueDetails/672c531dfbddbb8f9f297c36 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T11:43:51.578Z [INFO]: server is running on http://localhost:4001
+2024-11-12T11:44:20.822Z [INFO]: server is running on http://localhost:4001
+2024-11-12T15:04:10.991Z [INFO]: server is running on http://localhost:4001

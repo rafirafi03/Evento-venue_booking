@@ -11,6 +11,7 @@ import {
 } from "app/store/slices/companyApiSlices";
 import OtpModal from "../otpModal/page";
 import { useRouter } from "next/navigation";
+import AuthHOC from "components/common/auth/authHoc";
 
 const Page = () => {
   const [name, setName] = useState<string>("");
@@ -177,8 +178,6 @@ const Page = () => {
   const handleOtp = async (event: React.FormEvent, otp: string) => {
     event.preventDefault();
 
-    console.log("hiiiiii");
-
     const formData = new FormData();
     formData.append('otp', otp);
     formData.append('name', name);
@@ -214,7 +213,7 @@ const Page = () => {
   };
 
   return (
-    <div>
+    <AuthHOC role="company" isAuthPage={true}>
       {modal ? (
         <OtpModal
           email={email}
@@ -481,7 +480,7 @@ const Page = () => {
           )}
         </>
       )}
-    </div>
+    </AuthHOC>
   );
 };
 

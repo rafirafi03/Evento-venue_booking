@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useAdminLoginMutation } from "app/store/slices/userApiSlices";
 import { useRouter } from "next/navigation";
+import AuthHOC from "components/common/auth/authHoc";
 
 const Page = () => {
   const [email, setEmail] = useState<string>("");
@@ -69,7 +70,7 @@ const Page = () => {
   };
 
   return (
-    <div>
+    <AuthHOC role="admin" isAuthPage={true}>
       <Header />
       <div className="min-h-screen flex items-center justify-center bg-slate-100 pt-20">
         <div className="flex display-flex transform transition duration-500 hover:scale-105">
@@ -167,7 +168,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AuthHOC>
   );
 };
 

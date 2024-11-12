@@ -18,10 +18,11 @@ type RangeValue<T> = {
 
 type AppProps = {
   isOpen: boolean;
+  isClose: ()=> void;
   handleBooking: (event: string, guests: number, bookingDuration: RangeValue<DateValue>) => void;
 };
 
-export default function App({ isOpen, handleBooking }: AppProps) {
+export default function App({ isOpen,isClose, handleBooking }: AppProps) {
   const [event, setEvent] = useState<string>("");
   const [guests, setGuests] = useState<number>(0);
   const [bookingDuration, setBookingDuration] = useState<RangeValue<DateValue>>({
@@ -38,9 +39,13 @@ export default function App({ isOpen, handleBooking }: AppProps) {
     handleBooking(event, guests, bookingDuration);
   };
 
+  const handleClose = () => {
+    isClose()
+  }
+
   return (
     <>
-      <Modal isOpen={isOpen} placement="top-center">
+      <Modal isOpen={isOpen} onClose={isClose} placement="top-center">
         <ModalContent>
           {() => (
             <>
@@ -111,7 +116,7 @@ export default function App({ isOpen, handleBooking }: AppProps) {
                 </Accordion>
               </ModalBody>
               <ModalFooter className="flex justify-center">
-                <Button color="danger" variant="flat">
+                <Button onClick={handleClose} color="danger" variant="flat">
                   Cancel
                 </Button>
                 <Button onClick={handleSubmit} className="bg-[rgb(255,0,0)] text-white">

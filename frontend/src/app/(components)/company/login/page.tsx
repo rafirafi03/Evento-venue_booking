@@ -83,7 +83,7 @@ const Page = () => {
   }
 
   return (
-    <AuthHOC role="company">
+    <AuthHOC role="company" isAuthPage={true}>
               <div className="flex h-screen">
                 <div className="w-1/3 h-full">
                   <Image

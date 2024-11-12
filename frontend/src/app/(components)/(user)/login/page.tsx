@@ -82,7 +82,7 @@ const Page = () => {
   };
 
   return (
-    <AuthHOC role="user">
+    <AuthHOC role='user' isAuthPage={true} >
       <>
       {isForgotEmailModal && (
         <EmailModal/>

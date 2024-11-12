@@ -21,16 +21,21 @@ export default function page({ params }: { params: { id: string } }) {
   const [type, setType] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [capacity, setCapacity] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(0);
   const [address, setAddress] = useState<string>("");
   const [phone, setPhone] = useState<number>(0);
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("");
 
   const [nameError, setNameError] = useState<string>("");
-  const [emailError, setEmailError] = useState<string>("");
+  const [typeError, setTypeError] = useState<string>("");
+  const [descriptionError, setDescriptionError] = useState<string>("");
+  const [capacityError, setCapacityError] = useState<string>("");
+  const [amountError, setAmountError] = useState<string>("");
+  const [addressError, setAddressError] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
-  const [passwordError, setPassError] = useState<string>("");
-  const [confirmPassError, setConfirmPassError] = useState<string>("");
+  const [cityError, setCityError] = useState<string>("");
+  const [stateError, setStateError] = useState<string>("");
 
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
@@ -44,6 +49,7 @@ export default function page({ params }: { params: { id: string } }) {
     setType(venue?.type)
     setDescription(venue?.description)
     setCapacity(venue?.capacity)
+    setAmount(venue?.amount)
     setAddress(venue?.address)
     setPhone(venue?.phone)
     setCity(venue?.city)
@@ -176,45 +182,22 @@ export default function page({ params }: { params: { id: string } }) {
               value={type}
               onChange={(e) => setType(e.target.value)}
               className={`${
-                emailError
+                typeError
                   ? "w-full px-3 py-2 rounded-md text-[rgb(255,0,0)] border-[rgb(255,0,0)] focus:outline-none focus:border-[rgb(255,0,0)]"
                   : "w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-purple-300"
               }`}
               placeholder="Type of Venue"
             />
-            {emailError && (
+            {typeError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {emailError}
+                {typeError}
               </p>
             )}
           </div>
         </div>
 
         <div className="flex flex-wrap -mx-2 mb-4">
-          <div className="w-1/2 px-2">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="phone"
-            >
-              Description
-            </label>
-            <input
-              id="description"
-              type="text"
-              name="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
-              placeholder="Description"
-            />
-            {phoneError && (
-              <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
-                {" "}
-                {phoneError}
-              </p>
-            )}
-          </div>
           <div className="w-1/2 px-2">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -238,6 +221,54 @@ export default function page({ params }: { params: { id: string } }) {
               </p>
             )}
           </div>
+          <div className="w-1/2 px-2">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="phone"
+            >
+              Amount (per day)
+            </label>
+            <input
+              id="description"
+              type="text"
+              name="description"
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
+              placeholder="amount"
+            />
+            {amountError && (
+              <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                {" "}
+                {amountError}
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-wrap -mx-2 mb-4">
+          <div className="w-full px-2">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="phone"
+            >
+              Description
+            </label>
+            <input
+              id="description"
+              type="text"
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
+              placeholder="Description"
+            />
+            {descriptionError && (
+              <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                {" "}
+                {descriptionError}
+              </p>
+            )}
+          </div>
         </div>
         <div className="flex flex-wrap -mx-2 mb-4">
           <div className="w-1/2 px-2">
@@ -256,10 +287,10 @@ export default function page({ params }: { params: { id: string } }) {
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Address"
             />
-            {phoneError && (
+            {addressError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {phoneError}
+                {addressError}
               </p>
             )}
           </div>
@@ -307,10 +338,10 @@ export default function page({ params }: { params: { id: string } }) {
               // value={password}
               // onChange={handleChange}
             />
-            {passwordError && (
+            {cityError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {passwordError}
+                {cityError}
               </p>
             )}
           </div>
@@ -332,10 +363,10 @@ export default function page({ params }: { params: { id: string } }) {
               // value={confirmPass}
               // onChange={handleChange}
             />
-            {confirmPassError && (
+            {stateError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
                 {" "}
-                {confirmPassError}
+                {stateError}
               </p>
             )}
           </div>

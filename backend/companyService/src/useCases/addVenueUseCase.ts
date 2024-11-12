@@ -5,8 +5,9 @@ interface data {
   companyId: string;
   name: string;
   type: string;
-  description: string;
+  amount: number;
   capacity: number;
+  description: string;
   address: string;
   phone: number;
   city: string;
@@ -21,8 +22,9 @@ export class AddVenueUseCase {
     companyId,
     name,
     type,
-    description,
+    amount,
     capacity,
+    description,
     address,
     phone,
     city,
@@ -34,8 +36,9 @@ export class AddVenueUseCase {
         companyId,
         name,
         type,
-        description,
+        amount,
         capacity,
+        description,
         address,
         phone,
         city,

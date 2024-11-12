@@ -123,7 +123,7 @@ export class CompanyController {
   async addVenue(req: Request, res: Response): Promise<void> {
     try {
 
-      const { companyId, name, type, description, capacity, address, phone, city, state } =
+      const { companyId, name, type, description, capacity,amount, address, phone, city, state } =
         req.body;
       const files = req.files as Express.MulterS3.File[];
 
@@ -137,6 +137,7 @@ export class CompanyController {
         type,
         description,
         capacity,
+        amount,
         address,
         phone,
         city,

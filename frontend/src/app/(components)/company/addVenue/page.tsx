@@ -16,8 +16,9 @@ export default function page() {
 
   const [name, setName] = useState<string>("");
   const [type, setType] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
   const [capacity, setCapacity] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(0)
+  const [description, setDescription] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [phone, setPhone] = useState<string>('');
   const [city, setCity] = useState<string>("");
@@ -25,8 +26,9 @@ export default function page() {
 
   const [nameError, setNameError] = useState<string>("");
   const [typeError, setTypeError] = useState<string>("");
-  const [descriptionError, setDescriptionError] = useState<string>("");
   const [capacityError, setCapacityError] = useState<string>("");
+  const [amountError, setAmountError] = useState<string>('')
+  const [descriptionError, setDescriptionError] = useState<string>("");
   const [addressError, setAddressError] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
   const [cityError, setCityError] = useState<string>("");
@@ -146,6 +148,11 @@ export default function page() {
       isValid = false
     }
 
+    if(amount < 0) {
+      setAmountError('Invalid amount')
+      isValid = false
+    }
+
     if(capacity < 1) {
       setCapacityError('Invalid capacity')
       isValid = false
@@ -196,6 +203,7 @@ export default function page() {
     formData.append("type", type);
     formData.append("description", description);
     formData.append("capacity", capacity.toString());
+    formData.append('amount', amount.toString());
     formData.append("address", address);
     formData.append("phone", phone.toString());
     formData.append("city", city);
@@ -288,29 +296,7 @@ export default function page() {
         </div>
 
         <div className="flex flex-wrap -mx-2 mb-4">
-          <div className="w-1/2 px-2">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="phone"
-            >
-              Description
-            </label>
-            <input
-              id="description"
-              type="text"
-              name="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
-              placeholder="Description"
-            />
-            {descriptionError && (
-              <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
-                {" "}
-                {descriptionError}
-              </p>
-            )}
-          </div>
+          
           <div className="w-1/2 px-2">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -334,7 +320,55 @@ export default function page() {
               </p>
             )}
           </div>
+          <div className="w-1/2 px-2">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="phone"
+            >
+              Amount (per day)
+            </label>
+            <input
+              id="amount"
+              type="number"
+              name="capacity"
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
+              placeholder="Amount per day for Venue"
+            />
+            {amountError && (
+              <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                {" "}
+                {amountError}
+              </p>
+            )}
+          </div>
         </div>
+        <div className="flex flex-wrap -mx-2 mb-4">
+        <div className="w-full px-2">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="phone"
+            >
+              Description
+            </label>
+            <input
+              id="description"
+              type="text"
+              name="description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
+              placeholder="Description"
+            />
+            {descriptionError && (
+              <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                {" "}
+                {descriptionError}
+              </p>
+            )}
+          </div>
+          </div>
         <div className="flex flex-wrap -mx-2 mb-4">
           <div className="w-1/2 px-2">
             <label

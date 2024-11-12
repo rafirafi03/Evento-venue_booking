@@ -18,6 +18,7 @@ import {
   useRegisterPostMutation,
   useVerifyOtpMutation,
 } from "app/store/slices/userApiSlices";
+import AuthHOC from "components/common/auth/authHoc";
 
 const Page = () => {
   const router = useRouter();
@@ -157,7 +158,7 @@ const Page = () => {
   };
 
   return (
-    <div>
+    <AuthHOC role="user" isAuthPage={true}>
       {modal ? (
         <OtpModal email={email} handleOtp={handleOtp} otpError={otpError} clearError={() => setOtpError("")} />
       ) : (
@@ -384,7 +385,7 @@ const Page = () => {
           )}
         </>
       )}
-    </div>
+    </AuthHOC>
   );
 };
 

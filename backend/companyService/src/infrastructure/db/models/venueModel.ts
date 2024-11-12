@@ -5,6 +5,7 @@ export interface IVenue extends Document {
     companyId: string;
     name: string;
     type: string;
+    amount: number;
     description: string;
     capacity: number;
     address: string;
@@ -30,13 +31,17 @@ const VenueSchema: Schema = new Schema<IVenue>({
         type: String,
         required: true,
       },
-      description: {
-        type: String,
-        required: true,
+      amount: {
+        type: Number,
+        required: true
       },
       capacity: {
         type: Number,
         required: true
+      },
+      description: {
+        type: String,
+        required: true,
       },
       address: {
         type: String,

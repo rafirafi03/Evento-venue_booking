@@ -13,7 +13,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 export class MakePaymentUseCase {
   constructor() {}
 
-  async execute(name: string, venueId: string, event: string, guests: number, bookingDuration: RangeValue<DateValue>): Promise<any> {
+  async execute(name: string, venueId: string,amount:number, event: string, guests: number, bookingDuration: RangeValue<DateValue>): Promise<any> {
     try {
 
         console.log(venueId);
@@ -27,7 +27,7 @@ export class MakePaymentUseCase {
           userId: '3456',
           paymentMethod: 'online',
           paymentStatus: 'pending',  // Payment status is 'pending' before creating Stripe session
-          amount: 6000,
+          amount: amount,
           bookingDateStart: startDate,
           bookingDateEnd: endDate ,
           event,
@@ -47,7 +47,7 @@ export class MakePaymentUseCase {
             product_data: {
               name: name,
             },
-            unit_amount: Math.round(1200) // Assuming this is in cents (1200.00 USD)
+            unit_amount: amount // Assuming this is in cents (1200.00 USD)
           },
           quantity: 1
         }

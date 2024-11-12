@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
-import { useLayoutEffect, useState } from 'react';
-import Loader from '../../../app/(components)/loader';
+import { useEffect, useState } from 'react';
+import Loader from '../loader/loader';
 
 enum Role {
   Admin = 'admin',
@@ -11,34 +11,41 @@ enum Role {
 type AuthHOCProps = {
   children: React.ReactNode;
   role: Role;
+  isAuthPage?: boolean; // Optional prop to specify if this is the login page
 };
 
-export default function AuthHOC({ children, role }: AuthHOCProps) {
+export default function AuthHOC({ children, role, isAuthPage = false }: AuthHOCProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true); // Loading state for auth check
+  const [loading, setLoading] = useState(true);
 
-  
-  useLayoutEffect(() => {
+  useEffect(() => {
     const tokenKey = role === Role.Admin ? 'adminToken' : role === Role.User ? 'authToken' : 'companyToken';
     const token = localStorage.getItem(tokenKey);
-    let redirectTo;
 
-    
-    if (!token) {
-      redirectTo = role === Role.Admin ? '/admin/login' : role === Role.User ? '/login' : '/company/login';
-      router.push(redirectTo);
-      setLoading(false)
+    if (isAuthPage) {
+      // If on login page and token exists, redirect to main content page
+      if (token) {
+        const redirectTo = role === Role.Admin ? '/admin/dashboard' : role === Role.User ? '/' : '/company';
+        router.push(redirectTo);
+      } else {
+        setLoading(false); // Allow access to the login page if no token is found
+      }
     } else {
-      setLoading(false); // Auth check complete, ready to render content
+      // If on a protected page and no token, redirect to the login page
+      if (!token) {
+        const redirectTo = role === Role.Admin ? '/admin/login' : role === Role.User ? '/login' : '/company/login';
+        router.push(redirectTo);
+      } else {
+        setLoading(false); // Auth check complete, ready to render protected content
+      }
     }
-  }, [role, router]);
+  }, [role, router, isAuthPage]);
 
-  // Render a placeholder (like a loading spinner) until auth check is complete
+  // Render Loader while checking authentication
   if (loading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
-
-  // Render the protected content once authenticated
+  // Render the content once authenticated or allow access to the login page if unauthenticated
   return <>{children}</>;
 }
