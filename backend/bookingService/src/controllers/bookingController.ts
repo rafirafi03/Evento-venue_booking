@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import { HttpStatusCode } from "../constants";
-import { MakePaymentUseCase } from "../useCases";
+import { MakePaymentUseCase, WebhookUseCase } from "../useCases";
 
 export class BookingController {
-  constructor(private _makePaymentUseCase: MakePaymentUseCase) {}
+  constructor(
+    private _makePaymentUseCase: MakePaymentUseCase,
+    private _webhookUseCase: WebhookUseCase
+  ) {}
 
   async makePaymentRequest(req: Request, res: Response): Promise<void> {
     try {
@@ -17,6 +20,20 @@ export class BookingController {
         bookingDuration
       );
 
+      res.status(HttpStatusCode.OK).json(response);
+    } catch (error) {
+      console.log(error);
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: "failed to send request",
+      });
+    }
+  }
+
+  async webhook( req: Request, res: Response) : Promise<void> {
+    try {
+      const event = req.body;
+
+      const response = await this._webhookUseCase.execute(event)
       res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);

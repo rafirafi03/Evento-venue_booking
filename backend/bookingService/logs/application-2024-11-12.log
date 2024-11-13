@@ -4,3 +4,5 @@
 2024-11-12T15:18:48.787Z [INFO]: server is running on http://localhost:4003
 2024-11-12T15:18:57.026Z [INFO]: server is running on http://localhost:4003
 2024-11-12T15:19:09.889Z [INFO]: ::1 - - [12/Nov/2024:15:19:09 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-12T15:19:52.106Z [INFO]: server is running on http://localhost:4003
+2024-11-12T15:20:01.658Z [INFO]: ::1 - - [12/Nov/2024:15:20:01 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

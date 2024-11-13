@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Header from "../header/page";
 import Footer from "../footer/page";
@@ -11,11 +12,13 @@ import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import FavouriteButton from "../favouriteButton/page";
 // import AuthHOC from "components/common/auth/authHoc";
+import Loader from "components/common/loader/loader";
 
 // import Auth from '../../../auth/auth'
 
 const Page = () => {
   const userId = getUserIdFromToken("authToken");
+  const [loader, setLoader] = useState<boolean>(false)
 
   const { data: venues, refetch } = useGetListedVenuesQuery(undefined);
   // const [addToFavourites] = useAddToFavouritesMutation()
@@ -27,7 +30,9 @@ const Page = () => {
   const router = useRouter();
 
   const handleOnClick = (id: string) => {
+    setLoader(true)
     router.push(`/venueDetails/${id}`);
+
   };
 
   // const [isWishlisted, setIsWishlisted] = useState(false)
@@ -41,6 +46,10 @@ const Page = () => {
   //     console.log(error)
   //   }
   // }
+
+  if (loader) {
+    return <Loader/>
+  }
 
   return (
     <div className="bg-slate-50">

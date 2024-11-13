@@ -1,0 +1,1 @@
+2024-11-13T18:58:56.432Z [INFO]: ::1 - - [13/Nov/2024:18:58:56 +0000] "GET /getVenueDetails/6733709bb17017e899b57510 HTTP/1.1" 200 998 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
