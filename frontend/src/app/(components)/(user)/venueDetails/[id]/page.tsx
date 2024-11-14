@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Header from "../../header/page";
+import Header from "../../../../../components/userComponents/header";
 import Footer from "../../footer/page";
 import { useRouter } from "next/navigation";
 import { useGetVenueDetailsQuery } from "app/store/slices/companyApiSlices";

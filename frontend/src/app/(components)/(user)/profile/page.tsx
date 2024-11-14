@@ -10,7 +10,7 @@ import {
   Calendar,
   Edit,
 } from "lucide-react";
-import Header from "app/(components)/(user)/header/page";
+import Header from "components/userComponents/header";
 import {
   useGetUserDetailsQuery,
   useResetPasswordMutation,

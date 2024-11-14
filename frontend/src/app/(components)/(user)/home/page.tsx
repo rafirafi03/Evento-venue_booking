@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Header from "../header/page";
+import Header from "components/userComponents/header";
 import Footer from "../footer/page";
 import { useRouter } from "next/navigation";
 import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
