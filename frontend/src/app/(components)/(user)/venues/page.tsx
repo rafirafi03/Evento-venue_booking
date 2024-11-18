@@ -1,14 +1,21 @@
-import React from 'react'
-import Header from 'components/userComponents/header'
-import FilterSection from 'components/userComponents/filterSection'
+import React from "react";
+import Header from "components/userComponents/header";
+import FilterSection from "components/userComponents/filterSection";
+import VenueList from "components/userComponents/venueList";
 
-export default function page() {
+export default function Page() {
   return (
-    <div>
-      <div className="flex flex-col"> {/* Use flexbox for column layout */}
+    <div className="bg-slate-50">
       <Header />
-      <FilterSection/>
+      <div className="flex p-4 space-x-4">
+        <div className="">
+        <FilterSection />
+
+        </div>
+        <div className="mt-20 px-5">
+        <VenueList/>
+        </div>
+      </div>
     </div>
-    </div>
-  )
+  );
 }

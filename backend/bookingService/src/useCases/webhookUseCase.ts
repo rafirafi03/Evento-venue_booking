@@ -8,8 +8,14 @@ export class WebhookUseCase {
 
   async execute(event: any): Promise<any> {
     try {
+      if (event.type === 'checkout.session.completed') {
+        const session = event.data.object as Stripe.Checkout.Session;
+    
+        // Access metadata
+        console.log(session.metadata?.bookingId,"session in webhook")
+      }
+      
 
-        console.log(event,"event in usecase webhokkkkkkkkkkkk")
     } catch (error) {
       console.error(error);
       throw new Error('Internal server error: ' + error);

@@ -10,11 +10,10 @@ export class BookingController {
 
   async makePaymentRequest(req: Request, res: Response): Promise<void> {
     try {
-      const { name, venueId,amount, event, guests, bookingDuration } = req.body;
+      const { userId, venueId, event, guests, bookingDuration } = req.body;
       const response = await this._makePaymentUseCase.execute(
-        name,
+        userId,
         venueId,
-        amount,
         event,
         guests,
         bookingDuration

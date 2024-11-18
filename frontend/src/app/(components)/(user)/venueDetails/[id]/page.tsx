@@ -3,19 +3,22 @@
 import React, { useState } from "react";
 import Header from "../../../../../components/userComponents/header";
 import Footer from "../../footer/page";
-import { useRouter } from "next/navigation";
 import { useGetVenueDetailsQuery } from "app/store/slices/companyApiSlices";
 import AuthHOC from "components/common/auth/authHoc";
 import {loadStripe} from '@stripe/stripe-js';
 import { useMakePaymentMutation } from "app/store/slices/bookingApiSlices";
 import dotenv from 'dotenv';
-import BookingModal from 'components/userComponents/bookingModal'
+import BookingModal from 'components/userComponents/bookingModal';
+import { getUserIdFromToken } from "utils/tokenHelper";
+
 
 dotenv.config()
 
 export default function page({ params }: { params: { id: string } }) {
   const [makePayment] = useMakePaymentMutation()
   const [isBookingModal, setBookingModal] = useState(false)
+  const userId = getUserIdFromToken("authToken");
+
   // const router = useRouter();
   const venueId = params.id;
 
@@ -37,7 +40,7 @@ export default function page({ params }: { params: { id: string } }) {
     try {
       const stripe = await loadStripe('pk_test_51QIW2Z04vhsHHnxMXq9wq2BPsf5Lsy3LgQLC6quw5HKBS2aaVofHBiGzsZKQBG4oiKrNkEMBvHJNvvC5KlCyQCnB00dRuVASgF');
 
-    const response = await makePayment({name: venue.name, venueId,amount: venue.amount, event, guests, bookingDuration}).unwrap();
+    const response = await makePayment({userId, venueId, event, guests, bookingDuration}).unwrap();
 
     const result = stripe?.redirectToCheckout({
       sessionId: response.id

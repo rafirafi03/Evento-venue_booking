@@ -19,7 +19,6 @@ const FavouriteButton = ({ userId, venueId } : propsData) => {
   const handleFavouriteToggle = async () => {
     try {
         if(isFavourited) {
-          console.log('hiiiiiiiiiiiiii')
           const response = await deleteFromFavourites({userId, venueId}).unwrap()
           console.log(response,"res from delte")
         } else {

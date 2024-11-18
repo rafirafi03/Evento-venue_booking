@@ -13,6 +13,7 @@ import { getUserIdFromToken } from "utils/tokenHelper";
 import FavouriteButton from "../favouriteButton/page";
 // import AuthHOC from "components/common/auth/authHoc";
 import Loader from "components/common/loader/loader";
+import VenueCard from "components/userComponents/venueCard";
 
 // import Auth from '../../../auth/auth'
 
@@ -29,11 +30,6 @@ const Page = () => {
 
   const router = useRouter();
 
-  const handleOnClick = (id: string) => {
-    setLoader(true)
-    router.push(`/venueDetails/${id}`);
-
-  };
 
   // const [isWishlisted, setIsWishlisted] = useState(false)
 
@@ -142,52 +138,7 @@ const Page = () => {
           {venue?.length && (
             <>
               {venue?.map((ven, index) => (
-                <div className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                  <a>
-                    <Image
-                      className="rounded-t-lg"
-                      src={ven?.images[0]}
-                      alt="img"
-                      width={500}
-                      height={500}
-                    />
-                  </a>
-                  <div className="p-5">
-                    <a>
-                      <h5 className="mb-2 text-sm font-bold tracking-tight text-gray-900 dark:text-white">
-                        {ven?.name}
-                      </h5>
-                    </a>
-                    <p className="mb-3 font-normal text-xs text-gray-700 dark:text-gray-400">
-                      {ven?.description}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <a
-                        onClick={() => handleOnClick(ven?._id)}
-                        className="inline-flex items-center cursor-pointer px-3 py-2 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-700"
-                      >
-                        View Details
-                        <svg
-                          className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 14 10"
-                        >
-                          <path
-                            stroke="currentColor"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M1 5h12m0 0L9 1m4 4L9 9"
-                          />
-                        </svg>
-                      </a>
-
-                      <FavouriteButton userId={userId} venueId={ven?._id} />
-                    </div>
-                  </div>
-                </div>
+                <VenueCard key={index} title={ven?.name} imageUrl={ven?.images[0]} city={ven?.city} state={ven?.state} capacity={ven?.capacity} description={ven?.description} price={ven?.amount} venueId={ven?._id} userId={userId as string} />
               ))}
             </>
           )}

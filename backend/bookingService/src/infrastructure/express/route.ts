@@ -13,7 +13,7 @@ router.post("/makePayment", (req, res) => {
   bookingController.makePaymentRequest(req, res);
 });
 
-router.post('/webhook', (req, res) => {
+router.post('/api/webhook', (req, res) => {
   bookingController.webhook(req, res)
 })
 

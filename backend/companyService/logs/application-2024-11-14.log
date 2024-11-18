@@ -17,3 +17,4 @@
 2024-11-14T12:43:01.126Z [INFO]: ::1 - - [14/Nov/2024:12:43:01 +0000] "GET /getListedVenues HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 2024-11-14T12:43:06.299Z [INFO]: ::1 - - [14/Nov/2024:12:43:06 +0000] "GET /getListedVenues HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 2024-11-14T12:43:09.846Z [INFO]: ::1 - - [14/Nov/2024:12:43:09 +0000] "GET /getVenueDetails/6 HTTP/1.1" 500 28 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-14T17:20:40.916Z [INFO]: server is running on http://localhost:4001

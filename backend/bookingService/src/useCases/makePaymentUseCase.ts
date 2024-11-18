@@ -13,9 +13,8 @@ export class MakePaymentUseCase {
   constructor() {}
 
   async execute(
-    name: string,
+    userId: string,
     venueId: string,
-    amount: number,
     event: string,
     guests: number,
     bookingDuration: RangeValue<DateValue>
@@ -35,47 +34,55 @@ export class MakePaymentUseCase {
         bookingDuration.end.day
       );
 
-      const newBooking = new Booking({
+      // Creating the booking object
+      const newBooking = {
+        userId,
         venueId,
-        userId: "3456",
         paymentMethod: "online",
-        paymentStatus: "pending", // Payment status is 'pending' before creating Stripe session
-        amount: amount,
         bookingDateStart: startDate,
         bookingDateEnd: endDate,
         event,
         guests,
         cancelReason: "", // Initially no cancel reason
-      });
+      };
 
-      // Save the booking to the database
-      const savedBooking = await newBooking.save();
+      // Save the booking to the database (This should be done with your ORM, e.g., mongoose)
+      // await Booking.create(newBooking); // Assuming you have a Booking model to save data
 
       const lineItems = [
         {
           price_data: {
             currency: "usd",
             product_data: {
-              name: name,
+              name: event, // Set the event name dynamically
             },
-            unit_amount: amount, // Assuming this is in cents (1200.00 USD)
+            unit_amount: 120000, // Price in cents, assuming it's 1200.00 USD
           },
-          quantity: 1,
+          quantity: guests, // Adjust based on the number of guests
         },
       ];
 
+      // Create a session in Stripe
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: "http://localhost:3000",
-        cancel_url: "https://localhost:3000",
+        success_url: `http://localhost:3000/venueDetails/${venueId}`,
+        cancel_url: `http://localhost:3000/venueDetails/${venueId}`,
+        metadata: {
+          userId,
+          venueId,
+          event,
+          guests: guests.toString(), // Convert number to string
+          bookingDateStart: startDate.toISOString(), // Store ISO string representation
+          bookingDateEnd: endDate.toISOString(),
+        }
       });
 
-      return { id: session.id };
+      return { id: session.id }; // Return the session ID to the frontend for redirection
     } catch (error) {
       console.error(error);
-      throw new Error("Internal server error: " + error);
+      throw new Error("Internal server error: "); // Improved error handling
     }
   }
 }
