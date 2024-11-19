@@ -66,3 +66,4 @@
 2024-11-18T12:01:01.439Z [INFO]: ::1 - - [18/Nov/2024:12:01:01 +0000] "GET /getVenueDetails/6733709bb17017e899b57510 HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 2024-11-18T15:50:06.226Z [INFO]: server is running on http://localhost:4001
 2024-11-18T15:51:44.914Z [INFO]: server is running on http://localhost:4001
+2024-11-18T15:52:06.534Z [INFO]: server is running on http://localhost:4001

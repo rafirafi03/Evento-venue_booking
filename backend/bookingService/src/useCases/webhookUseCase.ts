@@ -10,9 +10,24 @@ export class WebhookUseCase {
     try {
       if (event.type === 'checkout.session.completed') {
         const session = event.data.object as Stripe.Checkout.Session;
-    
-        // Access metadata
-        console.log(session.metadata?.bookingId,"session in webhook")
+
+        if(session.metadata) {
+          const { userDetails, userId, venueId, eventName, guests, bookingDateStart, bookingDateEnd} = session.metadata;
+
+
+
+        const booking = new Booking({
+          userId,
+          venueId,
+          amount: 4000,
+          event: eventName,
+          guests,
+          bookingDateStart,
+          bookingDateEnd
+        })
+
+        await booking.save()
+        }
       }
       
 

@@ -1,6 +1,7 @@
 import Stripe from "stripe";
 import { DateValue } from "@internationalized/date";
 import Booking from "../infrastructure/db/models/bookingModel";
+import { getUserDetails } from "../infrastructure/grpc/grpcServices/grpcClient";
 
 type RangeValue<T> = {
   start: T;
@@ -20,6 +21,10 @@ export class MakePaymentUseCase {
     bookingDuration: RangeValue<DateValue>
   ): Promise<any> {
     try {
+
+      const userDetails = await getUserDetails(userId);
+
+      console.log(userDetails," userdetails through grpc")
       console.log(venueId);
       console.log(bookingDuration, " booking duration");
 
@@ -70,9 +75,10 @@ export class MakePaymentUseCase {
         success_url: `http://localhost:3000/venueDetails/${venueId}`,
         cancel_url: `http://localhost:3000/venueDetails/${venueId}`,
         metadata: {
+          userDetails: JSON.stringify(userDetails),
           userId,
           venueId,
-          event,
+          eventName: event,
           guests: guests.toString(), // Convert number to string
           bookingDateStart: startDate.toISOString(), // Store ISO string representation
           bookingDateEnd: endDate.toISOString(),
@@ -81,8 +87,8 @@ export class MakePaymentUseCase {
 
       return { id: session.id }; // Return the session ID to the frontend for redirection
     } catch (error) {
-      console.error(error);
-      throw new Error("Internal server error: "); // Improved error handling
+      console.error(error,"message error error rrrroeroeroereoor");
+      throw new Error("Internal server error: ");
     }
   }
 }

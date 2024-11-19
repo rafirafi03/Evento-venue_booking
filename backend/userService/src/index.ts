@@ -7,6 +7,7 @@ import cors from "cors";
 import { connectDB } from "./infrastructure/db";
 import userRoute from "./infrastructure/express/route";
 import cookieParser from 'cookie-parser';
+import { startGrpcServer } from "./infrastructure/grpc/grpcServices/grpcServer";
 
 const PORT = process.env.PORT;
 
@@ -36,4 +37,5 @@ app.use("/", userRoute);
 
 app.listen(PORT, () => {
   logger.info(`server is running on http://localhost:${PORT}`);
+  startGrpcServer()
 });

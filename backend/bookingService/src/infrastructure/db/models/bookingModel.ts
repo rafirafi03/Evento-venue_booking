@@ -31,11 +31,9 @@ const BookingSchema: Schema = new Schema<IBooking>({
       },
       paymentMethod: {
         type: String,
-        required: true,
       },
       paymentStatus: {
         type: String,
-        required: true
       },
       amount: {
         type: Number,
