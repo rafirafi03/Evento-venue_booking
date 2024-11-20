@@ -1,10 +1,13 @@
 import Stripe from 'stripe';
-import Booking from '../infrastructure/db/models/bookingModel';
+import { IBookingRepository } from '../repositories/interfaces';
+import { Booking, User } from '../entities';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export class WebhookUseCase {
-  constructor() {}
+  constructor(
+    private _bookingRepository: IBookingRepository
+  ) {}
 
   async execute(event: any): Promise<any> {
     try {
@@ -12,7 +15,19 @@ export class WebhookUseCase {
         const session = event.data.object as Stripe.Checkout.Session;
 
         if(session.metadata) {
-          const { userDetails, userId, venueId, eventName, guests, bookingDateStart, bookingDateEnd} = session.metadata;
+          const { userId, venueId, eventName, guests, bookingDateStart, bookingDateEnd } = session.metadata;
+          const {userId: id, name, email, phone} = JSON.parse(session.metadata.userDetails)
+
+          console.log(session.metadata," session metadataaaaaaaaaaaaaaaaaa");
+
+          const guestCount = Number(guests)
+          const startDate = new Date(bookingDateStart);
+          const endDate = new Date(bookingDateEnd);
+
+          if (isNaN(guestCount)) {
+            throw new Error("Invalid guests count");
+          }
+
 
 
 
@@ -21,12 +36,22 @@ export class WebhookUseCase {
           venueId,
           amount: 4000,
           event: eventName,
-          guests,
-          bookingDateStart,
-          bookingDateEnd
+          guests: guestCount,
+          bookingDateStart: startDate,
+          bookingDateEnd: endDate
         })
 
-        await booking.save()
+        const user = new User({
+          _id: userId,
+          name,
+          email,
+          phone
+        })
+
+
+
+        await this._bookingRepository.save(booking)
+        await this._bookingRepository.saveUser(user)
         }
       }
       

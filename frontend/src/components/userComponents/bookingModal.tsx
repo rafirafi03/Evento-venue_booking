@@ -120,7 +120,7 @@ export default function App({ isOpen,isClose, handleBooking }: AppProps) {
                   Cancel
                 </Button>
                 <Button onClick={handleSubmit} className="bg-[rgb(255,0,0)] text-white">
-                  Book
+                  Pay Advance
                 </Button>
               </ModalFooter>
             </>

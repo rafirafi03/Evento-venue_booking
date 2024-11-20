@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { HttpStatusCode } from "../constants";
-import { MakePaymentUseCase, WebhookUseCase } from "../useCases";
+import { HttpStatusCode } from "../../constants";
+import { MakePaymentUseCase, WebhookUseCase } from "../../useCases";
 
 export class BookingController {
   constructor(

@@ -1,11 +1,14 @@
 import { Router } from "express";
-import { BookingController } from "../../controllers/bookingController";
+import { BookingController } from '../../adapters/controllers'
 import { MakePaymentUseCase, WebhookUseCase } from "../../useCases";
+import { BookingRepository }  from "../../repositories/implementations";
 
 const router = Router();
 
+const bookingRepository = new BookingRepository()
+
 const makePaymentUseCase = new MakePaymentUseCase();
-const webhookUseCase = new WebhookUseCase()
+const webhookUseCase = new WebhookUseCase(bookingRepository)
 
 const bookingController = new BookingController(makePaymentUseCase, webhookUseCase);
 

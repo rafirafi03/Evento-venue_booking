@@ -7,11 +7,9 @@ export enum VerificationStatus {
 }
 
 export interface IBooking extends Document {
-    _id: mongoose.Types.ObjectId;
+    _id: string;
     venueId: string;
     userId: string;
-    paymentMethod: string;
-    paymentStatus: string;
     amount: number;
     bookingDateStart: Date;
     bookingDateEnd: Date;
@@ -28,12 +26,6 @@ const BookingSchema: Schema = new Schema<IBooking>({
       userId: {
         type: String,
         required: true,
-      },
-      paymentMethod: {
-        type: String,
-      },
-      paymentStatus: {
-        type: String,
       },
       amount: {
         type: Number,
@@ -60,6 +52,4 @@ const BookingSchema: Schema = new Schema<IBooking>({
       }
 })
 
-const Booking = mongoose.model<IBooking>('Booking', BookingSchema);
-
-export default Booking;
+export const BookingModel = mongoose.model<IBooking>('Booking', BookingSchema);

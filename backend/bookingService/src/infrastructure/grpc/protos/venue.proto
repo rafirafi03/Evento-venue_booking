@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package venue;
+
+service CompanyService {
+  rpc GetVenueDetails(VenueRequest) returns (VenueResponse);
+}
+
+message VenueRequest {
+  string venueId = 1;
+}
+
+message VenueResponse {
+  string id = 1;
+  string name = 2;
+  int32 amount = 3;
+  string city = 4;
+  string state = 5;
+}

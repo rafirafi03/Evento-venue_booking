@@ -1,7 +1,7 @@
 import Stripe from "stripe";
 import { DateValue } from "@internationalized/date";
-import Booking from "../infrastructure/db/models/bookingModel";
-import { getUserDetails } from "../infrastructure/grpc/grpcServices/grpcClient";
+import { getUserDetails } from "../infrastructure/grpc/grpcServices/grpcUserClient";
+import { getVenueDetails } from "../infrastructure/grpc/grpcServices/grpcVenueClient";
 
 type RangeValue<T> = {
   start: T;
@@ -23,10 +23,8 @@ export class MakePaymentUseCase {
     try {
 
       const userDetails = await getUserDetails(userId);
+      const venueDetails = await getVenueDetails(venueId);
 
-      console.log(userDetails," userdetails through grpc")
-      console.log(venueId);
-      console.log(bookingDuration, " booking duration");
 
       const startDate = new Date(
         bookingDuration.start.year,
@@ -39,31 +37,39 @@ export class MakePaymentUseCase {
         bookingDuration.end.day
       );
 
-      // Creating the booking object
-      const newBooking = {
-        userId,
-        venueId,
-        paymentMethod: "online",
-        bookingDateStart: startDate,
-        bookingDateEnd: endDate,
-        event,
-        guests,
-        cancelReason: "", // Initially no cancel reason
-      };
+      startDate.setHours(0, 0, 0, 0);
+      endDate.setHours(0, 0, 0, 0);
 
-      // Save the booking to the database (This should be done with your ORM, e.g., mongoose)
-      // await Booking.create(newBooking); // Assuming you have a Booking model to save data
+      // Calculate the number of days including both start and end dates
+      const timeDiff = endDate.getTime() - startDate.getTime();
+      const days = timeDiff / (1000 * 3600 * 24) + 1; // Add 1 to include both days
+
+      console.log(days," daysssssssssssssss")
+
+      const totalAmount = venueDetails.amount * days; // total amount (in dollars)
+
+      console.log(totalAmount," totalamounttttttttttttttttttt")
+
+      // Calculate 10% of the total amount
+      let finalAmount = totalAmount * 0.10;
+
+      if (finalAmount > 25000) {
+        finalAmount = 25000;
+      }
+
+      console.log(finalAmount," finalamountttttttttttttttttt")
+
 
       const lineItems = [
         {
           price_data: {
             currency: "usd",
             product_data: {
-              name: event, // Set the event name dynamically
+              name: "Advance amount",
             },
-            unit_amount: 120000, // Price in cents, assuming it's 1200.00 USD
+            unit_amount : finalAmount, // Total amount based on the number of guests (in cents)
           },
-          quantity: guests, // Adjust based on the number of guests
+          quantity: 1, 
         },
       ];
 
@@ -76,12 +82,12 @@ export class MakePaymentUseCase {
         cancel_url: `http://localhost:3000/venueDetails/${venueId}`,
         metadata: {
           userDetails: JSON.stringify(userDetails),
-          userId,
-          venueId,
-          eventName: event,
-          guests: guests.toString(), // Convert number to string
-          bookingDateStart: startDate.toISOString(), // Store ISO string representation
-          bookingDateEnd: endDate.toISOString(),
+          userId: JSON.stringify(userId),
+          venueId: JSON.stringify(venueId),
+          eventName:JSON.stringify(event),
+          guests: JSON.stringify(guests), // Convert number to string
+          bookingDateStart: JSON.stringify(startDate), // Store ISO string representation
+          bookingDateEnd: JSON.stringify(endDate),
         }
       });
 

@@ -4,8 +4,6 @@ import path from "path";
 
 const PROTO_PATH = path.resolve(__dirname, "../protos/user.proto");
 
-console.log(PROTO_PATH,"proto pathhhhhhhhhhhhhhhhh")
-
 const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
   longs: String,
@@ -23,16 +21,12 @@ const client = new userProto.user.UserService(
 );
 
 export const getUserDetails = (userId: string): Promise<any> => {
-    console.log('inside getuserdetails in grpcclient')
   return new Promise((resolve, reject) => {
     client.GetUserDetails({ userId }, (error: any, response: any) => {
-      console.log(response,'hoiiiiiiiiii')
       if (error) {
-        console.log(error.message,"error insideeeeeee")
         return reject(error);
       }
-      console.log(resolve,"resolve in getusredetrailsssssssssssssssss")
-      resolve(response);
+        resolve(response);
     });
   });
 };

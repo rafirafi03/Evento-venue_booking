@@ -1,6 +1,6 @@
 import { IUserRepository } from "../repositories";
 import { IRedisClient } from "../repositories/interfaces/redisInterface";
-import User from "../infrastructure/db/models/userModel";
+import { User } from "../entities/userEntity";
 import { hashPass } from "../utils";
 import { TokenService } from 'evento-library';
 import dotenv from 'dotenv';
