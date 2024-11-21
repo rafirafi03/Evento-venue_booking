@@ -1,5 +1,7 @@
+import mongoose from "mongoose";
+
 export interface IBookingData {
-    _id?: string;
+    _id?: mongoose.Types.ObjectId;
     userId: string;
     venueId: string;
     event: string;
@@ -11,7 +13,7 @@ export interface IBookingData {
 }
 
 export class Booking {
-    _id?: string;
+    _id?: mongoose.Types.ObjectId;
     userId: string;
     venueId: string;
     event: string;

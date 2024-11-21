@@ -75,3 +75,4 @@
 2024-11-20T15:38:23.134Z [INFO]: ::1 - - [20/Nov/2024:15:38:23 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
 2024-11-20T15:38:25.142Z [INFO]: ::1 - - [20/Nov/2024:15:38:25 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
 2024-11-20T16:05:53.642Z [INFO]: server is running on http://localhost:4003
+2024-11-20T16:06:39.288Z [INFO]: server is running on http://localhost:4003

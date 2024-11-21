@@ -1,23 +1,28 @@
+import mongoose from "mongoose";
+
 export interface IVenueData {
-    _id?: string;
+    _id?: mongoose.Types.ObjectId;
     name: string;
+    amount: number;
     city: string;
     state: string;
-    amount: number;
+    image: string;
 }
 
 export class Venue {
-    _id?: string;
+    _id?: mongoose.Types.ObjectId;
     name: string;
+    amount: number;
     city: string;
     state: string;
-    amount: number;
+    image: string;
 
-    constructor({ _id,name,city,state,amount} : IVenueData) {
+    constructor({ _id,name,amount,city,state,image} : IVenueData) {
         this._id = _id;
         this.name = name;
+        this.amount = amount;
         this.city = city;
         this.state = state;
-        this.amount = amount;
+        this.image = image
     }
 }

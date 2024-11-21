@@ -44,11 +44,7 @@ export class MakePaymentUseCase {
       const timeDiff = endDate.getTime() - startDate.getTime();
       const days = timeDiff / (1000 * 3600 * 24) + 1; // Add 1 to include both days
 
-      console.log(days," daysssssssssssssss")
-
-      const totalAmount = venueDetails.amount * days; // total amount (in dollars)
-
-      console.log(totalAmount," totalamounttttttttttttttttttt")
+      const totalAmount = venueDetails.venueAmount * days; // total amount (in dollars)
 
       // Calculate 10% of the total amount
       let finalAmount = totalAmount * 0.10;
@@ -56,8 +52,6 @@ export class MakePaymentUseCase {
       if (finalAmount > 25000) {
         finalAmount = 25000;
       }
-
-      console.log(finalAmount," finalamountttttttttttttttttt")
 
 
       const lineItems = [
@@ -82,18 +76,19 @@ export class MakePaymentUseCase {
         cancel_url: `http://localhost:3000/venueDetails/${venueId}`,
         metadata: {
           userDetails: JSON.stringify(userDetails),
-          userId: JSON.stringify(userId),
-          venueId: JSON.stringify(venueId),
-          eventName:JSON.stringify(event),
+          venueDetails: JSON.stringify(venueDetails),
+          userId: userId,
+          venueId: venueId,
+          eventName:event,
+          finalAmount: JSON.stringify(finalAmount),
           guests: JSON.stringify(guests), // Convert number to string
-          bookingDateStart: JSON.stringify(startDate), // Store ISO string representation
-          bookingDateEnd: JSON.stringify(endDate),
+          bookingDateStart: startDate.toISOString(), // Store ISO string representation
+          bookingDateEnd: endDate.toISOString(),
         }
       });
 
       return { id: session.id }; // Return the session ID to the frontend for redirection
     } catch (error) {
-      console.error(error,"message error error rrrroeroeroereoor");
       throw new Error("Internal server error: ");
     }
   }

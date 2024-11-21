@@ -1,0 +1,118 @@
+2024-11-21T05:06:26.040Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:07:16.130Z [INFO]: ::1 - - [21/Nov/2024:05:07:16 +0000] "POST /makePayment HTTP/1.1" 401 36 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:11:56.281Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:12:20.458Z [INFO]: ::1 - - [21/Nov/2024:05:12:20 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:12:46.205Z [INFO]: ::1 - - [21/Nov/2024:05:12:46 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:12:46.207Z [INFO]: ::1 - - [21/Nov/2024:05:12:46 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:12:46.683Z [INFO]: ::1 - - [21/Nov/2024:05:12:46 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:12:47.312Z [INFO]: ::1 - - [21/Nov/2024:05:12:47 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:12:48.392Z [INFO]: ::1 - - [21/Nov/2024:05:12:48 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:31:02.155Z [INFO]: ::1 - - [21/Nov/2024:05:31:02 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:31:21.058Z [INFO]: ::1 - - [21/Nov/2024:05:31:21 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:31:21.144Z [INFO]: ::1 - - [21/Nov/2024:05:31:21 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:31:21.326Z [INFO]: ::1 - - [21/Nov/2024:05:31:21 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:31:21.329Z [INFO]: ::1 - - [21/Nov/2024:05:31:21 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:31:23.332Z [INFO]: ::1 - - [21/Nov/2024:05:31:23 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:32:41.656Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:32:47.714Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:35:45.062Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:36:45.012Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:38:02.157Z [INFO]: ::1 - - [21/Nov/2024:05:38:02 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:38:22.719Z [INFO]: ::1 - - [21/Nov/2024:05:38:22 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:38:22.795Z [INFO]: ::1 - - [21/Nov/2024:05:38:22 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:38:22.824Z [INFO]: ::1 - - [21/Nov/2024:05:38:22 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:38:23.017Z [INFO]: ::1 - - [21/Nov/2024:05:38:23 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:38:24.943Z [INFO]: ::1 - - [21/Nov/2024:05:38:24 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:38:56.996Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:39:10.504Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:39:20.170Z [INFO]: ::1 - - [21/Nov/2024:05:39:20 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:39:39.939Z [INFO]: ::1 - - [21/Nov/2024:05:39:39 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:39:40.027Z [INFO]: ::1 - - [21/Nov/2024:05:39:40 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:39:40.133Z [INFO]: ::1 - - [21/Nov/2024:05:39:40 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:39:40.143Z [INFO]: ::1 - - [21/Nov/2024:05:39:40 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:39:41.956Z [INFO]: ::1 - - [21/Nov/2024:05:39:41 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:40:29.663Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:41:06.742Z [INFO]: ::1 - - [21/Nov/2024:05:41:06 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:41:33.767Z [INFO]: ::1 - - [21/Nov/2024:05:41:33 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:41:33.799Z [INFO]: ::1 - - [21/Nov/2024:05:41:33 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:41:33.845Z [INFO]: ::1 - - [21/Nov/2024:05:41:33 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:41:36.039Z [INFO]: ::1 - - [21/Nov/2024:05:41:36 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:41:36.188Z [INFO]: ::1 - - [21/Nov/2024:05:41:36 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:44:04.786Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:44:23.350Z [INFO]: ::1 - - [21/Nov/2024:05:44:23 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:44:45.050Z [INFO]: ::1 - - [21/Nov/2024:05:44:45 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:44:45.051Z [INFO]: ::1 - - [21/Nov/2024:05:44:45 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:44:45.102Z [INFO]: ::1 - - [21/Nov/2024:05:44:45 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:44:46.573Z [INFO]: ::1 - - [21/Nov/2024:05:44:46 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:44:47.220Z [INFO]: ::1 - - [21/Nov/2024:05:44:47 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:48:08.529Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:48:14.432Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:48:28.512Z [INFO]: ::1 - - [21/Nov/2024:05:48:28 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:48:40.798Z [INFO]: ::1 - - [21/Nov/2024:05:48:40 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:48:40.800Z [INFO]: ::1 - - [21/Nov/2024:05:48:40 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:48:40.857Z [INFO]: ::1 - - [21/Nov/2024:05:48:40 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:48:41.120Z [INFO]: ::1 - - [21/Nov/2024:05:48:41 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:48:42.924Z [INFO]: ::1 - - [21/Nov/2024:05:48:42 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:50:32.905Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:51:48.554Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:52:00.861Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:52:22.786Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:52:46.702Z [INFO]: ::1 - - [21/Nov/2024:05:52:46 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:53:05.200Z [INFO]: ::1 - - [21/Nov/2024:05:53:05 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:53:05.272Z [INFO]: ::1 - - [21/Nov/2024:05:53:05 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:53:05.326Z [INFO]: ::1 - - [21/Nov/2024:05:53:05 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:53:06.976Z [INFO]: ::1 - - [21/Nov/2024:05:53:06 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:53:07.468Z [INFO]: ::1 - - [21/Nov/2024:05:53:07 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:53:44.869Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:55:21.355Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:55:34.283Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:56:35.667Z [INFO]: server is running on http://localhost:4003
+2024-11-21T05:57:28.068Z [INFO]: ::1 - - [21/Nov/2024:05:57:28 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T05:57:37.829Z [INFO]: ::1 - - [21/Nov/2024:05:57:37 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:57:37.962Z [INFO]: ::1 - - [21/Nov/2024:05:57:37 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:57:38.076Z [INFO]: ::1 - - [21/Nov/2024:05:57:38 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:57:38.096Z [INFO]: ::1 - - [21/Nov/2024:05:57:38 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T05:57:39.975Z [INFO]: ::1 - - [21/Nov/2024:05:57:39 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:05:27.973Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:05:36.927Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:05:54.803Z [INFO]: ::1 - - [21/Nov/2024:06:05:54 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T06:06:05.406Z [INFO]: ::1 - - [21/Nov/2024:06:06:05 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:06:05.486Z [INFO]: ::1 - - [21/Nov/2024:06:06:05 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:06:05.701Z [INFO]: ::1 - - [21/Nov/2024:06:06:05 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:06:05.725Z [INFO]: ::1 - - [21/Nov/2024:06:06:05 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:06:07.633Z [INFO]: ::1 - - [21/Nov/2024:06:06:07 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:08:45.304Z [INFO]: ::1 - - [21/Nov/2024:06:08:45 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T06:08:54.545Z [INFO]: ::1 - - [21/Nov/2024:06:08:54 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:08:54.663Z [INFO]: ::1 - - [21/Nov/2024:06:08:54 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:08:54.664Z [INFO]: ::1 - - [21/Nov/2024:06:08:54 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:08:54.732Z [INFO]: ::1 - - [21/Nov/2024:06:08:54 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:08:57.527Z [INFO]: ::1 - - [21/Nov/2024:06:08:57 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:11:51.280Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:12:05.281Z [INFO]: ::1 - - [21/Nov/2024:06:12:05 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T06:12:15.263Z [INFO]: ::1 - - [21/Nov/2024:06:12:15 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:12:15.346Z [INFO]: ::1 - - [21/Nov/2024:06:12:15 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:12:15.406Z [INFO]: ::1 - - [21/Nov/2024:06:12:15 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:12:15.583Z [INFO]: ::1 - - [21/Nov/2024:06:12:15 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:12:17.442Z [INFO]: ::1 - - [21/Nov/2024:06:12:17 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:15:44.653Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:20:39.767Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:20:59.683Z [INFO]: ::1 - - [21/Nov/2024:06:20:59 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T06:21:11.796Z [INFO]: ::1 - - [21/Nov/2024:06:21:11 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:21:11.950Z [INFO]: ::1 - - [21/Nov/2024:06:21:11 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:21:12.342Z [INFO]: ::1 - - [21/Nov/2024:06:21:12 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:21:12.373Z [INFO]: ::1 - - [21/Nov/2024:06:21:12 +0000] "POST /api/webhook HTTP/1.1" 401 36 "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:21:14.008Z [INFO]: ::1 - - [21/Nov/2024:06:21:14 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:25:24.615Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:25:31.636Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:25:43.501Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:26:11.206Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:28:50.978Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:29:56.031Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:30:01.901Z [INFO]: server is running on http://localhost:4003
+2024-11-21T06:30:57.547Z [INFO]: ::1 - - [21/Nov/2024:06:30:57 +0000] "POST /makePayment HTTP/1.1" 200 75 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-11-21T06:31:14.108Z [INFO]: ::1 - - [21/Nov/2024:06:31:14 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:31:14.175Z [INFO]: ::1 - - [21/Nov/2024:06:31:14 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:31:14.739Z [INFO]: ::1 - - [21/Nov/2024:06:31:14 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:31:17.167Z [INFO]: ::1 - - [21/Nov/2024:06:31:17 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:31:17.531Z [INFO]: ::1 - - [21/Nov/2024:06:31:17 +0000] "POST /api/webhook HTTP/1.1" 200 - "-" "Stripe/1.0 (+https://stripe.com/docs/webhooks)"
+2024-11-21T06:33:44.219Z [INFO]: server is running on http://localhost:4003

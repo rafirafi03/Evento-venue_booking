@@ -1,12 +1,14 @@
+import mongoose from "mongoose";
+
 export interface IUserData {
-    _id?: string;
+    _id?: mongoose.Types.ObjectId;
     name: string;
     email: string;
     phone: number;
 }
 
 export class User {
-    _id?: string;
+    _id?: mongoose.Types.ObjectId;
     name: string;
     email: string;
     phone: number

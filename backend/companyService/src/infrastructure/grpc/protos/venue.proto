@@ -11,9 +11,9 @@ message VenueRequest {
 }
 
 message VenueResponse {
-  string id = 1;
-  string name = 2;
-  int32 amount = 3;
-  string city = 4;
-  string state = 5;
+  string venueName = 1;
+  int32 venueAmount = 2;
+  string venueCity = 3;
+  string venueState = 4;
+  string venueImage = 5;
 }
