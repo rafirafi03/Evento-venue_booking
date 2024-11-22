@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useBlockUserMutation, useGetUsersQuery } from "app/store/slices/userApiSlices";
-import ConfirmModal from '../confirmModal/page'
+import ConfirmModal from '../../../../components/common/modals/confirmModal'
 
 export default function Page() {
   interface IUser {

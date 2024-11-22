@@ -16,7 +16,7 @@ import {
   useGetVenueDetailsQuery,
   useDeleteVenueMutation,
 } from "app/store/slices/companyApiSlices";
-import ConfirmModal from "../../confirmModal/page";
+import ConfirmModal from "../../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

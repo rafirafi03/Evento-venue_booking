@@ -33,6 +33,7 @@ export default function page() {
   const [phoneError, setPhoneError] = useState<string>("");
   const [cityError, setCityError] = useState<string>("");
   const [stateError, setStateError] = useState<string>("");
+  const [imageError, setImageError] = useState<string> ('')
 
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
@@ -86,6 +87,7 @@ export default function page() {
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      setImageError('')
       const filesArray = Array.from(e.target.files);
   
       if (imageToReplace !== null) {
@@ -148,7 +150,7 @@ export default function page() {
       isValid = false
     }
 
-    if(amount < 0) {
+    if(amount <= 0) {
       setAmountError('Invalid amount')
       isValid = false
     }
@@ -189,6 +191,11 @@ export default function page() {
       isValid = false
     } else if(state.length < 3) {
       setStateError('state is too short. min 3 length')
+      isValid = false
+    }
+
+    if(selectedImages.length < 1) {
+      setImageError('select atleast 1 images')
       isValid = false
     }
 
@@ -257,7 +264,11 @@ export default function page() {
               name="name"
               placeholder="Venue Name"
               value={name}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value)
+                setNameError('')
+              }
+              }
             />
             {nameError && (
               <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
@@ -278,7 +289,11 @@ export default function page() {
               type="text"
               name="type"
               value={type}
-              onChange={(e) => setType(e.target.value)}
+              onChange={(e) => {
+                setType(e.target.value)
+                 setTypeError('')
+              }
+                }
               className={`${
                 typeError
                   ? "w-full px-3 py-2 rounded-md text-[rgb(255,0,0)] border-[rgb(255,0,0)] focus:outline-none focus:border-[rgb(255,0,0)]"
@@ -309,7 +324,9 @@ export default function page() {
               type="number"
               name="capacity"
               value={capacity}
-              onChange={(e) => setCapacity(Number(e.target.value))}
+              onChange={(e) => {setCapacity(Number(e.target.value))
+                setCapacityError('') }
+              }
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Capacity of Venue"
             />
@@ -332,7 +349,9 @@ export default function page() {
               type="number"
               name="capacity"
               value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
+              onChange={(e) => {setAmount(Number(e.target.value))
+                setAmountError('')}
+              }
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Amount per day for Venue"
             />
@@ -357,7 +376,9 @@ export default function page() {
               type="text"
               name="description"
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => {setDescription(e.target.value)
+                setDescriptionError('')}
+              }
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Description"
             />
@@ -382,7 +403,9 @@ export default function page() {
               type="text"
               name="address"
               value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              onChange={(e) => {setAddress(e.target.value)
+                setAddressError('') }
+              }
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Address"
             />
@@ -405,7 +428,9 @@ export default function page() {
               type="tel"
               name="phone"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={(e) => {setPhone(e.target.value)
+                setPhoneError('')}
+              }
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="Phone Number"
             />
@@ -431,7 +456,9 @@ export default function page() {
               type="text"
               name="city"
               value={city}
-              onChange={(e) => setCity(e.target.value)}
+              onChange={(e) => {setCity(e.target.value)
+                setCityError('') }
+              }
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="city"
               // value={password}
@@ -456,7 +483,9 @@ export default function page() {
               type="text"
               name="state"
               value={state}
-              onChange={(e) => setState(e.target.value)}
+              onChange={(e) => {setState(e.target.value)
+                setStateError('')}
+              }
               className="w-full px-3 py-2 border-slate-200 bg-slate-50 rounded-md text-gray-700 focus:outline-none focus:border-indigo-500"
               placeholder="state"
               // value={confirmPass}
@@ -474,6 +503,13 @@ export default function page() {
         <h1 className="font-extrabold text-lg mb-7 mt-5 font-sans text-center">
           Venue Images
         </h1>
+
+        {imageError && (
+              <p className="mt-1 ml-2 text-xs font-bold text-[rgb(255,0,0)] dark:text-[rgb(255,0,0)]">
+                {" "}
+                {imageError}
+              </p>
+            )}
 
         <div className="flex justify-center items-center flex-wrap gap-4 mb-5">
           {selectedImages.map((image, index) => {

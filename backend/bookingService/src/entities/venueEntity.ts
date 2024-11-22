@@ -1,7 +1,6 @@
-import mongoose from "mongoose";
 
 export interface IVenueData {
-    _id?: mongoose.Types.ObjectId;
+    _id?: string;
     name: string;
     amount: number;
     city: string;
@@ -10,7 +9,7 @@ export interface IVenueData {
 }
 
 export class Venue {
-    _id?: mongoose.Types.ObjectId;
+    _id?: string;
     name: string;
     amount: number;
     city: string;

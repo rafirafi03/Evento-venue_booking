@@ -1,8 +1,8 @@
-import mongoose from "mongoose";
 
 export interface IBookingData {
-    _id?: mongoose.Types.ObjectId;
+    _id?: string;
     userId: string;
+    companyId: string
     venueId: string;
     event: string;
     guests: number;
@@ -13,8 +13,9 @@ export interface IBookingData {
 }
 
 export class Booking {
-    _id?: mongoose.Types.ObjectId;
+    _id?: string;
     userId: string;
+    companyId: string;
     venueId: string;
     event: string;
     guests: number;
@@ -23,9 +24,10 @@ export class Booking {
     bookingDateEnd: Date;
     cancelReason?: string;
 
-    constructor({ _id,userId,venueId,event,guests,amount,bookingDateStart,bookingDateEnd,cancelReason} : IBookingData) {
+    constructor({ _id,userId,companyId, venueId,event,guests,amount,bookingDateStart,bookingDateEnd,cancelReason} : IBookingData) {
         this._id = _id;
         this.userId = userId;
+        this.companyId = companyId;
         this.venueId = venueId;
         this.event = event;
         this.guests = guests;

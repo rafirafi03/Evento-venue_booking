@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useGetCompaniesQuery,useBlockCompanyMutation } from "app/store/slices/companyApiSlices";
-import ConfirmModal from '../confirmModal/page'
+import ConfirmModal from '../../../../components/common/modals/confirmModal'
 import LicenseModal from '../licenseModal/page'
 
 export default function Page() {

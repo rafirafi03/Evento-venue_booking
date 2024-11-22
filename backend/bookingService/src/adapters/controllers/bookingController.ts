@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import { HttpStatusCode } from "../../constants";
-import { MakePaymentUseCase, WebhookUseCase } from "../../useCases";
+import { CancelBookingUseCase, GetUserBookingsUseCase, MakePaymentUseCase, WebhookUseCase, GetCompanyBookingsUseCase } from "../../useCases";
 
 export class BookingController {
   constructor(
     private _makePaymentUseCase: MakePaymentUseCase,
-    private _webhookUseCase: WebhookUseCase
+    private _webhookUseCase: WebhookUseCase,
+    private _getUserBookingsUseCase : GetUserBookingsUseCase,
+    private _getCompanyBookingsUseCase : GetCompanyBookingsUseCase,
+    private _cancelBookingUseCase : CancelBookingUseCase
   ) {}
 
   async makePaymentRequest(req: Request, res: Response): Promise<void> {
@@ -42,33 +45,56 @@ export class BookingController {
     }
   }
 
-  // async handleWebHook(req: Request, res: Response): Promise<void> {
-  //   const sig = req.headers['stripe-signature'] as string;
-  //   try {
-  //     const event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET as string);
+  async getUserBookings(req: Request, res: Response) : Promise<void> {
+    try {
+      const { userId } = req.params;
 
-  //     if (event.type === 'checkout.session.completed') {
-  //       const session = event.data.object as Stripe.Checkout.Session;
+      console.log(userId,"userId in controller of getbookings")
 
-  //       // Map session data to Payment entity
-  //       const payment: Payment = {
-  //         customerId: session.customer as string,
-  //         paymentStatus: session.payment_status!,
-  //         amountTotal: session.amount_total!,
-  //         currency: session.currency!,
-  //         createdAt: new Date(),
-  //       };
+      const response = await this._getUserBookingsUseCase.execute(userId);
 
-  //       // Save payment data
-  //       await this.savePaymentDataUseCase.execute(payment);
-  //     }
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: "failed to send request",
+      });
+    }
+  }
 
-  //     res.status(200).json({ received: true });
-  //   } catch (error) {
-  //     console.log(error);
-  //     res.status(HttpStatusCode.UNAUTHORIZED).json({
-  //       message: "failed to send request",
-  //     });
-  //   }
-  // }
+  async getCompanyBookings(req: Request, res: Response) : Promise<void> {
+    try {
+      const { companyId } = req.params;
+
+      console.log(companyId,"companyId in controller of getbookings")
+
+      const response = await this._getCompanyBookingsUseCase.execute(companyId);
+
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: "failed to send request",
+      });
+    }
+  }
+
+  async cancelBooking(req: Request, res: Response) : Promise<void> {
+    try {
+      const {cancelUserId, cancelVenueId} = req.body;
+
+      console.log(cancelUserId, cancelVenueId," cancel venue and user id")
+
+      const response = await this._cancelBookingUseCase.execute(cancelUserId, cancelVenueId)
+
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: "failed to send request",
+      });
+    }
+  }
+
+  
 }

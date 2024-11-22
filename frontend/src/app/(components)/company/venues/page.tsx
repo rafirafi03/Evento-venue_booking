@@ -9,7 +9,7 @@ import {
   useGetOffersQuery,
   useApplyOfferMutation
 } from "app/store/slices/companyApiSlices";
-import ConfirmModal from "../confirmModal/page";
+import ConfirmModal from "../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
 import Aside from "app/(components)/company/aside/page";

@@ -16,4 +16,5 @@ message VenueResponse {
   string venueCity = 3;
   string venueState = 4;
   string venueImage = 5;
+  string companyId = 6;
 }

@@ -18,10 +18,13 @@ import {
   useGetFavouritesQuery,
   useDeleteFromFavouritesMutation
 } from "app/store/slices/userApiSlices";
+import { useGetUserBookingsQuery } from "app/store/slices/bookingApiSlices";
+import { useCancelBookingMutation } from "app/store/slices/bookingApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
 import AuthHOC from "components/common/auth/authHoc";
 import { editProfileSchema } from "app/schema/validation";
+import CancleBookingModal from 'components/userComponents/cancelBookingModal';
 
 export default function UserProfile() {
   // useAuth()
@@ -40,12 +43,17 @@ export default function UserProfile() {
     isLoading,
     refetch: refetchUserDetails
   } = useGetUserDetailsQuery(userId);
+
+  const { data: bookings, refetch: refetchBookings } = useGetUserBookingsQuery(userId) 
+
+  console.log(bookings," bookings in frontend")
   const { data: favourites, refetch: refetchGetFavourites} = useGetFavouritesQuery(userId)
 
   console.log(favourites,"favrts in frontend")
   const [resetPass] = useResetPasswordMutation();
   const [editUser] = useEditUserProfileMutation();
   const [deleteFromFavourites] = useDeleteFromFavouritesMutation()
+  const [cancelBooking] = useCancelBookingMutation()
 
   console.log(userDetails, "userdetils in fronend hurreyey");
 
@@ -54,6 +62,9 @@ export default function UserProfile() {
   const [confirmPass, setComfirmPass] = useState<string>("");
   const [userName, setUserName] = useState<string>('');
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+  const [cancelBookingModal, setCancelBookingModal] = useState<boolean>(false);
+  const [cancelUserId, setCancelUserId] = useState<string>('')
+  const [cancelVenueId, setCancelVenueId] = useState<string>('')
 
   useEffect(() => {
     if(userDetails) {
@@ -69,23 +80,6 @@ export default function UserProfile() {
     avatar: "/placeholder.svg?height=100&width=100",
     memberSince: "January 2023",
   };
-
-  const upcomingBookings = [
-    {
-      id: 1,
-      venue: "Grand Ballroom",
-      date: "2023-06-15",
-      time: "18:00",
-      image: "/placeholder.svg?height=100&width=150",
-    },
-    {
-      id: 2,
-      venue: "Sunset Terrace",
-      date: "2023-07-22",
-      time: "12:00",
-      image: "/placeholder.svg?height=100&width=150",
-    },
-  ];
 
   const bookingHistory = [
     {
@@ -198,6 +192,31 @@ export default function UserProfile() {
     }
   }
 
+  const handleCancelBooking = (venueId: string, userId: string)=> {
+    setCancelUserId(userId)
+    setCancelVenueId(venueId)
+    setCancelBookingModal(true)
+
+  }
+
+  const isClose = ()=> {
+    setCancelBookingModal(false)
+  }
+
+  const handleCancellation = async ()=> {
+    try {
+      const response = await cancelBooking({cancelUserId,cancelVenueId}).unwrap();
+
+      if(response.success) {
+        refetchBookings()
+      }
+
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <AuthHOC role="user">
     <div>
@@ -207,7 +226,11 @@ export default function UserProfile() {
       <div className="my-16">
         <Header />
       </div>
+      
       <div className="container mx-auto p-6 bg-gray-50">
+      { cancelBookingModal && 
+            <CancleBookingModal isOpen={cancelBookingModal} isClose={isClose} handleCancelConfirm={handleCancellation} />
+          }
         <div className="grid gap-6 md:grid-cols-[300px_1fr]">
           <aside className="space-y-6">
             <div className="bg-white border border-gray-200 rounded-lg shadow-sm">
@@ -288,25 +311,27 @@ export default function UserProfile() {
             <div className="mt-4">
               {activeTab === "upcoming" && (
                 <div className="space-y-4">
-                  {upcomingBookings.map((booking) => (
+                  {bookings?.length > 0 ? (
+                    <>
+                  {bookings?.map((booking) => (
                     <div
-                      key={booking.id}
+                      key={booking._id}
                       className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
                     >
                       <div className="flex items-center space-x-4">
                         <img
                           src="/assets/images/homepage-image.jpg"
-                          alt={booking.venue}
+                          alt={booking?.event}
                           className="w-24 h-16 object-cover rounded"
                         />
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900">
-                            {booking.venue}
+                            {booking?.event}
                           </h3>
                           <div className="text-sm text-gray-500">
                             <div className="flex items-center">
                               <Calendar className="w-4 h-4 mr-2" />
-                              {booking.date}
+                              {booking?.bookingDateStart} to {booking?.bookingDateEnd}
                             </div>
                             <div className="flex items-center mt-1">
                               <Clock className="w-4 h-4 mr-2" />
@@ -319,12 +344,23 @@ export default function UserProfile() {
                         <button className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                           View Details
                         </button>
-                        <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                        <button onClick={()=> handleCancelBooking(booking.venueId, booking.userId)} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                           Cancel Booking
                         </button>
                       </div>
                     </div>
                   ))}
+                  </>
+                ) : (
+                  <>
+                    <div
+                        className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
+                      >
+                    <h2 className="my-10 text-center text-gray-400">No upcoming bookings</h2>
+
+                      </div>
+                    </>
+                )}
                 </div>
               )}
               {activeTab === "history" && (

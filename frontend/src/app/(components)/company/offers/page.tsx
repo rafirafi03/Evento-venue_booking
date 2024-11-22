@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { faAdd, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ConfirmModal from '../confirmModal/page';
+import ConfirmModal from '../../../../components/common/confirmModal/page';
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
 import Aside from 'app/(components)/company/aside/page';

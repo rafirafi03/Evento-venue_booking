@@ -26,7 +26,7 @@ export class WebhookUseCase {
           const { name, email, phone } = JSON.parse(
             session.metadata.userDetails
           );
-          const { venueName, venueAmount, venueCity, venueState, venueImage } =
+          const { venueName, venueAmount, venueCity, venueState, venueImage, companyId } =
             JSON.parse(session.metadata.venueDetails);
 
           const guestCount = Number(guests);
@@ -54,6 +54,7 @@ export class WebhookUseCase {
           const booking = new Booking({
             userId,
             venueId,
+            companyId,
             amount: advance,
             event: eventName,
             guests: guestCount,
@@ -61,25 +62,38 @@ export class WebhookUseCase {
             bookingDateEnd: endDate,
           });
 
-          const user = new User({
-            _id: new Types.ObjectId(userId),
-            name,
-            email,
-            phone: userPhone,
-          });
-
-          const venue = new Venue({
-            _id: new Types.ObjectId(venueId),
-            name: venueName,
-            amount: amount,
-            city: venueCity,
-            state: venueState,
-            image: venueImage,
-          });
-
           await this._bookingRepository.save(booking);
-          await this._bookingRepository.saveUser(user);
-          await this._bookingRepository.saveVenue(venue);
+
+
+          const findUser = await this._bookingRepository.findUser(userId)
+          const findVenue = await this._bookingRepository.findVenue(userId)
+
+          if (!findUser) {
+            const user = new User({
+              _id: new Types.ObjectId(userId),
+              name,
+              email,
+              phone: userPhone,
+            });
+
+            await this._bookingRepository.saveUser(user);
+            
+          }
+
+          if(!findVenue) {
+            const venue = new Venue({
+              _id: venueId,
+              name: venueName,
+              amount: amount,
+              city: venueCity,
+              state: venueState,
+              image: venueImage,
+            });
+            await this._bookingRepository.saveVenue(venue);
+
+          }
+          
+
         }
       }
     } catch (error) {

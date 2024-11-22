@@ -15,10 +15,32 @@ export const bookingApiSlices = createApi({
                 method: HttpMethod.POST,
                 body: postData
             })
+        }),
+        getUserBookings: builder.query({
+            query: (userId) => ({
+                url: `/booking/getUserBookings/${userId}`,
+                method: HttpMethod.GET
+            })
+        }),
+        getCompanyBookings: builder.query({
+            query: (companyId) => ({
+                url: `/booking/getCompanyBookings/${companyId}`,
+                method: HttpMethod.GET
+            })
+        }),
+        cancelBooking: builder.mutation({
+            query: (data) => ({
+                url: '/booking/cancelBooking',
+                method: HttpMethod.DELETE,
+                body: data
+            })
         })
     })
 });
 
 export const {
-    useMakePaymentMutation
+    useMakePaymentMutation,
+    useGetUserBookingsQuery,
+    useCancelBookingMutation,
+    useGetCompanyBookingsQuery
 } = bookingApiSlices;

@@ -38,7 +38,8 @@ const getVenueDetails = async (call: any, callback: any) => {
           venueAmount: venue.amount,
           venueCity: venue.city,
           venueState: venue.state,
-          venueImage: venue.images[0]
+          venueImage: venue.images[0],
+          companyId : venue.companyId
         });
       } else {
         callback({

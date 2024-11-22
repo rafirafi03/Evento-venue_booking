@@ -10,6 +10,7 @@ export interface IBooking extends Document {
     _id: string;
     venueId: string;
     userId: string;
+    companyId: string;
     amount: number;
     bookingDateStart: Date;
     bookingDateEnd: Date;
@@ -26,6 +27,10 @@ const BookingSchema: Schema = new Schema<IBooking>({
       userId: {
         type: String,
         required: true,
+      },
+      companyId: {
+        type: String,
+        required: true
       },
       amount: {
         type: Number,

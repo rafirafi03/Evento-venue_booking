@@ -25,6 +25,8 @@ export class MakePaymentUseCase {
       const userDetails = await getUserDetails(userId);
       const venueDetails = await getVenueDetails(venueId);
 
+      console.log(venueDetails," venue details sssssl sfksajflsakfja;skfjsadfksjf")
+
 
       const startDate = new Date(
         bookingDuration.start.year,
