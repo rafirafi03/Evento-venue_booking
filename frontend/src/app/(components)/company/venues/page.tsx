@@ -16,6 +16,7 @@ import Aside from "app/(components)/company/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import OfferListModal from "components/companyComponents/modals/offerListModal";
 import toast, { Toaster } from "react-hot-toast";
+import Pagination from "components/userComponents/pagination";
 
 
 export default function page() {
@@ -117,6 +118,10 @@ export default function page() {
       console.log(error);
     }
   };
+
+  const pageChange = ()=> {
+    console.log('hii')
+  }
 
   return (
     <>
@@ -288,6 +293,9 @@ export default function page() {
               <h1>No venues found</h1>
             )}
           </div>
+          <div className="">
+        <Pagination currentPage={1} totalPages={1} onPageChange={pageChange}/>
+        </div>
         </div>
       </div>
     </>

@@ -17,7 +17,12 @@ export default function page() {
 
   const handleOnClick = (page: string)=> {
     setCurrpage(page)
-    router.push(`/company/${page}`)
+    if(page == 'main') {
+      router.push('/company')
+    } else {
+      router.push(`/company/${page}`)
+
+    }
   }
 
   const handleLogout = () => {

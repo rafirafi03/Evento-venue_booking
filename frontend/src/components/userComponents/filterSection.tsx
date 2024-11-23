@@ -1,12 +1,63 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Search, ChevronDown, ChevronUp, X, DollarSign, Star, Wifi, Car, Coffee, Tv, ShipWheelIcon as Wheelchair } from 'lucide-react'
 
 export default function RefinedVenueFilter() {
   const [isOpen, setIsOpen] = useState(false)
-  const [priceRange, setPriceRange] = useState([0, 1000])
-  const [rating, setRating] = useState(0)
+  const [priceRange, setPriceRange] = useState([0, 10000])
+  // const [rating, setRating] = useState(0);
+  const [searchValue, setSearchValue] = useState('')
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+
+  console.log(selectedTypes," selected typessssssssss")
+
+  const router = useRouter()
+
+  const clearFilter = ()=> {
+    setSearchValue('')
+    setSelectedTypes([])
+    setPriceRange([0, 10000]);
+
+
+    const params = new URLSearchParams();
+  router.push(`/venues?${params.toString()}`);
+  }
+
+
+  const handleFilter = () => {
+    // Create new URLSearchParams instance
+    const params = new URLSearchParams()
+    
+    // Add search if it exists
+    if (searchValue) {
+      params.set('search', searchValue)
+    }
+    
+    // Add types if any are selected
+    if (selectedTypes.length > 0) {
+      // Join array with commas to make it URL-friendly
+      params.set('types', selectedTypes.join(','))
+    }
+
+    if (priceRange) {
+      params.set('priceRange', encodeURIComponent(priceRange.join(',')));
+    }
+
+    // Push to router with all params
+    router.push(`/venues?${params.toString()}`)
+  }
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, type: string) => {
+    if (event.target.checked) {
+      // Add the type to the selected types
+      setSelectedTypes((prev) => [...prev, type]);
+    } else {
+      // Remove the type from the selected types
+      setSelectedTypes((prev) => prev.filter((item) => item !== type));
+    }
+  };
 
   const toggleFilters = () => setIsOpen(!isOpen)
 
@@ -27,6 +78,8 @@ export default function RefinedVenueFilter() {
           <input
             type="text"
             placeholder="Search dream venues..."
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border placeholder:text-xs border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-transparent transition duration-300"
           />
           <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
@@ -39,7 +92,7 @@ export default function RefinedVenueFilter() {
           <div className="space-y-1">
             {['Conference', 'Banquet', 'Auditorium', 'Outdoor', 'Restaurant'].map((type) => (
               <label key={type} className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 transition duration-300">
-                <input type="checkbox" className="form-checkbox text-red-500 rounded focus:ring-red-500" />
+                <input onChange={(e) => handleCheckboxChange(e, type)} checked={selectedTypes.includes(type)} type="checkbox" className="form-checkbox text-red-500 rounded focus:ring-red-500" />
                 <span className="text-sm font-medium text-gray-700">{type}</span>
               </label>
             ))}
@@ -75,7 +128,7 @@ export default function RefinedVenueFilter() {
 
         <hr />
 
-        <div>
+        {/* <div>
           <h2 className="text-lg font-bold text-gray-800 mb-1">Rating</h2>
           <div className="flex items-center space-x-1">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -116,13 +169,13 @@ export default function RefinedVenueFilter() {
           </div>
         </div>
 
-        <hr />
+        <hr /> */}
 
-        <button className="w-full bg-[rgb(255,0,0)] text-white py-2 rounded-md hover:bg-red-700 transition duration-300 font-semibold text-md">
+        <button onClick={handleFilter} className="w-full bg-[rgb(255,0,0)] text-white py-2 rounded-md hover:bg-red-700 transition duration-300 font-semibold text-md">
           Find Perfect Venues
         </button>
 
-        <button className="w-full bg-gray-100 text-gray-700 py-2 rounded-md hover:bg-gray-200 transition duration-300 font-semibold text-md flex items-center justify-center">
+        <button onClick={clearFilter} className="w-full bg-gray-100 text-gray-700 py-2 rounded-md hover:bg-gray-200 transition duration-300 font-semibold text-md flex items-center justify-center">
           <X size={20} className="mr-2" />
           Clear All Filters
         </button>

@@ -25,7 +25,7 @@ export class UserController {
     try {
       const response = await this._signupUseCase.execute(email);
 
-      res.status(200).json(response);
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
     }

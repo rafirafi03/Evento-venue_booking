@@ -167,7 +167,33 @@ export class CompanyController {
 
   async getListedVenues(req: Request, res: Response): Promise<void> {
     try {
-      const venues = await this._getListedVenues.execute();
+      // Extract and type-check both parameters
+      const { search = "", types = "", priceRange = "" } = req.query;
+  
+      console.log(req.query, " reqqueryyyyyyyyyyyyyy")
+      
+      // Convert query params to proper format
+      const searchTerm = typeof search === 'string' ? search : '';
+      const typeArray = typeof types === 'string' ? types.split(',').filter(Boolean) : [];
+  
+      let priceRangeArray: [number, number] = [0, 10000]; // Default price range
+      
+      if (typeof priceRange === 'string') {
+        const rangeParts = priceRange.split(',').map(Number).filter(num => !isNaN(num));
+        
+        // Ensure that the rangeParts array has exactly 2 elements
+        if (rangeParts.length === 2) {
+          priceRangeArray = [rangeParts[0], rangeParts[1]]; // Assign values to priceRangeArray
+        }
+      }
+  
+      // Pass both parameters to the service
+      const venues = await this._getListedVenues.execute({
+        search: searchTerm,
+        types: typeArray,
+        priceRange: priceRangeArray
+      });
+  
       res.status(HttpStatusCode.OK).json({ venues });
     } catch (error) {
       console.log(error);
@@ -176,6 +202,7 @@ export class CompanyController {
         .json({ message: "Internal error" });
     }
   }
+  
 
   async updateVenueStatus(req: Request, res: Response): Promise<void> {
     try {

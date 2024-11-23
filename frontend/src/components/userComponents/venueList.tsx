@@ -1,12 +1,40 @@
 "use client";
 
 import React from "react";
+import { useSearchParams } from "next/navigation";
 import VenueCard from "components/userComponents/venueCard";
 import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 
 export default function venueList() {
-  const { data: venues } = useGetListedVenuesQuery(undefined);
+  const searchParams = useSearchParams()
+
+  const filter = {
+    search: searchParams.get('search'),
+    types: searchParams.get('types')?.split(',') || [],
+    priceRange: (() => {
+      const priceRange = searchParams.get('priceRange');
+
+      console.log(priceRange," pricerangeeeeeeeeeee")
+      
+      if (priceRange) {
+        // Split and parse the priceRange string into an array of numbers
+        const rangeParts = priceRange.split(',').map(Number);
+
+        console.log(rangeParts,"rngeartsssssssssssssss")
+        
+        // Ensure that we have exactly two valid numbers for min and max
+        if (rangeParts.length === 2 && !rangeParts.some(isNaN)) {
+          console.log('its nymberrrereer')
+          return rangeParts; // Return [min, max] if valid
+        }
+      }
+      
+      // Fallback to default range if invalid or missing
+      return [0, 10000];
+    })(),
+  };
+  const { data: venues } = useGetListedVenuesQuery(filter);
   const userId = getUserIdFromToken("authToken");
   const venue = venues?.venues?.venues;
 

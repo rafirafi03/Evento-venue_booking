@@ -81,10 +81,29 @@ export const companyApiSlice = createApi({
             })
         }),
         getListedVenues: builder.query({
-            query: () => ({
-                url: '/company/getListedVenues'
-            })
-        }),
+            query: (params = {}) => {
+              // Create URLSearchParams instance
+              const queryParams = new URLSearchParams();
+          
+              // Add search if it exists
+              if (params.search) {
+                queryParams.set('search', params.search);
+              }
+          
+              // Add types if they exist
+              if (params.types && params.types.length > 0) {
+                queryParams.set('types', params.types.join(','));
+              }
+          
+              // Return the query configuration
+              return {
+                url: queryParams.toString() 
+                  ? `/company/getListedVenues?${queryParams.toString()}` 
+                  : '/company/getListedVenues',
+                method: HttpMethod.GET
+              };
+            }
+          }),
         getVenueDetails: builder.query({
             query: (id) => ({
                 url: `/company/getVenueDetails/${id}`,

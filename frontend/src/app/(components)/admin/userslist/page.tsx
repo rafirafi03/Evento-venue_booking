@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { useBlockUserMutation, useGetUsersQuery } from "app/store/slices/userApiSlices";
-import ConfirmModal from '../../../../components/common/modals/confirmModal'
+import ConfirmModal from '../../../../components/common/modals/confirmModal';
+import Pagination from "components/userComponents/pagination";
 
 export default function Page() {
   interface IUser {
@@ -56,6 +57,10 @@ export default function Page() {
 
   const closeModal = ()=> {
     setBlockModal(false)
+  }
+
+  const pageChange = ()=> {
+    console.log('giii')
   }
 
   // Handle loading and error states
@@ -124,6 +129,10 @@ export default function Page() {
             )}
           </tbody>
         </table>
+                
+      </div>
+      <div className="mt-5">
+        <Pagination currentPage={1} totalPages={1} onPageChange={pageChange} />
       </div>
       <ConfirmModal closeModal={closeModal} confirmBlock={confirmBlock} blockModal={blockModal} blockAction={blockAction}/>
       

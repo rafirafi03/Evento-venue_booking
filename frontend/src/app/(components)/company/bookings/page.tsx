@@ -6,6 +6,7 @@ import Aside from "app/(components)/company/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
 import { useGetCompanyBookingsQuery } from "app/store/slices/bookingApiSlices";
+import Pagination from "components/userComponents/pagination";
 
 export default function page() {
   const companyId = getUserIdFromToken("authCompanyToken");
@@ -14,6 +15,10 @@ export default function page() {
     useGetCompanyBookingsQuery(companyId);
 
   const router = useRouter();
+
+  const pageChange = ()=> {
+    console.log('hii')
+  }
 
   return (
     <>
@@ -131,6 +136,9 @@ export default function page() {
               <h1>No Bookings found</h1>
             )}
           </div>
+          <div className="">
+        <Pagination currentPage={1} totalPages={1} onPageChange={pageChange}/>
+        </div>
         </div>
       </div>
     </>

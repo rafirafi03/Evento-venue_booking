@@ -9,6 +9,7 @@ import Aside from 'app/(components)/company/aside/page';
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetOffersQuery, useDeleteOfferMutation } from "app/store/slices/companyApiSlices";
 import toast, { Toaster } from "react-hot-toast";
+import Pagination from "components/userComponents/pagination";
 
 
 
@@ -62,6 +63,9 @@ export default function page() {
       }
     }
 
+    const pageChange = ()=> {
+      console.log('hii')
+    }
 
   return (
 
@@ -154,6 +158,9 @@ export default function page() {
 
     )}
     </div>
+    <div className="">
+        <Pagination currentPage={1} totalPages={1} onPageChange={pageChange}/>
+        </div>
         </div>
       </div>
     </>
