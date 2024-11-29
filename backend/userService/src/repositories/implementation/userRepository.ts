@@ -94,4 +94,13 @@ export class UserRepository implements IUserRepository {
             throw new Error('Error fetching favourites: ' + error);
         }
     }
+
+    async updateWallet(userId: string, amount: number, transactionType: string, date: string): Promise<null> {
+        try {
+            console.log(userId, amount, transactionType, date)
+            return null
+        } catch (error) {
+            throw new Error('Error updating wallet: ' + error);
+        }
+    }
 }

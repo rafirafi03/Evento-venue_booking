@@ -63,8 +63,7 @@ export default function UserProfile() {
   const [userName, setUserName] = useState<string>('');
   const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
   const [cancelBookingModal, setCancelBookingModal] = useState<boolean>(false);
-  const [cancelUserId, setCancelUserId] = useState<string>('')
-  const [cancelVenueId, setCancelVenueId] = useState<string>('')
+  const [bookingId, setBookingId] = useState<string>('')
 
   useEffect(() => {
     if(userDetails) {
@@ -192,9 +191,8 @@ export default function UserProfile() {
     }
   }
 
-  const handleCancelBooking = (venueId: string, userId: string)=> {
-    setCancelUserId(userId)
-    setCancelVenueId(venueId)
+  const handleCancelBooking = (bookingId: string)=> {
+    setBookingId(bookingId)
     setCancelBookingModal(true)
 
   }
@@ -205,7 +203,7 @@ export default function UserProfile() {
 
   const handleCancellation = async ()=> {
     try {
-      const response = await cancelBooking({cancelUserId,cancelVenueId}).unwrap();
+      const response = await cancelBooking({bookingId}).unwrap();
 
       if(response.success) {
         refetchBookings()
@@ -344,7 +342,7 @@ export default function UserProfile() {
                         <button className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                           View Details
                         </button>
-                        <button onClick={()=> handleCancelBooking(booking.venueId, booking.userId)} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                        <button onClick={()=> handleCancelBooking(booking._id)} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                           Cancel Booking
                         </button>
                       </div>

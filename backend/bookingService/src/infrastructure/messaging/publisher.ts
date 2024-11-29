@@ -1,18 +1,18 @@
-import amqp from 'amqplib';
+import { rabbitMQ } from "../rabbitmq/rabbitmq";
 
-const QUEUE = 'wallet_updates';
+export async function publishRefundMessage(data: { userId: string; amount: number; transactionType: string; date: string }): Promise<void> {
+  await rabbitMQ.connect();
+  const channel = await rabbitMQ.getChannel();
 
-export const publishToQueue = async (message: any) => {
-  try {
-    const connection = await amqp.connect('amqp://localhost');
-    const channel = await connection.createChannel();
-    await channel.assertQueue(QUEUE, { durable: true });
-    channel.sendToQueue(QUEUE, Buffer.from(JSON.stringify(message)));
-    console.log(`Message sent to queue: ${message}`);
-    setTimeout(() => {
-      connection.close();
-    }, 500);
-  } catch (error) {
-    console.error('Error publishing message:', error);
-  }
-};
+  console.log('publisher workedddddd')
+
+  const exchange = "bookingExchange";
+  const routingKey = "refund";
+
+  console.log(data," data in publisherererererererer")
+
+  await channel.assertExchange(exchange, "direct", { durable: true });
+  await channel.publish(exchange, routingKey, Buffer.from(JSON.stringify(data)));
+
+  console.log(`Refund message published: ${JSON.stringify(data)}`);
+}

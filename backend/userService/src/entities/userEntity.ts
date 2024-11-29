@@ -4,7 +4,7 @@ export interface IUserData {
     email: string;
     phone: number | null;
     password: string;
-    wallet: number;
+    wallet?: number;
 }
 
 export class User {
@@ -13,7 +13,7 @@ export class User {
     email: string;
     phone: number | null;
     password: string;
-    wallet:  number;
+    wallet?:  number;
 
     constructor({ _id,userName,email,phone,password, wallet} : IUserData) {
         this._id = _id;

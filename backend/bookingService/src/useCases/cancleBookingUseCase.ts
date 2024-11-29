@@ -1,19 +1,26 @@
 import { IBookingRepository } from "../repositories/interfaces";
+import { publishRefundMessage } from "../infrastructure/messaging/publisher";
 
 export class CancelBookingUseCase {
-  constructor(
-    private _bookingRepository : IBookingRepository
-  ) {}
+  constructor(private _bookingRepository: IBookingRepository) {}
 
-  async execute(
-    cancelUserId: string,
-    cancelVenueId: string
-  ): Promise<any> {
+  async execute(bookingId: string): Promise<any> {
     try {
-        await this._bookingRepository.cancelBooking(cancelUserId,cancelVenueId);
+      const booking = await this._bookingRepository.findBooking(bookingId);
+      await this._bookingRepository.cancelBooking(bookingId);
 
-        return {success: true}
+      if (booking) {
+        publishRefundMessage({
+          userId: booking.userId,
+          amount: booking.amount,
+          transactionType : 'credit',
+          date: new Date().toISOString()
+        });
+      } else {
+        return { success: false };
+      }
 
+      return { success: true };
     } catch (error) {
       throw new Error("Internal server error: ");
     }

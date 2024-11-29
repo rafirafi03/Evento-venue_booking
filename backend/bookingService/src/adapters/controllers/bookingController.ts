@@ -81,11 +81,10 @@ export class BookingController {
 
   async cancelBooking(req: Request, res: Response) : Promise<void> {
     try {
-      const {cancelUserId, cancelVenueId} = req.body;
+      const { bookingId } = req.body;
 
-      console.log(cancelUserId, cancelVenueId," cancel venue and user id")
-
-      const response = await this._cancelBookingUseCase.execute(cancelUserId, cancelVenueId)
+      console.log(bookingId,"bookingid in controller vcance;")
+      const response = await this._cancelBookingUseCase.execute( bookingId )
 
       res.status(HttpStatusCode.OK).json(response)
     } catch (error) {

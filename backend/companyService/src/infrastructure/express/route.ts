@@ -24,7 +24,7 @@ import {
   RemoveOfferUseCase
 } from "../../useCases";
 import { AdminController, CompanyController } from "../../adapters/controllers";
-import { CompanyRepository } from "../../repositories/implementation/companyRepository";
+import { CompanyRepository } from "../../repositories/implementation";
 import { otpService } from "../services";
 import { RedisClient } from "../../repositories";
 import { upload } from "../multer/multerConfig";

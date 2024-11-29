@@ -29,10 +29,10 @@ export const bookingApiSlices = createApi({
             })
         }),
         cancelBooking: builder.mutation({
-            query: (data) => ({
+            query: (bookingId) => ({
                 url: '/booking/cancelBooking',
                 method: HttpMethod.DELETE,
-                body: data
+                body: bookingId
             })
         })
     })

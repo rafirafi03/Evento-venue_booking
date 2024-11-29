@@ -7,9 +7,10 @@ export interface IBookingRepository {
     saveVenue(venue: Venue) : Promise<void>
     getBookingsByUserId(userId: string) : Promise<IBookingData[] | null>
     getBookingsByCompanyId(companyId: string) : Promise<IBookingData[] | null>
-    cancelBooking(cancelUserId: string, cancelVenueId: string) : Promise<void>
+    cancelBooking(bookingId: string) : Promise<void>
     findUser(userId: string) : Promise<IUserData | null>
     findVenue(venueId: string) : Promise<IVenueData | null>
+    findBooking(bookingId: string) : Promise<IBookingData | null>
 }
 
 export { IBooking };

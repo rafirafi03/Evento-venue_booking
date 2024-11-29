@@ -61,9 +61,9 @@ export class BookingRepository implements IBookingRepository {
         }
     }
 
-    async cancelBooking(cancelUserId: string, cancelVenueId: string): Promise<void> {
+    async cancelBooking(bookingId: string): Promise<void> {
         try {
-            await BookingModel.findOneAndDelete({userId: cancelUserId, venueId: cancelVenueId})
+            await BookingModel.findOneAndDelete({_id: bookingId})
         } catch (error) {
             throw new Error('Error' + error)
         }
@@ -90,6 +90,15 @@ export class BookingRepository implements IBookingRepository {
 
             return null
 
+        } catch (error) {
+            throw new Error('Error' + error)
+        }
+    }
+
+    async findBooking(bookingId: string): Promise<IBookingData | null> {
+        try {
+            const booking = BookingModel.findOne({_id: bookingId});
+            return booking
         } catch (error) {
             throw new Error('Error' + error)
         }

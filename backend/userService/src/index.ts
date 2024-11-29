@@ -8,7 +8,7 @@ import { connectDB } from "./infrastructure/db";
 import userRoute from "./infrastructure/express/route";
 import cookieParser from 'cookie-parser';
 import { startGrpcUserServer } from "./infrastructure/grpc/grpcServices/grpcServer";
-import { consumeMessages } from "./infrastructure/messaging/consumer";
+import { consumeRefundMessages } from "./infrastructure/messaging/consumer";
 
 const PORT = process.env.PORT;
 
@@ -39,5 +39,5 @@ app.use("/", userRoute);
 app.listen(PORT, () => {
   logger.info(`server is running on http://localhost:${PORT}`);
   startGrpcUserServer()
-  consumeMessages()
+  consumeRefundMessages()
 });

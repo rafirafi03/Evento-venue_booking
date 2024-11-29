@@ -1,32 +1,49 @@
-import amqp from 'amqplib';
+import { rabbitMQ } from "../rabbitmq/rabbitmq";
+import { UpdateWalletUseCase } from "../../useCases";
+import { UserRepository } from "../../repositories";
 
-const QUEUE = 'wallet_updates';
+export async function consumeRefundMessages(): Promise<void> {
+  await rabbitMQ.connect();
+  const channel = await rabbitMQ.getChannel();
 
-export const consumeMessages = async () => {
-  try {
-    const connection = await amqp.connect('amqp://localhost');
-    const channel = await connection.createChannel();
-    await channel.assertQueue(QUEUE, { durable: true });
+  console.log('consumer getteddddddd')
 
-    console.log('Waiting for messages...');
-    channel.consume(
-      QUEUE,
-      async (msg) => {
-        if (msg !== null) {
-          const message = JSON.parse(msg.content.toString());
-          console.log('Received message:', message);
+  const exchange = "bookingExchange";
+  const queue = "refundQueue";
+  const routingKey = "refund";
 
-          // Process the wallet update
-          const { userId, refundAmount } = message;
-        //   await updateWallet(userId, refundAmount);
+  await channel.assertExchange(exchange, "direct", { durable: true });
+  await channel.assertQueue(queue, { durable: true });
+  await channel.bindQueue(queue, exchange, routingKey);
 
-          // Acknowledge the message
-          channel.ack(msg);
-        }
-      },
-      { noAck: false }
-    );
-  } catch (error) {
-    console.error('Error consuming messages:', error);
-  }
-};
+  const userRepository = new UserRepository()
+
+  const updateWalletUseCase = new UpdateWalletUseCase(userRepository)
+
+  channel.consume(queue, async (message) => {
+    if (message) {
+      const data = JSON.parse(message.content.toString());
+
+      const { userId, amount, transactionType, date } = data
+
+      console.log(data, 'dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaa in concumer')
+      console.log(`Refund message received: ${JSON.stringify(data)}`);
+
+      try {
+        await updateWalletUseCase.execute(userId, amount, transactionType, date );
+        console.log("Wallet updated successfully!");
+      } catch (error) {
+        console.error("Error processing message:", error);
+        // Optionally, reject or requeue the message
+        channel.nack(message);
+      }
+      
+      // Handle wallet update logic
+      // await updateWallet(data.userId, data.amount);
+
+      channel.ack(message);
+    }
+  });
+
+  console.log("Refund consumer listening...");
+}
