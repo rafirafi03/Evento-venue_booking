@@ -1,22 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../../../../components/userComponents/header";
 import Footer from "../../footer/page";
 import { useGetVenueDetailsQuery } from "app/store/slices/companyApiSlices";
 import AuthHOC from "components/common/auth/authHoc";
-import {loadStripe} from '@stripe/stripe-js';
+import { loadStripe } from "@stripe/stripe-js";
 import { useMakePaymentMutation } from "app/store/slices/bookingApiSlices";
-import dotenv from 'dotenv';
-import BookingModal from 'components/userComponents/bookingModal';
+import dotenv from "dotenv";
+import BookingModal from "components/userComponents/bookingModal";
+import PaymentModal from "components/common/modals/paymentModal";
 import { getUserIdFromToken } from "utils/tokenHelper";
+import { parseDate, DateValue } from "@internationalized/date";
+import { useGetUserDetailsQuery } from "app/store/slices/userApiSlices";
+import WalletModal from 'components/common/modals/walletModal'
+type RangeValue<T> = {
+  start: T;
+  end: T;
+};
 
-
-dotenv.config()
+dotenv.config();
 
 export default function page({ params }: { params: { id: string } }) {
-  const [makePayment] = useMakePaymentMutation()
-  const [isBookingModal, setBookingModal] = useState(false)
+  const [makePayment] = useMakePaymentMutation();
+  const [isBookingModal, setBookingModal] = useState<boolean>(false);
+  const [isPaymentModal, setPaymentModal] = useState<boolean>(false);
+  const [isWalletModal, setWalletModal] = useState<boolean>(false);
+  const [bookingAmount, setBookingAmount] = useState<number>(0)
+  const [event, setEvent] = useState<string>('');
+  const [guests, setGuests] = useState<number>(0);
+  const [bookingDuration, setBookingDuration] = useState<RangeValue<DateValue>>({
+    start: parseDate("2024-04-08"),
+    end: parseDate("2024-04-08"),
+  });
   const userId = getUserIdFromToken("authToken");
 
   // const router = useRouter();
@@ -25,34 +41,87 @@ export default function page({ params }: { params: { id: string } }) {
   console.log(params.id, "prmssss idddddd");
   console.log(venueId, "id in frontend");
 
-  const { data: venue, isLoading, isError } = useGetVenueDetailsQuery(venueId);
+  const { data: venue} = useGetVenueDetailsQuery(venueId);
+  const { data: user } = useGetUserDetailsQuery(userId)
 
   console.log(venue, "venue in frontend");
 
   const images = venue?.images;
 
-  const isClose = ()=> {
-    setBookingModal(false);
-  }
-
-  const handlePayment = async(event: string, guests: number, bookingDuration) => {
-
-    try {
-      const stripe = await loadStripe('pk_test_51QIW2Z04vhsHHnxMXq9wq2BPsf5Lsy3LgQLC6quw5HKBS2aaVofHBiGzsZKQBG4oiKrNkEMBvHJNvvC5KlCyQCnB00dRuVASgF');
-
-    const response = await makePayment({userId, venueId, event, guests, bookingDuration}).unwrap();
-
-    const result = stripe?.redirectToCheckout({
-      sessionId: response.id
-    })
-
-    console.log(result," stripe result in frontend")
-    } catch (error) {
-      console.log(error)
+  useEffect(() => {
+    if (venue?.amount) {
+      const calculatedAmount = venue.amount * 0.1; // Calculate 10% of venue amount
+      setBookingAmount(calculatedAmount);
     }
-    
-    
+  }, [venue]);
+
+  const isClose = () => {
+    setBookingModal(false);
+    setPaymentModal(false);
+  };
+
+  const handleBooking = (event: string, guests: number, bookingDuration: RangeValue<DateValue>)=> {
+    setEvent(event);
+    setGuests(guests);
+    setBookingDuration(bookingDuration)
+    setPaymentModal(true)
   }
+
+  const handlePaymentMethod = (paymentMethod: string)=> {
+    if(paymentMethod == 'online') {
+      handlePayment(paymentMethod)
+    } else {
+      setWalletModal(true)
+    }
+  }
+
+  const handlePayment = async (paymentMethod: string) => {
+    try {
+      if (paymentMethod === "online") {
+        // Use Stripe for online payments
+        const stripe = await loadStripe(
+          "pk_test_51QIW2Z04vhsHHnxMXq9wq2BPsf5Lsy3LgQLC6quw5HKBS2aaVofHBiGzsZKQBG4oiKrNkEMBvHJNvvC5KlCyQCnB00dRuVASgF"
+        );
+  
+        const response = await makePayment({
+          userId,
+          venueId,
+          event,
+          guests,
+          bookingDuration,
+          paymentMethod,
+        }).unwrap();
+  
+        const result = await stripe?.redirectToCheckout({
+          sessionId: response.id,
+        });
+  
+        console.log(result, "stripe result in frontend");
+      } else {
+        // Handle non-online payment methods
+        setPaymentModal(false)
+        setBookingModal(false)
+        setWalletModal(true)
+        
+        // const response = await makePayment({
+        //   userId,
+        //   venueId,
+        //   event,
+        //   guests,
+        //   bookingDuration,
+        //   paymentMethod,
+        // }).unwrap();
+  
+        console.log("Payment processed for offline method", response);
+      }
+  
+      // Update UI after payment attempt
+      setBookingModal(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
 
   return (
     <AuthHOC role="user">
@@ -62,52 +131,22 @@ export default function page({ params }: { params: { id: string } }) {
         </div>
 
         <div className="mx-auto px-6 max-w-7xl items-center justify-center p-6 rounded-lg">
-          { isBookingModal && 
-            <BookingModal isOpen={isBookingModal} isClose={isClose} handleBooking={handlePayment} />
-          }
-          {/* <div className="max-w-lg mx-auto mb-5">
-          <div className="flex">
-            <div className="relative w-full">
-              <input
-                type="search"
-                id="search-dropdown"
-                className="block p-2.5 w-full z-20 text-sm focus:ring-0 text-gray-900 bg-gray-50 rounded-s-lg border-s-gray-100 border-s-2 border border-gray-300 focus:ring-[rgb(255,0,0)] focus:border-[rgb(255,0,0)] dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:[rgb(255,0,0)]"
-                placeholder="Search Mockups, Logos, Design Templates..."
-                required
-              />
-            </div>
-            <div className="relative w-full">
-              <input
-                type="search"
-                id="search-dropdown"
-                className="block p-2.5 w-full z-20 text-sm focus:ring-0 text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-[rgb(255,0,0)] focus:border-[rgb(255,0,0)] dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:[rgb(255,0,0)]"
-                placeholder="Search Mockups, Logos, Design Templates..."
-                required
-              />
-              <button className="flex absolute top-0 end-0 p-3 text-sm font-medium h-full text-white bg-[rgb(255,0,0)] rounded-e-lg hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-200 dark:bg-red-500 dark:hover:bg-red-500 dark:focus:ring-red-500">
-                <span className="mr-3 font-lato w-4 h-4">find</span>
-                <svg
-                  className="w-4 h-4"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-                <span className="sr-only">Search</span>
-              </button>
-            </div>
-          </div>
-        </div> */}
+          {isBookingModal && (
+            <BookingModal
+              isOpen={isBookingModal}
+              isClose={isClose}
+              handleBooking={handleBooking}
+            />
+          )}
 
-          {/* <hr /> */}
+
+          {isPaymentModal && (
+            <PaymentModal isOpen={isPaymentModal} closeModal={isClose} handlePaymentMethod={handlePaymentMethod} balance={user?.wallet} />
+          )}
+
+          {isWalletModal && (
+            <WalletModal balance={user?.wallet} bookingAmount={bookingAmount} />
+          )}
 
           <div className="flex max-w-full my-auto mt-5">
             <div className="grid gap-4 w-3/4">
@@ -158,7 +197,10 @@ export default function page({ params }: { params: { id: string } }) {
                   upto {venue?.capacity} guests
                 </p>
               </a>
-              <button onClick={() => setBookingModal(true)} className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+              <button
+                onClick={() => setBookingModal(true)}
+                className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+              >
                 Schedule Booking
               </button>
 

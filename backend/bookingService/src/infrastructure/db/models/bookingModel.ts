@@ -1,11 +1,5 @@
 import mongoose, { Document, Schema} from 'mongoose';
 
-export enum VerificationStatus {
-    Pending = "pending",
-    Verified = "verified",
-    Rejected = "rejected"
-}
-
 export interface IBooking extends Document {
     _id: string;
     venueId: string;
@@ -16,7 +10,7 @@ export interface IBooking extends Document {
     bookingDateEnd: Date;
     event: string;
     guests: number;
-    cancelReason?:string;
+    status:string;
 }
 
 const BookingSchema: Schema = new Schema<IBooking>({
@@ -52,9 +46,12 @@ const BookingSchema: Schema = new Schema<IBooking>({
         type: Number,
         required: true
       },
-      cancelReason: {
+      status: {
         type: String,
+        enum: ['confirmed' , 'cancelled'],
+        required: true
       }
+
 })
 
 export const BookingModel = mongoose.model<IBooking>('Booking', BookingSchema);

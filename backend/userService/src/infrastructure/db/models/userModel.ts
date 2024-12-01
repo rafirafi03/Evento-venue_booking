@@ -1,9 +1,9 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 
-interface IWalletHistory {
+export interface IWalletHistory {
   amount: number;
-  type: 'credit' | 'debit'; // Define transaction type
+  transactionType: 'credit' | 'debit'; // Define transaction type
   date: Date;
 }
 

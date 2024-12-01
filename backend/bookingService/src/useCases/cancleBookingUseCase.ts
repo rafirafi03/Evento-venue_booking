@@ -7,9 +7,12 @@ export class CancelBookingUseCase {
   async execute(bookingId: string): Promise<any> {
     try {
       const booking = await this._bookingRepository.findBooking(bookingId);
-      await this._bookingRepository.cancelBooking(bookingId);
 
       if (booking) {
+
+        booking.status = 'cancelled'
+        await this._bookingRepository.save(booking);
+        
         publishRefundMessage({
           userId: booking.userId,
           amount: booking.amount,

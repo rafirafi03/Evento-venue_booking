@@ -95,12 +95,4 @@ export class UserRepository implements IUserRepository {
         }
     }
 
-    async updateWallet(userId: string, amount: number, transactionType: string, date: string): Promise<null> {
-        try {
-            console.log(userId, amount, transactionType, date)
-            return null
-        } catch (error) {
-            throw new Error('Error updating wallet: ' + error);
-        }
-    }
 }

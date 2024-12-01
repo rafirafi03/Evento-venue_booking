@@ -9,7 +9,7 @@ export interface IBookingData {
     amount: number;
     bookingDateStart: Date;
     bookingDateEnd: Date;
-    cancelReason?: string;
+    status: string;
 }
 
 export class Booking {
@@ -22,9 +22,9 @@ export class Booking {
     amount: number;
     bookingDateStart: Date;
     bookingDateEnd: Date;
-    cancelReason?: string;
+    status: string;
 
-    constructor({ _id,userId,companyId, venueId,event,guests,amount,bookingDateStart,bookingDateEnd,cancelReason} : IBookingData) {
+    constructor({ _id,userId,companyId, venueId,event,guests,amount,bookingDateStart,bookingDateEnd,status} : IBookingData) {
         this._id = _id;
         this.userId = userId;
         this.companyId = companyId;
@@ -34,6 +34,6 @@ export class Booking {
         this.amount = amount;
         this.bookingDateStart = bookingDateStart;
         this.bookingDateEnd = bookingDateEnd;
-        this.cancelReason = cancelReason;
+        this.status = status;
     }
 }

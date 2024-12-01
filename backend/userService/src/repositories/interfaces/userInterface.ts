@@ -9,7 +9,6 @@ export interface IUserRepository {
     checkFavourites(userId: string, venueId: string) : Promise<boolean>
     deleteFromFavourites(userId: string, venueId: string) : Promise<void>
     getFavouritesByUserId(userId: string) : Promise<IFavouritesData[]>
-    updateWallet(userId: string, amount: number, transactionType: string, date: string) : Promise<null>
 }
 
 export { IUser };

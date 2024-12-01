@@ -60,6 +60,7 @@ export class WebhookUseCase {
             guests: guestCount,
             bookingDateStart: startDate,
             bookingDateEnd: endDate,
+            status: 'confirmed'
           });
 
           await this._bookingRepository.save(booking);

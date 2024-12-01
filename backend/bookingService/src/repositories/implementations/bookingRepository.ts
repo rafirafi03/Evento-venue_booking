@@ -34,7 +34,7 @@ export class BookingRepository implements IBookingRepository {
     async getBookingsByUserId(userId: string): Promise<IBookingData[] | null> {
         try {
 
-            const bookings = await BookingModel.find({userId})
+            const bookings = await BookingModel.find({userId, status: 'confirmed'}).lean()
 
             console.log(bookings," bookings in repooooooooooooooooooooo")
             if(!bookings) {
@@ -61,13 +61,6 @@ export class BookingRepository implements IBookingRepository {
         }
     }
 
-    async cancelBooking(bookingId: string): Promise<void> {
-        try {
-            await BookingModel.findOneAndDelete({_id: bookingId})
-        } catch (error) {
-            throw new Error('Error' + error)
-        }
-    }
 
     async findUser(userId: string): Promise<IUserData | null> {
         try {

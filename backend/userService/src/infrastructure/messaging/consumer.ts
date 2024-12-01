@@ -26,12 +26,12 @@ export async function consumeRefundMessages(): Promise<void> {
 
       const { userId, amount, transactionType, date } = data
 
-      console.log(data, 'dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaa in concumer')
       console.log(`Refund message received: ${JSON.stringify(data)}`);
 
       try {
         await updateWalletUseCase.execute(userId, amount, transactionType, date );
         console.log("Wallet updated successfully!");
+        channel.ack(message);
       } catch (error) {
         console.error("Error processing message:", error);
         // Optionally, reject or requeue the message
@@ -40,10 +40,12 @@ export async function consumeRefundMessages(): Promise<void> {
       
       // Handle wallet update logic
       // await updateWallet(data.userId, data.amount);
-
-      channel.ack(message);
     }
   });
 
+
+  channel.on("error", (err) => console.error("Channel error:", err));
+  channel.on("close", () => console.warn("Channel closed. Reinitializing..."));
+  
   console.log("Refund consumer listening...");
 }
