@@ -10,6 +10,7 @@ export interface IBooking extends Document {
     bookingDateEnd: Date;
     event: string;
     guests: number;
+    paymentMethod: string;
     status:string;
 }
 
@@ -44,6 +45,11 @@ const BookingSchema: Schema = new Schema<IBooking>({
       },
       guests: {
         type: Number,
+        required: true
+      },
+      paymentMethod: {
+        type: String,
+        enum: ['wallet', 'online'],
         required: true
       },
       status: {

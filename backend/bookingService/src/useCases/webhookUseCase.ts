@@ -20,6 +20,7 @@ export class WebhookUseCase {
             eventName,
             finalAmount,
             guests,
+            paymentMethod,
             bookingDateStart,
             bookingDateEnd,
           } = session.metadata;
@@ -60,6 +61,7 @@ export class WebhookUseCase {
             guests: guestCount,
             bookingDateStart: startDate,
             bookingDateEnd: endDate,
+            paymentMethod,
             status: 'confirmed'
           });
 
@@ -67,7 +69,7 @@ export class WebhookUseCase {
 
 
           const findUser = await this._bookingRepository.findUser(userId)
-          const findVenue = await this._bookingRepository.findVenue(userId)
+          const findVenue = await this._bookingRepository.findVenue(venueId)
 
           if (!findUser) {
             const user = new User({
@@ -97,6 +99,8 @@ export class WebhookUseCase {
 
         }
       }
+
+      return {success: true}
     } catch (error) {
       console.error(error);
       throw new Error("Internal server error: " + error);

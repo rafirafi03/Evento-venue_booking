@@ -27,6 +27,7 @@ export class UpdateWalletUseCase {
                 if (user.wallet < amount) {
                     throw new Error("Insufficient wallet balance");
                 }
+                console.log('debitedddddddddddddddddddddddddddddddd')
                 user.wallet -= amount;
             }
 

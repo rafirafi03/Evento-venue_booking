@@ -13,6 +13,7 @@ interface pageProps {
   closeModal: () => void;
   handlePaymentMethod: (arg: string) => void;
   balance: number;
+  bookingAmount: number;
 }
 
 export default function App({
@@ -20,6 +21,7 @@ export default function App({
   closeModal,
   handlePaymentMethod,
   balance,
+  bookingAmount
 }: pageProps) {
   return (
     <>
@@ -39,16 +41,16 @@ export default function App({
                   <ul className="my-4 space-y-3">
                     <li
                       onClick={() => {
-                        if (balance >= 5000) {
+                        if (balance >= bookingAmount) {
                           handlePaymentMethod("wallet");
                         } 
                       }}
                     >
                       <div
                         className={`flex items-center p-3 text-base font-bold cursor-pointer ${
-                          balance < 500 ? "text-gray-500" : "text-gray-900"
+                          balance < bookingAmount ? "text-gray-500" : "text-gray-900"
                         } rounded-lg ${
-                          balance < 500
+                          balance < bookingAmount
                             ? "bg-gray-100"
                             : "bg-gray-50 hover:bg-gray-100 group hover:shadow"
                         } dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white`}
@@ -56,11 +58,11 @@ export default function App({
                         <FontAwesomeIcon
                           icon={faWallet}
                           className={`flex-shrink-0 w-5 h-5 ${
-                            balance < 500 ? "text-gray-400" : "text-orange-400"
+                            balance < bookingAmount ? "text-gray-400" : "text-orange-400"
                           } transition duration-75 dark:text-${
-                            balance < 500 ? "gray-400" : "orange-400"
+                            balance < bookingAmount ? "gray-400" : "orange-400"
                           } group-hover:text-${
-                            balance < 500 ? "gray-400" : "orange-400"
+                            balance < bookingAmount ? "gray-400" : "orange-400"
                           }`}
                         />
                         <span className="flex-1 ms-3 whitespace-nowrap">

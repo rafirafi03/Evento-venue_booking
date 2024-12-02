@@ -28,9 +28,12 @@ const getUserDetails = async (call: any, callback: any) => {
       const userId = call.request.userId;
 
       // Fetch user from the database using the user model
-      const user = await _userRepository.findById(userId)
+      const user = await _userRepository.findById(userId);
+
+      console.log(user," user in grcccccccc")
   
       if (user) {
+        console.log('inside user found in grpcccc')
         callback(null, {
           id: user._id.toString(),
           name: user.userName,

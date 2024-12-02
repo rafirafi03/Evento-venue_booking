@@ -13,7 +13,7 @@ const router = Router();
 
 const bookingRepository = new BookingRepository();
 
-const makePaymentUseCase = new MakePaymentUseCase();
+const makePaymentUseCase = new MakePaymentUseCase(bookingRepository);
 const webhookUseCase = new WebhookUseCase(bookingRepository);
 const getBookingsByUserId = new GetUserBookingsUseCase(bookingRepository);
 const getCompanyBookingsUseCase = new GetCompanyBookingsUseCase(

@@ -13,13 +13,14 @@ export class BookingController {
 
   async makePaymentRequest(req: Request, res: Response): Promise<void> {
     try {
-      const { userId, venueId, event, guests, bookingDuration } = req.body;
+      const { userId, venueId, event, guests, bookingDuration, paymentMethod } = req.body;
       const response = await this._makePaymentUseCase.execute(
         userId,
         venueId,
         event,
         guests,
-        bookingDuration
+        bookingDuration,
+        paymentMethod
       );
 
       res.status(HttpStatusCode.OK).json(response);

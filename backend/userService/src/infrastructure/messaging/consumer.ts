@@ -24,6 +24,8 @@ export async function consumeRefundMessages(): Promise<void> {
     if (message) {
       const data = JSON.parse(message.content.toString());
 
+      console.log(data," data in consumerrrrrrr rr r rr r r ")
+
       const { userId, amount, transactionType, date } = data
 
       console.log(`Refund message received: ${JSON.stringify(data)}`);

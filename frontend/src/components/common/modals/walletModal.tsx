@@ -4,14 +4,17 @@ import { useState, useEffect } from 'react'
 
 interface pageProps {
     balance: number;
-    bookingAmount: number
+    bookingAmount: number;
+    isOpen: ()=> void;
+    isClose: ()=> void;
+    handlePayment : (paymentMethod: string)=> void
 }
 
-export default function WalletModal({balance, bookingAmount} : pageProps) {
-  const [isOpen, setIsOpen] = useState(false)
+export default function WalletModal({balance, bookingAmount, isOpen, isClose, handlePayment} : pageProps) {
 
-
-  if (!isOpen) return null
+  if(!isOpen) {
+    return null
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -24,13 +27,13 @@ export default function WalletModal({balance, bookingAmount} : pageProps) {
           </div>
           <div className="flex space-x-4">
             <button
-              onClick={() => alert('Processing payment...')}
+            onClick={()=> handlePayment('wallet')}
               className="flex-1 bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
             >
               Pay {bookingAmount}
             </button>
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => isClose()}
               className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50"
             >
               Cancel

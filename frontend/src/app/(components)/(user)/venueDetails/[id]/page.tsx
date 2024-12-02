@@ -68,10 +68,15 @@ export default function page({ params }: { params: { id: string } }) {
   }
 
   const handlePaymentMethod = (paymentMethod: string)=> {
+    console.log(paymentMethod,"paymentmethoddddddddddd")
     if(paymentMethod == 'online') {
       handlePayment(paymentMethod)
     } else {
+      console.log('giii')
       setWalletModal(true)
+      setBookingModal(false)
+      setPaymentModal(false)
+      console.log('giii22222')
     }
   }
 
@@ -101,22 +106,21 @@ export default function page({ params }: { params: { id: string } }) {
         // Handle non-online payment methods
         setPaymentModal(false)
         setBookingModal(false)
-        setWalletModal(true)
-        
-        // const response = await makePayment({
-        //   userId,
-        //   venueId,
-        //   event,
-        //   guests,
-        //   bookingDuration,
-        //   paymentMethod,
-        // }).unwrap();
+        setWalletModal(false)      
+
+        const response = await makePayment({
+          userId,
+          venueId,
+          event,
+          guests,
+          bookingDuration,
+          paymentMethod,
+        }).unwrap();
   
         console.log("Payment processed for offline method", response);
       }
   
       // Update UI after payment attempt
-      setBookingModal(false);
     } catch (error) {
       console.log(error);
     }
@@ -131,21 +135,25 @@ export default function page({ params }: { params: { id: string } }) {
         </div>
 
         <div className="mx-auto px-6 max-w-7xl items-center justify-center p-6 rounded-lg">
+
+
+
+
           {isBookingModal && (
             <BookingModal
-              isOpen={isBookingModal}
-              isClose={isClose}
-              handleBooking={handleBooking}
+            isOpen={isBookingModal}
+            isClose={isClose}
+            handleBooking={handleBooking}
             />
           )}
 
 
           {isPaymentModal && (
-            <PaymentModal isOpen={isPaymentModal} closeModal={isClose} handlePaymentMethod={handlePaymentMethod} balance={user?.wallet} />
+            <PaymentModal isOpen={isPaymentModal} closeModal={isClose} handlePaymentMethod={handlePaymentMethod} balance={user?.wallet} bookingAmount={bookingAmount} />
           )}
 
           {isWalletModal && (
-            <WalletModal balance={user?.wallet} bookingAmount={bookingAmount} />
+            <WalletModal isOpen={isWalletModal} isClose={isClose} balance={user?.wallet} bookingAmount={bookingAmount} handlePayment={handlePayment} />
           )}
 
           <div className="flex max-w-full my-auto mt-5">
