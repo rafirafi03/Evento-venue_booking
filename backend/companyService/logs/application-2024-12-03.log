@@ -1,0 +1,2 @@
+2024-12-03T04:40:26.819Z [INFO]: server is running on http://localhost:4001
+2024-12-03T05:05:58.904Z [INFO]: ::1 - - [03/Dec/2024:05:05:58 +0000] "GET /getListedVenues HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

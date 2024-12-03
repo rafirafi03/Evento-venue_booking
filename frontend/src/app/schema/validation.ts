@@ -1,3 +1,4 @@
+import { DateValue } from '@nextui-org/react';
 import * as Yup from 'yup';
 import * as z from 'zod';
 
@@ -148,4 +149,17 @@ export const venueValidationSchema = Yup.object({
     .required('State is required')
     .min(2, 'State must be at least 2 characters long'),
 });
+
+export const validateDates = (start: DateValue, end: DateValue) => {
+  // Convert DateValue to JavaScript Date for comparison
+  const startDate = new Date(start.year, start.month - 1, start.day);
+  const endDate = new Date(end.year, end.month - 1, end.day);
+
+  // Check if start date is after end date
+  if (startDate > endDate) {
+    return false;
+  }
+
+  return true;
+};
 

@@ -8,6 +8,7 @@ import {
 } from "@nextui-org/react";
 import { DateRangePicker, Accordion, AccordionItem } from "@nextui-org/react";
 import { parseDate, DateValue } from "@internationalized/date";
+import { validateDates } from "app/schema/validation";
 
 import { useState } from "react";
 
@@ -20,22 +21,53 @@ type AppProps = {
   isOpen: boolean;
   isClose: ()=> void;
   handleBooking: (event: string, guests: number, bookingDuration: RangeValue<DateValue>) => void;
+  capacity: number
 };
 
-export default function App({ isOpen,isClose, handleBooking }: AppProps) {
+export default function App({ isOpen,isClose, handleBooking, capacity }: AppProps) {
   const [event, setEvent] = useState<string>("");
   const [guests, setGuests] = useState<number>(0);
   const [bookingDuration, setBookingDuration] = useState<RangeValue<DateValue>>({
     start: parseDate("2024-04-08"),
     end: parseDate("2024-04-08"),
   });
+  const [eventError, setEventError] = useState<string>('');
+  const [guestsError, setGuestsError] = useState<string>('');
+  const [dateError, setDateError] = useState<string>('')
 
   const handleDateChange = (range: RangeValue<DateValue>) => {
-    setBookingDuration(range);
+    if(validateDates(range.start, range.end)){
+
+      setBookingDuration(range);
+    } else {
+      setDateError('invalid date format')
+    }
     console.log(bookingDuration, "bkngdrtn");
   };
 
   const handleSubmit = () => {
+
+    let isValid = true;
+
+    if(event.trim()=="") {
+      setEventError('event field required')
+      isValid= false
+    }
+
+    if(guests <= 0) {
+      setGuestsError('invalid count')
+      isValid= false
+    } else if(guests > capacity) {
+      setGuestsError(`upto ${capacity} guests only allowed`);
+      isValid=false
+    }
+
+    if(dateError) {
+      isValid = false
+    }
+
+    if(!isValid) return 
+
     handleBooking(event, guests, bookingDuration);
   };
 
@@ -62,6 +94,9 @@ export default function App({ isOpen,isClose, handleBooking }: AppProps) {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                   placeholder="Name of Event"
                 />
+                { eventError && (
+                  <p className="text-sm text-red-500">{eventError}</p>
+                )}
                 <input
                   type="number"
                   id="helper-text"
@@ -71,6 +106,9 @@ export default function App({ isOpen,isClose, handleBooking }: AppProps) {
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                   placeholder="No of Guests"
                 />
+                { guestsError && (
+                  <p className="text-sm text-red-500">{guestsError}</p>
+                )}
                 <DateRangePicker
                   label="Booking Duration"
                   isRequired
@@ -79,6 +117,9 @@ export default function App({ isOpen,isClose, handleBooking }: AppProps) {
                   className="max-w-full flex items-center"
                   onChange={handleDateChange}
                 />
+                {/* { dateError && (
+                  <p className="text-sm text-red-500">{dateError}</p>
+                )} */}
 
                 <Accordion>
                   <AccordionItem

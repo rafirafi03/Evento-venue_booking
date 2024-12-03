@@ -144,6 +144,7 @@ export default function page({ params }: { params: { id: string } }) {
             isOpen={isBookingModal}
             isClose={isClose}
             handleBooking={handleBooking}
+            capacity={venue.capacity}
             />
           )}
 

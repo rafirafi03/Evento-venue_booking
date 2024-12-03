@@ -33,16 +33,41 @@ export class BookingRepository implements IBookingRepository {
 
     async getBookingsByUserId(userId: string): Promise<IBookingData[] | null> {
         try {
-
-            const bookings = await BookingModel.find({userId, status: 'confirmed'}).lean()
-
-            console.log(bookings," bookings in repooooooooooooooooooooo")
-            if(!bookings) {
-                return null
+            const bookings = await BookingModel.aggregate([
+                {
+                    $match: {
+                        userId,
+                        status: 'confirmed',
+                    },
+                },
+                {
+                    $addFields: {
+                        venueObjectId: { $toObjectId: '$venueId' }, // Convert venueId (string) to ObjectId
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'venues', // Correct pluralized collection name
+                        localField: 'venueObjectId', // Use the converted ObjectId field
+                        foreignField: '_id',
+                        as: 'venueDetails',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$venueDetails',
+                        preserveNullAndEmptyArrays: true, // Handle cases where no matching venue is found
+                    },
+                },
+            ]).exec();
+    
+            console.log(bookings, "bookings with venue details in repository");
+            if (!bookings || bookings.length === 0) {
+                return null;
             }
-            return bookings
+            return bookings;
         } catch (error) {
-            throw new Error('Error' + error)
+            throw new Error('Error: ' + error);
         }
     }
 

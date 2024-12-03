@@ -6,7 +6,7 @@ import {
   CalendarDays,
   MapPin,
   Star,
-  Clock,
+  Home,
   Calendar,
   Edit,
 } from "lucide-react";
@@ -318,7 +318,7 @@ export default function UserProfile() {
                     >
                       <div className="flex items-center space-x-4">
                         <img
-                          src="/assets/images/homepage-image.jpg"
+                          src={booking?.venueDetails.image}
                           alt={booking?.event}
                           className="w-24 h-16 object-cover rounded"
                         />
@@ -327,13 +327,13 @@ export default function UserProfile() {
                             {booking?.event}
                           </h3>
                           <div className="text-sm text-gray-500">
+                            <div className="flex items-center mt-1">
+                              <Home className="w-4 h-4 mr-2" />
+                              {booking.time}
+                            </div>
                             <div className="flex items-center">
                               <Calendar className="w-4 h-4 mr-2" />
-                              {booking?.bookingDateStart} to {booking?.bookingDateEnd}
-                            </div>
-                            <div className="flex items-center mt-1">
-                              <Clock className="w-4 h-4 mr-2" />
-                              {booking.time}
+                              {new Date(booking?.bookingDateStart).toLocaleDateString()} to {new Date(booking?.bookingDateEnd).toLocaleDateString()}
                             </div>
                           </div>
                         </div>
