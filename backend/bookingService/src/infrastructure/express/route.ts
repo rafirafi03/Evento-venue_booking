@@ -6,6 +6,7 @@ import {
   GetUserBookingsUseCase,
   CancelBookingUseCase,
   GetCompanyBookingsUseCase,
+  GetBookingDetailsUseCase
 } from "../../useCases";
 import { BookingRepository } from "../../repositories";
 
@@ -20,13 +21,15 @@ const getCompanyBookingsUseCase = new GetCompanyBookingsUseCase(
   bookingRepository
 );
 const cancelBookingUseCase = new CancelBookingUseCase(bookingRepository);
+const getBookingDetailsUseCase = new GetBookingDetailsUseCase(bookingRepository)
 
 const bookingController = new BookingController(
   makePaymentUseCase,
   webhookUseCase,
   getBookingsByUserId,
   getCompanyBookingsUseCase,
-  cancelBookingUseCase
+  cancelBookingUseCase,
+  getBookingDetailsUseCase
 );
 
 router.post("/makePayment", (req, res) => {
@@ -45,8 +48,12 @@ router.get("/getCompanyBookings/:companyId", (req, res) => {
   bookingController.getCompanyBookings(req, res);
 });
 
-router.delete("/cancelBooking", (req, res) => {
+router.patch("/cancelBooking", (req, res) => {
   bookingController.cancelBooking(req, res);
 });
+
+router.get('/getBookingDetails/:id', (req, res) => {
+  bookingController.getBookingDetails(req, res)
+})
 
 export default router;

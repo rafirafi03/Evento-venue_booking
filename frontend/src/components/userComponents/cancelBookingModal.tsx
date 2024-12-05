@@ -6,10 +6,7 @@ import {
     ModalFooter,
     Button,
   } from "@nextui-org/react";
-  import { Accordion, AccordionItem } from "@nextui-org/react";
   
-  import { useState } from "react";
-
   type AppProps = {
     isOpen: boolean;
     isClose: ()=> void;
@@ -17,12 +14,10 @@ import {
   };
   
   export default function App({ isOpen,isClose, handleCancelConfirm }: AppProps) {
-    const [event, setEvent] = useState<string>("");
-
   
     const handleSubmit = () => {
-      isClose()
       handleCancelConfirm();
+      isClose()
     };
   
     const handleClose = () => {

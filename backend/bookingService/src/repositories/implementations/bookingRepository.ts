@@ -42,7 +42,8 @@ export class BookingRepository implements IBookingRepository {
                 },
                 {
                     $addFields: {
-                        venueObjectId: { $toObjectId: '$venueId' }, // Convert venueId (string) to ObjectId
+                        venueObjectId: { $toObjectId: '$venueId' },
+                        userObjectId: {$toObjectId: '$userId'},
                     },
                 },
                 {
@@ -57,6 +58,20 @@ export class BookingRepository implements IBookingRepository {
                     $unwind: {
                         path: '$venueDetails',
                         preserveNullAndEmptyArrays: true, // Handle cases where no matching venue is found
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'users', // Assuming the collection name for users is 'users'
+                        localField: 'userObjectId', // Field in BookingModel matching the user's _id
+                        foreignField: '_id',
+                        as: 'userDetails',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$userDetails',
+                        preserveNullAndEmptyArrays: true, // Handle cases where no matching user is found
                     },
                 },
             ]).exec();
@@ -83,6 +98,22 @@ export class BookingRepository implements IBookingRepository {
             return bookings
         } catch (error) {
             throw new Error('Error' + error)
+        }
+    }
+
+    async getBookingDetails(id: string): Promise<IBookingData | null> {
+        try {
+            const booking = await BookingModel.findById({_id:id}).populate('userId').populate('venueId').exec()
+
+            console.log(booking," booking in reporrroror")
+
+            if (!booking) {
+                throw new Error('Booking not found');
+            }
+    
+            return booking;
+        } catch (error) {
+            throw new Error('Error: ' + error);
         }
     }
 

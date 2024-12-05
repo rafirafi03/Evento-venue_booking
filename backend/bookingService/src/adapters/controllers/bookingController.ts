@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { HttpStatusCode } from "../../constants";
-import { CancelBookingUseCase, GetUserBookingsUseCase, MakePaymentUseCase, WebhookUseCase, GetCompanyBookingsUseCase } from "../../useCases";
+import { CancelBookingUseCase, GetUserBookingsUseCase, MakePaymentUseCase, WebhookUseCase, GetCompanyBookingsUseCase, GetBookingDetailsUseCase } from "../../useCases";
 
 export class BookingController {
   constructor(
@@ -8,7 +8,8 @@ export class BookingController {
     private _webhookUseCase: WebhookUseCase,
     private _getUserBookingsUseCase : GetUserBookingsUseCase,
     private _getCompanyBookingsUseCase : GetCompanyBookingsUseCase,
-    private _cancelBookingUseCase : CancelBookingUseCase
+    private _cancelBookingUseCase : CancelBookingUseCase,
+    private _getBookingDetailsUseCase : GetBookingDetailsUseCase
   ) {}
 
   async makePaymentRequest(req: Request, res: Response): Promise<void> {
@@ -53,6 +54,23 @@ export class BookingController {
       console.log(userId,"userId in controller of getbookings")
 
       const response = await this._getUserBookingsUseCase.execute(userId);
+
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: "failed to send request",
+      });
+    }
+  }
+
+  async getBookingDetails(req: Request, res: Response) : Promise<void> {
+    try {
+      const { id } = req.params;
+
+      console.log(id,"id in controller of getbookings")
+
+      const response = await this._getBookingDetailsUseCase.execute(id);
 
       res.status(HttpStatusCode.OK).json(response)
     } catch (error) {

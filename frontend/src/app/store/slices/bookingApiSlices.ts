@@ -31,8 +31,14 @@ export const bookingApiSlices = createApi({
         cancelBooking: builder.mutation({
             query: (bookingId) => ({
                 url: '/booking/cancelBooking',
-                method: HttpMethod.DELETE,
+                method: HttpMethod.PATCH,
                 body: bookingId
+            })
+        }),
+        getBookingDetails: builder.query({
+            query: (id) => ({
+                url: `/booking/getBookingDetails/${id}`,
+                method: HttpMethod.GET
             })
         })
     })
@@ -42,5 +48,6 @@ export const {
     useMakePaymentMutation,
     useGetUserBookingsQuery,
     useCancelBookingMutation,
-    useGetCompanyBookingsQuery
+    useGetCompanyBookingsQuery,
+    useGetBookingDetailsQuery
 } = bookingApiSlices;

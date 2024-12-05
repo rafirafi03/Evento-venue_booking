@@ -6,6 +6,7 @@ import {
   CalendarDays,
   MapPin,
   Star,
+  Clock,
   Home,
   Calendar,
   Edit,
@@ -339,7 +340,7 @@ export default function UserProfile() {
                         </div>
                       </div>
                       <div className="mt-4 flex space-x-2">
-                        <button className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                        <button onClick={()=> router.push(`/bookingDetails/${booking._id}`)} className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                           View Details
                         </button>
                         <button onClick={()=> handleCancelBooking(booking._id)} className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">

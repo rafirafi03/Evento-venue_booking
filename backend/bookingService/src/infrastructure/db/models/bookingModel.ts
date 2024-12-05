@@ -18,10 +18,12 @@ const BookingSchema: Schema = new Schema<IBooking>({
     venueId: {
         type: String,
         required: true,
+        ref: 'Venue'
       },
       userId: {
         type: String,
         required: true,
+        ref: 'User'
       },
       companyId: {
         type: String,
