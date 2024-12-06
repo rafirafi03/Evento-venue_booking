@@ -56,6 +56,9 @@ export default function page() {
                           guests
                         </th>
                         <th scope="col" className="px-6 py-3">
+                          status
+                        </th>
+                        <th scope="col" className="px-6 py-3">
                           action
                         </th>
                         {/* <th scope="col" className="px-6 py-3">
@@ -83,6 +86,13 @@ export default function page() {
                           </th>
                           <td className="px-6 py-4">{booking.amount}</td>
                           <td className="px-6 py-4">{booking.guests}</td>
+                          <td className="px-6 py-4">
+                            <button
+                              className={`transition-transform duration-300 hover:scale-110 text-xs ${ booking.status == 'confirmed' ? 'bg-success-500' : 'bg-danger-600 '} text-white p-2 rounded-xl h-5 flex items-center`}
+                            >
+                              {booking.status == 'confirmed' ? 'Confirmed' : 'Cancelled'}
+                            </button>
+                          </td>
                           {/* <td className="px-6 py-4">
                             {booking.isListed ? (
                               <button
@@ -115,7 +125,7 @@ export default function page() {
                           <td className="px-6 py-4">
                             <button
                               onClick={() =>
-                                router.push(`/company/venueDetails/${ven._id}`)
+                                router.push(`/company/bookingDetails/${booking._id}`)
                               }
                               className="bg-black transition-transform duration-300 hover:scale-110 text-xs text-white p-2 rounded-xl h-5 flex items-center"
                             >
