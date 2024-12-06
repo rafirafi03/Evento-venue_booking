@@ -113,7 +113,7 @@ router.post("/resendOtp", (req, res) => {
   companyController.resendOtp(req, res);
 });
 
-router.get("/getCompanies", (req, res) => {
+router.get("/getCompanies",authMiddleware(['admin']), (req, res) => {
   adminController.getCompanies(req, res);
 });
 

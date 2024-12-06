@@ -181,13 +181,20 @@ export default function UserProfile() {
 
   const handleDeleteFromFavourites = async(userId: string, venueId: string) => {
     try {
+      const loadingToast = toast.loading('removing from favourites...')
       const response = await deleteFromFavourites({userId, venueId}).unwrap()
+      toast.dismiss(loadingToast)
 
-      console.log(response,"response in delete fvrst handler")
-      refetchGetFavourites()
-
+      if(response.success) {
+        toast.success(<b>Succesfully removed!</b>)
+        refetchGetFavourites()
+      } else {
+        toast.error(<b>failed to remove from favourites!</b>)
+      }
       console.log(response)
     } catch (error) {
+      toast.dismiss()
+      toast.error(<b>failed to remove from favourites!</b>)
       console.log(error)
     }
   }
@@ -204,14 +211,21 @@ export default function UserProfile() {
 
   const handleCancellation = async ()=> {
     try {
+      const loadingToast = toast.loading('cancelling...')
       const response = await cancelBooking({bookingId}).unwrap();
+      toast.dismiss(loadingToast)
 
       if(response.success) {
+        toast.success(<b>Cancellation successfull</b>)
         refetchBookings()
+      } else {
+        toast.error(<b>Cancellation failed</b>)
       }
 
       console.log(response)
     } catch (error) {
+      toast.dismiss()
+      toast.error(<b>Error occurred</b>)
       console.log(error)
     }
   }

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useLoginPostMutation } from "app/store/slices/userApiSlices";
 import EmailModal from 'app/(components)/(user)/emailModal/page'
 import AuthHOC from "components/common/auth/authHoc";
+import toast, {Toaster} from "react-hot-toast";
 
 const Page = () => {
   const router = useRouter();
@@ -62,16 +63,22 @@ const Page = () => {
 
   const handleLogin = async () => {
     try {
+      const loadingToast = toast.loading('logging in...')
       const res = await loginMutation({ email, password }).unwrap();
+      toast.dismiss(loadingToast)
 
       if (res.success) {
+        toast.success(<b>Login successfull!</b>)
         const token = res.token;
         localStorage.setItem('authToken', token)
         router.push("/");
       } else {
+        toast.error(<b>Login failed!</b>)
         setError(res.error)
       }
     } catch (error) {
+      toast.dismiss()
+      toast.error(<b>Error Occured!</b>)
       console.log(error);
       setError("Invalid email or password");
     }
@@ -83,6 +90,9 @@ const Page = () => {
 
   return (
     <AuthHOC role='user' isAuthPage={true} >
+      <div>
+        <Toaster position="bottom-center" reverseOrder={false} />
+      </div>
       <>
       {isForgotEmailModal && (
         <EmailModal/>

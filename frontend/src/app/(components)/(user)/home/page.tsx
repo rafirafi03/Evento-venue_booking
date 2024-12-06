@@ -19,17 +19,14 @@ import VenueCard from "components/userComponents/venueCard";
 
 const Page = () => {
   const userId = getUserIdFromToken("authToken");
-  const [loader, setLoader] = useState<boolean>(false)
+  const [loader, setLoader] = useState<boolean>(false);
 
   const { data: venues, refetch } = useGetListedVenuesQuery(undefined);
   // const [addToFavourites] = useAddToFavouritesMutation()
 
   const venue = venues?.venues?.venues;
 
-  console.log(venue," venueeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-
   const router = useRouter();
-
 
   // const [isWishlisted, setIsWishlisted] = useState(false)
 
@@ -44,7 +41,7 @@ const Page = () => {
   // }
 
   if (loader) {
-    return <Loader/>
+    return <Loader />;
   }
 
   return (
@@ -138,7 +135,18 @@ const Page = () => {
           {venue?.length && (
             <>
               {venue?.map((ven, index) => (
-                <VenueCard key={index} title={ven?.name} imageUrl={ven?.images[0]} city={ven?.city} state={ven?.state} capacity={ven?.capacity} description={ven?.description} price={ven?.amount} venueId={ven?._id} userId={userId as string} />
+                <VenueCard
+                  key={index}
+                  title={ven?.name}
+                  imageUrl={ven?.images[0]}
+                  city={ven?.city}
+                  state={ven?.state}
+                  capacity={ven?.capacity}
+                  description={ven?.description}
+                  price={ven?.amount}
+                  venueId={ven?._id}
+                  userId={userId as string}
+                />
               ))}
             </>
           )}
@@ -146,7 +154,7 @@ const Page = () => {
       </div>
       <div className="flex items-center justify-center mb-5 mt-5">
         <button
-          type="submit"
+          onClick={() => router.push("/venues")}
           className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[rgb(255,0,0)] rounded-lg border border-slate-200"
         >
           Show More Venues

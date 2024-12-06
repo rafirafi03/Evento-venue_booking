@@ -19,6 +19,7 @@ import {
   useVerifyOtpMutation,
 } from "app/store/slices/userApiSlices";
 import AuthHOC from "components/common/auth/authHoc";
+import toast, {Toaster} from "react-hot-toast";
 
 const Page = () => {
   const router = useRouter();

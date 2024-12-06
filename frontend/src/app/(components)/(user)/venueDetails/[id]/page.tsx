@@ -13,7 +13,9 @@ import PaymentModal from "components/common/modals/paymentModal";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { parseDate, DateValue } from "@internationalized/date";
 import { useGetUserDetailsQuery } from "app/store/slices/userApiSlices";
-import WalletModal from 'components/common/modals/walletModal'
+import WalletModal from 'components/common/modals/walletModal';
+import toast, {Toaster} from "react-hot-toast";
+
 type RangeValue<T> = {
   start: T;
   end: T;
@@ -82,6 +84,7 @@ export default function page({ params }: { params: { id: string } }) {
 
   const handlePayment = async (paymentMethod: string) => {
     try {
+      const loadingToast = toast.loading('processing payment...')
       if (paymentMethod === "online") {
         // Use Stripe for online payments
         const stripe = await loadStripe(
@@ -96,10 +99,17 @@ export default function page({ params }: { params: { id: string } }) {
           bookingDuration,
           paymentMethod,
         }).unwrap();
+        toast.dismiss(loadingToast)
   
         const result = await stripe?.redirectToCheckout({
           sessionId: response.id,
         });
+
+        if(response.success) {
+          toast.success(<b>Payment completed!</b>)
+        } else {
+          toast.error(<b>Payment failed</b>)
+        }
   
         console.log(result, "stripe result in frontend");
       } else {
@@ -116,12 +126,21 @@ export default function page({ params }: { params: { id: string } }) {
           bookingDuration,
           paymentMethod,
         }).unwrap();
+        toast.dismiss(loadingToast)
+
+        if(response.success) {
+          toast.success(<b>Payment completed!</b>)
+        } else {
+          toast.error(<b>Payment failed!</b>)
+        }
   
         console.log("Payment processed for offline method", response);
       }
   
       // Update UI after payment attempt
     } catch (error) {
+      toast.dismiss()
+      toast.error(<b>Payment failed!</b>)
       console.log(error);
     }
   };
@@ -130,6 +149,7 @@ export default function page({ params }: { params: { id: string } }) {
   return (
     <AuthHOC role="user">
       <div className="bg-slate-50">
+      <Toaster position="bottom-center" reverseOrder={false}/>
         <div className="my-16">
           <Header />
         </div>

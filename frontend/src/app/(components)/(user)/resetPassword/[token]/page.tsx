@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useChangePasswordMutation } from "app/store/slices/userApiSlices";
 import { useRouter } from "next/navigation";
+import toast,{Toaster} from "react-hot-toast";
 
 export default function page({ params }: { params: { token: string } }) {
 
@@ -16,13 +17,20 @@ export default function page({ params }: { params: { token: string } }) {
 
     const handleSubmit = async()=> {
         try {
+            const loadingToast = toast.loading('changing...')
             const response = await changePassword({token, password}).unwrap()
+            toast.dismiss(loadingToast)
 
             if (response.success) {
+              toast.success(<b>Password chaged Successfully!</b>)
               router.push('/login')
+            } else {
+              toast.error(<b>Failed to change password!</b>)
             }
             console.log(response)
         } catch (error) {
+          toast.dismiss()
+          toast.error(<b>Error occured!</b>)
             console.log(error)
         }
         
@@ -30,6 +38,7 @@ export default function page({ params }: { params: { token: string } }) {
 
   return (
     <div className="flex justify-center items-center min-h-screen max-w-full bg-gradient-to-br from-gray-500 via-white to-red-100">
+      <Toaster position="bottom-center" reverseOrder={false}/>
       <div className="bg-slate-50 border w-1/2 border-gray-200 rounded-lg shadow-sm p-6 my-5">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Reset Password
