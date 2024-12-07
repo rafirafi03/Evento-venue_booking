@@ -28,18 +28,6 @@ const Page = () => {
 
   const router = useRouter();
 
-  // const [isWishlisted, setIsWishlisted] = useState(false)
-
-  // const handleFavourites = async (venueId : string) => {
-  //   try {
-  //     const response = await  addToFavourites({venueId, userId}).unwrap()
-
-  //     console.log(response)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-
   if (loader) {
     return <Loader />;
   }

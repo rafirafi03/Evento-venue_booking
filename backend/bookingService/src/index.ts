@@ -7,6 +7,7 @@ import cors from "cors";
 import { connectDB } from "./infrastructure/db";
 import bookingRoute from "./infrastructure/express/route";
 import cookieParser from 'cookie-parser'
+// import { startGrpcBookingServer } from "./infrastructure/grpc/grpcServices/grpcBookingServer";
 
 const PORT = process.env.PORT;
 
@@ -37,4 +38,5 @@ app.use("/",bookingRoute);
 
 app.listen(PORT, () => {
   logger.info(`server is running on http://localhost:${PORT}`);
+  // startGrpcBookingServer()
 });

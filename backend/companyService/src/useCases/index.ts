@@ -19,4 +19,5 @@ export * from './addOfferUseCase';
 export * from './getOffersUseCase';
 export * from './deleteOfferUseCase';
 export * from './applyOfferUseCase';
-export * from './removeOfferUseCase'
+export * from './removeOfferUseCase';
+export * from './getDashboardDetailsUseCase';

@@ -166,6 +166,12 @@ export const companyApiSlice = createApi({
                 url: `/company/removeOffer/${venueId}`,
                 method: HttpMethod.PATCH
             })
+        }),
+        getDashboardDetails: builder.query({
+            query: (companyId) => ({
+                url: `/company/getDashboardDetails?${companyId}`,
+                method: HttpMethod.GET
+            })
         })
     })
 });
@@ -192,5 +198,6 @@ export const {
     useGetOffersQuery,
     useDeleteOfferMutation,
     useApplyOfferMutation,
-    useRemoveOfferMutation
+    useRemoveOfferMutation,
+    useGetDashboardDetailsQuery
 } = companyApiSlice;

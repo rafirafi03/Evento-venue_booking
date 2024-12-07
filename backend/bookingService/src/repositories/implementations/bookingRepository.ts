@@ -88,16 +88,56 @@ export class BookingRepository implements IBookingRepository {
 
     async getBookingsByCompanyId(companyId: string): Promise<IBookingData[] | null> {
         try {
-
-            const bookings = await BookingModel.find({companyId})
-
-            console.log(bookings," bookings in repooooooooooooooooooooo")
-            if(!bookings) {
-                return null
+            const bookings = await BookingModel.aggregate([
+                {
+                    $match: {
+                        companyId,
+                        status: 'confirmed',
+                    },
+                },
+                {
+                    $addFields: {
+                        venueObjectId: { $toObjectId: '$venueId' },
+                        userObjectId: {$toObjectId: '$userId'},
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'venues', // Correct pluralized collection name
+                        localField: 'venueObjectId', // Use the converted ObjectId field
+                        foreignField: '_id',
+                        as: 'venueDetails',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$venueDetails',
+                        preserveNullAndEmptyArrays: true, // Handle cases where no matching venue is found
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'users', // Assuming the collection name for users is 'users'
+                        localField: 'userObjectId', // Field in BookingModel matching the user's _id
+                        foreignField: '_id',
+                        as: 'userDetails',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$userDetails',
+                        preserveNullAndEmptyArrays: true, // Handle cases where no matching user is found
+                    },
+                },
+            ]).exec();
+    
+            console.log(bookings, "bookings with venue details in repository");
+            if (!bookings || bookings.length === 0) {
+                return null;
             }
-            return bookings
+            return bookings;
         } catch (error) {
-            throw new Error('Error' + error)
+            throw new Error('Error: ' + error);
         }
     }
 

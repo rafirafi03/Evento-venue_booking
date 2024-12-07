@@ -16,7 +16,8 @@ import {
   GetOffersUseCase,
   DeleteOfferUseCase,
   ApplyOfferUseCase,
-  RemoveOfferUseCase
+  RemoveOfferUseCase,
+  GetDashboardDetailsUseCase
 } from "../../useCases";
 import { HttpStatusCode } from "../../constants";
 import { GetCompanyDetailsUseCase } from "../../useCases/getCompanyDetailsUseCase";
@@ -43,7 +44,8 @@ export class CompanyController {
     private _getOffersUseCase : GetOffersUseCase,
     private _deleteOfferUseCase : DeleteOfferUseCase,
     private _applyOfferUseCase : ApplyOfferUseCase,
-    private _removeOfferUseCase : RemoveOfferUseCase
+    private _removeOfferUseCase : RemoveOfferUseCase,
+    private _getDashboardDetailsUseCase : GetDashboardDetailsUseCase
   ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
@@ -395,6 +397,20 @@ export class CompanyController {
       const {venueId} = req.params;
 
       const response = await this._removeOfferUseCase.execute(venueId);
+      res.send(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async getDashboardDetails(req: Request, res: Response) : Promise<void> {
+    try {
+      const {companyId} = req.params;
+
+      const response = await this._getDashboardDetailsUseCase.execute(companyId);
       res.send(HttpStatusCode.OK).json(response)
     } catch (error) {
       console.log(error);

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package bookings;
+
+service BookingService {
+  rpc GetBookings(BookingsRequest) returns (BookingsResponse);
+}
+
+message BookingsRequest {
+  string companyId = 1;
+}
+
+message BookingsResponse {
+  string venueName = 1;
+  int32 venueAmount = 2;
+  string venueCity = 3;
+  string venueState = 4;
+  string venueImage = 5;
+  string companyId = 6;
+}

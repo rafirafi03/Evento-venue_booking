@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import cors from "cors";
 import { connectDB } from "./infrastructure/db";
-import companyRoute from "./infrastructure/express/route";
+import  companyRoute from "./infrastructure/express/route";
 import cookieParser from 'cookie-parser'
 import { startGrpcVenueServer } from "./infrastructure/grpc/grpcServices/grpcVenueServer";
 

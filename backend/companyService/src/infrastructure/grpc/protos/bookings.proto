@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package bookings;
+
+service BookingService {
+  rpc GetBookings(BookingsRequest) returns (BookingsResponse);
+}
+
+message BookingsRequest {
+  string companyId = 1;
+}
+
+message BookingsResponse {
+  repeated Booking bookings = 1
+}
+
+message Booking {
+  string id = 1;  
+  string venueId = 2;
+  string userId = 3;
+  string amount = 4;
+  string startDate = 5;
+  string endDate = 6;   
+  string event = 7;
+  string guests = 8;
+  string paymentMethod = 9;
+  string status = 10;
+  string userName = 11;
+  string userEmail = 12;
+  string userPhone = 13;
+  string venueName = 14;    
+  string venueAmount = 15;         
+  string city = 16;         
+  string state = 17; 
+  string status = 18;       
+}
