@@ -20,4 +20,4 @@ export * from './getOffersUseCase';
 export * from './deleteOfferUseCase';
 export * from './applyOfferUseCase';
 export * from './removeOfferUseCase';
-export * from './getDashboardDetailsUseCase';
+// export * from './getDashboardDetailsUseCase';

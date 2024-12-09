@@ -40,6 +40,12 @@ export const bookingApiSlices = createApi({
                 url: `/booking/getBookingDetails/${id}`,
                 method: HttpMethod.GET
             })
+        }),
+        getCompanyDashboardDetails: builder.query({
+            query: (companyId) => ({
+                url: `/booking/getCompanyDashboardDetails/${companyId}`,
+                method: HttpMethod.GET
+            })
         })
     })
 });
@@ -49,5 +55,6 @@ export const {
     useGetUserBookingsQuery,
     useCancelBookingMutation,
     useGetCompanyBookingsQuery,
-    useGetBookingDetailsQuery
+    useGetBookingDetailsQuery,
+    useGetCompanyDashboardDetailsQuery
 } = bookingApiSlices;

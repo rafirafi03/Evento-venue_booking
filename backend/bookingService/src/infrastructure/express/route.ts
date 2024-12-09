@@ -6,7 +6,8 @@ import {
   GetUserBookingsUseCase,
   CancelBookingUseCase,
   GetCompanyBookingsUseCase,
-  GetBookingDetailsUseCase
+  GetBookingDetailsUseCase,
+  CompanyDashboardDetailsUseCase
 } from "../../useCases";
 import { BookingRepository } from "../../repositories";
 
@@ -21,7 +22,8 @@ const getCompanyBookingsUseCase = new GetCompanyBookingsUseCase(
   bookingRepository
 );
 const cancelBookingUseCase = new CancelBookingUseCase(bookingRepository);
-const getBookingDetailsUseCase = new GetBookingDetailsUseCase(bookingRepository)
+const getBookingDetailsUseCase = new GetBookingDetailsUseCase(bookingRepository);
+const companyDashboardDetailsuseCase = new CompanyDashboardDetailsUseCase(bookingRepository)
 
 const bookingController = new BookingController(
   makePaymentUseCase,
@@ -29,7 +31,8 @@ const bookingController = new BookingController(
   getBookingsByUserId,
   getCompanyBookingsUseCase,
   cancelBookingUseCase,
-  getBookingDetailsUseCase
+  getBookingDetailsUseCase,
+  companyDashboardDetailsuseCase
 );
 
 router.post("/makePayment", (req, res) => {
@@ -54,6 +57,10 @@ router.patch("/cancelBooking", (req, res) => {
 
 router.get('/getBookingDetails/:id', (req, res) => {
   bookingController.getBookingDetails(req, res)
+})
+
+router.get('/getCompanyDashboardDetails/:companyId', (req, res) => {
+  bookingController.companyDashboardDetails(req, res)
 })
 
 export default router;

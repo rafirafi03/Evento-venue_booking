@@ -11,7 +11,7 @@ export default function Page() {
   const [isToken, setToken] = useState(false)
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken')
+    const token = localStorage.getItem('authUserToken')
     if(token) {
       setToken(true)
     }

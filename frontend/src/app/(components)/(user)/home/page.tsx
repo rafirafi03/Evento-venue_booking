@@ -18,7 +18,7 @@ import VenueCard from "components/userComponents/venueCard";
 // import Auth from '../../../auth/auth'
 
 const Page = () => {
-  const userId = getUserIdFromToken("authToken");
+  const userId = getUserIdFromToken("authUserToken");
   const [loader, setLoader] = useState<boolean>(false);
 
   const { data: venues, refetch } = useGetListedVenuesQuery(undefined);
@@ -140,6 +140,7 @@ const Page = () => {
           )}
         </div>
       </div>
+
       <div className="flex items-center justify-center mb-5 mt-5">
         <button
           onClick={() => router.push("/venues")}

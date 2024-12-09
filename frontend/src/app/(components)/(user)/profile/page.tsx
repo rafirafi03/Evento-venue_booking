@@ -36,7 +36,7 @@ export default function UserProfile() {
 
   // const [editUserProfile] = useEditUserProfileMutation()
 
-  const userId = getUserIdFromToken('authToken');
+  const userId = getUserIdFromToken('authUserToken');
 
   const {
     data: userDetails,

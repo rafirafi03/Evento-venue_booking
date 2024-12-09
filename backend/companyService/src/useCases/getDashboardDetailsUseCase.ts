@@ -1,17 +1,17 @@
-import { ICompanyRepository } from "../repositories";
+// import { ICompanyRepository } from "../repositories";
 
-export class GetDashboardDetailsUseCase {
-    constructor (
-        private _companyRepository: ICompanyRepository
-    ) {}
+// export class GetDashboardDetailsUseCase {
+//     constructor (
+//         private _companyRepository: ICompanyRepository
+//     ) {}
 
-    async execute(companyId:string) : Promise< any > {
+//     async execute(companyId:string) : Promise< any > {
 
-        try {
+//         try {
             
-        } catch (error) {
-            throw new Error("Error" + error)
-        }
+//         } catch (error) {
+//             throw new Error("Error" + error)
+//         }
         
-    }
-}
+//     }
+// }

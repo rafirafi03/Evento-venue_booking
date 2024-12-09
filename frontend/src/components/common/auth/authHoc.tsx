@@ -19,7 +19,7 @@ export default function AuthHOC({ children, role, isAuthPage = false }: AuthHOCP
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const tokenKey = role === Role.Admin ? 'adminToken' : role === Role.User ? 'authToken' : 'companyToken';
+    const tokenKey = role === Role.Admin ? 'adminToken' : role === Role.User ? 'authUserToken' : 'companyToken';
     const token = localStorage.getItem(tokenKey);
 
     if (isAuthPage) {

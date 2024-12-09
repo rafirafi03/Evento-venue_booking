@@ -70,7 +70,7 @@ const Page = () => {
       if (res.success) {
         toast.success(<b>Login successfull!</b>)
         const token = res.token;
-        localStorage.setItem('authCompanyToken', token)
+        localStorage.setItem('authUserToken', token)
         router.push("/");
       } else {
         toast.error(<b>Login failed!</b>)
