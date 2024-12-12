@@ -1,0 +1,1 @@
+2024-12-12T05:14:43.702Z [INFO]: ::1 - - [12/Dec/2024:05:14:43 +0000] "GET /getUserBookings/66e26ce1a6b2b5cff3334e6b HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

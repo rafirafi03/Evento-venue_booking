@@ -35,7 +35,7 @@ export default function venueList() {
     })(),
   };
   const { data: venues } = useGetListedVenuesQuery(filter);
-  const userId = getUserIdFromToken("authToken");
+  const userId = getUserIdFromToken("authUserToken");
   const venue = venues?.venues?.venues;
 
 

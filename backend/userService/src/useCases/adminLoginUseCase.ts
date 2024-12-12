@@ -15,6 +15,8 @@ export class AdminLoginUseCase {
     async execute(email: string, password: string): Promise<ILoginResponse | null> {
         try {
             const secretKey = process.env.JWTSECRETKEY as string;
+            const tokenTimer = process.env.TOKEN_TIMER as string;
+            const refreshTokenTimer = process.env.REFRESH_TOKEN_TIMER as string
     
             const user = await this._userRepository.findByEmail(email);
     
@@ -36,12 +38,12 @@ export class AdminLoginUseCase {
             const token = tokenService.generateToken({
                 userId: user._id as string,
                 role: 'admin'
-            },'15m');
+            },tokenTimer);
 
             const refreshToken = tokenService.generateToken({
                 userId: user._id as string,
                 role: 'admin'
-              }, '7d')
+              }, refreshTokenTimer)
     
             return { success: true, token, refreshToken };
         } catch (error) {

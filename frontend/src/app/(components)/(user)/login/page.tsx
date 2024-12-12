@@ -95,7 +95,7 @@ const Page = () => {
       </div>
       <>
       {isForgotEmailModal && (
-        <EmailModal/>
+        <EmailModal isOpen={isForgotEmailModal} />
       )}
       </>
       <Header />

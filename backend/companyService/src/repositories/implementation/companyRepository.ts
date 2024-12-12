@@ -1,10 +1,11 @@
-import { ICompanyData, Company, Venue, IVenueData, IOfferData, Offer } from "../../entities";
+import { ICompanyData, Company, Venue, IVenueData, IOfferData, Offer, Rating, IRatingData } from "../../entities";
 import {
   companyModel,
   ICompany,
   IVenue,
   venueModel,
   offerModel,
+  ratingModel,
   IOffer
 } from "../../infrastructure/db";
 import { ICompanyRepository } from "../interfaces/companyInterface";
@@ -186,6 +187,26 @@ export class CompanyRepository implements ICompanyRepository {
   async removeOffer(venueId: string): Promise<void> {
     try {
       await venueModel.updateOne({ _id: venueId }, { $unset: { offerId: "" } })
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
+  async addRating(rating: Rating): Promise<IRatingData> {
+    try {
+      const newRating = new ratingModel(rating);
+      await newRating.save()
+      return newRating as IRatingData
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
+  async getReviews(venueId: string): Promise<IRatingData[]> {
+    try {
+      const reviews = await ratingModel.find({venueId});
+
+      return reviews
     } catch (error) {
       throw new Error("error in DB" + error);
     }

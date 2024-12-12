@@ -22,7 +22,8 @@ import {
   DeleteOfferUseCase,
   ApplyOfferUseCase,
   RemoveOfferUseCase,
-  // GetDashboardDetailsUseCase
+  AddReviewUseCase,
+  GetReviewsUseCase
 } from "../../useCases";
 import { AdminController, CompanyController } from "../../adapters/controllers";
 import { CompanyRepository } from "../../repositories/implementation";
@@ -69,7 +70,8 @@ const getOffersUseCase = new GetOffersUseCase(companyRepository);
 const deleteOfferUseCase = new DeleteOfferUseCase(companyRepository);
 const applyOfferUseCase = new ApplyOfferUseCase(companyRepository);
 const removeOfferUseCase = new RemoveOfferUseCase(companyRepository);
-// const getDashboardDetailsUseCase = new GetDashboardDetailsUseCase(companyRepository)
+const addReviewUseCase = new AddReviewUseCase(companyRepository);
+const getReviewsUseCase = new GetReviewsUseCase(companyRepository)
 
 
 const companyController = new CompanyController(
@@ -91,7 +93,8 @@ const companyController = new CompanyController(
   deleteOfferUseCase,
   applyOfferUseCase,
   removeOfferUseCase,
-  // getDashboardDetailsUseCase
+  addReviewUseCase,
+  getReviewsUseCase
 );
 const adminController = new AdminController(
   getRequestsUseCase,
@@ -188,8 +191,12 @@ router.patch('/removeOffer', (req, res) => {
   companyController.removeOffer(req, res)
 })
 
-// router.get('/getDashboardDetails/:companyId', (req, res) => {
-//   companyController.getDashboardDetails(req, res)
-// })
+router.post('/addReview', (req, res) => {
+  companyController.addReview(req, res)
+})
+
+router.get('/getRatings/:venueId', (req, res) => {
+  companyController.getReviews(req,res)
+})
 
 export default router;

@@ -143,7 +143,7 @@ const Page = () => {
 
       if (res.success) {
         const token = res.token;
-        localStorage.setItem("authToken", token);
+        localStorage.setItem("authUserToken", token);
         router.push("/");
       } else {
         setOtpError('Invalid otp')

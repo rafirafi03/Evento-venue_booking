@@ -81,7 +81,7 @@ router.get('/get-users',authMiddleware(['admin']), (req,res) => {
   adminController.getUsers(req,res)
 })
 
-router.get('/getUserDetails/:userId',authMiddleware(['admin','user']), (req,res) => {
+router.get('/getUserDetails/:userId', (req,res) => {
   userController.getUserDetails(req,res)
 })
 

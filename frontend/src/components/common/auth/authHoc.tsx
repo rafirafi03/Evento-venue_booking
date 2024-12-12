@@ -42,9 +42,9 @@ export default function AuthHOC({ children, role, isAuthPage = false }: AuthHOCP
   }, [role, router, isAuthPage]);
 
   // Render Loader while checking authentication
-  if (loading) {
-    return <Loader />;
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // }
 
   // Render the content once authenticated or allow access to the login page if unauthenticated
   return <>{children}</>;

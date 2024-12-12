@@ -17,13 +17,14 @@ import {
   DeleteOfferUseCase,
   ApplyOfferUseCase,
   RemoveOfferUseCase,
-  // GetDashboardDetailsUseCase
+  AddReviewUseCase,
+  GetReviewsUseCase
 } from "../../useCases";
 import { HttpStatusCode } from "../../constants";
 import { GetCompanyDetailsUseCase } from "../../useCases/getCompanyDetailsUseCase";
-import dotenv from 'dotenv'
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
 export class CompanyController {
   constructor(
@@ -37,16 +38,19 @@ export class CompanyController {
     private _updateVenueStatus: VenueStatusUseCase,
     private _getVenueDetailsUseCase: GetVenueDetailsUseCase,
     private _editVenueUseCase: EditVenueUseCase,
-    private _deleteVenueUseCase : DeleteVenueUseCase,
-    private _getCompanyDetailsUseCase : GetCompanyDetailsUseCase,
-    private _editCompanyUseCase : EditCompanyUseCase,
-    private _addOfferUseCase : AddOfferUseCase,
-    private _getOffersUseCase : GetOffersUseCase,
-    private _deleteOfferUseCase : DeleteOfferUseCase,
-    private _applyOfferUseCase : ApplyOfferUseCase,
-    private _removeOfferUseCase : RemoveOfferUseCase,
-    // private _getDashboardDetailsUseCase : GetDashboardDetailsUseCase
-  ) {}
+    private _deleteVenueUseCase: DeleteVenueUseCase,
+    private _getCompanyDetailsUseCase: GetCompanyDetailsUseCase,
+    private _editCompanyUseCase: EditCompanyUseCase,
+    private _addOfferUseCase: AddOfferUseCase,
+    private _getOffersUseCase: GetOffersUseCase,
+    private _deleteOfferUseCase: DeleteOfferUseCase,
+    private _applyOfferUseCase: ApplyOfferUseCase,
+    private _removeOfferUseCase: RemoveOfferUseCase,
+    private _addReviewUseCase: AddReviewUseCase,
+    private _getReviewsUseCase : GetReviewsUseCase
+  ) 
+  
+    {}
 
   async signup(req: Request, res: Response): Promise<void> {
     const { email } = req.body;
@@ -71,14 +75,14 @@ export class CompanyController {
         secure: true,
         sameSite: "strict",
         maxAge: 60 * 60 * 1000,
-    });
+      });
 
-    res.cookie("companyRefreshToken", response?.refreshToken, {
+      res.cookie("companyRefreshToken", response?.refreshToken, {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
         maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+      });
 
       res.status(200).json(response);
       console.log(response);
@@ -124,14 +128,29 @@ export class CompanyController {
 
   async addVenue(req: Request, res: Response): Promise<void> {
     try {
-
-      const { companyId, name, type, description, capacity,amount, address, phone, city, state } =
-        req.body;
+      const {
+        companyId,
+        name,
+        type,
+        description,
+        capacity,
+        amount,
+        address,
+        phone,
+        city,
+        state,
+      } = req.body;
       const files = req.files as Express.MulterS3.File[];
 
-      const imagePaths = files?.map((image) => `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${image.key}`);
+      const imagePaths = files?.map(
+        (image) =>
+          `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${image.key}`
+      );
 
-      console.log(imagePaths," image pathsssssssssssssssssssssssssssssssssssssssssssssssssssss")
+      console.log(
+        imagePaths,
+        " image pathsssssssssssssssssssssssssssssssssssssssssssssssssssss"
+      );
 
       const response = await this._addVenueUseCase.execute({
         companyId,
@@ -155,8 +174,7 @@ export class CompanyController {
 
   async getVenues(req: Request, res: Response): Promise<void> {
     try {
-
-      const { companyId } = req.params
+      const { companyId } = req.params;
       const venues = await this._getVenues.execute(companyId);
       res.status(HttpStatusCode.OK).json({ venues });
     } catch (error) {
@@ -171,31 +189,35 @@ export class CompanyController {
     try {
       // Extract and type-check both parameters
       const { search = "", types = "", priceRange = "" } = req.query;
-  
-      console.log(req.query, " reqqueryyyyyyyyyyyyyy")
-      
+
+      console.log(req.query, " reqqueryyyyyyyyyyyyyy");
+
       // Convert query params to proper format
-      const searchTerm = typeof search === 'string' ? search : '';
-      const typeArray = typeof types === 'string' ? types.split(',').filter(Boolean) : [];
-  
+      const searchTerm = typeof search === "string" ? search : "";
+      const typeArray =
+        typeof types === "string" ? types.split(",").filter(Boolean) : [];
+
       let priceRangeArray: [number, number] = [0, 10000]; // Default price range
-      
-      if (typeof priceRange === 'string') {
-        const rangeParts = priceRange.split(',').map(Number).filter(num => !isNaN(num));
-        
+
+      if (typeof priceRange === "string") {
+        const rangeParts = priceRange
+          .split(",")
+          .map(Number)
+          .filter((num) => !isNaN(num));
+
         // Ensure that the rangeParts array has exactly 2 elements
         if (rangeParts.length === 2) {
           priceRangeArray = [rangeParts[0], rangeParts[1]]; // Assign values to priceRangeArray
         }
       }
-  
+
       // Pass both parameters to the service
       const venues = await this._getListedVenues.execute({
         search: searchTerm,
         types: typeArray,
-        priceRange: priceRangeArray
+        priceRange: priceRangeArray,
       });
-  
+
       res.status(HttpStatusCode.OK).json({ venues });
     } catch (error) {
       console.log(error);
@@ -204,7 +226,6 @@ export class CompanyController {
         .json({ message: "Internal error" });
     }
   }
-  
 
   async updateVenueStatus(req: Request, res: Response): Promise<void> {
     try {
@@ -287,7 +308,7 @@ export class CompanyController {
 
       const response = await this._deleteVenueUseCase.execute(venueId);
 
-      res.status(HttpStatusCode.OK).json(response)
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
       res
@@ -302,7 +323,7 @@ export class CompanyController {
 
       const response = await this._getCompanyDetailsUseCase.execute(companyId);
 
-      res.status(HttpStatusCode.OK).json(response)
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
       res
@@ -311,17 +332,20 @@ export class CompanyController {
     }
   }
 
-  async editCompanyProfile(req: Request, res: Response) : Promise<void> {
+  async editCompanyProfile(req: Request, res: Response): Promise<void> {
     try {
       const { companyId, name, phone } = req.body;
 
-      console.log(req.body," reqbdyy in edit company")
+      console.log(req.body, " reqbdyy in edit company");
 
-      const response = await this._editCompanyUseCase.execute({companyId, name, phone});
+      const response = await this._editCompanyUseCase.execute({
+        companyId,
+        name,
+        phone,
+      });
 
       console.log(response);
-      res.status(HttpStatusCode.OK).json(response)
-
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
       res
@@ -330,16 +354,21 @@ export class CompanyController {
     }
   }
 
-  async addOffer(req: Request, res: Response) : Promise<void> {
+  async addOffer(req: Request, res: Response): Promise<void> {
     try {
-      const { companyId, values} = req.body;
-      const { name, percentage, validity } = values
+      const { companyId, values } = req.body;
+      const { name, percentage, validity } = values;
 
-      console.log(req.body,"reqbdy in controller of offer")
+      console.log(req.body, "reqbdy in controller of offer");
 
-      const response = await this._addOfferUseCase.execute({companyId, name, percentage, validity})
+      const response = await this._addOfferUseCase.execute({
+        companyId,
+        name,
+        percentage,
+        validity,
+      });
 
-      res.status(HttpStatusCode.OK).json(response)
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
       res
@@ -348,12 +377,11 @@ export class CompanyController {
     }
   }
 
-  async getOffers(req: Request, res: Response) : Promise<void> {
+  async getOffers(req: Request, res: Response): Promise<void> {
     try {
-
       const { companyId } = req.params;
-      const response = await this._getOffersUseCase.execute(companyId)
-      res.status(HttpStatusCode.OK).json(response)
+      const response = await this._getOffersUseCase.execute(companyId);
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
       res
@@ -362,13 +390,12 @@ export class CompanyController {
     }
   }
 
-  async deleteOffer(req: Request, res: Response) : Promise<void> {
+  async deleteOffer(req: Request, res: Response): Promise<void> {
     try {
-
       const { offerId } = req.params;
-      console.log(offerId," offerId from contoller in offer")
-      const response = await this._deleteOfferUseCase.execute(offerId)
-      res.status(HttpStatusCode.OK).json(response)
+      console.log(offerId, " offerId from contoller in offer");
+      const response = await this._deleteOfferUseCase.execute(offerId);
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
       res
@@ -377,13 +404,13 @@ export class CompanyController {
     }
   }
 
-  async applyOffer(req: Request, res: Response) : Promise<void> {
+  async applyOffer(req: Request, res: Response): Promise<void> {
     try {
-      const {venueId, offerId} = req.body;
+      const { venueId, offerId } = req.body;
 
       const response = await this._applyOfferUseCase.execute(venueId, offerId);
 
-      res.status(HttpStatusCode.OK).json(response)
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
       res
@@ -392,12 +419,12 @@ export class CompanyController {
     }
   }
 
-  async removeOffer(req: Request, res: Response) : Promise<void> {
+  async removeOffer(req: Request, res: Response): Promise<void> {
     try {
-      const {venueId} = req.params;
+      const { venueId } = req.params;
 
       const response = await this._removeOfferUseCase.execute(venueId);
-      res.send(HttpStatusCode.OK).json(response)
+      res.send(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
       res
@@ -406,18 +433,42 @@ export class CompanyController {
     }
   }
 
-  // async getDashboardDetails(req: Request, res: Response) : Promise<void> {
-  //   try {
-  //     const {companyId} = req.params;
+  async addReview(req: Request, res: Response): Promise<void> {
+    try {
+      const { userId, venueId, userName, userEmail, star, review } = req.body;
 
-  //     const response = await this._getDashboardDetailsUseCase.execute(companyId);
-  //     res.send(HttpStatusCode.OK).json(response)
-  //   } catch (error) {
-  //     console.log(error);
-  //     res
-  //       .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
-  //       .json({ message: "Internal error" });
-  //   }
-  // }
+      console.log(req.body," req.bddyyyyyyyyyyyy")
 
+      const response = await this._addReviewUseCase.execute({
+        userId,
+        venueId,
+        userName,
+        userEmail,
+        star,
+        review,
+      });
+      res.status(HttpStatusCode.OK).json(response);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
+
+  async getReviews(req: Request, res: Response) : Promise<void> {
+    try {
+      const { venueId } = req.params;
+
+      console.log(req.params,"req paramsssssss")
+
+      const response = await this._getReviewsUseCase.execute(venueId);
+      res.status(HttpStatusCode.OK).json(response);
+    } catch (error) {
+      console.log(error);
+      res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal error" });
+    }
+  }
 }

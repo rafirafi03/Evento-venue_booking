@@ -4,8 +4,12 @@ import { useState } from "react";
 import { useForgetPasswordRequestMutation } from "app/store/slices/userApiSlices";
 import AuthHOC from "components/common/auth/authHoc";
 
-export default function pagge() {
-  const [isOpen, setIsOpen] = useState(false);
+interface pageProps {
+  isOpen : boolean;
+}
+
+export default function page({isOpen}: pageProps) {
+  const [isModal, setModal] = useState(isOpen);
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -25,6 +29,8 @@ export default function pagge() {
       setIsLoading(false);
     }
   };
+
+  if(!isModal) return null;
 
   return (
     <AuthHOC role="user">
@@ -82,7 +88,7 @@ export default function pagge() {
               <button
                 type="button"
                 className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                onClick={() => setIsOpen(false)}
+                onClick={() => setModal(false)}
               >
                 Cancel
               </button>

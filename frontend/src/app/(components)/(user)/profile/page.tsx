@@ -32,7 +32,7 @@ export default function UserProfile() {
 
 
   const router = useRouter()
-  const token = localStorage.getItem("authToken");
+  const token = localStorage.getItem("authUserToken");
 
   // const [editUserProfile] = useEditUserProfileMutation()
 
@@ -344,7 +344,7 @@ export default function UserProfile() {
                           <div className="text-sm text-gray-500">
                             <div className="flex items-center mt-1">
                               <Home className="w-4 h-4 mr-2" />
-                              {booking.time}
+                              {booking?.venueDetails.name}, {booking?.venueDetails.city}
                             </div>
                             <div className="flex items-center">
                               <Calendar className="w-4 h-4 mr-2" />
@@ -378,35 +378,38 @@ export default function UserProfile() {
               )}
               {activeTab === "history" && (
                 <div className="space-y-4">
-                  {bookingHistory.map((booking) => (
+                  {bookings?.map((booking) => (
                     <div
-                      key={booking.id}
+                      key={booking._id}
                       className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
                     >
                       <div className="flex items-center space-x-4">
                         <img
-                          src="/assets/images/homepage-image.jpg"
-                          alt={booking.venue}
+                          src={booking.venueDetails.image}
+                          alt={booking.venueDetails.name}
                           className="w-24 h-16 object-cover rounded"
                         />
                         <div>
                           <h3 className="text-lg font-semibold text-gray-900">
-                            {booking.venue}
+                            {booking.event}
                           </h3>
                           <div className="text-sm text-gray-500">
                             <div className="flex items-center">
                               <Calendar className="w-4 h-4 mr-2" />
-                              {booking.date}
+                              {booking.venueDetails.name}, {booking.venueDetails.city}
                             </div>
                             <div className="flex items-center mt-1">
                               <Clock className="w-4 h-4 mr-2" />
-                              {booking.time}
+                              {new Date(booking.bookingDateStart).toLocaleDateString()} to {new Date(booking.bookingDateEnd).toLocaleDateString()}
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="mt-4">
-                        <button className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                      <div className="mt-4 flex space-x-2">
+                        <button onClick={()=> router.push(`/bookingDetails/${booking._id}`)} className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                          View Details
+                        </button>
+                        <button className="px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-600 rounded-md hover:bg-red-600 hover:text-white focus:outline-none focus:ring-1 focus:ring-red-500 focus:ring-offset-2">
                           Leave Review
                         </button>
                       </div>

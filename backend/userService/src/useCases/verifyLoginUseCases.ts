@@ -12,6 +12,8 @@ export class UserLoginUseCase {
   ): Promise<ILoginResponse | null> {
     try {
       const secretKey = process.env.JWTSECRETKEY as string;
+      const tokenTimer = process.env.TOKEN_TIMER as string;
+      const refreshTokenTimer = process.env.REFRESH_TOKEN_TIMER as string
 
       const user = await this._userRepository.findByEmail(email);
       
@@ -31,12 +33,12 @@ export class UserLoginUseCase {
           const token = tokenservice.generateToken({
             userId: user._id as string,
             role: 'user',
-          }, '15m');
+          }, tokenTimer);
 
           const refreshToken = tokenservice.generateToken({
             userId: user._id as string,
             role: 'user'
-          }, '7d')
+          }, refreshTokenTimer)
 
           return { success: true, token, refreshToken };
         }

@@ -24,8 +24,9 @@ export default function Page() {
   }
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken')
-    setToken(false)
+    localStorage.removeItem('authUserToken');
+    setToken(false);
+    router.push('/login')
   }
 
   return (

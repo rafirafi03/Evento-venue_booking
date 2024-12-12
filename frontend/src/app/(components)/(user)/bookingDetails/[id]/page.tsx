@@ -19,12 +19,14 @@ import Header from "components/userComponents/header";
 import Aside from "app/(components)/company/aside/page";
 import CancelBookingModal from "components/userComponents/cancelBookingModal";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAddReviewMutation } from "app/store/slices/companyApiSlices";
 import {
   useCancelBookingMutation,
   useGetBookingDetailsQuery,
 } from "app/store/slices/bookingApiSlices";
 import toast, { Toaster } from "react-hot-toast";
+import RatingCard from "components/common/cards/ratingCard";
 
 export default function BookingDetails({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -32,10 +34,22 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
   const { id } = params;
 
   const { data: booking, refetch } = useGetBookingDetailsQuery(id);
+  let userId : string;
+  let venueId: string;
+  let userName : string;
+  let userEmail : string;
+
+  useEffect(() => {
+    userId = booking?.userId._id
+    venueId = booking?.venueId._id
+    userName = booking?.userId.name
+    userEmail = booking?.userId.email
+  })
 
   const [isCancelModal, setCancelModal] = useState<boolean>(false);
 
   const [cancelBooking] = useCancelBookingMutation();
+  const [addReview] = useAddReviewMutation()
 
   const closeModal = () => {
     setCancelModal(false);
@@ -61,6 +75,25 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
       toast.dismiss();
       toast.error(<b>Error occurred.</b>);
       console.log(error);
+    }
+  };
+
+  const handleRatingSubmit = async (star: number, review: string) => {
+    try {
+      const loadingToast = toast.loading('submitting...')
+      const response = await addReview({userId, venueId, userName, userEmail, star, review}).unwrap();
+      toast.dismiss(loadingToast)
+
+      if(response.success) {
+        toast.success('review submitted!')
+      } else {
+        toast.error('review submission failed!')
+      }
+
+    } catch (error) {
+      console.log(error);
+      toast.dismiss()
+      toast.error('error occured')
     }
   };
 
@@ -92,9 +125,9 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          <div className="max-w-6xl mx-auto p-6">
+          <div className="max-w-6xl mx-auto my-3 p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+              <div className="md:col-span-2 bg-white rounded-lg border shadow-md p-6">
                 <h2 className="text-2xl font-semibold mb-4">booking Details</h2>
                 <div className="space-y-4">
                   <div className="flex items-center">
@@ -161,7 +194,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
               </div>
 
               <div className="space-y-6">
-                <div className="bg-white rounded-lg shadow-md p-6">
+                <div className="bg-white rounded-lg shadow-md border p-6">
                   <h3 className="text-xl font-semibold mb-4">
                     Contact Information
                   </h3>
@@ -200,6 +233,14 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
                 </div>
               </div>
             </div>
+
+            {booking?.status == "confirmed" && (
+              <>
+                <hr className="my-5" />
+
+                <RatingCard handleRatingSubmit={handleRatingSubmit} />
+              </>
+            )}
           </div>
         </div>
       </div>

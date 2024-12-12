@@ -1,5 +1,5 @@
-import { Company, ICompanyData, IVenueData, Venue, Offer, IOfferData } from "../../entities";
-import { ICompany, IOffer, IVenue } from "../../infrastructure/db";
+import { Company, ICompanyData, IVenueData, Venue, Offer, IOfferData, Rating, IRatingData } from "../../entities";
+import { ICompany, IOffer, IRating, IVenue } from "../../infrastructure/db";
 
 
 export interface ICompanyRepository {
@@ -21,4 +21,6 @@ export interface ICompanyRepository {
     getOffers(companyId: string) : Promise<IOffer[] | null>
     deleteOffer(offerId: string) : Promise<void>
     removeOffer(venueId: string) : Promise<void>
+    addRating(rating: Rating) : Promise<IRatingData>
+    getReviews(venueId: string) : Promise<IRatingData[]>
 }

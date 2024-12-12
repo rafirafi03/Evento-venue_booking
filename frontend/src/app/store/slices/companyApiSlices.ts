@@ -167,6 +167,19 @@ export const companyApiSlice = createApi({
                 method: HttpMethod.PATCH
             })
         }),
+        addReview: builder.mutation({
+            query: (postData) => ({
+                url: '/company/addReview',
+                method: HttpMethod.POST,
+                body: postData
+            })
+        }),
+        getRatings: builder.query({
+            query: (venueId) => ({
+                url: `/company/getRatings/${venueId}`,
+                method: HttpMethod.GET
+            })
+        })
     })
 });
 
@@ -193,4 +206,6 @@ export const {
     useDeleteOfferMutation,
     useApplyOfferMutation,
     useRemoveOfferMutation,
+    useAddReviewMutation,
+    useGetRatingsQuery
 } = companyApiSlice;
