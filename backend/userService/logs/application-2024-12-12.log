@@ -66,3 +66,4 @@
 2024-12-12T14:51:15.894Z [INFO]: ::1 - - [12/Dec/2024:14:51:15 +0000] "GET /getUserDetails/66e26ce1a6b2b5cff3334e6b HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 2024-12-12T14:51:47.022Z [INFO]: ::1 - - [12/Dec/2024:14:51:47 +0000] "GET /getUserDetails/66e26ce1a6b2b5cff3334e6b HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 2024-12-12T14:52:19.826Z [INFO]: ::1 - - [12/Dec/2024:14:52:19 +0000] "GET /getUserDetails/66e26ce1a6b2b5cff3334e6b HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-12T15:15:06.195Z [INFO]: server is running on http://localhost:4000
