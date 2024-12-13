@@ -1,0 +1,30 @@
+{
+    "env": {
+      "browser": false,
+      "es2021": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended"  // Enable Prettier integration
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": 2021,
+      "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint", "import", "prettier"],
+    "rules": {
+      "prettier/prettier": "error",
+      "@typescript-eslint/no-unused-vars": "warn",
+      "import/order": [
+        "error",
+        {
+          "groups": [["builtin", "external"], "internal", ["sibling", "parent", "index"]],
+          "newlines-between": "always"
+        }
+      ]
+    }
+  }
+  
