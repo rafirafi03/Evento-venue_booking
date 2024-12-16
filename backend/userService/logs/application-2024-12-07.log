@@ -1,6 +1,0 @@
-2024-12-07T05:30:35.691Z [INFO]: server is running on http://localhost:4000
-2024-12-07T13:53:32.511Z [INFO]: server is running on http://localhost:4000
-2024-12-07T13:53:36.620Z [INFO]: ::1 - - [07/Dec/2024:13:53:36 +0000] "GET /checkFavourites/66e26ce1a6b2b5cff3334e6b/6733709bb17017e899b57510 HTTP/1.1" 401 53 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-2024-12-07T13:53:38.846Z [INFO]: ::1 - - [07/Dec/2024:13:53:38 +0000] "GET /getUserDetails/66e26ce1a6b2b5cff3334e6b HTTP/1.1" 401 53 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-2024-12-07T13:55:17.276Z [INFO]: ::1 - - [07/Dec/2024:13:55:17 +0000] "GET /getUserDetails/66e26ce1a6b2b5cff3334e6b HTTP/1.1" 401 53 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-2024-12-07T14:52:56.128Z [INFO]: ::1 - - [07/Dec/2024:14:52:56 +0000] "GET /getUserDetails/66e26ce1a6b2b5cff3334e6b HTTP/1.1" 401 53 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

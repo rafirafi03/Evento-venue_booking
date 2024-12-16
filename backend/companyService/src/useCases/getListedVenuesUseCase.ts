@@ -1,5 +1,6 @@
 import { ICompanyRepository } from "../repositories";
 import { IVenue } from "../infrastructure/db";
+import { generateSignedUrl } from "../utils";
 
 interface SearchParams {
     search: string;
@@ -12,7 +13,7 @@ export class GetListedVenuesUseCase {
         private _companyRepository: ICompanyRepository
     ) {}
 
-    async execute({ search, types, priceRange }: SearchParams): Promise<{ venues: IVenue[] } | null> {
+    async execute({ search, types, priceRange }: SearchParams): Promise<IVenue[] | null> {
         try {
           
           let venues = await this._companyRepository.getListedVenues();
@@ -44,7 +45,18 @@ export class GetListedVenuesUseCase {
           if (!venues || venues.length === 0) {
             return null;
           } else {
-            return { venues };
+            return await Promise.all(
+              venues.map(async (venue) => {
+                const signedUrls = await Promise.all(
+                  venue.images.map((imageName: string) => generateSignedUrl(imageName))
+                );
+    
+                return {
+                  ...venue.toObject(),
+                  images: signedUrls,
+                };
+              })
+            );
           }
         } catch (error) {
           throw new Error("Error: " + error);

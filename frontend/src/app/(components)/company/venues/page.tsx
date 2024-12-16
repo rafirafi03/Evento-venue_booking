@@ -28,6 +28,8 @@ export default function page() {
     isError,
     refetch,
   } = useGetVenuesQuery(companyId);
+
+  const venue = venues?.venues
   const { data: offers, refetch: offerRefetch } = useGetOffersQuery(companyId);
   const [updateVenueStatus] = useUpdateVenueStatusMutation();
   const [applyOffer] = useApplyOfferMutation()
@@ -44,10 +46,6 @@ export default function page() {
   const [isOfferListModal, setOfferListModal] = useState<boolean>(false);
 
   const router = useRouter();
-
-  console.log(venues?.venues);
-
-  const venue = venues?.venues?.venues;
 
   const handleChange = () => {
     router.push("/company/addVenue");

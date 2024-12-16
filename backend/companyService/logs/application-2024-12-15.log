@@ -1,0 +1,25 @@
+2024-12-14T19:11:03.192Z [INFO]: ::1 - - [14/Dec/2024:19:11:03 +0000] "GET /getListedVenues?search=ta&types=Conference%2CAuditorium HTTP/1.1" 200 1032 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T19:11:11.343Z [INFO]: ::1 - - [14/Dec/2024:19:11:11 +0000] "GET /getListedVenues?search=ta&types=Conference%2CAuditorium HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T19:11:13.040Z [INFO]: ::1 - - [14/Dec/2024:19:11:13 +0000] "GET /getListedVenues?search=ta&types=Conference%2CAuditorium HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T19:11:16.992Z [INFO]: ::1 - - [14/Dec/2024:19:11:16 +0000] "GET /getListedVenues?types=Banquet HTTP/1.1" 200 15 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T19:11:22.278Z [INFO]: ::1 - - [14/Dec/2024:19:11:22 +0000] "GET /getListedVenues HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T19:11:30.046Z [INFO]: ::1 - - [14/Dec/2024:19:11:30 +0000] "GET /getListedVenues?types=Conference%2CBanquet%2CAuditorium HTTP/1.1" 200 3068 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T19:11:38.254Z [INFO]: ::1 - - [14/Dec/2024:19:11:38 +0000] "GET /getListedVenues?types=Restaurant HTTP/1.1" 200 15 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T19:32:38.032Z [INFO]: server is running on http://localhost:4001
+2024-12-14T19:50:10.187Z [INFO]: server is running on http://localhost:4001
+2024-12-14T19:50:48.014Z [INFO]: server is running on http://localhost:4001
+2024-12-14T20:10:13.693Z [INFO]: ::1 - - [14/Dec/2024:20:10:13 +0000] "GET /getVenues/67162fa0016448154f9b34cb HTTP/1.1" 200 15 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T20:10:13.701Z [INFO]: ::1 - - [14/Dec/2024:20:10:13 +0000] "GET /getOffers/67162fa0016448154f9b34cb HTTP/1.1" 200 259 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T20:10:13.752Z [INFO]: ::1 - - [14/Dec/2024:20:10:13 +0000] "GET /getVenues/67162fa0016448154f9b34cb HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T20:11:09.393Z [INFO]: ::1 - - [14/Dec/2024:20:11:09 +0000] "POST /addVenue HTTP/1.1" 500 1887 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T20:12:23.249Z [INFO]: server is running on http://localhost:4001
+2024-12-14T20:13:15.803Z [INFO]: ::1 - - [14/Dec/2024:20:13:15 +0000] "POST /addVenue HTTP/1.1" 500 1887 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T20:15:30.217Z [INFO]: server is running on http://localhost:4001
+2024-12-14T20:15:42.302Z [INFO]: server is running on http://localhost:4001
+2024-12-14T20:15:54.058Z [INFO]: ::1 - - [14/Dec/2024:20:15:54 +0000] "POST /addVenue HTTP/1.1" 500 1887 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T20:16:11.200Z [INFO]: server is running on http://localhost:4001
+2024-12-14T20:16:50.553Z [INFO]: ::1 - - [14/Dec/2024:20:16:50 +0000] "POST /addVenue HTTP/1.1" 500 1887 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T20:18:49.720Z [INFO]: server is running on http://localhost:4001
+2024-12-14T20:19:01.737Z [INFO]: ::1 - - [14/Dec/2024:20:19:01 +0000] "POST /addVenue HTTP/1.1" 500 1538 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-14T20:19:19.173Z [INFO]: server is running on http://localhost:4001
+2024-12-14T20:19:57.923Z [INFO]: ::1 - - [14/Dec/2024:20:19:57 +0000] "POST /addVenue HTTP/1.1" 500 1538 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

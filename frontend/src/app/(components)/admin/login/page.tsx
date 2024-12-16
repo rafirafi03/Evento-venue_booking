@@ -60,7 +60,7 @@ const Page = () => {
         console.log("adminscssssss");
         const token = res.token;
         localStorage.setItem("authAdminToken", token);
-        router.push("/admin/dashboard");
+        router.push("/admin");
       } else {
         setError(res.error);
       }

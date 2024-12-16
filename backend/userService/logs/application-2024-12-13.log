@@ -161,3 +161,6 @@
 2024-12-13T18:16:42.310Z [INFO]: server is running on http://localhost:4000
 2024-12-13T18:17:45.699Z [INFO]: server is running on http://localhost:4000
 2024-12-13T18:18:13.617Z [INFO]: server is running on http://localhost:4000
+2024-12-13T18:18:18.092Z [INFO]: server is running on http://localhost:4000
+2024-12-13T18:21:14.901Z [INFO]: ::1 - - [13/Dec/2024:18:21:14 +0000] "GET /health HTTP/1.1" 200 70 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-13T18:21:15.052Z [INFO]: ::1 - - [13/Dec/2024:18:21:15 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:4000/health" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

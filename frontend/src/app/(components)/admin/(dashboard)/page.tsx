@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Header from "../../login-header/header";
-import Aside from "../aside/page";
-import UserList from "../userslist/page";
+import Aside from "components/adminComponents/aside";
+import UserList from "../usersList/page";
 import CompanyList from '../companyList/page'
 import Approval from "../approval/page";
 import { useRouter } from "next/navigation";
@@ -43,17 +43,7 @@ export default function Page() {
           />
         </aside>
         <div className="flex-1 p-4">
-          {page === "users" ? (
-            <UserList />
-          ) : page === "dashboard" ? (
-            <h1 className="text-2xl font-bold">Dashboard</h1>
-          ) : page === "inbox" ? (
-            <Approval />
-          ) : page === "companies" ? (
-            <CompanyList />
-          ) : (
-            <h1 className="text-2xl font-bold">Not Found</h1>
-          )}
+          dashboard
         </div>
       </div>
     </>

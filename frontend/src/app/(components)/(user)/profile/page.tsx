@@ -62,9 +62,15 @@ export default function UserProfile() {
   const [newPass, setNewPass] = useState<string>("");
   const [confirmPass, setComfirmPass] = useState<string>("");
   const [userName, setUserName] = useState<string>('');
-  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+  const [errors, setErrors] = useState<{ name?: string; email?: string; password?: string; }>({});
   const [cancelBookingModal, setCancelBookingModal] = useState<boolean>(false);
-  const [bookingId, setBookingId] = useState<string>('')
+  const [bookingId, setBookingId] = useState<string>('');
+  const [initialUserName, setInitialUserName] = useState(userName);
+
+// Set initial values when component mounts
+useEffect(() => {
+  setInitialUserName(userDetails?.userName);
+}, [userDetails?.userName]);
 
   useEffect(() => {
     if(userDetails) {
@@ -116,6 +122,11 @@ export default function UserProfile() {
   const handleEditUserProfile = async (e)=> {
 
     e.preventDefault();
+
+    if (userName === initialUserName) {
+      console.log("No changes detected.");
+      return; // Exit if no change
+    }
     
     // Validate the input data with Zod
     const validationResult = editProfileSchema.safeParse({ name: userName, });
@@ -132,7 +143,9 @@ export default function UserProfile() {
     // Clear previous errors if validation succeeds
     setErrors({ name: ''});
     try {
+
       const loadingToast = toast.loading('Saving...');
+      setInitialUserName(userName)
       setUserName(userName)
       const res = await editUser({ userId, userName }).unwrap();
       toast.dismiss(loadingToast);
@@ -157,6 +170,25 @@ export default function UserProfile() {
         console.log("password doesnt match.");
         return;
       }
+
+      if(currPass.trim() == "") {
+        setErrors({password: 'Current Password needed!'});
+        return
+      } else if (newPass.trim() == "") {
+        setErrors({password: 'new Password required!'});
+        return
+      } else if(newPass.length < 6) {
+        setErrors({password: 'new password atleast 6 characters needed!'})
+        return 
+      } else if(confirmPass.trim() == "") {
+        setErrors({password: 'confirmPass required!'})
+        return 
+      } else if(confirmPass.length < 6) {
+        setErrors({password: 'confirm password atleast 6 characters needed!'})
+        return 
+      }
+
+
       const loadingToast = toast.loading('Saving...');
       const res = await resetPass({ userId, currPass, newPass }).unwrap();
       toast.dismiss(loadingToast);
@@ -557,6 +589,8 @@ export default function UserProfile() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">
                       Reset Password
                     </h3>
+                    {errors.password && <div className="text-sm text-[rgb(255,0,0)] mb-2">{errors.password}</div>}
+
                     <div className="space-y-4">
                       <div>
                         <label

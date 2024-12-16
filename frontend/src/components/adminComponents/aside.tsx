@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 // import Image from "next/image";
 // import Header from "../../login-header/header";
 
-export default function page({ handleLogout, changePage, page }: any) {
+export default function page() {
+  const [page, setPage] = useState<string>("");
+  const router = useRouter();
+
+  const changePage = (arg: string) => {
+    setPage(arg);
+    if(arg === 'dashboard') {
+        router.push('/admin')
+    } else {
+        router.push(`/admin/${arg}`)
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("authAdminToken");
+    router.push('/admin/login')
+  };
+
   return (
     <div>
       <aside
@@ -12,8 +30,17 @@ export default function page({ handleLogout, changePage, page }: any) {
       >
         <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-white">
           <ul className="space-y-5 ml-2 font-medium">
-            <li className="cursor-pointer" onClick={() => changePage('dashboard')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${page == 'dashboard' ? 'bg-red-300' : ""}`}>
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                 changePage("dashboard")
+                }}
+            >
+              <a
+                className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${
+                  page == "dashboard" ? "bg-red-300" : ""
+                }`}
+              >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900"
                   aria-hidden="true"
@@ -27,8 +54,17 @@ export default function page({ handleLogout, changePage, page }: any) {
                 <span className="ms-3 ml-6">Dashboard</span>
               </a>
             </li>
-            <li className="cursor-pointer" onClick={() => changePage('companies')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${page == 'companies' ? 'bg-red-300' : ""}`}>
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                changePage("companyList");
+              }}
+            >
+              <a
+                className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${
+                  page == "companyList" ? "bg-red-300" : ""
+                }`}
+              >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900"
                   aria-hidden="true"
@@ -43,9 +79,18 @@ export default function page({ handleLogout, changePage, page }: any) {
                 </span>
               </a>
             </li>
-            
-            <li className="cursor-pointer" onClick={() => changePage('users')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'users' ? 'bg-red-300' : ""}`}>
+
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                changePage("usersList");
+              }}
+            >
+              <a
+                className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${
+                  page == "usersList" ? "bg-red-300" : ""
+                }`}
+              >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900 "
                   aria-hidden="true"
@@ -60,8 +105,16 @@ export default function page({ handleLogout, changePage, page }: any) {
                 </span>
               </a>
             </li>
-            <li className="cursor-pointer" onClick={() => changePage('inbox')}>
-              <a className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${page == 'inbox' ? 'bg-red-300' : ""}`}>
+            <li 
+            className="cursor-pointer" 
+            onClick={() => { 
+                changePage("approval");
+            }}>
+              <a
+                className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${
+                  page == "approval" ? "bg-red-300" : ""
+                }`}
+              >
                 <svg
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 dark:text-black group-hover:text-gray-900"
                   aria-hidden="true"
@@ -96,7 +149,6 @@ export default function page({ handleLogout, changePage, page }: any) {
                 </span>
               </a>
             </li>
-            
           </ul>
         </div>
       </aside>

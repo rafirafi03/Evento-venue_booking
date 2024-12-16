@@ -90,6 +90,8 @@ export class CompanyRepository implements ICompanyRepository {
     try {
       const venues = await venueModel.find({companyId: companyId});
 
+      
+
       return venues as IVenue[];
     } catch (error) {
       console.error("Error fetching venues:", error);

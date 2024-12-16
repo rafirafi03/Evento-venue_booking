@@ -24,7 +24,7 @@ const Page = () => {
   const { data: venues, refetch } = useGetListedVenuesQuery(undefined);
   // const [addToFavourites] = useAddToFavouritesMutation()
 
-  const venue = venues?.venues?.venues;
+  const venue = venues?.venues;
 
   const router = useRouter();
 

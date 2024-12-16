@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { Send, Search } from 'lucide-react'
+import socket from 'utils/socket'
 
 type Message = {
   id: number
@@ -17,7 +18,7 @@ type User = {
   lastMessage: string
 }
 
-export default function ImprovedChatUI() {
+export default function chatComponent() {
   const [users] = useState<User[]>([
     { id: 1, name: 'Alice Johnson', avatar: '/placeholder.svg?height=40&width=40', lastMessage: 'Hello there!' },
     { id: 2, name: 'Bob Smith', avatar: '/placeholder.svg?height=40&width=40', lastMessage: 'How are you?' },
@@ -27,23 +28,39 @@ export default function ImprovedChatUI() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [messages, setMessages] = useState<Message[]>([])
   const [inputMessage, setInputMessage] = useState('')
-  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight
     }
-  };
+  }
 
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // Connect to Socket.IO
+  useEffect(() => {
+    // Listen for messages from the server
+    socket.on('message', (message: Message) => {
+      setMessages((prevMessages) => [...prevMessages, message])
+    })
+
+    // Clean up on component unmount
+    return () => {
+      socket.off('message')
+    }
+  }, [])
 
   const handleUserSelect = (user: User) => {
     setSelectedUser(user)
     setMessages([
       { id: 1, text: `Hi, this is ${user.name}. How can I help you?`, sender: 'contact', timestamp: '10:00 AM' },
     ])
+
+    // Join the chat room for the selected user
+    socket.emit('joinRoom', { userId: user.id })
   }
 
   const handleSendMessage = () => {
@@ -52,21 +69,14 @@ export default function ImprovedChatUI() {
         id: Date.now(),
         text: inputMessage,
         sender: 'user',
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       }
-      setMessages(prevMessages => [...prevMessages, newMessage])
+
+      setMessages((prevMessages) => [...prevMessages, newMessage])
       setInputMessage('')
-      
-      // Simulate response
-      setTimeout(() => {
-        const response: Message = {
-          id: Date.now(),
-          text: `This is a simulated response from ${selectedUser.name}.`,
-          sender: 'contact',
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        }
-        setMessages(prevMessages => [...prevMessages, response])
-      }, 1000)
+
+      // Send the message to the server
+      socket.emit('sendMessage', { message: newMessage, to: selectedUser.id })
     }
   }
 
@@ -85,10 +95,12 @@ export default function ImprovedChatUI() {
           </div>
         </div>
         <div className="overflow-y-auto h-[calc(100vh-73px)]">
-          {users.map(user => (
-            <div 
-              key={user.id} 
-              className={`flex items-center p-4 hover:bg-gray-50 cursor-pointer ${selectedUser?.id === user.id ? 'bg-gray-100' : ''}`}
+          {users.map((user) => (
+            <div
+              key={user.id}
+              className={`flex items-center p-4 hover:bg-gray-50 cursor-pointer ${
+                selectedUser?.id === user.id ? 'bg-gray-100' : ''
+              }`}
               onClick={() => handleUserSelect(user)}
             >
               <img src={user.avatar} alt={user.name} className="w-10 h-10 rounded-full mr-3" />
@@ -115,19 +127,23 @@ export default function ImprovedChatUI() {
             <div className="flex-1 overflow-hidden">
               <div className="h-full overflow-y-auto p-4 space-y-4" ref={messagesContainerRef}>
                 {messages.map((message) => (
-                  <div 
-                    key={message.id} 
+                  <div
+                    key={message.id}
                     className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    <div 
+                    <div
                       className={`max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl rounded-lg p-3 ${
-                        message.sender === 'user' 
-                          ? 'bg-red-500 text-white' 
+                        message.sender === 'user'
+                          ? 'bg-red-500 text-white'
                           : 'bg-white border border-gray-200'
                       }`}
                     >
                       <p>{message.text}</p>
-                      <p className={`text-xs mt-1 ${message.sender === 'user' ? 'text-red-200' : 'text-gray-400'}`}>
+                      <p
+                        className={`text-xs mt-1 ${
+                          message.sender === 'user' ? 'text-red-200' : 'text-gray-400'
+                        }`}
+                      >
                         {message.timestamp}
                       </p>
                     </div>
@@ -165,4 +181,3 @@ export default function ImprovedChatUI() {
     </div>
   )
 }
-

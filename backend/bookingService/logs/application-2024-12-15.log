@@ -1,0 +1,1 @@
+2024-12-14T20:10:11.205Z [INFO]: ::1 - - [14/Dec/2024:20:10:11 +0000] "GET /getCompanyDashboardDetails/67162fa0016448154f9b34cb HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"

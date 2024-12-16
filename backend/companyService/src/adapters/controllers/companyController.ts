@@ -143,9 +143,7 @@ export class CompanyController {
       const files = req.files as Express.MulterS3.File[];
 
       const imagePaths = files?.map(
-        (image) =>
-          `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${image.key}`
-      );
+        (image) => image.key );
 
       console.log(
         imagePaths,
@@ -175,6 +173,8 @@ export class CompanyController {
   async getVenues(req: Request, res: Response): Promise<void> {
     try {
       const { companyId } = req.params;
+
+      console.log(req.params," req parmassss")
       const venues = await this._getVenues.execute(companyId);
       res.status(HttpStatusCode.OK).json({ venues });
     } catch (error) {

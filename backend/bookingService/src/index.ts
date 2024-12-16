@@ -37,19 +37,24 @@ app.use(cookieParser())
 
 app.use("/",bookingRoute);
 app.get('/health', async (req, res) => {
-  let dbStatus = 'DOWN';
+  try {
+    let dbStatus = mongoose.connection.readyState === 1 ? 'UP' : 'DOWN';
 
-  // Check database connection
-  if (mongoose.connection.readyState === 1) {
-    dbStatus = 'UP';
+    res.status(200).json({
+      status: 'UP',
+      database: dbStatus,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: 'DOWN',
+      database: 'DOWN',
+      error: error.message,
+      timestamp: new Date().toISOString(),
+    });
   }
-
-  res.status(200).json({
-    status: 'UP',
-    database: dbStatus,
-    timestamp: new Date().toISOString(),
-  });
 });
+
 
 app.listen(PORT, () => {
   logger.info(`server is running on http://localhost:${PORT}`);
