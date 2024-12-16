@@ -18,6 +18,8 @@ import Aside from "app/(components)/company/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetCompanyDetailsQuery, useEditCompanyProfileMutation } from "app/store/slices/companyApiSlices";
 import Image from "next/image";
+import AuthHOC,{Role} from "components/common/auth/authHoc";
+
 
 export default function Page() {
 
@@ -40,14 +42,21 @@ export default function Page() {
 
   const [name, setName] = useState<string>('')
   const [phone, setPhone] = useState<number>(0)
+  const [initialName, setInitialName] = useState<string>('');
+  const [initialPhone, setInitialPhone] = useState<number>(0)
 
   useEffect(() => {
     setName(company?.name)
-    setPhone(company?.phone)
+    setPhone(company?.phone);
+    setInitialName(company?.name)
+    setInitialPhone(company?.phone)
   },[company])
 
   const handleUpdateProfile = async()=> {
     try {
+      if(initialName == name && initialPhone == phone) {
+        return null
+      } 
       const response = await editCompanyProfile({companyId, name, phone}).unwrap()
 
       console.log(response)
@@ -69,6 +78,7 @@ export default function Page() {
   };
 
   return (
+    <AuthHOC role={Role.Company}>
     <div className="bg-gray-100 h-full">
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
@@ -396,5 +406,6 @@ export default function Page() {
         </div>
       </div>
     </div>
+    </AuthHOC>
   );
 }

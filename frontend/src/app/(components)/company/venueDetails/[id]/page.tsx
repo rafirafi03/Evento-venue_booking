@@ -19,6 +19,7 @@ import {
 import ConfirmModal from "../../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import AuthHOC,{Role} from "components/common/auth/authHoc";
 
 export default function VenueDetails({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -68,7 +69,7 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
   };
 
   return (
-    <>
+    <AuthHOC role={Role.Company} >
       {isConfirmModal && (
         <ConfirmModal
           title={modalTitle}
@@ -181,6 +182,6 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
-    </>
+    </AuthHOC>
   );
 }

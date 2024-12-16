@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import RevenueCard from "components/common/cards/revenueCard";
 import { useGetCompanyDashboardDetailsQuery } from "app/store/slices/bookingApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 export default function Page() {
   const router = useRouter();
@@ -24,11 +25,12 @@ export default function Page() {
     }
   }, [router]);
   
-  const { data: dashboardData, isError, refetch } = useGetCompanyDashboardDetailsQuery(companyId);
+  const { data: dashboardData } = useGetCompanyDashboardDetailsQuery(companyId);
 
   console.log(dashboardData,"dahsboard datattatatattatat")
 
   return (
+    <AuthHOC role={Role.Company}>
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
@@ -54,5 +56,6 @@ export default function Page() {
         </div>
       </div>
     </>
+    </AuthHOC> 
   );
 }

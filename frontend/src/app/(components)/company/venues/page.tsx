@@ -17,6 +17,25 @@ import { getUserIdFromToken } from "utils/tokenHelper";
 import OfferListModal from "components/companyComponents/modals/offerListModal";
 import toast, { Toaster } from "react-hot-toast";
 import Pagination from "components/userComponents/pagination";
+import AuthHOC,{Role} from "components/common/auth/authHoc";
+
+interface IVenue {
+  _id: string;
+  companyId: string;
+  name: string;
+  type: string;
+  amount: number;
+  description: string;
+  capacity: number;
+  address: string;
+  phone: number;
+  city: string;
+  state: string;
+  images: string[]
+  isListed: boolean;
+  offerId: string;
+  isCompanyBlocked: boolean;
+}
 
 
 export default function page() {
@@ -24,19 +43,23 @@ export default function page() {
 
   const {
     data: venues,
-    isLoading,
-    isError,
     refetch,
   } = useGetVenuesQuery(companyId);
 
-  const venue = venues?.venues
-  const { data: offers, refetch: offerRefetch } = useGetOffersQuery(companyId);
+  const { data: offers } = useGetOffersQuery(companyId);
   const [updateVenueStatus] = useUpdateVenueStatusMutation();
-  const [applyOffer] = useApplyOfferMutation()
+  const [applyOffer] = useApplyOfferMutation();
+  const [venuesArray, setVenuesArray] = useState<IVenue[]>([]);
 
   useEffect(() => {
-    refetch()
-  },[venues])
+        // Initial fetch for companies
+        const fetchVenues = async () => {
+    
+          const venue = venues?.venues
+          setVenuesArray(venue);
+        };
+        fetchVenues();
+      }, []);
 
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalButton, setModalButton] = useState<string>("");
@@ -66,7 +89,16 @@ export default function page() {
     try {
       console.log("confirmvenuelisting");
       const response = await updateVenueStatus({ venueId }).unwrap();
-      refetch();
+      
+      if(response.success) {
+        setVenuesArray((prev) =>
+          prev?.map((venue) =>
+            venue._id === venueId
+              ? { ...venue, isListed: !venue.isListed }
+              : venue
+          )
+        );
+      }
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -122,7 +154,7 @@ export default function page() {
   }
 
   return (
-    <>
+    <AuthHOC role={Role.Company} >
     <div>
         <Toaster position="bottom-center" reverseOrder={false} />
       </div>
@@ -170,7 +202,7 @@ export default function page() {
                 />
               </button>
             </div>
-            {venue?.length > 0 ? (
+            {venuesArray?.length > 0 ? (
               <>
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                   <table className="w-full text-sm text-left rtl:text-right text-black dark:text-black">
@@ -206,7 +238,7 @@ export default function page() {
                       </tr>
                     </thead>
                     <tbody className="dark:text-black font-bold">
-                      {venue.map((ven, index) => (
+                      {venuesArray.map((ven, index) => (
                         <tr
                           key={index}
                           className="bg-slate-100 dark:bg-slate-100 hover:bg-slate-200 border-b-2 border"
@@ -296,6 +328,6 @@ export default function page() {
         </div>
         </div>
       </div>
-    </>
+    </AuthHOC>
   );
 }

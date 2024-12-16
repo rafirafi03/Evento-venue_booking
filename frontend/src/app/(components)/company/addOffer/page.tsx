@@ -10,6 +10,7 @@ import { getUserIdFromToken } from "utils/tokenHelper";
 import { useFormik } from "formik";
 import { offerValidationSchema } from "app/schema/validation";
 import toast, { Toaster } from "react-hot-toast";
+import AuthHOC,{Role} from "components/common/auth/authHoc";
 
 export default function page() {
   const [addOffer] = useAddOfferMutation();
@@ -46,6 +47,7 @@ export default function page() {
   });
 
   return (
+    <AuthHOC role={Role.Company} >
     <>
     <div>
         <Toaster position="bottom-center" reverseOrder={false} />
@@ -141,5 +143,6 @@ export default function page() {
         </div>
       </div>
     </>
+    </AuthHOC>
   );
 }

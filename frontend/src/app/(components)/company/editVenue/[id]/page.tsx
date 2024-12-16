@@ -7,6 +7,8 @@ import { useGetVenueDetailsQuery, useEditVenueMutation } from "app/store/slices/
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
 import Aside from '../../aside/page'
+import AuthHOC,{Role} from "components/common/auth/authHoc";
+
 
 export default function page({ params }: { params: { id: string } }) {
 
@@ -125,7 +127,7 @@ export default function page({ params }: { params: { id: string } }) {
 
   return (
 
-    <>
+    <AuthHOC role={Role.Company}>
     <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
       </nav>
@@ -430,7 +432,7 @@ export default function page({ params }: { params: { id: string } }) {
     </div>
     </div>
       </div>
-      </>
+      </AuthHOC>
 
 
 

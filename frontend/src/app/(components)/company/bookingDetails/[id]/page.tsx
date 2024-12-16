@@ -22,6 +22,8 @@ import CancelBookingModal from 'components/userComponents/cancelBookingModal'
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCancelBookingMutation, useGetBookingDetailsQuery } from "app/store/slices/bookingApiSlices";
+import AuthHOC, {Role} from "components/common/auth/authHoc";
+
 
 export default function BookingDetails({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -56,6 +58,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
   };
 
   return (
+    <AuthHOC role={Role.Company}>
     <>
       
             <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
@@ -189,5 +192,6 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
         </div>
         </div>
     </>
+    </AuthHOC>
   );
 }

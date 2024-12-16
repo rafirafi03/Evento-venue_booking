@@ -5,6 +5,8 @@ import {
   useDeleteFromFavouritesMutation,
 } from "app/store/slices/userApiSlices";
 import toast, {Toaster} from "react-hot-toast";
+import { use, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 interface propsData {
   userId: string | null;
@@ -12,9 +14,11 @@ interface propsData {
 }
 
 const FavouriteButton = ({ userId, venueId }: propsData) => {
+
+  const router = useRouter()
   const {
     data: isFavourited,
-    isError,
+    error: favouriteFetchError,
     isLoading,
     refetch,
   } = useCheckIfFavouritedQuery({ userId, venueId });
@@ -32,6 +36,8 @@ const FavouriteButton = ({ userId, venueId }: propsData) => {
           userId,
           venueId,
         }).unwrap();
+        console.log("response:",response)
+
         toast.dismiss(loadingToast)
 
         if(response.success) {
@@ -44,6 +50,7 @@ const FavouriteButton = ({ userId, venueId }: propsData) => {
       } else {
         const loadingToast = toast.loading('adding to favourites...')
         const response = await addToFavourites({ userId, venueId }).unwrap();
+        console.log("response:",response)
         toast.dismiss(loadingToast)
 
         if (response.success) {
@@ -55,7 +62,12 @@ const FavouriteButton = ({ userId, venueId }: propsData) => {
 
       }
       refetch();
-    } catch (error) {
+    } catch (error: any) {
+      if(error.status === 401) {
+        console.warn("Session expired. Logging out...");
+        localStorage.removeItem("authUserToken");
+        router.push('/login')
+      }
       toast.dismiss()
       toast.error(<b>Error occured!</b>)
       console.error("Error toggling favourite", error);

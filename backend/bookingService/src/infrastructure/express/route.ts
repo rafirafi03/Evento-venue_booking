@@ -10,6 +10,7 @@ import {
   CompanyDashboardDetailsUseCase
 } from "../../useCases";
 import { BookingRepository } from "../../repositories";
+import { authMiddleware } from "evento-library";
 
 const router = Router();
 

@@ -7,11 +7,10 @@ import UserList from "../usersList/page";
 import CompanyList from '../companyList/page'
 import Approval from "../approval/page";
 import { useRouter } from "next/navigation";
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 export default function Page() {
   const router = useRouter();
-
-  const [page, setPage] = useState("dashboard");
 
   useEffect(() => {
     const token = localStorage.getItem("authAdminToken");
@@ -20,32 +19,22 @@ export default function Page() {
     }
   }, [router]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("authAdminToken");
-    router.replace("/admin/login");
-  };
-
-  const changePage = (arg: string) => {
-    setPage(arg);
-  };
 
   return (
+    <AuthHOC role={Role.Admin}>
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
       </nav>
       <div className="flex mt-[64px]">
         <aside className="w-64 bg-white dark:bg-gray-800">
-          <Aside
-            handleLogout={handleLogout}
-            changePage={changePage}
-            page={page}
-          />
+          <Aside/>
         </aside>
         <div className="flex-1 p-4">
           dashboard
         </div>
       </div>
     </>
+    </AuthHOC>
   );
 }

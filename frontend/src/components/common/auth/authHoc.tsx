@@ -1,8 +1,10 @@
+"use client"
+
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Loader from '../loader/loader';
 
-enum Role {
+export enum Role {
   Admin = 'admin',
   User = 'user',
   Company = 'company'
@@ -19,7 +21,7 @@ export default function AuthHOC({ children, role, isAuthPage = false }: AuthHOCP
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const tokenKey = role === Role.Admin ? 'adminToken' : role === Role.User ? 'authUserToken' : 'companyToken';
+    const tokenKey = role === Role.Admin ? 'authAdminToken' : role === Role.User ? 'authUserToken' : 'authCompanyToken';
     const token = localStorage.getItem(tokenKey);
 
     if (isAuthPage) {

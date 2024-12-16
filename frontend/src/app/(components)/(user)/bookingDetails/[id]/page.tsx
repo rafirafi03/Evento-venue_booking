@@ -27,6 +27,7 @@ import {
 } from "app/store/slices/bookingApiSlices";
 import toast, { Toaster } from "react-hot-toast";
 import RatingCard from "components/common/cards/ratingCard";
+import AuthHOC,{Role} from "components/common/auth/authHoc";
 
 export default function BookingDetails({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -98,7 +99,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
   };
 
   return (
-    <>
+    <AuthHOC role={Role.User} >
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
       </nav>
@@ -244,6 +245,6 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
           </div>
         </div>
       </div>
-    </>
+    </AuthHOC>
   );
 }

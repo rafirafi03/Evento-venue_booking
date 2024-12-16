@@ -23,7 +23,7 @@ import { useGetUserBookingsQuery } from "app/store/slices/bookingApiSlices";
 import { useCancelBookingMutation } from "app/store/slices/bookingApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
-import AuthHOC from "components/common/auth/authHoc";
+import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { editProfileSchema } from "app/schema/validation";
 import CancleBookingModal from 'components/userComponents/cancelBookingModal';
 
@@ -40,10 +40,20 @@ export default function UserProfile() {
 
   const {
     data: userDetails,
-    error,
+    error: userFetchError,
     isLoading,
     refetch: refetchUserDetails
   } = useGetUserDetailsQuery(userId);
+
+  useEffect(() => {
+    if (userFetchError && "status" in userFetchError) {
+      if (userFetchError.status === 401) {
+        console.warn("Session expired. Logging out...");
+        localStorage.removeItem("authUserToken");
+        router.push('/login')
+      }
+    }
+  }, [userFetchError]);
 
   const { data: bookings, refetch: refetchBookings } = useGetUserBookingsQuery(userId) 
 
@@ -263,7 +273,7 @@ useEffect(() => {
   }
 
   return (
-    <AuthHOC role="user">
+    <AuthHOC role={Role.User}>
     <div>
       <div>
         <Toaster position="bottom-center" reverseOrder={false} />

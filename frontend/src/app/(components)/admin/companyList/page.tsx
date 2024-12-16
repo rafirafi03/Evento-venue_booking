@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   useGetCompaniesQuery,
   useBlockCompanyMutation,
@@ -10,6 +10,7 @@ import Pagination from "components/userComponents/pagination";
 import Header from "app/(components)/login-header/header";
 import Aside from 'components/adminComponents/aside';
 import ErrorPage from 'components/common/ErrorPage/errorPage'
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 export default function Page() {
   interface IVerification {
@@ -31,16 +32,7 @@ export default function Page() {
   }
 
   const [companyBlock] = useBlockCompanyMutation();
-  const {
-    data: companies,
-    isLoading,
-    isError,
-    refetch,
-  } = useGetCompaniesQuery(undefined);
-
-  console.log(companies, "cmpniesssss");
-
-  const company = companies?.companies?.companies || [];
+  
 
   const [blockUser, setBlockUser] = useState<string>("");
   const [blockModal, setBlockModal] = useState<boolean>(false);
@@ -48,8 +40,25 @@ export default function Page() {
   const [userId, setUserId] = useState<string>("");
   const [licenseModal, setLicenseModal] = useState<boolean>("");
   const [license, setLicense] = useState<string>("");
+  const [companiesArray, setCompaniesArray] = useState<ICompany[]>([]);
 
-  console.log(company);
+  const {
+    data: companies,
+    isLoading,
+    isError,
+  } = useGetCompaniesQuery(undefined);
+
+  useEffect(() => {
+    // Initial fetch for companies
+    const fetchCompanies = async () => {
+
+      const company = companies?.companies?.companies || []; // Assume this fetches the company data
+      setCompaniesArray(company);
+    };
+    fetchCompanies();
+  }, []);
+
+
 
   const handleBlock = (id: string, isBlocked: boolean) => {
     try {
@@ -73,10 +82,15 @@ export default function Page() {
       const res = await companyBlock({ id }).unwrap();
 
       if (res.success) {
-        // toast.success("user blocked");
-        refetch();
+        setCompaniesArray((prev) =>
+          prev.map((company) =>
+            company._id === id
+              ? { ...company, isBlocked: blockAction === "unblock" ? false : true }
+              : company
+          )
+        );
       } else {
-        console.error("something went wrong");
+        console.error("Something went wrong");
       }
     } catch (error) {
       console.log(error);
@@ -100,6 +114,7 @@ export default function Page() {
   if (isError) return <ErrorPage page={'/admin'}/> ;
 
   return (
+    <AuthHOC role={Role.Admin} >
     <div>
       {licenseModal && (
         <LicenseModal
@@ -114,9 +129,9 @@ export default function Page() {
         <aside className="w-64 bg-white dark:bg-gray-800">
           <Aside />
         </aside>
-        <div className="flex-1 p-4">
+        <div className="flex-1 p-4 mx-5">
           <h1 className="font-extrabold text-2xl mt-5 mb-5">Companies</h1>
-          {company.length > 0 ? (
+          {companiesArray.length > 0 ? (
             <>
               <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table className="w-full text-sm text-left rtl:text-right text-black dark:text-black">
@@ -146,7 +161,7 @@ export default function Page() {
                     </tr>
                   </thead>
                   <tbody className="dark:text-black font-bold">
-                    {company.map((company: ICompany) => (
+                    {companiesArray.map((company: ICompany) => (
                       <tr
                         key={company._id}
                         className="bg-red-100 dark:bg-red-100 hover:bg-red-200"
@@ -219,5 +234,6 @@ export default function Page() {
         </div>
       </div>
     </div>
+    </AuthHOC>
   );
 }

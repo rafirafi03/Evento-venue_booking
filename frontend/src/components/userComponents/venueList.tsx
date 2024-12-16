@@ -1,12 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import VenueCard from "components/userComponents/venueCard";
 import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
+import { useRouter } from "next/navigation";
 
 export default function venueList() {
+  const router = useRouter()
   const searchParams = useSearchParams()
 
   const filter = {
@@ -35,8 +37,12 @@ export default function venueList() {
     })(),
   };
   const { data: venues } = useGetListedVenuesQuery(filter);
+
+
+
+  console.log("venues in frontend:::",venues)
   const userId = getUserIdFromToken("authUserToken");
-  const venue = venues?.venues?.venues;
+  const venue = venues?.venues;
 
 
   return (

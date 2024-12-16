@@ -7,7 +7,8 @@ import { useAddVenueMutation } from "app/store/slices/companyApiSlices";
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
 import Aside from 'app/(components)/company/aside/page';
-import { getUserIdFromToken } from "utils/tokenHelper"
+import { getUserIdFromToken } from "utils/tokenHelper";
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 export default function page() {
   const [addVenue] = useAddVenueMutation();
@@ -229,7 +230,7 @@ export default function page() {
   };
 
   return (
-
+    <AuthHOC role={Role.Company}>
     <>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
@@ -566,5 +567,6 @@ export default function page() {
         </div>
       </div>
     </>
+    </AuthHOC>
   );
 }

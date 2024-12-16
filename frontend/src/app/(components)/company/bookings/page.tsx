@@ -7,6 +7,7 @@ import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
 import { useGetCompanyBookingsQuery } from "app/store/slices/bookingApiSlices";
 import Pagination from "components/userComponents/pagination";
+import AuthHOC,{Role} from "components/common/auth/authHoc";
 
 export default function page() {
   const companyId = getUserIdFromToken("authCompanyToken");
@@ -21,7 +22,7 @@ export default function page() {
   }
 
   return (
-    <>
+    <AuthHOC role={Role.Company}>
       <div>
         <Toaster position="bottom-center" reverseOrder={false} />
       </div>
@@ -151,6 +152,6 @@ export default function page() {
         </div>
         </div>
       </div>
-    </>
+    </AuthHOC>
   );
 }

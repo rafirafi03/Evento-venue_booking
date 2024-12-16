@@ -8,7 +8,8 @@ import {
 import Modal from "../modal/page";
 import ErrorPage from "components/common/ErrorPage/errorPage";
 import Header from "app/(components)/login-header/header";
-import Aside from 'components/adminComponents/aside'
+import Aside from 'components/adminComponents/aside';
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 export default function Page() {
   interface IVerification {
@@ -79,9 +80,10 @@ export default function Page() {
 
   // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <ErrorPage />;
+  if (isError) return <ErrorPage page="/admin" />;
 
   return (
+    <AuthHOC role={Role.Admin}>
     <div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
@@ -170,5 +172,6 @@ export default function Page() {
         </div>
       </div>
     </div>
+    </AuthHOC>
   );
 }

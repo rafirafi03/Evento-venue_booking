@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   useBlockUserMutation,
   useGetUsersQuery,
@@ -9,7 +9,8 @@ import ConfirmModal from "../../../../components/common/modals/confirmModal";
 import Pagination from "components/userComponents/pagination";
 import ErrorPage from "components/common/ErrorPage/errorPage";
 import Header from "app/(components)/login-header/header";
-import Aside from 'components/adminComponents/aside'
+import Aside from 'components/adminComponents/aside';
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 export default function Page() {
   interface IUser {
@@ -20,22 +21,33 @@ export default function Page() {
     phone: number;
     isBlocked: boolean;
   }
-
+  
+  
   const [userBlock] = useBlockUserMutation();
   const {
     data: users,
     isLoading,
     isError,
-    refetch,
   } = useGetUsersQuery(undefined);
+  const [usersArray, setUsersArray] = useState<IUser[]>([]);
 
-  const user = users?.users.users || [];
+  useEffect(() => {
+      // Initial fetch for companies
+      const fetchUsers = async () => {
+  
+        const user = users?.users?.users || [];
+        setUsersArray(user);
+      };
+      fetchUsers();
+    }, []);
+
+
 
   const [blockUser, setBlockUser] = useState<string>("");
   const [blockModal, setBlockModal] = useState<boolean>(false);
   const [blockAction, setBlockAction] = useState<string>("");
+  
 
-  console.log(user);
 
   const handleBlock = (id: string, isBlocked: boolean) => {
     try {
@@ -54,7 +66,13 @@ export default function Page() {
 
       if (res.success) {
         // toast.success("user blocked");
-        refetch();
+        setUsersArray((prev) =>
+          prev?.map((user) =>
+            user._id === id
+              ? { ...user, isBlocked: blockAction === "unblock" ? false : true }
+              : user
+          )
+        );
       } else {
         console.error("something went wrong");
       }
@@ -75,6 +93,7 @@ export default function Page() {
   if (isError) return <ErrorPage page={"/admin"} />;
 
   return (
+    <AuthHOC role={Role.Admin} >
     <div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
@@ -83,7 +102,7 @@ export default function Page() {
         <aside className="w-64 bg-white dark:bg-gray-800">
           <Aside />
         </aside>
-        <div className="flex-1 p-4">
+        <div className="flex-1 p-4 mx-5">
           <h1 className="font-extrabold text-2xl mt-5 mb-5">Users</h1>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-center rtl:text-right text-black dark:text-black">
@@ -107,8 +126,8 @@ export default function Page() {
                 </tr>
               </thead>
               <tbody className="dark:text-black font-bold">
-                {user.length > 0 ? (
-                  user.map((user: IUser) => (
+                {usersArray.length > 0 ? (
+                  usersArray.map((user: IUser) => (
                     <tr
                       key={user._id}
                       className="bg-red-100 dark:bg-red-100 hover:bg-red-200"
@@ -170,5 +189,6 @@ export default function Page() {
         </div>
       </div>
     </div>
+    </AuthHOC>
   );
 }
