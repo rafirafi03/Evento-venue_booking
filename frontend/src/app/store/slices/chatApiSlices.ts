@@ -10,10 +10,9 @@ export const chatApiSlices = createApi({
   }),
   endpoints: (builder) => ({
     getMessages: builder.query({
-      query: (data) => ({
-        url: "/chat/getMessages",
+      query: ({userId, receiverId}) => ({
+        url: `/chat/getMessages/${userId}/${receiverId}`,
         method: HttpMethod.GET,
-        body: data,
       }),
     }),
   }),

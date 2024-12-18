@@ -11,7 +11,7 @@ const getMessagesUseCase = new GetMessagesUseCase(chatRepository)
 
 const chatController = new ChatController(getMessagesUseCase)
 
-router.get('/getMessages', (req, res) => {
+router.get('/getMessages/:userId/:receiverId', (req, res) => {
     chatController.getMessages(req, res)
 })
 

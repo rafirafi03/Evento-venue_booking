@@ -6,17 +6,18 @@ export class GetMessagesUseCase {
     private _chatRepository : IChatRepository
   ) {}
 
-  async execute(senderId: string, receiverId: string): Promise<{ success: boolean }> {
+  async execute(senderId: string, receiverId: string): Promise<Chat[]> {
     try {
 
+      console.log(senderId,"senderIdddddd")
        const response = this._chatRepository.getMessages(senderId, receiverId)
 
        console.log(response,"responseeeee");
       
-      return { success: true };
+      return response
     } catch (error) {
       console.log(error);
-      return { success: false };
+      return [];
     }
   }
 }

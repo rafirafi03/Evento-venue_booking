@@ -27,13 +27,14 @@ type AppProps = {
 export default function App({ isOpen,isClose, handleBooking, capacity }: AppProps) {
   const [event, setEvent] = useState<string>("");
   const [guests, setGuests] = useState<number>(0);
+  const today = new Date().toISOString().split('T')[0];
   const [bookingDuration, setBookingDuration] = useState<RangeValue<DateValue>>({
-    start: parseDate("2024-04-08"),
-    end: parseDate("2024-04-08"),
+    start: parseDate(today),
+    end: parseDate(today),
   });
   const [eventError, setEventError] = useState<string>('');
   const [guestsError, setGuestsError] = useState<string>('');
-  const [dateError, setDateError] = useState<string>('')
+  const [dateError, setDateError] = useState<string>('');
 
   const handleDateChange = (range: RangeValue<DateValue>) => {
     if(validateDates(range.start, range.end)){
@@ -74,6 +75,11 @@ export default function App({ isOpen,isClose, handleBooking, capacity }: AppProp
   const handleClose = () => {
     isClose()
   }
+
+  const disablePastDates = (date: DateValue) => {
+    const todayDate = new Date();
+    return new Date(date.year, date.month - 1, date.day) < todayDate; // Disable dates before today
+  };
 
   return (
     <>
@@ -116,6 +122,7 @@ export default function App({ isOpen,isClose, handleBooking, capacity }: AppProp
                   color="default"
                   className="max-w-full flex items-center"
                   onChange={handleDateChange}
+                  isDateUnavailable={disablePastDates}
                 />
                 {/* { dateError && (
                   <p className="text-sm text-red-500">{dateError}</p>

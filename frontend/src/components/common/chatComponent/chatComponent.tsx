@@ -26,17 +26,19 @@ interface pageProps {
   receiverId: string;
 }
 
-export default function chatComponent({receiverId}: pageProps) {
+export default function   chatComponent({receiverId}: pageProps) {
 
   const userId = getUserIdFromToken('authUserToken');
   
 
   const {data: company} = useGetCompanyDetailsQuery(receiverId);
-  const {data: chatMessages} = useGetMessagesQuery({senderId: userId, receiverId});
+  const {data: chatMessages, error: messageFetchError} = useGetMessagesQuery({ userId, receiverId});
 
-  console.log(chatMessages,'messages')
+  console.log(messageFetchError,"msg ftch errror")
 
-  console.log(company,'venues')
+  console.log(chatMessages?.response,'messages')
+
+  console.log(company,'venues') 
 
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -52,10 +54,16 @@ export default function chatComponent({receiverId}: pageProps) {
   };
 
   useEffect(() => {
-    // Connect to socket
+    if (chatMessages) {
+      setMessages(chatMessages?.response);
+    }
+  }, [chatMessages]);
+
+  useEffect(() => {
+   
     socket.connect();
 
-    // Listen for messages
+
     socket.on('receive_message', (message: Message) => {
       if (message.sender !== 'user') { 
         setMessages(prevMessages => [...prevMessages, message]);
@@ -115,7 +123,7 @@ export default function chatComponent({receiverId}: pageProps) {
                 className="h-full overflow-y-auto p-4 space-y-4"
                 ref={messagesContainerRef}
               >
-                {messages.map((message) => (
+                {messages?.map((message) => (
                   <div
                     key={message.id}
                     className={`flex ${

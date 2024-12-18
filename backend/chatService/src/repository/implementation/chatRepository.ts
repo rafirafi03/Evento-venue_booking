@@ -9,11 +9,15 @@ export class ChatRepository implements IChatRepository {
   }
 
   async getMessages(senderId: string, receiverId: string): Promise<Chat[]> {
-    return await ChatModel.find({
+    const response = await ChatModel.find({
       $or: [
         { senderId, receiverId },
         { senderId: receiverId, receiverId: senderId },
       ],
     }).sort({ timestamp: 1 });
+
+    console.log(response,"responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+
+    return response;
   }
 }

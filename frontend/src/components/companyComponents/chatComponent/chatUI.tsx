@@ -5,6 +5,7 @@ import { Send, Search } from 'lucide-react'
 import { socket } from "utils/socket";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetUsersQuery } from 'app/store/slices/userApiSlices';
+import { useGetMessagesQuery } from 'app/store/slices/chatApiSlices';
 
 
 // import socket from 'utils/socket'
@@ -30,22 +31,33 @@ export default function chatComponent() {
     const companyId = getUserIdFromToken('authCompanyToken')
 
     const {data: user} = useGetUsersQuery(undefined);
-
+    
     console.log("users:", user);
     
     const useru = user?.users?.users;
     console.log("users:", useru);
+    
+    const [selectedUser, setSelectedUser] = useState<User | null>(null)
+    const [selectedUserId ,setSelectedUserId] = useState<string>('')
+    const [messages, setMessages] = useState<Message[]>([])
+    const [inputMessage, setInputMessage] = useState('')
+    const messagesContainerRef = useRef<HTMLDivElement>(null)
+    
+    const {data: chatMessages} = useGetMessagesQuery({userId : companyId, receiverId: selectedUserId} );
 
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [inputMessage, setInputMessage] = useState('')
-  const messagesContainerRef = useRef<HTMLDivElement>(null)
+    console.log(chatMessages,"chatmessagesssss")
 
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight
     }
   }
+
+  useEffect(() => {
+    if (chatMessages) {
+      setMessages(chatMessages?.response);
+    }
+  }, [chatMessages]);
 
   useEffect(() => {
       // Connect to socket
@@ -70,6 +82,7 @@ export default function chatComponent() {
 
 
   const handleUserSelect = (user: User) => {
+    setSelectedUserId(user._id)
     setSelectedUser(user)
 
     // Join the chat room for the selected user
