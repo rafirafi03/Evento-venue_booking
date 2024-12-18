@@ -21,4 +21,5 @@ export * from './deleteOfferUseCase';
 export * from './applyOfferUseCase';
 export * from './removeOfferUseCase';
 export * from './addReviewUseCase'
-export * from './getReviewsUseCase'
+export * from './getReviewsUseCase';
+export * from './getUserReviewsUseCase'

@@ -23,4 +23,5 @@ export interface ICompanyRepository {
     removeOffer(venueId: string) : Promise<void>
     addRating(rating: Rating) : Promise<IRatingData>
     getReviews(venueId: string) : Promise<IRatingData[]>
+    getUserReviews(userId: string) : Promise<IRatingData[]>
 }

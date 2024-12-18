@@ -43,15 +43,6 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
     setConfirmModal(true);
   };
 
-  const handleLogout = () => {
-    console.log("hii");
-  };
-
-
-  const page = (arg) => {
-    console.log(arg);
-  };
-
   const closeModal = () => {
     setConfirmModal(false);
   };
@@ -63,8 +54,12 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
       if (response.success) {
         router.push("/company/main");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      if(error.status == 401) {
+        localStorage.removeItem('authCompanyToken')
+        router.push('/company/login')
+      }
     }
   };
 

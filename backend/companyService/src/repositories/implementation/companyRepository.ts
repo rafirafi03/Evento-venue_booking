@@ -214,4 +214,14 @@ export class CompanyRepository implements ICompanyRepository {
     }
   }
 
+  async getUserReviews(userId: string): Promise<IRatingData[]> {
+    try {
+      const reviews = await ratingModel.find({userId: userId});
+
+      return reviews
+    } catch (error) {
+      throw new Error("error in DB" + error);
+    }
+  }
+
 }

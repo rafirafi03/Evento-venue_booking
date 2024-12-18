@@ -157,6 +157,60 @@ export class BookingRepository implements IBookingRepository {
         }
     }
 
+    async getBookings(): Promise<IBookingData[]> {
+        try {
+            const bookings = await BookingModel.aggregate([
+                {
+                    $match: {
+                        status: 'confirmed',
+                    },
+                },
+                {
+                    $addFields: {
+                        venueObjectId: { $toObjectId: '$venueId' },
+                        userObjectId: {$toObjectId: '$userId'},
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'venues', // Correct pluralized collection name
+                        localField: 'venueObjectId', // Use the converted ObjectId field
+                        foreignField: '_id',
+                        as: 'venueDetails',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$venueDetails',
+                        preserveNullAndEmptyArrays: true, // Handle cases where no matching venue is found
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'users', // Assuming the collection name for users is 'users'
+                        localField: 'userObjectId', // Field in BookingModel matching the user's _id
+                        foreignField: '_id',
+                        as: 'userDetails',
+                    },
+                },
+                {
+                    $unwind: {
+                        path: '$userDetails',
+                        preserveNullAndEmptyArrays: true, // Handle cases where no matching user is found
+                    },
+                },
+            ]).exec();
+    
+            console.log(bookings, "bookings with venue details in repository");
+            if (!bookings || bookings.length === 0) {
+                return [];
+            }
+            return bookings;
+        } catch (error) {
+            throw new Error('Error: ' + error);
+        }
+    }
+
 
     async findUser(userId: string): Promise<IUserData | null> {
         try {

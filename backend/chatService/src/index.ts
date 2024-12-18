@@ -1,6 +1,5 @@
 import express from "express";
 import { createServer } from 'http';
-import { Server } from 'socket.io';
 import morgan from 'morgan';
 import logger from "./logger";
 import dotenv from "dotenv";
@@ -10,37 +9,22 @@ import { connectDB } from "./infrastructure/db";
 import cookieParser from 'cookie-parser'
 import chatRoute from './infrastructure/express/route';
 import mongoose from "mongoose";
-import { HttpMethod } from "./constants";
+import { initializeSocket } from "./infrastructure/services/socket-io";
 
 const PORT = process.env.PORT;
+const FRONTEND_PORT = process.env.FRONTEND_PORT
 
 const app = express();
+app.use(cors())
 const httpServer = createServer(app);
 connectDB();
 
-const io = new Server(httpServer, {
-  cors: {
-    origin: '*', // Allow connections from the API Gateway
-    methods: [HttpMethod.GET, HttpMethod.POST],
-  },
-});
+initializeSocket(httpServer)
 
-io.on('connection', (socket) => {
-  console.log(`ChatService: User connected ${socket.id}`);
-
-  socket.on('sendMessage', (data) => {
-    console.log('ChatService received message:', data);
-    io.emit('receiveMessage', data); // Broadcast message
-  });
-
-  socket.on('disconnect', () => {
-    console.log(`ChatService: User disconnected ${socket.id}`);
-  });
-});
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: `http://localhost:${FRONTEND_PORT}`,
     credentials: true,
   })
 );

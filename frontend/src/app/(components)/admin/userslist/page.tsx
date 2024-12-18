@@ -11,6 +11,7 @@ import ErrorPage from "components/common/ErrorPage/errorPage";
 import Header from "app/(components)/login-header/header";
 import Aside from 'components/adminComponents/aside';
 import AuthHOC, {Role} from "components/common/auth/authHoc";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   interface IUser {
@@ -21,14 +22,28 @@ export default function Page() {
     phone: number;
     isBlocked: boolean;
   }
+
+  const router = useRouter()
   
   
   const [userBlock] = useBlockUserMutation();
   const {
     data: users,
     isLoading,
-    isError,
+    error: usersFetchError,
   } = useGetUsersQuery(undefined);
+
+  useEffect(() => {
+            if (usersFetchError && "status" in usersFetchError) {
+              if (usersFetchError.status === 401) {
+                console.warn("Session expired. Logging out...");
+                localStorage.removeItem("authAdminToken");
+                router.push('/admin/login')
+              }
+            }
+          }, [usersFetchError]);
+
+
   const [usersArray, setUsersArray] = useState<IUser[]>([]);
 
   useEffect(() => {
@@ -55,6 +70,7 @@ export default function Page() {
       setBlockModal(true);
       setBlockAction(isBlocked ? "unblock" : "block");
     } catch (error) {
+      
       console.log(error);
     }
   };
@@ -76,7 +92,11 @@ export default function Page() {
       } else {
         console.error("something went wrong");
       }
-    } catch (error) {
+    } catch (error: any) {
+      if(error.status === 401) {
+        localStorage.removeItem('authAdminToken')
+        router.push('/admin/login')
+      }
       console.log(error);
     }
   };
@@ -90,7 +110,6 @@ export default function Page() {
   };
 
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <ErrorPage page={"/admin"} />;
 
   return (
     <AuthHOC role={Role.Admin} >

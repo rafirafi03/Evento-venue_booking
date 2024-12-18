@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { faAdd, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ConfirmModal from '../../../../components/common/confirmModal/page';
@@ -17,7 +17,19 @@ export default function page() {
 
   const companyId = getUserIdFromToken('authCompanyToken')
 
-  const {data: offers, isLoading, isError, refetch} = useGetOffersQuery(companyId);
+  const {data: offers, isLoading, error: offerFetchError, refetch} = useGetOffersQuery(companyId);
+
+  useEffect(() => {
+        if (offerFetchError && "status" in offerFetchError) {
+          if (offerFetchError.status === 401) {
+            console.warn("Session expired. Logging out...");
+            localStorage.removeItem("authCompanyToken");
+            router.push('/company/login')
+          }
+        }
+      }, [offerFetchError]);
+
+
   const [deleteOffer] = useDeleteOfferMutation()
   console.log(offers)
 

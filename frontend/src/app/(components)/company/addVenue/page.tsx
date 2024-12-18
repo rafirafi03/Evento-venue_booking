@@ -11,6 +11,7 @@ import { getUserIdFromToken } from "utils/tokenHelper";
 import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 export default function page() {
+
   const [addVenue] = useAddVenueMutation();
 
   const companyId = getUserIdFromToken('authCompanyToken')
@@ -125,8 +126,8 @@ export default function page() {
   };
 
   const handleSubmit = async (e) => {
-
-    e.preventDefault()
+    try {
+      e.preventDefault()
 
     let isValid = true
 
@@ -227,6 +228,14 @@ export default function page() {
 
     console.log(response);
   }
+    } catch (error: any) {
+      console.log(error)
+      if(error.status == 401) {
+        localStorage.removeItem('authCompanyToken')
+        router.push('/company/login')
+      }
+    }
+    
   };
 
   return (

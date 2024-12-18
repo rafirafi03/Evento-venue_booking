@@ -11,6 +11,7 @@ import Header from "app/(components)/login-header/header";
 import Aside from 'components/adminComponents/aside';
 import ErrorPage from 'components/common/ErrorPage/errorPage'
 import AuthHOC, {Role} from "components/common/auth/authHoc";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   interface IVerification {
@@ -31,6 +32,8 @@ export default function Page() {
     isBlocked: boolean;
   }
 
+  const router = useRouter()
+
   const [companyBlock] = useBlockCompanyMutation();
   
 
@@ -45,8 +48,19 @@ export default function Page() {
   const {
     data: companies,
     isLoading,
-    isError,
+    error: companiesFetchError,
   } = useGetCompaniesQuery(undefined);
+
+  useEffect(() => {
+          if (companiesFetchError && "status" in companiesFetchError) {
+            if (companiesFetchError.status === 401) {
+              console.warn("Session expired. Logging out...");
+              localStorage.removeItem("authAdminToken");
+              router.push('/admin/login')
+            }
+          }
+        }, [companiesFetchError]);
+  
 
   useEffect(() => {
     // Initial fetch for companies
@@ -92,7 +106,11 @@ export default function Page() {
       } else {
         console.error("Something went wrong");
       }
-    } catch (error) {
+    } catch (error: any) {
+      if(error.status === 401) {
+        localStorage.removeItem('authAdminToken')
+        router.push('/admin/login')
+      }
       console.log(error);
     }
   };
@@ -111,7 +129,6 @@ export default function Page() {
 
   // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <ErrorPage page={'/admin'}/> ;
 
   return (
     <AuthHOC role={Role.Admin} >

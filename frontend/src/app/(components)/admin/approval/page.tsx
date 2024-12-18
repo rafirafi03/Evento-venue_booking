@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   useCompanyApprovalMutation,
   useGetRequestsQuery,
@@ -10,6 +10,7 @@ import ErrorPage from "components/common/ErrorPage/errorPage";
 import Header from "app/(components)/login-header/header";
 import Aside from 'components/adminComponents/aside';
 import AuthHOC, {Role} from "components/common/auth/authHoc";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   interface IVerification {
@@ -30,12 +31,26 @@ export default function Page() {
     isVerified: IVerification;
   }
 
+  const router = useRouter()
+
   const {
     data: requests,
     isLoading,
-    isError,
+    error: requestFetchError,
     refetch,
   } = useGetRequestsQuery(undefined);
+
+  useEffect(() => {
+        if (requestFetchError && "status" in requestFetchError) {
+          if (requestFetchError.status === 401) {
+            console.warn("Session expired. Logging out...");
+            localStorage.removeItem("authAdminToken");
+            router.push('/admin/login')
+          }
+        }
+      }, [requestFetchError]);
+
+
   const [setApproval] = useCompanyApprovalMutation();
 
   const [isModal, setModal] = useState<boolean>(false);
@@ -69,7 +84,11 @@ export default function Page() {
       const res = await setApproval({ approval, userId }).unwrap();
 
       console.log(res);
-    } catch (error) {
+    } catch (error: any) {
+      if(error.status === 401) {
+        localStorage.removeItem('authAdminToken')
+        router.push('/admin/login')
+      }
       console.log(error);
     }
   };
@@ -80,7 +99,6 @@ export default function Page() {
 
   // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
-  if (isError) return <ErrorPage page="/admin" />;
 
   return (
     <AuthHOC role={Role.Admin}>

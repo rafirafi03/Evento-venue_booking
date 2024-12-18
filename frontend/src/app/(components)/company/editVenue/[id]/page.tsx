@@ -88,6 +88,8 @@ export default function page({ params }: { params: { id: string } }) {
   };
 
   const handleSubmit = async () => {
+
+    try {
     const formData = new FormData();
 
     formData.append('id',id)
@@ -119,11 +121,15 @@ export default function page({ params }: { params: { id: string } }) {
 
 
     console.log(response);
+  } catch(error: any) {
+    console.log(error)
+    if(error.status == 401) {
+      localStorage.removeItem('authCompanyToken');
+      router.push('/company/login')
+    }
+  }
   };
 
-  const handleLogout = ()=> {
-    console.log('hii')
-  }
 
   return (
 

@@ -179,6 +179,12 @@ export const companyApiSlice = createApi({
                 url: `/company/getRatings/${venueId}`,
                 method: HttpMethod.GET
             })
+        }),
+        getRatingsByUserId: builder.query({
+            query: (userId) => ({
+                url: `/company/getUserReviews/${userId}`,
+                method: HttpMethod.GET
+            })
         })
     })
 });
@@ -207,5 +213,6 @@ export const {
     useApplyOfferMutation,
     useRemoveOfferMutation,
     useAddReviewMutation,
-    useGetRatingsQuery
+    useGetRatingsQuery,
+    useGetRatingsByUserIdQuery
 } = companyApiSlice;

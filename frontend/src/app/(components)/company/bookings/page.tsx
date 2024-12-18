@@ -12,8 +12,18 @@ import AuthHOC,{Role} from "components/common/auth/authHoc";
 export default function page() {
   const companyId = getUserIdFromToken("authCompanyToken");
 
-  const { data: bookings, refetch: bookingRefetch } =
+  const { data: bookings, error: bookingFetchError, refetch: bookingRefetch } =
     useGetCompanyBookingsQuery(companyId);
+
+    useEffect(() => {
+      if (bookingFetchError && "status" in bookingFetchError) {
+        if (bookingFetchError.status === 401) {
+          console.warn("Session expired. Logging out...");
+          localStorage.removeItem("authCompanyToken");
+          router.push('/company/login')
+        }
+      }
+    }, [bookingFetchError]);
 
   const router = useRouter();
 

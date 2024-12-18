@@ -43,6 +43,7 @@ export default function page() {
 
   const {
     data: venues,
+    error: venuesFetchError,
     refetch,
   } = useGetVenuesQuery(companyId);
 
@@ -50,6 +51,16 @@ export default function page() {
   const [updateVenueStatus] = useUpdateVenueStatusMutation();
   const [applyOffer] = useApplyOfferMutation();
   const [venuesArray, setVenuesArray] = useState<IVenue[]>([]);
+
+  useEffect(() => {
+      if (venuesFetchError && "status" in venuesFetchError) {
+        if (venuesFetchError.status === 401) {
+          console.warn("Session expired. Logging out...");
+          localStorage.removeItem("authCompanyToken");
+          router.push('/company/login')
+        }
+      }
+    }, [venuesFetchError]);
 
   useEffect(() => {
         // Initial fetch for companies

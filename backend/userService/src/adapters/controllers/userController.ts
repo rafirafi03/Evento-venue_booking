@@ -84,7 +84,7 @@ export class UserController {
         httpOnly: true,
         secure: true,
         sameSite: "strict",
-        maxAge: 15 * 60 * 1000,
+        maxAge: 60 * 60 * 1000,
     });
     res.cookie("userRefreshToken", response?.refreshToken, {
         httpOnly: true,

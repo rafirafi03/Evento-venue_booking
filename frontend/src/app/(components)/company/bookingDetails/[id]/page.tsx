@@ -20,7 +20,7 @@ import Header from "components/userComponents/header";
 import Aside from "app/(components)/company/aside/page";
 import CancelBookingModal from 'components/userComponents/cancelBookingModal'
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCancelBookingMutation, useGetBookingDetailsQuery } from "app/store/slices/bookingApiSlices";
 import AuthHOC, {Role} from "components/common/auth/authHoc";
 
@@ -30,7 +30,17 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
 
   const { id } = params;
 
-  const {data: booking, refetch} = useGetBookingDetailsQuery(id)
+  const {data: booking, error: bookingFetchError , refetch} = useGetBookingDetailsQuery(id);
+
+   useEffect(() => {
+            if (bookingFetchError && "status" in bookingFetchError) {
+              if (bookingFetchError.status === 401) {
+                console.warn("Session expired. Logging out...");
+                localStorage.removeItem("authCompanyToken");
+                router.push('/company/login')
+              }
+            }
+          }, [bookingFetchError]);
 
   const [isCancelModal, setCancelModal] = useState<boolean>(false);
 
@@ -52,8 +62,12 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
       if (response.success) {
         refetch()
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      if(error.status == 401) {
+        localStorage.removeItem('authCompanyToken');
+        router.push('/company/login')
+      }
     }
   };
 

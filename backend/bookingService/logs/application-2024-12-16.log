@@ -272,3 +272,4 @@
 2024-12-16T16:06:42.451Z [INFO]: ::1 - - [16/Dec/2024:16:06:42 +0000] "GET /getCompanyDashboardDetails/67162fa0016448154f9b34cb HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 2024-12-16T16:07:27.494Z [INFO]: ::1 - - [16/Dec/2024:16:07:27 +0000] "GET /getCompanyDashboardDetails/67162fa0016448154f9b34cb HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
 2024-12-16T16:07:32.393Z [INFO]: ::1 - - [16/Dec/2024:16:07:32 +0000] "GET /getCompanyDashboardDetails/67162fa0016448154f9b34cb HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+2024-12-16T16:21:29.834Z [INFO]: server is running on http://localhost:4003

@@ -25,7 +25,18 @@ export default function Page() {
     }
   }, [router]);
   
-  const { data: dashboardData } = useGetCompanyDashboardDetailsQuery(companyId);
+  const { data: dashboardData , error: dahsboardFetchError} = useGetCompanyDashboardDetailsQuery(companyId);
+
+  useEffect(() => {
+          if (dahsboardFetchError && "status" in dahsboardFetchError) {
+            if (dahsboardFetchError.status === 401) {
+              console.warn("Session expired. Logging out...");
+              localStorage.removeItem("authCompanyToken");
+              router.push('/company/login')
+            }
+          }
+        }, [dahsboardFetchError]);
+  
 
   console.log(dashboardData,"dahsboard datattatatattatat")
 

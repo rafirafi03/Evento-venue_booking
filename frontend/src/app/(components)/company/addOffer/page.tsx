@@ -13,6 +13,7 @@ import toast, { Toaster } from "react-hot-toast";
 import AuthHOC,{Role} from "components/common/auth/authHoc";
 
 export default function page() {
+  const router = useRouter()
   const [addOffer] = useAddOfferMutation();
 
   const companyId = getUserIdFromToken("authCompanyToken");
@@ -38,9 +39,13 @@ export default function page() {
           toast.error(<b>Could not Add.</b>);
         }
         resetForm();
-      } catch (error) {
+      } catch (error: any) {
         toast.dismiss();
         toast.error(<b>Error occurred.</b>);
+        if(error.status == 401) {
+          localStorage.removeItem('authCompanyToken');
+          router.push('/company/login')
+        }
         console.error("Failed to add offer:", error);
       }
     },

@@ -11,6 +11,20 @@ export interface IBookingData {
     bookingDateEnd: Date;
     paymentMethod: string;
     status: string;
+    venueDetails?: {
+        _id: string;
+        name: string;
+        amount: number;
+        city: string;
+        state: string;
+        image: string; // Add the image field here
+      };
+      userDetails?: {
+        _id: string;
+        name: string;
+        email: string;
+        phone: number;
+      };
 }
 
 export class Booking {

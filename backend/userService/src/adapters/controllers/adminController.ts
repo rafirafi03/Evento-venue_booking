@@ -20,7 +20,7 @@ export class AdminController {
                 httpOnly: true,
                 secure: true,
                 sameSite: "strict",
-                maxAge: 15 * 60 * 1000,
+                maxAge: 60 * 60 * 1000,
             });
             res.cookie("adminRefreshToken", response?.refreshToken, {
                 httpOnly: true,

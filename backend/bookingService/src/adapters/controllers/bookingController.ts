@@ -7,7 +7,8 @@ import {
   WebhookUseCase,
   GetCompanyBookingsUseCase,
   GetBookingDetailsUseCase,
-  CompanyDashboardDetailsUseCase
+  CompanyDashboardDetailsUseCase,
+  AdminDashboardUseCase
 } from "../../useCases";
 
 export class BookingController {
@@ -18,7 +19,8 @@ export class BookingController {
     private _getCompanyBookingsUseCase: GetCompanyBookingsUseCase,
     private _cancelBookingUseCase: CancelBookingUseCase,
     private _getBookingDetailsUseCase: GetBookingDetailsUseCase,
-    private _companyDashboardDetailsUseCase: CompanyDashboardDetailsUseCase
+    private _companyDashboardDetailsUseCase: CompanyDashboardDetailsUseCase,
+    private _adminDashboardUseCase : AdminDashboardUseCase
   ) {}
 
   async makePaymentRequest(req: Request, res: Response): Promise<void> {
@@ -131,6 +133,20 @@ export class BookingController {
       console.log(companyId,"companyIddddddd")
 
       const response = await this._companyDashboardDetailsUseCase.execute(companyId);
+
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res.status(HttpStatusCode.UNAUTHORIZED).json({
+        message: "failed to send request",
+      });
+    }
+  }
+
+  async adminDashboardDetails(req: Request, res: Response): Promise<void> {
+    try {
+
+      const response = await this._adminDashboardUseCase.execute();
 
       res.status(HttpStatusCode.OK).json(response)
     } catch (error) {

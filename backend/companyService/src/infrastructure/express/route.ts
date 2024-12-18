@@ -23,7 +23,8 @@ import {
   ApplyOfferUseCase,
   RemoveOfferUseCase,
   AddReviewUseCase,
-  GetReviewsUseCase
+  GetReviewsUseCase,
+  GetUserReviewsUseCase
 } from "../../useCases";
 import { AdminController, CompanyController } from "../../adapters/controllers";
 import { CompanyRepository } from "../../repositories/implementation";
@@ -72,6 +73,7 @@ const applyOfferUseCase = new ApplyOfferUseCase(companyRepository);
 const removeOfferUseCase = new RemoveOfferUseCase(companyRepository);
 const addReviewUseCase = new AddReviewUseCase(companyRepository);
 const getReviewsUseCase = new GetReviewsUseCase(companyRepository)
+const getUserReviewsUseCase = new GetUserReviewsUseCase(companyRepository);
 
 
 const companyController = new CompanyController(
@@ -94,7 +96,8 @@ const companyController = new CompanyController(
   applyOfferUseCase,
   removeOfferUseCase,
   addReviewUseCase,
-  getReviewsUseCase
+  getReviewsUseCase,
+  getUserReviewsUseCase
 );
 const adminController = new AdminController(
   getRequestsUseCase,
@@ -198,5 +201,11 @@ router.post('/addReview',authMiddleware(['user']), (req, res) => {
 router.get('/getRatings/:venueId', (req, res) => {
   companyController.getReviews(req,res)
 })
+
+router.get('/getUserReviews/:userId', (req, res) => {
+  companyController.getUserReviews(req,res)
+})
+
+
 
 export default router;

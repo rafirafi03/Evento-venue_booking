@@ -21,6 +21,7 @@ import {
 } from "app/store/slices/userApiSlices";
 import { useGetUserBookingsQuery } from "app/store/slices/bookingApiSlices";
 import { useCancelBookingMutation } from "app/store/slices/bookingApiSlices";
+import { useGetRatingsByUserIdQuery } from "app/store/slices/companyApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import toast, { Toaster } from "react-hot-toast";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
@@ -44,6 +45,10 @@ export default function UserProfile() {
     isLoading,
     refetch: refetchUserDetails
   } = useGetUserDetailsQuery(userId);
+
+  const { data: userReview} = useGetRatingsByUserIdQuery(userId)
+
+  console.log(userReview);
 
   useEffect(() => {
     if (userFetchError && "status" in userFetchError) {
@@ -96,38 +101,7 @@ useEffect(() => {
     avatar: "/placeholder.svg?height=100&width=100",
     memberSince: "January 2023",
   };
-
-  const bookingHistory = [
-    {
-      id: 3,
-      venue: "Lakeview Hall",
-      date: "2023-05-01",
-      time: "14:00",
-      image: "/placeholder.svg?height=100&width=150",
-    },
-    {
-      id: 4,
-      venue: "Mountain Lodge",
-      date: "2023-04-10",
-      time: "10:00",
-      image: "/placeholder.svg?height=100&width=150",
-    },
-  ];
-
-  const userReviews = [
-    {
-      id: 1,
-      venue: "Lakeview Hall",
-      rating: 5,
-      comment: "Fantastic venue with great views!",
-    },
-    {
-      id: 2,
-      venue: "Mountain Lodge",
-      rating: 4,
-      comment: "Cozy atmosphere, perfect for our retreat.",
-    },
-  ];
+  
 
   const handleEditUserProfile = async (e)=> {
 
@@ -461,20 +435,20 @@ useEffect(() => {
               )}
               {activeTab === "reviews" && (
                 <div className="space-y-4">
-                  {userReviews.map((review) => (
+                  {userReview.map((review) => (
                     <div
-                      key={review.id}
+                      key={review._id}
                       className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
                     >
                       <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                        {review.venue}
+                        {review.review}
                       </h3>
                       <div className="flex items-center mb-2">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
                             className={`w-5 h-5 ${
-                              i < review.rating
+                              i < review.star
                                 ? "text-yellow-400"
                                 : "text-gray-300"
                             }`}

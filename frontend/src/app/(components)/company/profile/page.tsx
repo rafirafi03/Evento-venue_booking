@@ -4,14 +4,8 @@ import React, { useEffect, useState } from "react";
 import {
   Building,
   Save,
-  Camera,
-  Globe,
   Mail,
-  MapPin,
   Phone,
-  Users,
-  BarChart,
-  FileText,
 } from "lucide-react";
 import Header from "app/(components)/login-header/header";
 import Aside from "app/(components)/company/aside/page";
@@ -19,9 +13,12 @@ import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetCompanyDetailsQuery, useEditCompanyProfileMutation } from "app/store/slices/companyApiSlices";
 import Image from "next/image";
 import AuthHOC,{Role} from "components/common/auth/authHoc";
+import { useRouter } from "next/navigation";
 
 
 export default function Page() {
+
+  const router = useRouter()
 
   const [activeTab, setActiveTab] = useState("info");
 
@@ -32,9 +29,19 @@ export default function Page() {
   const {
     data: company,
     isLoading,
-    isError,
+    error: companyFetchError,
     refetch,
   } = useGetCompanyDetailsQuery(companyId);
+
+   useEffect(() => {
+          if (companyFetchError && "status" in companyFetchError) {
+            if (companyFetchError.status === 401) {
+              console.warn("Session expired. Logging out...");
+              localStorage.removeItem("authCompanyToken");
+              router.push('/company/login')
+            }
+          }
+        }, [companyFetchError]);
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
@@ -62,20 +69,15 @@ export default function Page() {
       console.log(response)
       refetch()
       setIsEdit(false)
-    } catch (error) {
+    } catch (error: any) {
+      if(error.status == 401) {
+        localStorage.removeItem('authCompanyToken');
+        router.push('/company/login')
+      }
       console.log(error)
     }
   }
 
-  const handleLogout = () => {
-    console.log("hi");
-  };
-  const changePage = () => {
-    console.log("hi");
-  };
-  const page = () => {
-    console.log("hi");
-  };
 
   return (
     <AuthHOC role={Role.Company}>

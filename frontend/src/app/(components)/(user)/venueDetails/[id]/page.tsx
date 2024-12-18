@@ -16,6 +16,9 @@ import { useGetUserDetailsQuery } from "app/store/slices/userApiSlices";
 import WalletModal from 'components/common/modals/walletModal';
 import ReviewListingCard from "components/common/cards/reviewListingCard";
 import toast, {Toaster} from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComment } from "@fortawesome/free-regular-svg-icons";
+import { useRouter } from "next/navigation";
 
 type RangeValue<T> = {
   start: T;
@@ -25,6 +28,7 @@ type RangeValue<T> = {
 dotenv.config();
 
 export default function page({ params }: { params: { id: string } }) {
+  const router = useRouter()
   const [makePayment] = useMakePaymentMutation();
   const [isBookingModal, setBookingModal] = useState<boolean>(false);
   const [isPaymentModal, setPaymentModal] = useState<boolean>(false);
@@ -227,12 +231,25 @@ export default function page({ params }: { params: { id: string } }) {
                   upto {venue?.capacity} guests
                 </p>
               </a>
+              <div className="flex w-full">
+
               <button
                 onClick={() => setBookingModal(true)}
-                className="inline-flex justify-center items-center px-3 my-3 mx-5 py-2 w-4/5 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                className="inline-flex justify-center items-center mx-1 px-3 py-2 w-2/3 text-xs font-md text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
               >
                 Schedule Booking
               </button>
+              <button
+                                                  onClick={() => router.push(`/inbox/${venue.companyId}`)}
+
+                className="inline-flex justify-center items-center px-3 mx-1 py-2 w-1/3 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+              >
+                <FontAwesomeIcon
+                                  icon={faComment}
+                                  className="text-white m-auto text-md cursor-pointer"
+                                />
+              </button>
+              </div>
 
               <hr className="my-3" />
 
