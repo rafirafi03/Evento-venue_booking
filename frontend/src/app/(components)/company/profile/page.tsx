@@ -14,6 +14,7 @@ import { useGetCompanyDetailsQuery, useEditCompanyProfileMutation } from "app/st
 import Image from "next/image";
 import AuthHOC,{Role} from "components/common/auth/authHoc";
 import { useRouter } from "next/navigation";
+import { isApiError } from "utils/errors";
 
 
 export default function Page() {
@@ -28,7 +29,6 @@ export default function Page() {
 
   const {
     data: company,
-    isLoading,
     error: companyFetchError,
     refetch,
   } = useGetCompanyDetailsQuery(companyId);
@@ -41,7 +41,7 @@ export default function Page() {
               router.push('/company/login')
             }
           }
-        }, [companyFetchError]);
+        }, [companyFetchError, router]);
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
 
@@ -69,12 +69,13 @@ export default function Page() {
       console.log(response)
       refetch()
       setIsEdit(false)
-    } catch (error: any) {
-      if(error.status == 401) {
-        localStorage.removeItem('authCompanyToken');
-        router.push('/company/login')
+    } catch (error: unknown) {
+      if (isApiError(error) && error.status === 401) {
+        localStorage.removeItem("authCompanyToken");
+        router.push("/company/login");
+      } else {
+        console.error("An unexpected error occurred", error);
       }
-      console.log(error)
     }
   }
 
@@ -96,7 +97,7 @@ export default function Page() {
               <div className="mb-8 flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
                 <div className="flex items-center space-x-4">
                   <div className="relative h-20 w-20">
-                    <img
+                    <Image
                       alt="Company logo"
                       className="rounded-full object-cover"
                       height="80"

@@ -1,8 +1,7 @@
 "use client"
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import Loader from '../loader/loader';
+import { useEffect } from 'react';
 
 export enum Role {
   Admin = 'admin',
@@ -18,7 +17,7 @@ type AuthHOCProps = {
 
 export default function AuthHOC({ children, role, isAuthPage = false }: AuthHOCProps) {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const tokenKey = role === Role.Admin ? 'authAdminToken' : role === Role.User ? 'authUserToken' : 'authCompanyToken';
@@ -29,17 +28,19 @@ export default function AuthHOC({ children, role, isAuthPage = false }: AuthHOCP
       if (token) {
         const redirectTo = role === Role.Admin ? '/admin/dashboard' : role === Role.User ? '/' : '/company';
         router.push(redirectTo);
-      } else {
-        setLoading(false); // Allow access to the login page if no token is found
       }
+      //  else {
+      //   setLoading(false); // Allow access to the login page if no token is found
+      // }
     } else {
       // If on a protected page and no token, redirect to the login page
       if (!token) {
         const redirectTo = role === Role.Admin ? '/admin/login' : role === Role.User ? '/login' : '/company/login';
         router.push(redirectTo);
-      } else {
-        setLoading(false); // Auth check complete, ready to render protected content
       }
+      //  else {
+      //   setLoading(false); // Auth check complete, ready to render protected content
+      // }
     }
   }, [role, router, isAuthPage]);
 

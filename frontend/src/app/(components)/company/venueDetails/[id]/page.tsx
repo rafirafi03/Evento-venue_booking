@@ -20,13 +20,15 @@ import ConfirmModal from "../../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import AuthHOC,{Role} from "components/common/auth/authHoc";
+import { isApiError } from "utils/errors";
+import Image from "next/image";
 
 export default function VenueDetails({ params }: { params: { id: string } }) {
   const router = useRouter();
 
   const { id } = params;
 
-  const { data: venue, isLoading, isError } = useGetVenueDetailsQuery(id);
+  const { data: venue } = useGetVenueDetailsQuery(id);
   const [deleteVenue] = useDeleteVenueMutation();
 
   const images = venue?.images;
@@ -54,11 +56,14 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
       if (response.success) {
         router.push("/company/main");
       }
-    } catch (error: any) {
-      console.log(error);
-      if(error.status == 401) {
-        localStorage.removeItem('authCompanyToken')
-        router.push('/company/login')
+    } catch (error: unknown) {
+      console.error(error);
+    
+      if (isApiError(error) && error.status === 401) {
+        localStorage.removeItem("authCompanyToken");
+        router.push("/company/login");
+      } else {
+        console.error("An unexpected error occurred", error);
       }
     }
   };
@@ -84,10 +89,12 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
         <div className="flex-1 p-4 bg-slate-100 my-3">
           <div className="min-h-screen bg-white shadow-lg rounded-lg">
             <div className="relative h-64 bg-gray-200">
-              <img
+              <Image
                 src={images?.[0]}
                 alt="Venue cover"
                 className="w-full h-full object-cover rounded-lg"
+                width={500}
+                height={500}
               />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
                 <h1 className="text-3xl font-bold text-white">{venue?.name}</h1>

@@ -1,10 +1,8 @@
-"use client"
-
 // import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
+import { Providers } from "./store/provider";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,12 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Provider store={store}>
       <body className={inter.className}>
-        {children}
-        <script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js" />
+        <Providers>
+          {children}
+          <Script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js" />
+        </Providers>
       </body>
-      </Provider>
     </html>
   );
 }

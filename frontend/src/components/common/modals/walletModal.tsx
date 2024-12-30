@@ -1,11 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-
 interface pageProps {
     balance: number;
     bookingAmount: number;
-    isOpen: ()=> void;
+    isOpen: boolean;
     isClose: ()=> void;
     handlePayment : (paymentMethod: string)=> void
 }

@@ -52,7 +52,7 @@ export default function withPaginationSorting<T>(
 
       setFilteredData(result);
       setCurrentPage(1); // Reset to first page if data changes
-    }, [data, searchQuery, sortField, sortDirection]);
+    }, [data, searchQuery, sortField, sortDirection, searchFields]);
 
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const paginatedData = filteredData.slice(

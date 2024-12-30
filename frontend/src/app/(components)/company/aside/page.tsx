@@ -9,7 +9,7 @@ import { faBuilding, faFileAlt, faTags, faComments, faSignOutAlt, faUser } from 
 
 
 
-export default function page() {
+export default function Page() {
 
   const router = useRouter()
 

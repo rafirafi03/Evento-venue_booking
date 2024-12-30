@@ -3,34 +3,36 @@
 import { useState } from "react";
 import Image from "next/image";
 import Header from "components/userComponents/header";
-import Footer from "../footer/page";
+import Footer from "../../../../components/userComponents/footer";
 import { useRouter } from "next/navigation";
 import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
-// import { useAddToFavouritesMutation } from "app/store/slices/userApiSlices";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { getUserIdFromToken } from "utils/tokenHelper";
-import FavouriteButton from "../favouriteButton/page";
-// import AuthHOC from "components/common/auth/authHoc";
-import Loader from "components/common/loader/loader";
 import VenueCard from "components/userComponents/venueCard";
-
-// import Auth from '../../../auth/auth'
+import { IVenue } from "types/types";
 
 const Page = () => {
   const userId = getUserIdFromToken("authUserToken");
-  const [loader, setLoader] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string>('');
 
-  const { data: venues, refetch } = useGetListedVenuesQuery(undefined);
-  // const [addToFavourites] = useAddToFavouritesMutation()
+
+  const { data: venues } = useGetListedVenuesQuery(undefined);
 
   const venue = venues?.venues;
 
   const router = useRouter();
 
-  if (loader) {
-    return <Loader />;
+  const handleSearch = ()=> {
+    if(searchValue.trim()== "") {
+      return
+    } 
+
+    const params = new URLSearchParams();
+
+    params.set('search', searchValue);
+
+    router.push(`/venues?${params}`)
   }
+
 
   return (
     <div className="bg-slate-50">
@@ -46,7 +48,7 @@ const Page = () => {
               search venues with reviews, pricing and more..
             </p>
 
-            <form className="flex items-center max-w-lg mx-auto">
+            <div className="flex items-center max-w-lg mx-auto">
               <label className="sr-only">Search</label>
               <div className="relative w-full">
                 <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -68,6 +70,7 @@ const Page = () => {
                 </div>
                 <input
                   type="text"
+                  onChange={(e)=> setSearchValue(e.target.value)}
                   id="voice-search"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:placeholder-gray-400 "
                   placeholder="Search venues for your event..."
@@ -75,7 +78,7 @@ const Page = () => {
                 />
               </div>
               <button
-                type="submit"
+                onClick={handleSearch}
                 className="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-[rgb(255,0,0)] rounded-lg border border-slate-200"
               >
                 <svg
@@ -95,7 +98,7 @@ const Page = () => {
                 </svg>
                 Search
               </button>
-            </form>
+            </div>
           </div>
         </div>
         <div className="w-1/2 h-[45vh] relative">
@@ -122,7 +125,7 @@ const Page = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {venue?.length && (
             <>
-              {venue?.map((ven, index) => (
+              {venue?.map((ven: IVenue, index: number) => (
                 <VenueCard
                   key={index}
                   title={ven?.name}

@@ -2,12 +2,13 @@ import React,{useState} from "react";
 
 import { useGetRatingsQuery } from "app/store/slices/companyApiSlices";
 import { FaStar, FaRegStar } from "react-icons/fa";
+import Image from "next/image";
 
 interface pageProps {
   venueId: string;
 }
 
-export default function reviewListingCard({ venueId }: pageProps) {
+export default function ReviewListingCard({ venueId }: pageProps) {
   const { data: ratings } = useGetRatingsQuery(venueId);
 
   const [showAll, setShowAll] = useState<boolean>(false);
@@ -54,12 +55,14 @@ export default function reviewListingCard({ venueId }: pageProps) {
                   <p className="my-4">{rating.review}</p>
                 </blockquote>
                 <figcaption className="flex items-center justify-center ">
-                  <img
+                  <Image
                     className="rounded-full w-9 h-9"
                     src={`https://ui-avatars.com/api/?name=${
-                      rating.name || "User"
+                      rating.userName || "User"
                     }&background=random`}
                     alt={`${rating.name || "User"}'s profile picture`}
+                    width={500}
+                    height={500}
                   />
                   <div className="space-y-0.5 font-medium dark:text-white text-left rtl:text-right ms-3">
                     <div>{rating.userName}</div>

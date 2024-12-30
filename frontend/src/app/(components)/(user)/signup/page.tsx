@@ -11,15 +11,14 @@ import {
 } from "react-icons/fa";
 import Header from "../../login-header/header";
 import OtpModal from "../OtpModal/page";
-import Skl from "../../skeleton/page";
 import Image from "next/image";
 import { useState } from "react";
 import {
   useRegisterPostMutation,
   useVerifyOtpMutation,
 } from "app/store/slices/userApiSlices";
-import AuthHOC from "components/common/auth/authHoc";
-import toast, {Toaster} from "react-hot-toast";
+import AuthHOC, {Role} from "components/common/auth/authHoc";
+import toast from "react-hot-toast";
 
 const Page = () => {
   const router = useRouter();
@@ -43,7 +42,6 @@ const Page = () => {
   const [otpError, setOtpError] = useState<string>("")
 
   const [modal, setModal] = useState(false);
-  const [isLoading, setLoading] = useState(false);
 
   const validateEmail = (email: string) => {
     const re = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -115,18 +113,18 @@ const Page = () => {
   };
 
   const handleSubmit = async () => {
-    setLoading(true);
     try {
+      const loadingToast = toast.loading('processing...')
       const res = await registerUser({ email }).unwrap();
-      setLoading(false);
+      toast.dismiss(loadingToast)
       if (res.success) {
+        toast.success(<b>Signup successfull</b>)
         setModal(true);
       } else if(!res.success) {
         setError('user email already exists')
       }
     } catch (err) {
       console.log(err);
-      setLoading(false);
       setError("Registration failed. Please try again.");
     }
   };
@@ -159,15 +157,12 @@ const Page = () => {
   };
 
   return (
-    <AuthHOC role="user" isAuthPage={true}>
+    <AuthHOC role={Role.User} isAuthPage={true}>
       {modal ? (
         <OtpModal email={email} handleOtp={handleOtp} otpError={otpError} clearError={() => setOtpError("")} />
       ) : (
         <>
-          {isLoading ? (
-            <Skl />
-          ) : (
-            <>
+          
               <Header />
               <div className="min-h-screen flex items-center justify-center bg-slate-100 pt-32 pb-10">
                 <div className="flex display-flex transform transition duration-500 hover:scale-105">
@@ -382,8 +377,6 @@ const Page = () => {
                   </div>
                 </div>
               </div>
-            </>
-          )}
         </>
       )}
     </AuthHOC>

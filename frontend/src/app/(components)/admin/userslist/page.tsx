@@ -7,11 +7,11 @@ import {
 } from "app/store/slices/userApiSlices";
 import ConfirmModal from "../../../../components/common/modals/confirmModal";
 import Pagination from "components/userComponents/pagination";
-import ErrorPage from "components/common/ErrorPage/errorPage";
 import Header from "app/(components)/login-header/header";
 import Aside from 'components/adminComponents/aside';
 import AuthHOC, {Role} from "components/common/auth/authHoc";
 import { useRouter } from "next/navigation";
+import { isApiError } from "utils/errors";
 
 export default function Page() {
   interface IUser {
@@ -41,7 +41,7 @@ export default function Page() {
                 router.push('/admin/login')
               }
             }
-          }, [usersFetchError]);
+          }, [usersFetchError, router]);
 
 
   const [usersArray, setUsersArray] = useState<IUser[]>([]);
@@ -54,7 +54,7 @@ export default function Page() {
         setUsersArray(user);
       };
       fetchUsers();
-    }, []);
+    }, [users?.users?.users]);
 
 
 
@@ -92,12 +92,13 @@ export default function Page() {
       } else {
         console.error("something went wrong");
       }
-    } catch (error: any) {
-      if(error.status === 401) {
-        localStorage.removeItem('authAdminToken')
-        router.push('/admin/login')
+    } catch (error: unknown) {
+      if (isApiError(error) && error.status === 401) {
+        localStorage.removeItem("authAdminToken");
+        router.push("/admin/login");
+      } else {
+        console.error("An unexpected error occurred", error);
       }
-      console.log(error);
     }
   };
 

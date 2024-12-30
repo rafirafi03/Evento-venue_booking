@@ -11,7 +11,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 // ]
 
 interface pageProps {
-  data : any
+  data : string[]
   title: string
   dataKeys: string[]
 }

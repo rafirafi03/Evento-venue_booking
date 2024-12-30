@@ -4,6 +4,7 @@ import { socket } from "utils/socket";
 import { useGetCompanyDetailsQuery } from "app/store/slices/companyApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetMessagesQuery } from "app/store/slices/chatApiSlices";
+import Image from 'next/image';
 
 
 type Message = {
@@ -15,18 +16,18 @@ type Message = {
   receiverId: string
 };
 
-type User = {
-  id: number;
-  name: string;
-  avatar: string;
-  lastMessage: string;
-};
+// type User = {
+//   id: number;
+//   name: string;
+//   avatar: string;
+//   lastMessage: string;
+// };
 
 interface pageProps {
   receiverId: string;
 }
 
-export default function   chatComponent({receiverId}: pageProps) {
+export default function ChatComponent({receiverId}: pageProps) {
 
   const userId = getUserIdFromToken('authUserToken');
   
@@ -41,7 +42,6 @@ export default function   chatComponent({receiverId}: pageProps) {
   console.log(company,'venues') 
 
 
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const messagesContainerRef = useRef<HTMLDivElement>(null);
@@ -107,12 +107,12 @@ export default function   chatComponent({receiverId}: pageProps) {
       {/* Chat Area */}
       <div className="flex-1 flex flex-col mt-16">
             <div className="bg-white p-4 flex items-center border-b border-gray-200">
-              <img
-                src={`https://ui-avatars.com/api/?name=${
-                  selectedUser?.name || "User"
-                }&background=random`}
+              <Image
+                src={`https://ui-avatars.com/api/?name=${"User"}&background=random`}
                 alt={company?.name}
                 className="w-10 h-10 rounded-full mr-3"
+                width={500}
+                height={500}
               />
               <h2 className="font-semibold">{company?.name}</h2>
             </div>

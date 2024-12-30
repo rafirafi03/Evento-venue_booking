@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useRef, useState, useEffect } from 'react';
 import { useResendOtpMutation } from 'app/store/slices/userApiSlices';
 
@@ -123,7 +125,7 @@ const Page: React.FC<PageProps> = ({ email, handleOtp, otpError, clearError }) =
                       ) : (
                         <>
                         <br />
-                        <p>Didn't receive code?</p>
+                        <p>Didnt receive code?</p>
                         <button
                           className="flex flex-row items-center text-blue-600"
                           onClick={handleResendOTP} 

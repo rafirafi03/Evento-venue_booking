@@ -13,7 +13,7 @@ interface propsData {
     onClose: ()=> void;
     offers: Offer[];
     onSubmit: (offerId: string)=> void
-    removeOffer: ()=> void
+    removeOffer: (offerId: string)=> void
 }
 
 export default function App({venueOfferId, isOpenModal, onClose, offers, onSubmit, removeOffer}: propsData) {

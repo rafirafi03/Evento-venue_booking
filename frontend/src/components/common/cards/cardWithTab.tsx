@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import LineChart from "../charts/lineChart";
+import { IDashboardData } from "types/types";
 
-export default function cardWithTab({data} : any) {
+export default function CardWithTab(data : IDashboardData) {
   const [activeTab, setActiveTab] = useState<string>("weekly");
 
   return (

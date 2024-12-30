@@ -11,7 +11,7 @@ import {
 } from "app/store/slices/companyApiSlices";
 import OtpModal from "../otpModal/page";
 import { useRouter } from "next/navigation";
-import AuthHOC from "components/common/auth/authHoc";
+import AuthHOC, { Role } from "components/common/auth/authHoc";
 
 const Page = () => {
   const [name, setName] = useState<string>("");
@@ -44,7 +44,12 @@ const Page = () => {
 
   const options = useMemo(() => countryList().getData(), []);
 
-  const handleCountryChange = (selectedOption: any) => {
+  const handleCountryChange = (
+    selectedOption: {
+      label: string;
+      value: string;
+    } | null
+  ) => {
     console.log(selectedOption);
     setCountryError("");
     if (selectedOption) {
@@ -145,7 +150,11 @@ const Page = () => {
           setError: setConfirmPassError,
           errorMsg: "Confirm password required",
         },
-        { value: license, setError: setLicenseError, errorMsg: "License required" },
+        {
+          value: license,
+          setError: setLicenseError,
+          errorMsg: "License required",
+        },
       ];
 
       let hasError = false;
@@ -179,17 +188,17 @@ const Page = () => {
     event.preventDefault();
 
     const formData = new FormData();
-    formData.append('otp', otp);
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('phone', phone);
-    formData.append('password', password);
-    formData.append('folderName',"companyLicenses")
-    if(country) {
-      formData.append('country', country?.label);
+    formData.append("otp", otp);
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    formData.append("password", password);
+    formData.append("folderName", "companyLicenses");
+    if (country) {
+      formData.append("country", country?.label);
     }
-    if(license) {
-      formData.append('license', license);
+    if (license) {
+      formData.append("license", license);
     }
     const response = await confirmOtp(formData).unwrap();
 
@@ -213,7 +222,7 @@ const Page = () => {
   };
 
   return (
-    <AuthHOC role="company" isAuthPage={true}>
+    <AuthHOC role={Role.Company} isAuthPage={true}>
       {modal ? (
         <OtpModal
           email={email}
@@ -469,7 +478,11 @@ const Page = () => {
                       </button>
                     </div>
                     <h1 className="text-center text-sm md:text-sm lg:text-sm xl:text-md my-6">
-                      Already have an account? <span className="text-[rgb(255,0,0)] font-bold hover:cursor-pointer" onClick={() => router.push('/company/login')}>
+                      Already have an account?{" "}
+                      <span
+                        className="text-[rgb(255,0,0)] font-bold hover:cursor-pointer"
+                        onClick={() => router.push("/company/login")}
+                      >
                         Login
                       </span>
                     </h1>

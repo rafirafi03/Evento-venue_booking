@@ -7,7 +7,7 @@ import {
 } from "app/store/slices/companyApiSlices";
 // import OtpModal from "../otpModal/page";
 import { useRouter } from "next/navigation";
-import AuthHOC from "components/common/auth/authHoc";
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 const Page = () => {
 
@@ -83,7 +83,7 @@ const Page = () => {
   }
 
   return (
-    <AuthHOC role="company" isAuthPage={true}>
+    <AuthHOC role={Role.Company} isAuthPage={true}>
               <div className="flex h-screen">
                 <div className="w-1/3 h-full">
                   <Image

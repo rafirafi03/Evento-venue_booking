@@ -9,8 +9,11 @@ import Header from "app/(components)/login-header/header";
 import Aside from 'app/(components)/company/aside/page';
 import { getUserIdFromToken } from "utils/tokenHelper";
 import AuthHOC, {Role} from "components/common/auth/authHoc";
+import Image from "next/image";
+import { ResizeImage } from "utils/resizeImage";
+import { isApiError } from "utils/errors";
 
-export default function page() {
+export default function Page() {
 
   const [addVenue] = useAddVenueMutation();
 
@@ -43,49 +46,6 @@ export default function page() {
 
   const router = useRouter()
 
-  const resizeImage = (file: File, width: number, height: number): Promise<File | null> => {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-  
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        const img = new Image();
-        img.src = e.target?.result as string;
-  
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          canvas.width = width;
-          canvas.height = height;
-  
-          const ctx = canvas.getContext('2d');
-          if (ctx) {
-            ctx.drawImage(img, 0, 0, width, height);
-            canvas.toBlob(
-              (blob) => {
-                if (blob) {
-                  // Convert Blob to File
-                  const resizedFile = new File([blob], file.name, {
-                    type: 'image/jpeg',
-                    lastModified: Date.now(),
-                  });
-                  resolve(resizedFile); // Returns the resized image file
-                } else {
-                  resolve(null);
-                }
-              },
-              'image/jpeg',
-              0.8 // Adjust quality as needed
-            );
-          } else {
-            resolve(null);
-          }
-        };
-      };
-  
-      reader.readAsDataURL(file);
-    });
-  };
-  
-  
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -94,7 +54,7 @@ export default function page() {
   
       if (imageToReplace !== null) {
         // Resize the image before replacing it
-        const resizedImage = await resizeImage(filesArray[0], 5000, 3000); // Adjust width and height as needed
+        const resizedImage = await ResizeImage(filesArray[0], 5000, 3000); // Adjust width and height as needed
   
         if (resizedImage) {
           const updatedFiles = [...selectedImages];
@@ -106,7 +66,7 @@ export default function page() {
         }
       } else {
         const newFiles = await Promise.all(
-          filesArray.map((file) => resizeImage(file, 5000, 3000)) // Resize each file
+          filesArray.map((file) => ResizeImage(file, 5000, 3000)) // Resize each file
         );
   
         // Filter out any null values in case resizing failed for any image
@@ -125,9 +85,8 @@ export default function page() {
     document.getElementById("imageInput")?.click();
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     try {
-      e.preventDefault()
 
     let isValid = true
 
@@ -228,11 +187,12 @@ export default function page() {
 
     console.log(response);
   }
-    } catch (error: any) {
-      console.log(error)
-      if(error.status == 401) {
-        localStorage.removeItem('authCompanyToken')
-        router.push('/company/login')
+    } catch (error: unknown) {
+      if (isApiError(error) && error.status === 401) {
+        localStorage.removeItem("authCompanyToken");
+        router.push("/company/login");
+      } else {
+        console.error("An unexpected error occurred", error);
       }
     }
     
@@ -532,10 +492,12 @@ export default function page() {
                 className="relative w-1/4 h-48 border-2 border-dashed border-gray-300 rounded-lg shadow-md cursor-pointer"
                 onClick={() => handleImageReplace(index)} // Click to replace the image
               >
-                <img
+                <Image
                   src={imageUrl}
                   alt={`Selected ${index}`}
                   className="w-full h-full object-cover rounded-lg transition-transform duration-300 transform hover:scale-105"
+                  width={500}
+                  height={500}
                 />
               </div>
             );

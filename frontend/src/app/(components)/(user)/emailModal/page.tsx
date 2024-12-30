@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { useForgetPasswordRequestMutation } from "app/store/slices/userApiSlices";
-import AuthHOC from "components/common/auth/authHoc";
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 interface pageProps {
   isOpen : boolean;
 }
 
-export default function page({isOpen}: pageProps) {
+export default function Page({isOpen}: pageProps) {
   const [isModal, setModal] = useState(isOpen);
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +16,7 @@ export default function page({isOpen}: pageProps) {
 
   const [forgetPasswordRequest] = useForgetPasswordRequestMutation();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async () => {
     setIsLoading(true);
     setError("");
 
@@ -24,6 +24,7 @@ export default function page({isOpen}: pageProps) {
       const response = await forgetPasswordRequest({ email }).unwrap();
       console.log(response);
     } catch (err) {
+      console.log(err)
       setError("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
@@ -33,7 +34,7 @@ export default function page({isOpen}: pageProps) {
   if(!isModal) return null;
 
   return (
-    <AuthHOC role="user">
+    <AuthHOC role={Role.User}>
       <div className="fixed inset-0 z-10 overflow-y-auto">
         <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <div className="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -44,7 +45,7 @@ export default function page({isOpen}: pageProps) {
             className="hidden sm:inline-block sm:align-middle sm:h-screen"
             aria-hidden="true"
           >
-            &#8203;
+            {'\u200B'}
           </span>
 
           <div className="inline-block overflow-hidden text-left align-bottom transition-all transform bg-white rounded-lg shadow-xl sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
@@ -59,7 +60,7 @@ export default function page({isOpen}: pageProps) {
                   </h3>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Enter your email address and we'll send you a link to
+                      Enter your email address and we will send you a link to
                       reset your password.
                     </p>
                   </div>

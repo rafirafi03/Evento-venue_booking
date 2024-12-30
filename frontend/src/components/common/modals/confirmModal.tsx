@@ -84,14 +84,14 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
                 closeModal();
               }}
             >
-              Yes, I'm sure
+              Yes, Im sure
             </button>
             <button
               onClick={closeModal}
               type="button"
               className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
             >
-              No, cancel
+              cancel
             </button>
           </div>
         </div>

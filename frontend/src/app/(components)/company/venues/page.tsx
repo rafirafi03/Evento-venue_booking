@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import { faAdd } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -38,7 +37,8 @@ interface IVenue {
 }
 
 
-export default function page() {
+export default function Page() {
+  const router = useRouter();
   const companyId = getUserIdFromToken("authCompanyToken");
 
   const {
@@ -60,7 +60,7 @@ export default function page() {
           router.push('/company/login')
         }
       }
-    }, [venuesFetchError]);
+    }, [venuesFetchError, router]);
 
   useEffect(() => {
         // Initial fetch for companies
@@ -70,7 +70,7 @@ export default function page() {
           setVenuesArray(venue);
         };
         fetchVenues();
-      }, []);
+      }, [venues?.venues]);
 
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalButton, setModalButton] = useState<string>("");
@@ -79,7 +79,6 @@ export default function page() {
   const [isConfirmModal, setConfirmModal] = useState<boolean>(false);
   const [isOfferListModal, setOfferListModal] = useState<boolean>(false);
 
-  const router = useRouter();
 
   const handleChange = () => {
     router.push("/company/addVenue");
@@ -123,7 +122,7 @@ export default function page() {
   const handleRemoveOffer = async(offerId: string)=> {
     try {
       const loadingToast = toast.loading('Removing...');
-      const res = await applyOffer({ venueId }).unwrap();
+      const res = await applyOffer({ venueId, offerId }).unwrap();
       toast.dismiss(loadingToast);
 
       if (res.success) {

@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 // import Image from "next/image";
 // import Header from "../../login-header/header";
 
-export default function page() {
+export default function Page() {
   const [page, setPage] = useState<string>("");
   const router = useRouter();
 

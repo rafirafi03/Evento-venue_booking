@@ -6,7 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 interface pageProps {
     title: string;
-    data: any;
+    data: string[];
     dataKey: string;
 }
 

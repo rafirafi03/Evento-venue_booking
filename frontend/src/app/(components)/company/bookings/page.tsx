@@ -1,18 +1,18 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
 import Aside from "app/(components)/company/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
-import toast, { Toaster } from "react-hot-toast";
 import { useGetCompanyBookingsQuery } from "app/store/slices/bookingApiSlices";
 import Pagination from "components/userComponents/pagination";
 import AuthHOC,{Role} from "components/common/auth/authHoc";
 
-export default function page() {
+export default function Page() {
+  const router = useRouter();
   const companyId = getUserIdFromToken("authCompanyToken");
 
-  const { data: bookings, error: bookingFetchError, refetch: bookingRefetch } =
+  const { data: bookings, error: bookingFetchError } =
     useGetCompanyBookingsQuery(companyId);
 
     useEffect(() => {
@@ -23,9 +23,8 @@ export default function page() {
           router.push('/company/login')
         }
       }
-    }, [bookingFetchError]);
+    }, [bookingFetchError, router]);
 
-  const router = useRouter();
 
   const pageChange = ()=> {
     console.log('hii')
@@ -33,9 +32,6 @@ export default function page() {
 
   return (
     <AuthHOC role={Role.Company}>
-      <div>
-        <Toaster position="bottom-center" reverseOrder={false} />
-      </div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
       </nav>

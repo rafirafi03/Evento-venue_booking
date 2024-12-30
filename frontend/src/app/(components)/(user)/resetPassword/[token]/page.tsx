@@ -5,7 +5,7 @@ import { useChangePasswordMutation } from "app/store/slices/userApiSlices";
 import { useRouter } from "next/navigation";
 import toast,{Toaster} from "react-hot-toast";
 
-export default function page({ params }: { params: { token: string } }) {
+export default function Page({ params }: { params: { token: string } }) {
 
     const [password, setPass] = useState<string>('');
     const [confirmPass, setConfirmPass] = useState<string>("");

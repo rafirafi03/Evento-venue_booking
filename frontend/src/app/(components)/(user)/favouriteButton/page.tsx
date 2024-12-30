@@ -1,12 +1,14 @@
+'use client'
+
 import { Heart } from "lucide-react";
 import {
   useAddToFavouritesMutation,
   useCheckIfFavouritedQuery,
   useDeleteFromFavouritesMutation,
 } from "app/store/slices/userApiSlices";
-import toast, {Toaster} from "react-hot-toast";
-import { use, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { isApiError } from "utils/errors";
 
 interface propsData {
   userId: string | null;
@@ -18,8 +20,6 @@ const FavouriteButton = ({ userId, venueId }: propsData) => {
   const router = useRouter()
   const {
     data: isFavourited,
-    error: favouriteFetchError,
-    isLoading,
     refetch,
   } = useCheckIfFavouritedQuery({ userId, venueId });
 
@@ -62,15 +62,18 @@ const FavouriteButton = ({ userId, venueId }: propsData) => {
 
       }
       refetch();
-    } catch (error: any) {
-      if(error.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authUserToken");
-        router.push('/login')
+    } catch (error: unknown) {
+      if (isApiError(error)) { // Type guard to check if error has status
+        if (error.status === 401) {
+          console.warn("Session expired. Logging out...");
+          localStorage.removeItem("authUserToken");
+          router.push('/login');
+        }
+      } else {
+        console.error("Unexpected error occurred", error);
       }
-      toast.dismiss()
-      toast.error(<b>Error occured!</b>)
-      console.error("Error toggling favourite", error);
+      toast.dismiss();
+      toast.error(<b>Error occurred!</b>);
     }
   };
 

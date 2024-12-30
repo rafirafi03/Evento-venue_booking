@@ -7,7 +7,7 @@ interface pageProps {
   handleRatingSubmit: (star: number, review: string) => void;
 }
 
-export default function ratingCard({ handleRatingSubmit }: pageProps) {
+export default function RatingCard({ handleRatingSubmit }: pageProps) {
   const [rating, setRating] = useState<number>(1);
   const [review, setReview] = useState<string>("");
 

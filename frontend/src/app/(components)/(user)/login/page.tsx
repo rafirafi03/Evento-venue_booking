@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLoginPostMutation } from "app/store/slices/userApiSlices";
 import EmailModal from 'app/(components)/(user)/emailModal/page'
-import AuthHOC from "components/common/auth/authHoc";
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 import toast, {Toaster} from "react-hot-toast";
 
 const Page = () => {
@@ -89,7 +89,7 @@ const Page = () => {
   };
 
   return (
-    <AuthHOC role='user' isAuthPage={true} >
+    <AuthHOC role={Role.User} isAuthPage={true} >
       <div>
         <Toaster position="bottom-center" reverseOrder={false} />
       </div>
@@ -204,7 +204,7 @@ const Page = () => {
               <p onClick={()=> setForgotEmailModal(true)} className="text-xs my-2 mx-1 text-red-600 hover:cursor-pointer">forgot password?</p>
             <div className="mt-4 text-center">
               <p className="text-gray-600">
-                Don't have an account?
+                Dont have an account?
                 <span
                   onClick={handleOnClick}
                   className="text-[rgb(255,0,0)] font-bold cursor-pointer"

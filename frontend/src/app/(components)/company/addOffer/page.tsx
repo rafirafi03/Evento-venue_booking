@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState } from "react";
 import "@radix-ui/themes/styles.css";
 import { useAddOfferMutation } from "app/store/slices/companyApiSlices";
 import { useRouter } from "next/navigation";
@@ -11,8 +10,9 @@ import { useFormik } from "formik";
 import { offerValidationSchema } from "app/schema/validation";
 import toast, { Toaster } from "react-hot-toast";
 import AuthHOC,{Role} from "components/common/auth/authHoc";
+import { isApiError } from "utils/errors";
 
-export default function page() {
+export default function Page() {
   const router = useRouter()
   const [addOffer] = useAddOfferMutation();
 
@@ -39,14 +39,15 @@ export default function page() {
           toast.error(<b>Could not Add.</b>);
         }
         resetForm();
-      } catch (error: any) {
+      } catch (error: unknown) {
         toast.dismiss();
         toast.error(<b>Error occurred.</b>);
-        if(error.status == 401) {
-          localStorage.removeItem('authCompanyToken');
-          router.push('/company/login')
+        if (isApiError(error) && error.status === 401) {
+          localStorage.removeItem("authCompanyToken");
+          router.push("/company/login");
+        } else {
+          console.error("An unexpected error occurred", error);
         }
-        console.error("Failed to add offer:", error);
       }
     },
   });

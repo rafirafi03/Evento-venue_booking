@@ -1,14 +1,11 @@
-"use client";
 
-import React, { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import VenueCard from "components/userComponents/venueCard";
 import { useGetListedVenuesQuery } from "app/store/slices/companyApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
-import { useRouter } from "next/navigation";
+import { IVenue } from "types/types";
 
-export default function venueList() {
-  const router = useRouter()
+export default function VenueList() {
   const searchParams = useSearchParams()
 
   const filter = {
@@ -54,7 +51,7 @@ export default function venueList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {venue?.length && (
           <>
-            {venue?.map((ven, index) => (
+            {venue?.map((ven: IVenue, index: number) => (
               <>
               <VenueCard
               key={index}

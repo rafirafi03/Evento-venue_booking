@@ -95,7 +95,11 @@ export default function App({ isOpen,isClose, handleBooking, capacity }: AppProp
                   type="text"
                   id="helper-text"
                   value={event}
-                  onChange={(e) => setEvent(e.target.value)}
+                  onChange={(e) => {
+                    setEvent(e.target.value)
+                    setEventError("")
+                  }
+                  }
                   aria-describedby="helper-text-explanation"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                   placeholder="Name of Event"
@@ -107,7 +111,10 @@ export default function App({ isOpen,isClose, handleBooking, capacity }: AppProp
                   type="number"
                   id="helper-text"
                   value={guests}
-                  onChange={(e) => setGuests(Number(e.target.value))}
+                  onChange={(e) => {
+                    setGuests(Number(e.target.value))
+                    setGuestsError('')
+                  } }
                   aria-describedby="helper-text-explanation"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-500 dark:focus:border-red-500"
                   placeholder="No of Guests"

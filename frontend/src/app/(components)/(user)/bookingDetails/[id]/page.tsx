@@ -7,16 +7,12 @@ import {
   Phone,
   Mail,
   Calendar,
-  Trash,
-  Building,
-  CalendarDays,
-  Dot,
   XCircle,
+  Building,
   X,
   Check,
 } from "lucide-react";
 import Header from "components/userComponents/header";
-import Aside from "app/(components)/company/aside/page";
 import CancelBookingModal from "components/userComponents/cancelBookingModal";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -28,6 +24,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import RatingCard from "components/common/cards/ratingCard";
 import AuthHOC,{Role} from "components/common/auth/authHoc";
+import Image from "next/image";
 
 export default function BookingDetails({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -35,17 +32,24 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
   const { id } = params;
 
   const { data: booking, refetch } = useGetBookingDetailsQuery(id);
-  let userId : string;
-  let venueId: string;
-  let userName : string;
-  let userEmail : string;
+
+  const [userDetails, setUserDetails] = useState({
+    userId: "",
+    venueId: "",
+    userName: "",
+    userEmail: "",
+  });
 
   useEffect(() => {
-    userId = booking?.userId._id
-    venueId = booking?.venueId._id
-    userName = booking?.userId.name
-    userEmail = booking?.userId.email
-  })
+    if (booking) {
+      setUserDetails({
+        userId: booking.userId._id,
+        venueId: booking.venueId._id,
+        userName: booking.userId.name,
+        userEmail: booking.userId.email,
+      });
+    }
+  }, [booking]);
 
   const [isCancelModal, setCancelModal] = useState<boolean>(false);
 
@@ -81,6 +85,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
 
   const handleRatingSubmit = async (star: number, review: string) => {
     try {
+      const {userId, venueId, userName, userEmail } = userDetails;
       const loadingToast = toast.loading('submitting...')
       const response = await addReview({userId, venueId, userName, userEmail, star, review}).unwrap();
       toast.dismiss(loadingToast)
@@ -116,10 +121,12 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
       <div className="flex-1 p-7 mt-16 bg-slate-100 my-3">
         <div className="min-h-screen bg-white shadow-lg rounded-lg">
           <div className="relative h-64 bg-gray-200 rounded-lg">
-            <img
+            <Image
               src={booking?.venueId?.image}
               alt="Venue cover"
               className="w-full h-full object-cover rounded-lg"
+              width={500}
+              height={500}
             />
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6">
               <h1 className="text-3xl font-bold text-white">{booking?.name}</h1>

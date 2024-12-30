@@ -1,3 +1,0 @@
-2024-12-14T04:21:43.834Z [INFO]: server is running on http://localhost:4003
-2024-12-14T04:21:48.563Z [INFO]: ::1 - - [14/Dec/2024:04:21:48 +0000] "GET /getCompanyDashboardDetails/67162fa0016448154f9b34cb HTTP/1.1" 200 4284 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-2024-12-14T04:22:01.976Z [INFO]: ::1 - - [14/Dec/2024:04:22:01 +0000] "GET /getCompanyDashboardDetails/67162fa0016448154f9b34cb HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
