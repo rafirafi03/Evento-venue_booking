@@ -2,7 +2,7 @@
 import React, { useEffect} from "react";
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
-import Aside from "app/(components)/company/aside/page";
+import Aside from "components/companyComponents/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetCompanyBookingsQuery } from "app/store/slices/bookingApiSlices";
 import Pagination from "components/userComponents/pagination";

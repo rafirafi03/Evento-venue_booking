@@ -11,7 +11,7 @@ import {
 import ConfirmModal from "../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
-import Aside from "app/(components)/company/aside/page";
+import Aside from "components/companyComponents/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import OfferListModal from "components/companyComponents/modals/offerListModal";
 import toast, { Toaster } from "react-hot-toast";

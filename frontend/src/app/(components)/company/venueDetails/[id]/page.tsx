@@ -11,7 +11,7 @@ import {
   Trash,
 } from "lucide-react";
 import Header from "app/(components)/login-header/header";
-import Aside from "app/(components)/company/aside/page";
+import Aside from "components/companyComponents/aside/page";
 import {
   useGetVenueDetailsQuery,
   useDeleteVenueMutation,

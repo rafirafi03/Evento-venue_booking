@@ -14,7 +14,7 @@ import {
   User,
 } from "lucide-react";
 import Header from "components/userComponents/header";
-import Aside from "app/(components)/company/aside/page";
+import Aside from "components/companyComponents/aside/page";
 import CancelBookingModal from "components/userComponents/cancelBookingModal";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";

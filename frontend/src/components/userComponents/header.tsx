@@ -2,10 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function Page() {
   const router = useRouter();
+  const pathname = usePathname(); // Get the current pathname
 
   const [isToken, setToken] = useState(false);
 
@@ -27,6 +28,8 @@ export default function Page() {
     setToken(false);
     router.push("/login");
   };
+
+  const isActive = (path: string) => pathname === path;
 
   return (
     <>
@@ -76,12 +79,14 @@ export default function Page() {
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
             id="navbar-sticky"
           >
-            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white  dark:border-gray-700">
+            <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:border-gray-700">
               <li>
                 <a
                   onClick={() => router.push("/")}
-                  style={{ color: "rgba(255, 0, 0, 1)" }}
-                  className="block py-2 px-3 font-bold text-black rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 cursor-pointer"
+                  style={{
+                    color: isActive("/") ? "rgba(255, 0, 0, 1)" : "black",
+                  }}
+                  className="block py-2 px-3 font-bold text-black rounded md:bg-transparent md:p-0 md:dark:text-blue-500 cursor-pointer"
                   aria-current="page"
                 >
                   Home
@@ -90,18 +95,18 @@ export default function Page() {
               <li>
                 <a
                   onClick={() => router.push("/venues")}
-                  className="block py-2 px-3 text-black rounded hover:bg-gray-100 font-bold md:hover:bg-transparent md:hover:text-red-500 md:p-0 md:dark:hover:text-red-500 dark:text-black dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 cursor-pointer"
+                  style={{
+                    color: isActive("/venues") ? "rgba(255, 0, 0, 1)" : "black",
+                  }}
+                  className="block py-2 px-3 font-bold text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-500 md:p-0 dark:text-black dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 cursor-pointer"
                 >
                   Venues
                 </a>
               </li>
               <li>
-                <a className="block py-2 px-3 text-black rounded hover:bg-gray-100 font-bold md:hover:bg-transparent md:hover:text-red-500 md:p-0 md:dark:hover:text-red-500 dark:text-black dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a className="block py-2 px-3 text-black rounded hover:bg-gray-100 font-bold md:hover:bg-transparent md:hover:text-red-500 md:p-0 md:dark:hover:text-red-500 dark:text-black dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                <a
+                  className="block py-2 px-3 font-bold text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-500 md:p-0 dark:text-black dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 cursor-pointer"
+                >
                   Contact
                 </a>
               </li>

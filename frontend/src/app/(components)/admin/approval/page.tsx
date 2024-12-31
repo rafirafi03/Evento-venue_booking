@@ -96,10 +96,6 @@ export default function Page() {
     }
   };
 
-  // const closeModal = ()=> {
-  //   setBlockModal(false)
-  // }
-
   // Handle loading and error states
   if (isLoading) return <div>Loading...</div>;
 
@@ -119,7 +115,7 @@ export default function Page() {
               <>
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                   <table className="w-full text-sm text-left rtl:text-right text-black dark:text-black">
-                    <thead className="font-bold text-black uppercase bg-red-300 dark:bg-red-300 dark:text-black">
+                    <thead className="font-bold text-black uppercase bg-gray-200 dark:bg-gray-200 dark:text-black">
                       <tr>
                         <th scope="col" className="px-6 py-3">
                           User
@@ -145,7 +141,7 @@ export default function Page() {
                       {user.map((user: ICompany) => (
                         <tr
                           key={user._id}
-                          className="bg-red-100 dark:bg-red-100 hover:bg-red-200"
+                          className="bg-gray-100 dark:bg-gray-100 hover:bg-gray-200"
                         >
                           <th
                             scope="row"

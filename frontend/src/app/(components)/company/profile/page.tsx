@@ -8,7 +8,7 @@ import {
   Phone,
 } from "lucide-react";
 import Header from "app/(components)/login-header/header";
-import Aside from "app/(components)/company/aside/page";
+import Aside from "components/companyComponents/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetCompanyDetailsQuery, useEditCompanyProfileMutation } from "app/store/slices/companyApiSlices";
 import Image from "next/image";

@@ -52,14 +52,65 @@ export interface IReview {
 }
 
 export interface IDashboardData {
-    bookings : string | number;
-    last7DaysSales : string[];
-    lastFiveYearRevenue: string[];
-    monthlySalesData : string[];
-    top3LocationData: string[];
-    top3VenueData: string[]
+    
+  bookings? : IBookingData[] | [] ;
+  last7DaysSales? : ILast7DaysSales[] | [];
+  lastFiveYearRevenue? : ILastFiveYearRevenue[] | [];
+  monthlyRevenue? : number;
+  monthlyRevenueShare? : number;
+  monthlySalesData?  : IMonthlySalesData[] | [];
+  overallRevenue? :  number;
+  overallRevenueShare? : number;
+  top3LocationData? : string[] | null;
+  top3VenueData? : string[] | null ;
+  totalBookings? : number;
+  yearlyRevenue? : number;
+  yearlyRevenueShare? : number;
 
-} 
+}  
+
+export interface ILast7DaysSales {
+  date: string;
+  sales : number
+}
+
+export interface ILastFiveYearRevenue {
+  year: string;
+  sales : number
+}
+
+export interface IMonthlySalesData {
+  month: string;
+  sales : number
+}
+
+export interface IBookingData {
+  _id?: string;
+  userId: string;
+  companyId: string
+  venueId: string;
+  event: string;
+  guests: number;
+  amount: number;
+  bookingDateStart: Date;
+  bookingDateEnd: Date;
+  paymentMethod: string;
+  status: string;
+  venueDetails?: {
+      _id: string;
+      name: string;
+      amount: number;
+      city: string;
+      state: string;
+      image: string; // Add the image field here
+    };
+    userDetails?: {
+      _id: string;
+      name: string;
+      email: string;
+      phone: number;
+    };
+}
 
 // export interface User {
 

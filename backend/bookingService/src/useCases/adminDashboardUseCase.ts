@@ -1,15 +1,14 @@
 import { IBookingRepository } from "../repositories/interfaces";
+import { IDashboardData, IDashboardDataResult } from "./types";
 
 export class AdminDashboardUseCase {
   constructor(private _bookingRepository: IBookingRepository) {}
 
-  async execute(): Promise<any> {
+  async execute(): Promise<{result : IDashboardData}> {
     try {
       const bookings = await this._bookingRepository.getBookings();
 
-
-
-      console.log("bookings::::::",bookings)
+      console.log("bookings::::::", bookings);
 
       const totalBookings = bookings?.filter(
         (booking: any) => booking.status === "confirmed"
@@ -33,7 +32,7 @@ export class AdminDashboardUseCase {
           0
         );
 
-        const monthlyRevenueShare = monthlyRevenue * 0.05
+      const monthlyRevenueShare = monthlyRevenue * 0.05;
 
       console.log(monthlyRevenue, "monthlyRevenueeeee");
 
@@ -51,9 +50,8 @@ export class AdminDashboardUseCase {
           0
         );
 
-        const yearlyRevenueShare = yearlyRevenue * 0.05
+      const yearlyRevenueShare = yearlyRevenue * 0.05;
 
-      // Calculate overall revenue
       const overallRevenue = bookings
         ?.filter((booking: any) => booking.status === "confirmed")
         .reduce(
@@ -62,7 +60,7 @@ export class AdminDashboardUseCase {
           0
         );
 
-        const overallRevenueShare = overallRevenue * 0.05
+      const overallRevenueShare = overallRevenue * 0.05;
 
       const months = [
         "Jan",
@@ -81,7 +79,6 @@ export class AdminDashboardUseCase {
 
       const monthlySalesData = months.map((month) => ({ month, sales: 0 }));
 
-      // Calculate monthly sales
       bookings?.forEach((booking: any) => {
         const bookingDate = new Date(booking.bookingDateStart);
         if (
@@ -90,42 +87,38 @@ export class AdminDashboardUseCase {
         ) {
           const monthIndex = bookingDate.getMonth();
           const amount = booking.venueDetails.amount || 0;
-      
-          // Update sales for the specific month
-          monthlySalesData[monthIndex].sales += amount * 0.05;
 
+          monthlySalesData[monthIndex].sales += amount * 0.05;
         }
       });
-      
+
       console.log("Monthly Sales Data:", monthlySalesData);
-      
 
-      const lastFiveYearRevenue = Array.from({ length: 5 }, (_, i) => currentYear - i)
-  .map((year) => {
-    // Filter bookings for the current year
-    const filteredBookings = bookings?.filter((booking: any) => {
-      const bookingDate = new Date(booking.bookingDateStart);
-      return (
-        booking.status === "confirmed" &&
-        bookingDate.getFullYear() === year
-      );
-    });
+      const lastFiveYearRevenue = Array.from(
+        { length: 5 },
+        (_, i) => currentYear - i
+      )
+        .map((year) => {
+          const filteredBookings = bookings?.filter((booking: any) => {
+            const bookingDate = new Date(booking.bookingDateStart);
+            return (
+              booking.status === "confirmed" &&
+              bookingDate.getFullYear() === year
+            );
+          });
 
-    // Calculate total sales for the year
-    const totalSales = filteredBookings?.reduce(
-      (total: number, booking: any) =>
-        total + (booking.venueDetails?.amount * 0.05 || 0),
-      0
-    ) || 0;
+          const totalSales =
+            filteredBookings?.reduce(
+              (total: number, booking: any) =>
+                total + (booking.venueDetails?.amount * 0.05 || 0),
+              0
+            ) || 0;
 
-    // Store only 5% of the total sales
-    return { year, sales: totalSales };
-  })
-  .sort((a, b) => a.year - b.year);
+          return { year: year.toString(), sales: totalSales };
+        })
+        .sort((a, b) => parseInt(a.year) - parseInt(b.year));
 
-console.log("Last Five Year Revenue:", lastFiveYearRevenue);
-
-
+      console.log("Last Five Year Revenue:", lastFiveYearRevenue);
 
       const last7DaysSales = Array.from({ length: 7 }, (_, i) => {
         const currentDate = new Date();
@@ -199,22 +192,20 @@ console.log("Last Five Year Revenue:", lastFiveYearRevenue);
         (bookings || []).reduce(
           (locations: Record<string, any>, booking: any) => {
             if (booking.status === "confirmed") {
-              const city = booking.venueDetails.city; // Assuming `city` is a field in `venueDetails`
-              const venueName = booking.venueDetails.name; // Assuming `name` is the venue's name
+              const city = booking.venueDetails.city;
+              const venueName = booking.venueDetails.name;
               const venueRevenue = booking.venueDetails.amount || 0;
 
               if (!locations[city]) {
-                // Initialize location data if it doesn't exist
                 locations[city] = {
                   location: city,
-                  venues: new Set<string>(), // Use a Set to store unique venue names
+                  venues: new Set<string>(),
                   events: 0,
                   revenue: 0,
                 };
               }
 
-              // Update the location's data
-              locations[city].venues.add(venueName); // Add the venue name to the Set
+              locations[city].venues.add(venueName);
               locations[city].events += 1;
               locations[city].revenue += venueRevenue;
             }
@@ -225,10 +216,10 @@ console.log("Last Five Year Revenue:", lastFiveYearRevenue);
       )
         .map((location) => ({
           ...location,
-          venues: location.venues.size, // Convert the Set size to the number of venues
+          venues: location.venues.size,
         }))
-        .sort((a, b) => b.events - a.events) // Sort by number of events in descending order
-        .slice(0, 3); // Get the top 3 locations
+        .sort((a, b) => b.events - a.events)
+        .slice(0, 3);
 
       console.log(top3LocationData);
 
@@ -236,7 +227,7 @@ console.log("Last Five Year Revenue:", lastFiveYearRevenue);
 
       console.log(top3VenueData);
 
-      const result = {
+      const result: IDashboardData = {
         bookings,
         totalBookings,
         monthlyRevenue,
@@ -252,11 +243,7 @@ console.log("Last Five Year Revenue:", lastFiveYearRevenue);
         top3LocationData,
       };
 
-      console.log(totalBookings, " total bookingssss");
-
-      console.log(bookings, "bookings in getbookingsusecase");
-
-      return result;
+      return {result};
     } catch (error) {
       throw new Error("Internal server error: ");
     }

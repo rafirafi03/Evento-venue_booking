@@ -9,7 +9,7 @@ import {
 } from "app/store/slices/companyApiSlices";
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
-import Aside from "../../aside/page";
+import Aside from "../../../../../components/companyComponents/aside/page";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { isApiError } from "utils/errors";
 import Image from "next/image";

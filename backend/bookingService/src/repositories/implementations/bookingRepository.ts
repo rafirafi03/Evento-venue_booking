@@ -86,7 +86,7 @@ export class BookingRepository implements IBookingRepository {
         }
     }
 
-    async getBookingsByCompanyId(companyId: string): Promise<IBookingData[] | null> {
+    async getBookingsByCompanyId(companyId: string): Promise<IBookingData[]> {
         try {
             const bookings = await BookingModel.aggregate([
                 {
@@ -133,7 +133,7 @@ export class BookingRepository implements IBookingRepository {
     
             console.log(bookings, "bookings with venue details in repository");
             if (!bookings || bookings.length === 0) {
-                return null;
+                []
             }
             return bookings;
         } catch (error) {

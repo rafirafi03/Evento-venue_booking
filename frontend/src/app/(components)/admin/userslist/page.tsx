@@ -126,7 +126,7 @@ export default function Page() {
           <h1 className="font-extrabold text-2xl mt-5 mb-5">Users</h1>
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table className="w-full text-sm text-center rtl:text-right text-black dark:text-black">
-              <thead className="font-bold text-black uppercase bg-red-300 dark:bg-red-300 dark:text-black">
+              <thead className="font-bold text-black uppercase bg-gray-200 dark:bg-gray-200 dark:text-black">
                 <tr>
                   <th scope="col" className="px-6 py-3">
                     User
@@ -150,7 +150,7 @@ export default function Page() {
                   usersArray.map((user: IUser) => (
                     <tr
                       key={user._id}
-                      className="bg-red-100 dark:bg-red-100 hover:bg-red-200"
+                      className="bg-gray-100 dark:bg-gray-100 hover:bg-gray-200"
                     >
                       <th scope="row" className="px-6 py-4 whitespace-nowrap">
                         {user.userName}

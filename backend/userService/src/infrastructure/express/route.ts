@@ -77,7 +77,7 @@ router.post('/adminLogin', (req,res) => {
   adminController.adminLogin(req,res)
 })
 
-router.get('/get-users',authMiddleware(['admin']), (req,res) => {
+router.get('/get-users',authMiddleware(['admin', "company"]), (req,res) => {
   adminController.getUsers(req,res)
 })
 

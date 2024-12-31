@@ -261,7 +261,7 @@ export default function Page({ params }: { params: { id: string } }) {
                   Schedule Booking
                 </button>
                 <button
-                  onClick={() => router.push(`/inbox/${venue.companyId}`)}
+                  onClick={() => router.push(`/inbox/${venue?.companyId}`)}
                   className="inline-flex justify-center items-center px-3 mx-1 py-2 w-1/3 text-sm font-medium text-center text-white bg-[rgb(255,0,0)] rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
                 >
                   <FontAwesomeIcon

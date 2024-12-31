@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import Header from "../../login-header/header";
-import Aside from "../aside/page";
+import Aside from "../../../../components/companyComponents/aside/page";
 import CardWithTab from "components/common/cards/cardWithTab";
 import BarChart from "components/common/charts/barChart";
 import { useRouter } from "next/navigation";

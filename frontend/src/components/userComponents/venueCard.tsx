@@ -2,6 +2,7 @@ import { MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import FavouriteButton from "app/(components)/(user)/favouriteButton/page";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 
 type VenueCardProps = {
@@ -30,60 +31,28 @@ const VenueCard: React.FC<VenueCardProps> = ({
 
   const router = useRouter()
 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+
   const handleOnClick = (id: string) => {
     router.push(`/venueDetails/${id}`);
 
   };
 
   return (
-    // <div className="flex bg-white shadow-md rounded-md overflow-hidden w-full max-w-full h-48 relative">
-    //     <button
-    //     className="absolute top-2 right-2 p-2 bg-red rounded-full hover:bg-gray-100 transition duration-300 ease-in-out"
-    //     aria-label="Add to favorites"
-    //   >
-    //     <Heart className="w-5 h-5 text-gray-500" />
-    //   </button>
-    //   {/* Left Side: Image */}
-    //   <div className="w-1/3">
-    //     <img className="w-full h-auto object-cover" src={imageUrl} alt={title} />
-    //   </div>
-
-    //   {/* Right Side: Venue Details */}
-    //   <div className="w-2/3 p-4 flex flex-col justify-between">
-    //     <div className='space-y-2'>
-    //       <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
-    //       <div className="flex items-center text-gray-700 text-xs font-sans font-bold">
-    //         <MapPin className="w-4 h-4 mr-1" />
-    //         <p>{city}, {state}</p>
-    //       </div>
-    //       <div className="flex items-center text-gray-700 text-sm font-sans font-semibold">
-    //         <Users className="w-4 h-4 mr-1" />
-    //         <p>capacity: {capacity}</p>
-    //       </div>
-    //       <p className="text-gray-800 mt-2 font-medium text-xs">{description}</p>
-    //     </div>
-    //     <div className="flex justify-between items-center">
-    //       <div>
-    //         <p className="text-md font-bold">₹ {price} <span className='text-sm'>(per day)</span></p>
-    //       </div>
-    //       <button
-    //         className="bg-[rgb(255,0,0)] hover:bg-red-700 text-white text-xs font-bold py-2.5 px-4 rounded-lg transition duration-300 ease-in-out"
-    //         aria-label="Schedule booking for this venue"
-    //       >
-    //         Schedule Booking
-    //       </button>
-    //     </div>
-    //   </div>
-    // </div>
+    
 
     <div className="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <a>
         <Image
-          className="rounded-t-lg"
+          className={`rounded-t-lg transition-opacity duration-300 ${
+            isLoading ? "animate-spin rounded-full text-center m-auto my-6 h-8 w-8 border-b-2 border-gray-900" : 'opacity-100'
+          }`}
           src={imageUrl}
           alt="img"
           width={500}
           height={500}
+          onLoadingComplete={()=> setIsLoading(false)}
         />
       </a>
       <div className="p-5">

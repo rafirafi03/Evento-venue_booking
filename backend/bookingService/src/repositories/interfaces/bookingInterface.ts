@@ -6,7 +6,7 @@ export interface IBookingRepository {
     saveUser(user: User) : Promise<void>
     saveVenue(venue: Venue) : Promise<void>
     getBookingsByUserId(userId: string) : Promise<IBookingData[] | null>
-    getBookingsByCompanyId(companyId: string) : Promise<IBookingData[] | null>
+    getBookingsByCompanyId(companyId: string) : Promise<IBookingData[]>
     getBookingDetails(id: string) : Promise<IBookingData | null>
     getBookings() : Promise<IBookingData[]>
     findUser(userId: string) : Promise<IUserData | null>

@@ -1,9 +1,10 @@
 import { IBookingRepository } from "../repositories/interfaces";
+import { IDashboardData } from './types'
 
 export class CompanyDashboardDetailsUseCase {
   constructor(private _bookingRepository: IBookingRepository) {}
 
-  async execute(companyId: string): Promise<any> {
+  async execute(companyId: string): Promise<{result : IDashboardData}> {
     try {
       const bookings = await this._bookingRepository.getBookingsByCompanyId(
         companyId
@@ -105,9 +106,9 @@ export class CompanyDashboardDetailsUseCase {
               0
             );
 
-          return { year, sales };
+          return { year: year.toString(), sales };
         })
-        .sort((a, b) => a.year - b.year);
+        .sort((a, b) => parseInt(a.year) - parseInt(b.year));
 
       const last7DaysSales = Array.from({ length: 7 }, (_, i) => {
         const currentDate = new Date();
@@ -218,7 +219,7 @@ export class CompanyDashboardDetailsUseCase {
 
       console.log(top3VenueData);
 
-      const result = {
+      const result : IDashboardData = {
         bookings,
         totalBookings,
         monthlyRevenue,
@@ -235,7 +236,7 @@ export class CompanyDashboardDetailsUseCase {
 
       console.log(bookings, "bookings in getbookingsusecase");
 
-      return result;
+      return {result};
     } catch (error) {
       throw new Error("Internal server error: ");
     }

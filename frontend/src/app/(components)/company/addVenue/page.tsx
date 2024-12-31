@@ -6,7 +6,7 @@ import { FaUpload } from "react-icons/fa";
 import { useAddVenueMutation } from "app/store/slices/companyApiSlices";
 import { useRouter } from "next/navigation";
 import Header from "app/(components)/login-header/header";
-import Aside from 'app/(components)/company/aside/page';
+import Aside from 'components/companyComponents/aside/page';
 import { getUserIdFromToken } from "utils/tokenHelper";
 import AuthHOC, {Role} from "components/common/auth/authHoc";
 import Image from "next/image";

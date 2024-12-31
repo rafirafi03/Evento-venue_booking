@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Loader from '../loader/loader';
 
 export enum Role {
   Admin = 'admin',
@@ -17,7 +18,7 @@ type AuthHOCProps = {
 
 export default function AuthHOC({ children, role, isAuthPage = false }: AuthHOCProps) {
   const router = useRouter();
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const tokenKey = role === Role.Admin ? 'authAdminToken' : role === Role.User ? 'authUserToken' : 'authCompanyToken';
@@ -26,28 +27,26 @@ export default function AuthHOC({ children, role, isAuthPage = false }: AuthHOCP
     if (isAuthPage) {
       // If on login page and token exists, redirect to main content page
       if (token) {
-        const redirectTo = role === Role.Admin ? '/admin/dashboard' : role === Role.User ? '/' : '/company';
+        const redirectTo = role === Role.Admin ? '/admin' : role === Role.User ? '/' : '/company';
         router.push(redirectTo);
+      } else {
+        setLoading(false); // Allow access to the login page if no token is found
       }
-      //  else {
-      //   setLoading(false); // Allow access to the login page if no token is found
-      // }
     } else {
       // If on a protected page and no token, redirect to the login page
       if (!token) {
         const redirectTo = role === Role.Admin ? '/admin/login' : role === Role.User ? '/login' : '/company/login';
         router.push(redirectTo);
+      } else {
+        setLoading(false); // Auth check complete, ready to render protected content
       }
-      //  else {
-      //   setLoading(false); // Auth check complete, ready to render protected content
-      // }
     }
   }, [role, router, isAuthPage]);
 
   // Render Loader while checking authentication
-  // if (loading) {
-  //   return <Loader />;
-  // }
+  if (loading) {
+    return <Loader />;
+  }
 
   // Render the content once authenticated or allow access to the login page if unauthenticated
   return <>{children}</>;

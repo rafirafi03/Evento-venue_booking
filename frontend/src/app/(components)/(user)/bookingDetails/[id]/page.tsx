@@ -23,7 +23,7 @@ import {
 } from "app/store/slices/bookingApiSlices";
 import toast, { Toaster } from "react-hot-toast";
 import RatingCard from "components/common/cards/ratingCard";
-import AuthHOC,{Role} from "components/common/auth/authHoc";
+import AuthHOC, { Role } from "components/common/auth/authHoc";
 import Image from "next/image";
 
 export default function BookingDetails({ params }: { params: { id: string } }) {
@@ -54,7 +54,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
   const [isCancelModal, setCancelModal] = useState<boolean>(false);
 
   const [cancelBooking] = useCancelBookingMutation();
-  const [addReview] = useAddReviewMutation()
+  const [addReview] = useAddReviewMutation();
 
   const closeModal = () => {
     setCancelModal(false);
@@ -85,26 +85,32 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
 
   const handleRatingSubmit = async (star: number, review: string) => {
     try {
-      const {userId, venueId, userName, userEmail } = userDetails;
-      const loadingToast = toast.loading('submitting...')
-      const response = await addReview({userId, venueId, userName, userEmail, star, review}).unwrap();
-      toast.dismiss(loadingToast)
+      const { userId, venueId, userName, userEmail } = userDetails;
+      const loadingToast = toast.loading("submitting...");
+      const response = await addReview({
+        userId,
+        venueId,
+        userName,
+        userEmail,
+        star,
+        review,
+      }).unwrap();
+      toast.dismiss(loadingToast);
 
-      if(response.success) {
-        toast.success('review submitted!')
+      if (response.success) {
+        toast.success("review submitted!");
       } else {
-        toast.error('review submission failed!')
+        toast.error("review submission failed!");
       }
-
     } catch (error) {
       console.log(error);
-      toast.dismiss()
-      toast.error('error occured')
+      toast.dismiss();
+      toast.error("error occured");
     }
   };
 
   return (
-    <AuthHOC role={Role.User} >
+    <AuthHOC role={Role.User}>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
         <Header />
       </nav>
@@ -245,7 +251,6 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
             {booking?.status == "confirmed" && (
               <>
                 <hr className="my-5" />
-
                 <RatingCard handleRatingSubmit={handleRatingSubmit} />
               </>
             )}
