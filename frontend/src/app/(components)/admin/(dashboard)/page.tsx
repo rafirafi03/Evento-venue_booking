@@ -16,8 +16,10 @@ export default function Page() {
 
   // const adminId = getUserIdFromToken("authAdminToken");
 
-  const { data: dashboardData, error: dahsboardFetchError } =
+  const { data: dashboardDataResult, error: dahsboardFetchError } =
     useGetAdminDashboardDetailsQuery(undefined);
+
+  const dashboardData = dashboardDataResult?.result;
 
   useEffect(() => {
     if (dahsboardFetchError && "status" in dahsboardFetchError) {

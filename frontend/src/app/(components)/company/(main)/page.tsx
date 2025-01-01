@@ -16,8 +16,10 @@ export default function Page() {
 
   const companyId = getUserIdFromToken("authCompanyToken");
 
-  const { data: dashboardData, error: dashboardFetchError } =
+  const { data: dashboardDataResult, error: dashboardFetchError } =
     useGetCompanyDashboardDetailsQuery(companyId);
+
+    const dashboardData = dashboardDataResult?.result;
 
     console.log(dashboardData," dashboarddatatatatatatatatatat")
 
