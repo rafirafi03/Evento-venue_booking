@@ -5,6 +5,8 @@ import { useGetCompanyDetailsQuery } from "app/store/slices/companyApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetMessagesQuery } from "app/store/slices/chatApiSlices";
 import Image from "next/image";
+import AuthHOC, {Role} from "../auth/authHoc";
+import { useRouter } from "next/navigation";
 
 type Message = {
   id: number;
@@ -15,18 +17,12 @@ type Message = {
   receiverId: string;
 };
 
-// type User = {
-//   id: number;
-//   name: string;
-//   avatar: string;
-//   lastMessage: string;
-// };
-
 interface pageProps {
   receiverId: string;
 }
 
 export default function ChatComponent({ receiverId }: pageProps) {
+  const router = useRouter()
   const userId = getUserIdFromToken("authUserToken");
 
   const { data: company } = useGetCompanyDetailsQuery(receiverId);
@@ -36,7 +32,15 @@ export default function ChatComponent({ receiverId }: pageProps) {
     receiverId,
   });
 
-  console.log(messageFetchError, "msg ftch errror");
+  useEffect(() => {
+      if (messageFetchError && "status" in messageFetchError) {
+        if (messageFetchError.status === 401) {
+          console.warn("Session expired. Logging out...");
+          localStorage.removeItem("authUserToken");
+          router.push("/login");
+        }
+      }
+    }, [messageFetchError, router]);
 
   console.log(chatMessages?.response, "messages");
 
@@ -99,6 +103,7 @@ export default function ChatComponent({ receiverId }: pageProps) {
   };
 
   return (
+    <AuthHOC role={Role.User} >
     <div className="flex h-screen bg-gray-100">
       {/* Chat Area */}
       <div className="flex-1 flex flex-col mt-16">
@@ -170,5 +175,6 @@ export default function ChatComponent({ receiverId }: pageProps) {
         </div>
       </div>
     </div>
+    </AuthHOC>
   );
 }

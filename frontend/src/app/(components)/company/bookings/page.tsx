@@ -17,6 +17,7 @@ export default function Page() {
 
     useEffect(() => {
       if (bookingFetchError && "status" in bookingFetchError) {
+        console.log(bookingFetchError.status,'bookingFetchError in frontend ')
         if (bookingFetchError.status === 401) {
           console.warn("Session expired. Logging out...");
           localStorage.removeItem("authCompanyToken");

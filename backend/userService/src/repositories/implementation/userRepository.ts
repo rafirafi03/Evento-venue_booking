@@ -4,6 +4,7 @@ import { IUserRepository } from "../interfaces";
 
 export class UserRepository implements IUserRepository {
 
+
     async findByEmail(email: string): Promise<IUser | null> {
         try {
             const user = await userModel.findOne({ email });

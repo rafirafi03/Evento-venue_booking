@@ -8,13 +8,16 @@ import {
   faSignOutAlt,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
+import { useAdminLogoutMutation } from "app/store/slices/userApiSlices";
 
 export default function Page() {
   const pathname = usePathname();
   const router = useRouter();
+  const [adminLogout] = useAdminLogoutMutation()
 
-  const handleLogout = () => {
+  const handleLogout = async() => {
     localStorage.removeItem("authAdminToken");
+    await adminLogout({})
     router.push("/admin/login");
   };
 

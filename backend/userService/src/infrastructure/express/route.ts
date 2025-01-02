@@ -121,6 +121,13 @@ router.put('/changePassword',authMiddleware(['user']), (req, res) => {
   userController.changePassword(req, res)
 })
 
+router.post('/userLogout', (req, res) => {
+  userController.userLogout(req, res)
+})
+
+router.post('/adminLogout', (req, res) => {
+  userController.adminLogout(req, res)
+})
 
 
 export default router;

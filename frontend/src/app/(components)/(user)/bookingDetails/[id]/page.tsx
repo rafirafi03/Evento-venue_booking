@@ -43,7 +43,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (booking) {
       setUserDetails({
-        userId: booking.userId._id,
+        userId: booking.userId,
         venueId: booking.venueId._id,
         userName: booking.userId.name,
         userEmail: booking.userId.email,

@@ -39,7 +39,7 @@ export class BookingController {
       res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
-      res.status(HttpStatusCode.UNAUTHORIZED).json({
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: "failed to send request",
       });
     }
@@ -53,7 +53,7 @@ export class BookingController {
       res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
-      res.status(HttpStatusCode.UNAUTHORIZED).json({
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: "failed to send request",
       });
     }
@@ -70,7 +70,7 @@ export class BookingController {
       res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
-      res.status(HttpStatusCode.UNAUTHORIZED).json({
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: "failed to send request",
       });
     }
@@ -80,14 +80,14 @@ export class BookingController {
     try {
       const { id } = req.params;
 
-      console.log(id, "id in controller of getbookings");
+      console.log(id, "id in controller of getbookingdetailsss");
 
       const response = await this._getBookingDetailsUseCase.execute(id);
 
       res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
-      res.status(HttpStatusCode.UNAUTHORIZED).json({
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: "failed to send request",
       });
     }
@@ -103,8 +103,8 @@ export class BookingController {
 
       res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
-      console.log(error);
-      res.status(HttpStatusCode.UNAUTHORIZED).json({
+      console.log(error," ERROR IN CATCH");
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: "failed to send request",
       });
     }
@@ -120,7 +120,7 @@ export class BookingController {
       res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
-      res.status(HttpStatusCode.UNAUTHORIZED).json({
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: "failed to send request",
       });
     }
@@ -137,7 +137,7 @@ export class BookingController {
       res.status(HttpStatusCode.OK).json(response)
     } catch (error) {
       console.log(error);
-      res.status(HttpStatusCode.UNAUTHORIZED).json({
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: "failed to send request",
       });
     }
@@ -151,7 +151,7 @@ export class BookingController {
       res.status(HttpStatusCode.OK).json(response)
     } catch (error) {
       console.log(error);
-      res.status(HttpStatusCode.UNAUTHORIZED).json({
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: "failed to send request",
       });
     }

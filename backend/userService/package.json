@@ -19,7 +19,7 @@
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "evento-library": "^2.0.1",
+    "evento-library": "^2.0.2",
     "express": "^4.19.2",
     "ioredis": "^5.4.1",
     "mongodb": "^6.8.0",

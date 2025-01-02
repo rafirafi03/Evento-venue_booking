@@ -34,7 +34,7 @@ export default function Page() {
   console.log(dashboardData, "dahsboard datattatatattatat");
 
   return (
-    <AuthHOC role={Role.Company}>
+    <AuthHOC role={Role.Admin}>
       <>
         <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
           <Header />

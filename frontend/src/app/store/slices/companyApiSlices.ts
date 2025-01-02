@@ -185,6 +185,12 @@ export const companyApiSlice = createApi({
                 url: `/company/getUserReviews/${userId}`,
                 method: HttpMethod.GET
             })
+        }),
+        logout: builder.mutation({
+            query: ()=> ({
+                url: '/company/logout',
+                method: HttpMethod.POST
+            })
         })
     })
 });
@@ -214,5 +220,6 @@ export const {
     useRemoveOfferMutation,
     useAddReviewMutation,
     useGetRatingsQuery,
-    useGetRatingsByUserIdQuery
+    useGetRatingsByUserIdQuery,
+    useLogoutMutation
 } = companyApiSlice;

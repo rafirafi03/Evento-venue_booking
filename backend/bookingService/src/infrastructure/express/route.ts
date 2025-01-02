@@ -39,35 +39,35 @@ const bookingController = new BookingController(
   adminDashboardUseCase
 );
 
-router.post("/makePayment", (req, res) => {
+router.post("/makePayment", authMiddleware(['user']), (req, res) => {
   bookingController.makePaymentRequest(req, res);
 });
 
-router.post("/api/webhook", (req, res) => {
+router.post("/api/webhook", authMiddleware(['user']), (req, res) => {
   bookingController.webhook(req, res);
 });
 
-router.get("/getUserBookings/:userId", (req, res) => {
+router.get("/getUserBookings/:userId", authMiddleware(['company','user']), (req, res) => {
   bookingController.getUserBookings(req, res);
 });
 
-router.get("/getCompanyBookings/:companyId", (req, res) => {
+router.get("/getCompanyBookings/:companyId", authMiddleware(['company']), (req, res) => {
   bookingController.getCompanyBookings(req, res);
 });
 
-router.patch("/cancelBooking", (req, res) => {
+router.patch("/cancelBooking", authMiddleware(['user']), (req, res) => {
   bookingController.cancelBooking(req, res);
 });
 
-router.get('/getBookingDetails/:id', (req, res) => {
+router.get('/getBookingDetails/:id', authMiddleware(['company','user']), (req, res) => {
   bookingController.getBookingDetails(req, res)
 })
 
-router.get('/getCompanyDashboardDetails/:companyId', (req, res) => {
+router.get('/getCompanyDashboardDetails/:companyId',authMiddleware(['company']), (req, res) => {
   bookingController.companyDashboardDetails(req, res)
 })
 
-router.get('/getAdminDashboard', (req, res) => {
+router.get('/getAdminDashboard',authMiddleware(['admin']), (req, res) => {
   bookingController.adminDashboardDetails(req, res)
 })
 

@@ -3,10 +3,12 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
+import { useUserLogoutMutation } from "app/store/slices/userApiSlices"; 
 
 export default function Page() {
   const router = useRouter();
   const pathname = usePathname(); // Get the current pathname
+  const [userLogout] = useUserLogoutMutation()
 
   const [isToken, setToken] = useState(false);
 
@@ -23,8 +25,9 @@ export default function Page() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem("authUserToken");
+    await userLogout({})
     setToken(false);
     router.push("/login");
   };

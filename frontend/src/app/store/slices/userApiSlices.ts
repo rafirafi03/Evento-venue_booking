@@ -114,6 +114,18 @@ export const userApiSlice = createApi({
                 body: data
             })
         }),
+        userLogout: builder.mutation({
+            query: ()=> ({
+                url: '/user/userLogout',
+                method: HttpMethod.POST
+            })
+        }),
+        adminLogout: builder.mutation({
+            query: ()=> ({
+                url: '/user/adminLogout',
+                method: HttpMethod.POST
+            })
+        })
     })
 })
 
@@ -134,4 +146,6 @@ export const {
     useDeleteFromFavouritesMutation,
     useForgetPasswordRequestMutation,
     useChangePasswordMutation,
+    useUserLogoutMutation,
+    useAdminLogoutMutation
 } = userApiSlice;

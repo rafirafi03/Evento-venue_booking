@@ -489,4 +489,22 @@ export class CompanyController {
         .json({ message: "Internal error" });
     }
   }
+
+  async logout(req: Request, res: Response ) : Promise<void> {
+    try {
+      res.setHeader('Set-Cookie', [
+        'companyToken=; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 UTC',
+        'companyRefreshToken=; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 UTC'
+    ]);
+
+    const message = 'logged out successfully'
+    res.status(HttpStatusCode.OK).json( message );
+    } catch (error) {
+      console.log(error)
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+        message: 'failed to send request',
+      });
+    }
+  }
+
 }

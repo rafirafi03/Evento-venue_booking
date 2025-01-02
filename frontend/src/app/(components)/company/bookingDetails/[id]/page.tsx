@@ -36,6 +36,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
     error: bookingFetchError,
     refetch,
   } = useGetBookingDetailsQuery(id);
+  console.log(booking," image in forntedndndndnndnd")
 
   useEffect(() => {
     if (bookingFetchError && "status" in bookingFetchError) {

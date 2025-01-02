@@ -206,6 +206,10 @@ router.get('/getUserReviews/:userId', (req, res) => {
   companyController.getUserReviews(req,res)
 })
 
+router.post('/logout', (req, res) => {
+  companyController.logout(req, res)
+})
+
 
 
 export default router;

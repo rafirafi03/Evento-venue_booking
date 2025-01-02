@@ -8,5 +8,5 @@
     "strict": true,
     "declaration": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "../../frontend/src/utils/clearCookies.ts"]
 }

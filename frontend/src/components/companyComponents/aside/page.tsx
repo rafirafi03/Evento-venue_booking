@@ -11,10 +11,12 @@ import {
   faSignOutAlt,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useLogoutMutation } from "app/store/slices/companyApiSlices";
 
 export default function Page() {
   const router = useRouter();
   const pathname = usePathname();
+  const [logout] = useLogoutMutation()
 
   const handleOnClick = (page: string) => {
     if (page === "main") {
@@ -24,8 +26,9 @@ export default function Page() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async() => {
     localStorage.removeItem("authCompanyToken");
+    await logout({})
     router.replace("/company/login");
   };
 
