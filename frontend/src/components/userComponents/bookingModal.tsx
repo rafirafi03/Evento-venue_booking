@@ -22,9 +22,10 @@ type AppProps = {
   isClose: ()=> void;
   handleBooking: (event: string, guests: number, bookingDuration: RangeValue<DateValue>) => void;
   capacity: number
+  bookedDates: string[]
 };
 
-export default function App({ isOpen,isClose, handleBooking, capacity }: AppProps) {
+export default function App({ isOpen,isClose, handleBooking, capacity, bookedDates }: AppProps) {
   const [event, setEvent] = useState<string>("");
   const [guests, setGuests] = useState<number>(0);
   const today = new Date().toISOString().split('T')[0];
@@ -38,7 +39,6 @@ export default function App({ isOpen,isClose, handleBooking, capacity }: AppProp
 
   const handleDateChange = (range: RangeValue<DateValue>) => {
     if(validateDates(range.start, range.end)){
-
       setBookingDuration(range);
     } else {
       setDateError('invalid date format')
@@ -77,8 +77,18 @@ export default function App({ isOpen,isClose, handleBooking, capacity }: AppProp
   }
 
   const disablePastDates = (date: DateValue) => {
+    // Convert the incoming date to the proper format
+    const dateString = `${date.year}-${date.month.toString().padStart(2, '0')}-${date.day.toString().padStart(2, '0')}`;
+    
+    // Get today's date as a string for comparison
     const todayDate = new Date();
-    return new Date(date.year, date.month - 1, date.day) < todayDate; // Disable dates before today
+    const todayString = todayDate.toISOString().split('T')[0]; // Format it as "YYYY-MM-DD"
+  
+    // Disable past dates and booked dates
+    if (dateString <= todayString || bookedDates.includes(dateString)) {
+      return true; // Return true to disable the date
+    }
+    return false; // Return false to enable the date
   };
 
   return (

@@ -30,30 +30,44 @@ export class MakePaymentUseCase {
   ): Promise<any> {
     try {
 
-      const userDetails = await getUserDetails(userId); //grpc
-      const venueDetails = await getVenueDetails(venueId); //grpc
-
       const startDate = new Date(
-        bookingDuration.start.year,
-        bookingDuration.start.month - 1,
-        bookingDuration.start.day
+        Date.UTC(
+          bookingDuration.start.year,
+          bookingDuration.start.month - 1,
+          bookingDuration.start.day
+        )
       );
       const endDate = new Date(
-        bookingDuration.end.year,
-        bookingDuration.end.month - 1,
-        bookingDuration.end.day
+        Date.UTC(
+          bookingDuration.end.year,
+          bookingDuration.end.month - 1,
+          bookingDuration.end.day
+        )
       );
 
-      startDate.setHours(0, 0, 0, 0);
-      endDate.setHours(0, 0, 0, 0);
+      console.log(bookingDuration,"bokingggduragionnnnnnnnn");
 
-      // Calculate the number of days including both start and end dates
+      console.log(startDate,"startDAte")
+      console.log(endDate,"endDAte")
+      
+      const overlappingBookings = await this._bookingRepository.findOverlappingBookings(venueId, startDate, endDate);
+
+      console.log('overlappingBookings: ' , overlappingBookings)
+
+      if (overlappingBookings.length > 0) {
+        return {success: false, message: 'inavlid date. try again later'}
+      }
+
+      const userDetails = await getUserDetails(userId); //grpc
+      const venueDetails = await getVenueDetails(venueId); //grpc
+      startDate.setUTCHours(0, 0, 0, 0);
+      endDate.setUTCHours(0, 0, 0, 0);
+
       const timeDiff = endDate.getTime() - startDate.getTime();
-      const days = timeDiff / (1000 * 3600 * 24) + 1; // Add 1 to include both days
+      const days = timeDiff / (1000 * 3600 * 24) + 1;
 
-      const totalAmount = venueDetails.venueAmount * days; // total amount (in dollars)
+      const totalAmount = venueDetails.venueAmount * days;
 
-      // Calculate 10% of the total amount
       let finalAmount = totalAmount * 0.10;
 
       if (finalAmount > 25000) {
@@ -143,8 +157,8 @@ export class MakePaymentUseCase {
             eventName:event,
             finalAmount: JSON.stringify(finalAmount),
             paymentMethod: paymentMethod,
-            guests: JSON.stringify(guests), // Convert number to string
-            bookingDateStart: startDate.toISOString(), // Store ISO string representation
+            guests: JSON.stringify(guests),
+            bookingDateStart: startDate.toISOString(),
             bookingDateEnd: endDate.toISOString(),
           }
         });

@@ -8,7 +8,8 @@ import {
   GetCompanyBookingsUseCase,
   GetBookingDetailsUseCase,
   CompanyDashboardDetailsUseCase,
-  AdminDashboardUseCase
+  AdminDashboardUseCase,
+  GetBookedDatesUseCase
 } from "../../useCases";
 import { BookingRepository } from "../../repositories";
 import { authMiddleware } from "evento-library";
@@ -27,6 +28,7 @@ const cancelBookingUseCase = new CancelBookingUseCase(bookingRepository);
 const getBookingDetailsUseCase = new GetBookingDetailsUseCase(bookingRepository);
 const companyDashboardDetailsuseCase = new CompanyDashboardDetailsUseCase(bookingRepository)
 const adminDashboardUseCase = new AdminDashboardUseCase(bookingRepository)
+const bookedDatesUseCase = new GetBookedDatesUseCase(bookingRepository)
 
 const bookingController = new BookingController(
   makePaymentUseCase,
@@ -36,14 +38,15 @@ const bookingController = new BookingController(
   cancelBookingUseCase,
   getBookingDetailsUseCase,
   companyDashboardDetailsuseCase,
-  adminDashboardUseCase
+  adminDashboardUseCase,
+  bookedDatesUseCase
 );
 
 router.post("/makePayment", authMiddleware(['user']), (req, res) => {
   bookingController.makePaymentRequest(req, res);
 });
 
-router.post("/api/webhook", authMiddleware(['user']), (req, res) => {
+router.post("/api/webhook", (req, res) => {
   bookingController.webhook(req, res);
 });
 
@@ -69,6 +72,10 @@ router.get('/getCompanyDashboardDetails/:companyId',authMiddleware(['company']),
 
 router.get('/getAdminDashboard',authMiddleware(['admin']), (req, res) => {
   bookingController.adminDashboardDetails(req, res)
+})
+
+router.get('/getBookedDates', authMiddleware(['user']), (req, res) => {
+  bookingController.getBookedDates(req, res)
 })
 
 export default router;

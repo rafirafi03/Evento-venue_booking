@@ -113,11 +113,11 @@ router.delete('/deleteFromFavourites/:userId/:venueId',authMiddleware(['user']),
   userController.deleteFromFavourites(req, res)
 })
 
-router.post('/forgetPasswordRequest',authMiddleware(['user']), (req, res) => {
+router.post('/forgetPasswordRequest', (req, res) => {
   userController.forgetPasswordRequest(req, res)
 })
 
-router.put('/changePassword',authMiddleware(['user']), (req, res) => {
+router.put('/changePassword',(req, res) => {
   userController.changePassword(req, res)
 })
 

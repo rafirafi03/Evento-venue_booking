@@ -94,6 +94,10 @@ export const companyApiSlice = createApi({
               if (params.types && params.types.length > 0) {
                 queryParams.set('types', params.types.join(','));
               }
+
+              if(params.priceRange && params.priceRange.length > 0) {
+                queryParams.set('priceRange', params.priceRange.join(','))
+              }
           
               // Return the query configuration
               return {

@@ -8,7 +8,8 @@ import {
   GetCompanyBookingsUseCase,
   GetBookingDetailsUseCase,
   CompanyDashboardDetailsUseCase,
-  AdminDashboardUseCase
+  AdminDashboardUseCase,
+  GetBookedDatesUseCase
 } from "../../useCases";
 
 export class BookingController {
@@ -20,13 +21,16 @@ export class BookingController {
     private _cancelBookingUseCase: CancelBookingUseCase,
     private _getBookingDetailsUseCase: GetBookingDetailsUseCase,
     private _companyDashboardDetailsUseCase: CompanyDashboardDetailsUseCase,
-    private _adminDashboardUseCase : AdminDashboardUseCase
+    private _adminDashboardUseCase : AdminDashboardUseCase,
+    private _getBookedDates : GetBookedDatesUseCase
   ) {}
 
   async makePaymentRequest(req: Request, res: Response): Promise<void> {
     try {
       const { userId, venueId, event, guests, bookingDuration, paymentMethod } =
         req.body;
+
+        console.log(req.body,"reqbdyyyyyyy 4545454545")
       const response = await this._makePaymentUseCase.execute(
         userId,
         venueId,
@@ -153,6 +157,18 @@ export class BookingController {
       console.log(error);
       res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: "failed to send request",
+      });
+    }
+  }
+
+  async getBookedDates(req: Request, res: Response) : Promise<void> {
+    try {
+      const response = await this._getBookedDates.execute()
+      res.status(HttpStatusCode.OK).json(response)
+    } catch (error) {
+      console.log(error);
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+        message: "failed to fetch",
       });
     }
   }

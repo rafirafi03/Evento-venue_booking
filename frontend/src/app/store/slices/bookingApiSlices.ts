@@ -52,6 +52,12 @@ export const bookingApiSlices = createApi({
             url: `/booking/getAdminDashboard`,
             method: HttpMethod.GET
         })
+    }),
+    getBookedDates: builder.query({
+      query: ()=> ({
+        url: '/booking/getBookedDates',
+        method: HttpMethod.GET
+      })
     })
   }),
 });
@@ -63,5 +69,6 @@ export const {
   useGetCompanyBookingsQuery,
   useGetBookingDetailsQuery,
   useGetCompanyDashboardDetailsQuery,
-  useGetAdminDashboardDetailsQuery
+  useGetAdminDashboardDetailsQuery,
+  useGetBookedDatesQuery
 } = bookingApiSlices;

@@ -1,22 +1,22 @@
-import { useMemo, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
-import {
-  Search,
-  ChevronDown,
-  ChevronUp,
-  X,
-  DollarSign,
-} from "lucide-react";
+import { useMemo, useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Search, ChevronDown, ChevronUp, X, DollarSign } from "lucide-react";
 import debounce from "lodash/debounce";
 import React from "react";
 
 export default function RefinedVenueFilter() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const search = searchParams.get("search") || "";
+    setSearchValue(search);
+  }, [searchParams]);
+
   const [isOpen, setIsOpen] = useState(false);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState<string>("");
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-
-  const router = useRouter();
 
   const clearFilter = () => {
     setSearchValue("");
@@ -27,51 +27,69 @@ export default function RefinedVenueFilter() {
     router.push(`/venues?${params.toString()}`);
   };
 
-  const debouncedHandleFilter = useRef(
-    debounce(() => {
-      const params = new URLSearchParams();
-  
-      if (searchValue) params.set("search", searchValue);
-      if (selectedTypes.length > 0) params.set("types", selectedTypes.join(","));
-      if (priceRange.length > 0) params.set("priceRange", encodeURIComponent(priceRange.join(",")));
-  
-      router.push(`/venues?${params.toString()}`);
-    }, 500)
-  ).current;
+  // Function to handle filter logic
+  const handleFilter = useMemo(
+    () =>
+      debounce(() => {
+        console.log('hi from 123123123')
+
+        console.log(priceRange," pricerange inside debounce function")
+        const params = new URLSearchParams();
+
+        if (searchValue) params.set("search", searchValue);
+        if (selectedTypes.length > 0) {
+          params.set("types", selectedTypes.join(","));
+        }
+        if (priceRange.length > 0) {
+          params.set("priceRange", priceRange.join(","));
+        }
+
+        console.log('url in frontend',`/venues?${params.toString()}`)
+
+        router.push(`/venues?${params.toString()}`);
+      }, 500),
+    [searchValue, selectedTypes, priceRange, router] // Dependencies ensure the latest state is used
+  );
+
+  // Ensure `handleFilter` runs when state changes
+  useEffect(() => {
+    handleFilter();
+
+    // Cleanup debounce to avoid memory leaks
+    return () => handleFilter.cancel();
+  }, [searchValue, selectedTypes, priceRange, handleFilter]);
 
   const checkboxOptions = useMemo(
     () => ["Conference", "Banquet", "Auditorium", "Outdoor", "Restaurant"],
     []
   );
-  
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
 
   const handleCheckboxChange = (isChecked: boolean, type: string) => {
-    setSelectedTypes((prev) => {
-      const newSelectedTypes = isChecked
-        ? [...prev, type]
-        : prev.filter((item) => item !== type);
-
-      return newSelectedTypes;
-    });
+    setSelectedTypes((prev) =>
+      isChecked ? [...prev, type] : prev.filter((item) => item !== type)
+    );
   };
 
   const handlePriceRangeChange = (index: number, value: number) => {
     setPriceRange((prevRange) => {
       const newRange: [number, number] = [...prevRange] as [number, number];
-      newRange[index] = value;
+
+      if (index === 0 && value > newRange[1]) {
+        newRange[index] = newRange[1];
+      } else if (index === 1 && value < newRange[0]) {
+        newRange[index] = newRange[0];
+      } else {
+        newRange[index] = value;
+      }
+
       return newRange;
     });
-  };
-  
-  
 
-  // Trigger the debounced function when any of the values change
-  React.useEffect(() => {
-    debouncedHandleFilter();
-  }, [searchValue, selectedTypes, priceRange, debouncedHandleFilter]); // This will trigger the debounced function when these values change
+  };
 
   const toggleFilters = () => setIsOpen(!isOpen);
 
@@ -99,7 +117,7 @@ export default function RefinedVenueFilter() {
             value={searchValue}
             onChange={handleSearchChange}
             className="w-full pl-10 pr-4 py-2 border placeholder:text-xs border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-transparent transition duration-300"
-            aria-label='Search dream venues'
+            aria-label="Search dream venues"
           />
           <Search className="absolute left-3 top-2.5 text-gray-400" size={20} />
         </div>
@@ -109,25 +127,23 @@ export default function RefinedVenueFilter() {
         <div>
           <h2 className="text-lg font-bold text-gray-800 mb-1">Venue Type</h2>
           <div className="space-y-1">
-            {checkboxOptions.map(
-              (type) => (
-                <label
-                  key={type}
-                  className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 transition duration-300"
-                >
-                  <input
-                    value={type}
-                    onChange={(e) => handleCheckboxChange(e.target.checked, type)}
-                    checked={selectedTypes.includes(type)}
-                    type="checkbox"
-                    className="form-checkbox text-red-500 rounded focus:ring-red-500"
-                  />
-                  <span className="text-sm font-medium text-gray-700">
-                    {type}
-                  </span>
-                </label>
-              )
-            )}
+            {checkboxOptions.map((type) => (
+              <label
+                key={type}
+                className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100 transition duration-300"
+              >
+                <input
+                  value={type}
+                  onChange={(e) => handleCheckboxChange(e.target.checked, type)}
+                  checked={selectedTypes.includes(type)}
+                  type="checkbox"
+                  className="form-checkbox text-red-500 rounded focus:ring-red-500"
+                />
+                <span className="text-sm font-medium text-gray-700">
+                  {type}
+                </span>
+              </label>
+            ))}
           </div>
         </div>
 
@@ -144,7 +160,9 @@ export default function RefinedVenueFilter() {
               <input
                 type="number"
                 value={priceRange[0]}
-                onChange={(e) => handlePriceRangeChange(0, parseInt(e.target.value))}
+                onChange={(e) =>
+                  handlePriceRangeChange(0, parseInt(e.target.value))
+                }
                 className="w-full pl-8 pr-2 py-1 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-transparent transition duration-300"
               />
             </div>
@@ -157,7 +175,9 @@ export default function RefinedVenueFilter() {
               <input
                 type="number"
                 value={priceRange[1]}
-                onChange={(e) => handlePriceRangeChange(1, parseInt(e.target.value))}
+                onChange={(e) =>
+                  handlePriceRangeChange(1, parseInt(e.target.value))
+                }
                 className="w-full pl-8 pr-2 py-1 border border-red-300 rounded-md focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-transparent transition duration-300"
               />
             </div>

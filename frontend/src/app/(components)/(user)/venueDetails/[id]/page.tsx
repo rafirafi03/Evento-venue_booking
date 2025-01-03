@@ -6,7 +6,7 @@ import Footer from "../../../../../components/userComponents/footer";
 import { useGetVenueDetailsQuery } from "app/store/slices/companyApiSlices";
 import AuthHOC, {Role} from "components/common/auth/authHoc";
 import { loadStripe } from "@stripe/stripe-js";
-import { useMakePaymentMutation } from "app/store/slices/bookingApiSlices";
+import { useGetBookedDatesQuery, useMakePaymentMutation } from "app/store/slices/bookingApiSlices";
 import dotenv from "dotenv";
 import BookingModal from "components/userComponents/bookingModal";
 import PaymentModal from "components/common/modals/paymentModal";
@@ -35,8 +35,10 @@ export default function Page({ params }: { params: { id: string } }) {
   const [isPaymentModal, setPaymentModal] = useState<boolean>(false);
   const [isWalletModal, setWalletModal] = useState<boolean>(false);
   const [bookingAmount, setBookingAmount] = useState<number>(0);
+  const [balance, setBalance] = useState<number>(0)
   const [event, setEvent] = useState<string>("");
   const [guests, setGuests] = useState<number>(0);
+  const [bookedDates, setBookedDates] = useState<string[]>([])
   const [bookingDuration, setBookingDuration] = useState<RangeValue<DateValue>>(
     {
       start: parseDate("2024-04-08"),
@@ -53,6 +55,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const { data: venue } = useGetVenueDetailsQuery(venueId);
   const { data: user } = useGetUserDetailsQuery(userId);
+  const {data: fetchedDates} = useGetBookedDatesQuery({})
 
   console.log(venue, "venue in frontend");
 
@@ -64,6 +67,16 @@ export default function Page({ params }: { params: { id: string } }) {
       setBookingAmount(calculatedAmount);
     }
   }, [venue]);
+
+  useEffect(()=> {
+    setBookedDates(fetchedDates)
+  },[fetchedDates])
+
+  useEffect(()=> {
+    if(user?.wallet) {
+      setBalance(user.wallet)
+    }
+  },[user])
 
   const isClose = () => {
     setBookingModal(false);
@@ -77,10 +90,35 @@ export default function Page({ params }: { params: { id: string } }) {
     bookingDuration: RangeValue<DateValue>
   ) => {
 
+    const startDate = new Date(
+      Date.UTC(
+        bookingDuration.start.year,
+        bookingDuration.start.month - 1,
+        bookingDuration.start.day
+      )
+    );
+    const endDate = new Date(
+      Date.UTC(
+        bookingDuration.start.year,
+        bookingDuration.start.month - 1,
+        bookingDuration.start.day
+      )
+    );
+  
+    // Calculate the number of booking days
+    const timeDiff = endDate.getTime() - startDate.getTime();
+    const days = timeDiff / (1000 * 3600 * 24) + 1; // +1 to include the start day
+  
+    // Calculate the booking amount
+    let amount =  bookingAmount * days;
+
+    amount = Math.min(amount, 25000)
+
     console.log('hiiiii123123')
     setEvent(event);
     setGuests(guests);
     setBookingDuration(bookingDuration);
+    setBookingAmount(amount);
     setPaymentModal(true);
   };
 
@@ -123,7 +161,12 @@ export default function Page({ params }: { params: { id: string } }) {
         if (response.success) {
           toast.success(<b>Payment completed!</b>);
         } else {
-          toast.error(<b>Payment failed</b>);
+         console.log(response,"response in frontendddddddd123123123")
+          if(response.message) {
+            toast.error(<b>{response.message}</b>)
+          } else {
+            toast.error(<b>Payment failed</b>);
+          }
         }
 
         console.log(result, "stripe result in frontend");
@@ -144,9 +187,15 @@ export default function Page({ params }: { params: { id: string } }) {
         toast.dismiss(loadingToast);
 
         if (response.success) {
+          setBalance((prevBalance) => Math.max(prevBalance - bookingAmount, 0)); // Ensures balance doesn't go negative
           toast.success(<b>Payment completed!</b>);
         } else {
-          toast.error(<b>Payment failed!</b>);
+          console.log(response,"response in frontendddddddd123123123")
+          if(response.message) {
+            toast.error(<b>{response.message}</b>)
+          } else {
+            toast.error(<b>Payment failed</b>);
+          }
         }
 
         console.log("Payment processed for offline method", response);
@@ -175,6 +224,7 @@ export default function Page({ params }: { params: { id: string } }) {
               isClose={isClose}
               handleBooking={handleBooking}
               capacity={venue.capacity}
+              bookedDates={bookedDates}
             />
           )}
 
@@ -183,7 +233,7 @@ export default function Page({ params }: { params: { id: string } }) {
               isOpen={isPaymentModal}
               closeModal={isClose}
               handlePaymentMethod={handlePaymentMethod}
-              balance={user?.wallet}
+              balance={balance}
               bookingAmount={bookingAmount} 
             />
           )}
@@ -192,7 +242,7 @@ export default function Page({ params }: { params: { id: string } }) {
               <WalletModal
                 isOpen={isWalletModal}
                 isClose={isClose}
-                balance={user?.wallet}
+                balance={balance}
                 bookingAmount={bookingAmount}
                 handlePayment={handlePayment}
               />

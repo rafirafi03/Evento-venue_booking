@@ -247,4 +247,34 @@ export class BookingRepository implements IBookingRepository {
         }
     }
 
+    async findOverlappingBookings(
+        venueId: string,
+        startDate: Date,
+        endDate: Date
+      ): Promise<Booking[]> {
+        return BookingModel.find({
+          venueId: venueId,
+          status: "confirmed",
+          $or: [
+            { bookingDateStart: { $lte: endDate, $gte: startDate } },
+            { bookingDateEnd: { $lte: endDate, $gte: startDate } },
+            { bookingDateStart: { $lte: startDate }, bookingDateEnd: { $gte: endDate } },
+          ],
+        }).exec();
+      }
+      
+      async getBookedDates(): Promise<IBooking[]> {
+        try {
+            const response = await BookingModel.find({ status: "confirmed" }, { bookingDateStart: 1, bookingDateEnd: 1, _id: 0 }).exec();
+
+            console.log(response,"ress ress ress ")
+
+            return response
+
+        } catch (error) {
+            throw new Error('Error fetching confirmed booked dates: ' + error);
+        }
+    }
+    
+
 }   

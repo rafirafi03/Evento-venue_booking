@@ -13,6 +13,8 @@ export class WebhookUseCase {
       if (event.type === "checkout.session.completed") {
         const session = event.data.object as Stripe.Checkout.Session;
 
+        console.log('yesss insideee webhookkkkk')
+
         if (session.metadata) {
           const {
             userId,

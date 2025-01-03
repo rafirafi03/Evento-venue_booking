@@ -194,26 +194,31 @@ export class CompanyController {
 
       console.log(req.query, " reqqueryyyyyyyyyyyyyy");
 
+      let decodedPriceRange = Array.isArray(priceRange) ? priceRange[0] : priceRange;
+
+// Decode the priceRange if it’s encoded
+      decodedPriceRange = decodeURIComponent(decodedPriceRange as string);
+
       // Convert query params to proper format
       const searchTerm = typeof search === "string" ? search : "";
       const typeArray =
         typeof types === "string" ? types.split(",").filter(Boolean) : [];
 
-      let priceRangeArray: [number, number] = [0, 10000]; // Default price range
+      let priceRangeArray: [number, number] = [0, 10000]; 
 
-      if (typeof priceRange === "string") {
-        const rangeParts = priceRange
+      console.log(decodedPriceRange,"pricerange in controllerrrr")
+
+      if (typeof decodedPriceRange === "string") {
+        const rangeParts = decodedPriceRange
           .split(",")
           .map(Number)
           .filter((num) => !isNaN(num));
 
-        // Ensure that the rangeParts array has exactly 2 elements
         if (rangeParts.length === 2) {
-          priceRangeArray = [rangeParts[0], rangeParts[1]]; // Assign values to priceRangeArray
+          priceRangeArray = [rangeParts[0], rangeParts[1]]; 
         }
       }
 
-      // Pass both parameters to the service
       const venues = await this._getListedVenues.execute({
         search: searchTerm,
         types: typeArray,

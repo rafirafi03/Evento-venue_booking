@@ -15,6 +15,8 @@ export class GetListedVenuesUseCase {
 
     async execute({ search, types, priceRange }: SearchParams): Promise<IVenue[] | null> {
         try {
+
+          console.log(priceRange," price rANGE IN USERCAES")
           
           let venues = await this._companyRepository.getListedVenues();
       

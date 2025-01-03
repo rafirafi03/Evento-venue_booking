@@ -34,7 +34,7 @@ export default function Page({isOpen}: pageProps) {
   if(!isModal) return null;
 
   return (
-    <AuthHOC role={Role.User}>
+    <AuthHOC role={Role.User} isAuthPage={true} >
       <div className="fixed inset-0 z-10 overflow-y-auto">
         <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <div className="fixed inset-0 transition-opacity" aria-hidden="true">
