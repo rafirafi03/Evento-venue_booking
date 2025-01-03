@@ -55,7 +55,6 @@ export default function RefinedVenueFilter() {
   useEffect(() => {
     handleFilter();
 
-    // Cleanup debounce to avoid memory leaks
     return () => handleFilter.cancel();
   }, [searchValue, selectedTypes, priceRange, handleFilter]);
 

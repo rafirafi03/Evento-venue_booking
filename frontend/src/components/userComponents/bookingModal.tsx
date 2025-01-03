@@ -82,7 +82,7 @@ export default function App({ isOpen,isClose, handleBooking, capacity, bookedDat
     
     // Get today's date as a string for comparison
     const todayDate = new Date();
-    const todayString = todayDate.toISOString().split('T')[0]; // Format it as "YYYY-MM-DD"
+    const todayString = todayDate.toISOString().split('T')[0];
   
     // Disable past dates and booked dates
     if (dateString <= todayString || bookedDates.includes(dateString)) {

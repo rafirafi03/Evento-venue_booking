@@ -7,10 +7,20 @@ export class GetUsersUseCase {
         private _adminRepository: IAdminRepository
     ) {}
 
-    async execute() : Promise<{ users: IUser[] } | null> {
+    async execute(search: string) : Promise<{ users: IUser[] } | null> {
 
         try {
-            const users = await this._adminRepository.getUsers()
+            console.log(search,"search in useCase")
+            let users = await this._adminRepository.getUsers()
+
+            if(search) {
+                console.log('search true')
+                users = users.filter((user)=> 
+                    user.userName.toLowerCase().includes(search.toLowerCase())
+                )
+
+                console.log(users,"users filter over")
+            }
 
             if(!users || users.length === 0) {
                 return null

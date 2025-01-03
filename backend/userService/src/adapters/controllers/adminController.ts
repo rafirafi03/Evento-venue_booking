@@ -35,9 +35,15 @@ export class AdminController {
         }
     }
 
-    async getUsers(req: Request, res: Response) : Promise<any> {
+    async getUsers(req: Request, res: Response) : Promise<void> {
         try {
-            const users = await this._getUsersUseCase.execute()
+            const {search = ""} = req.query;
+
+            const searchTerm = typeof search === "string" ? search : "";
+
+            console.log(req.query,"req queryyyyy")
+            console.log(searchTerm,"searchterm")
+            const users = await this._getUsersUseCase.execute(searchTerm)
             res.status(HttpStatusCode.OK).json({users})
         } catch (error) {
             console.log(error)

@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { Send, Search } from "lucide-react";
 import { socket } from "utils/socket";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetUsersQuery } from "app/store/slices/userApiSlices";
 import { useGetMessagesQuery } from "app/store/slices/chatApiSlices";
 import Image from "next/image";
+import debounce from "lodash/debounce";
 
 // import socket from 'utils/socket'
 
@@ -27,20 +29,50 @@ type User = {
 };
 
 export default function ChatComponent() {
+  const searchParams = useSearchParams();
+  const filter = {
+    search : searchParams.get("search")
+  }
+    
+  const router = useRouter();
   const companyId = getUserIdFromToken("authCompanyToken");
 
-  const { data: user } = useGetUsersQuery(undefined);
+  useEffect(() => {
+    const search = searchParams.get("search") || "";
+    setSearchValue(search);
+  }, [searchParams]);
+
+  const { data: user } = useGetUsersQuery(filter);
 
   console.log("users:", user);
 
-  const useru = user?.users?.users;
-  console.log("users:", useru);
+  const users = user?.users?.users;
+  console.log("users:", users);
 
+  const [searchValue, setSearchValue] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [selectedUserId, setSelectedUserId] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+
+  const handelFilter = useMemo(
+    () =>
+      debounce(() => {
+        const params = new URLSearchParams();
+
+        if (searchValue) params.set("search", searchValue);
+
+        router.push(`/company/inbox?${params.toString()}`);
+      }, 500),
+    [searchValue, router]
+  );
+
+  useEffect(() => {
+    handelFilter();
+
+    return () => handelFilter.cancel();
+  }, [searchValue, handelFilter]);
 
   const { data: chatMessages } = useGetMessagesQuery({
     userId: companyId,
@@ -48,6 +80,10 @@ export default function ChatComponent() {
   });
 
   console.log(chatMessages, "chatmessagesssss");
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
 
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
@@ -118,6 +154,8 @@ export default function ChatComponent() {
           <div className="relative">
             <input
               type="text"
+              value={searchValue}
+              onChange={handleSearchChange}
               placeholder="Search users..."
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-red-500"
             />
@@ -128,7 +166,7 @@ export default function ChatComponent() {
           </div>
         </div>
         <div className="overflow-y-auto h-[calc(100vh-73px)]">
-          {useru?.map((user: User) => (
+          {users?.map((user: User) => (
             <div
               key={user._id}
               className={`flex items-center p-4 hover:bg-gray-50 cursor-pointer ${
