@@ -22,7 +22,7 @@ export class ResetPasswordUseCase {
 
       const isPasswordValid = await verifyPass(
           currPass,
-          user.password
+          user.password as string
       );
       if(!isPasswordValid) {
         throw new Error('invalid password')

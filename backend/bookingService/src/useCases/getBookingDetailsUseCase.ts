@@ -14,18 +14,20 @@ export class GetBookingDetailsUseCase {
       console.log(id," id in bokingddetails use case")
         const booking = await this._bookingRepository.getBookingDetails(id);
 
-        console.log(booking?.venueId," bookingg venueid. there is no ot")
+        console.log(booking," bookingg venueid. there is no ot")
         
-        if (booking && booking.venueId) {
+        if (booking && booking.venueDetails && booking.venueDetails.image) {
+
+          console.log('inside is okkkkkkkkkkkkkkk')
           // Generate the signed URL for the image
-          const imageUrl = await generateSignedUrl('image/imagesss');
+          const imageUrl = await generateSignedUrl(booking?.venueDetails?.image);
           console.log(imageUrl," iamgeurllllll")
 
           console.log(booking.venueDetails,"booking venuedetailsssssss")
   
           return {
             ...booking,
-            venueId: {
+            venueDetails: {
               ...booking.venueDetails,
               image: imageUrl,  
             },

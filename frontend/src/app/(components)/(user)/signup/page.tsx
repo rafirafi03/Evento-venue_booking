@@ -7,7 +7,6 @@ import {
   FaEnvelope,
   FaPhone,
   FaGoogle,
-  FaFacebook,
 } from "react-icons/fa";
 import Header from "../../login-header/header";
 import OtpModal from "../OtpModal/page";
@@ -19,6 +18,7 @@ import {
 } from "app/store/slices/userApiSlices";
 import AuthHOC, {Role} from "components/common/auth/authHoc";
 import toast from "react-hot-toast";
+import GoogleSignup from "components/userComponents/googleSignIn";
 
 const Page = () => {
   const router = useRouter();
@@ -360,18 +360,7 @@ const Page = () => {
                         Or sign in with
                       </p>
                       <div className="flex justify-center space-x-4">
-                        <button className="flex items-center justify-center bg-white border border-gray-200 rounded-full p-2 shadow-md hover:bg-blue-600 transform transition duration-500 hover:scale-105">
-                          <FaGoogle
-                            className="text-black hover:text-white"
-                            size={24}
-                          />
-                        </button>
-                        <button className="flex items-center justify-center bg-white border border-gray-200 rounded-full p-2 shadow-md hover:bg-blue-800 transform transition duration-500 hover:scale-105">
-                          <FaFacebook
-                            className="text-black hover:text-white"
-                            size={24}
-                          />
-                        </button>
+                        <GoogleSignup/>
                       </div>
                     </div>
                   </div>

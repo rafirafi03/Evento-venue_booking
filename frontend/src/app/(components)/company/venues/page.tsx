@@ -6,7 +6,7 @@ import {
   useGetVenuesQuery,
   useUpdateVenueStatusMutation,
   useGetOffersQuery,
-  useApplyOfferMutation
+  useApplyOfferMutation,
 } from "app/store/slices/companyApiSlices";
 import ConfirmModal from "../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ import { getUserIdFromToken } from "utils/tokenHelper";
 import OfferListModal from "components/companyComponents/modals/offerListModal";
 import toast, { Toaster } from "react-hot-toast";
 import Pagination from "components/userComponents/pagination";
-import AuthHOC,{Role} from "components/common/auth/authHoc";
+import AuthHOC, { Role } from "components/common/auth/authHoc";
 
 interface IVenue {
   _id: string;
@@ -30,12 +30,11 @@ interface IVenue {
   phone: number;
   city: string;
   state: string;
-  images: string[]
+  images: string[];
   isListed: boolean;
   offerId: string;
   isCompanyBlocked: boolean;
 }
-
 
 export default function Page() {
   const router = useRouter();
@@ -53,32 +52,29 @@ export default function Page() {
   const [venuesArray, setVenuesArray] = useState<IVenue[]>([]);
 
   useEffect(() => {
-      if (venuesFetchError && "status" in venuesFetchError) {
-        if (venuesFetchError.status === 401) {
-          console.warn("Session expired. Logging out...");
-          localStorage.removeItem("authCompanyToken");
-          router.push('/company/login')
-        }
+    if (venuesFetchError && "status" in venuesFetchError) {
+      if (venuesFetchError.status === 401) {
+        console.warn("Session expired. Logging out...");
+        localStorage.removeItem("authCompanyToken");
+        router.push("/company/login");
       }
-    }, [venuesFetchError, router]);
+    }
+  }, [venuesFetchError, router]);
 
   useEffect(() => {
-        // Initial fetch for companies
-        const fetchVenues = async () => {
-    
-          const venue = venues?.venues
-          setVenuesArray(venue);
-        };
-        fetchVenues();
-      }, [venues?.venues]);
+    const fetchVenues = async () => {
+      const venue = venues?.venues;
+      setVenuesArray(venue);
+    };
+    fetchVenues();
+  }, [venues?.venues]);
 
   const [modalTitle, setModalTitle] = useState<string>("");
   const [modalButton, setModalButton] = useState<string>("");
   const [venueId, setVenueId] = useState<string>("");
-  const [venueOfferId, setVenueOfferId] = useState<string>('')
+  const [venueOfferId, setVenueOfferId] = useState<string>("");
   const [isConfirmModal, setConfirmModal] = useState<boolean>(false);
   const [isOfferListModal, setOfferListModal] = useState<boolean>(false);
-
 
   const handleChange = () => {
     router.push("/company/addVenue");
@@ -99,8 +95,8 @@ export default function Page() {
     try {
       console.log("confirmvenuelisting");
       const response = await updateVenueStatus({ venueId }).unwrap();
-      
-      if(response.success) {
+
+      if (response.success) {
         setVenuesArray((prev) =>
           prev?.map((venue) =>
             venue._id === venueId
@@ -119,39 +115,18 @@ export default function Page() {
     setOfferListModal(false);
   };
 
-  const handleRemoveOffer = async(offerId: string)=> {
+  const handleRemoveOffer = async (offerId: string) => {
     try {
-      const loadingToast = toast.loading('Removing...');
+      const loadingToast = toast.loading("Removing...");
       const res = await applyOffer({ venueId, offerId }).unwrap();
       toast.dismiss(loadingToast);
 
       if (res.success) {
         toast.success(<b>Offer applied successfully!</b>);
-        refetch()
+        refetch();
       } else {
         toast.error(<b>Could not apply.</b>);
       }
-
-    } catch (error) {
-      toast.dismiss();
-      toast.error(<b>Error occurred.</b>);
-      console.log(error);
-    }
-  }
-
-  const handleApplyOffer = async (offerId: string) => {
-    try {
-      const loadingToast = toast.loading('Saving...');
-      const res = await applyOffer({ venueId, offerId }).unwrap();
-      toast.dismiss(loadingToast);
-
-      if (res.success) {
-        toast.success(<b>Offer applied successfully!</b>);
-        refetch()
-      } else {
-        toast.error(<b>Could not apply.</b>);
-      }
-
     } catch (error) {
       toast.dismiss();
       toast.error(<b>Error occurred.</b>);
@@ -159,13 +134,32 @@ export default function Page() {
     }
   };
 
-  const pageChange = ()=> {
-    console.log('hii')
-  }
+  const handleApplyOffer = async (offerId: string) => {
+    try {
+      const loadingToast = toast.loading("Saving...");
+      const res = await applyOffer({ venueId, offerId }).unwrap();
+      toast.dismiss(loadingToast);
+
+      if (res.success) {
+        toast.success(<b>Offer applied successfully!</b>);
+        refetch();
+      } else {
+        toast.error(<b>Could not apply.</b>);
+      }
+    } catch (error) {
+      toast.dismiss();
+      toast.error(<b>Error occurred.</b>);
+      console.log(error);
+    }
+  };
+
+  const pageChange = () => {
+    console.log("hii");
+  };
 
   return (
-    <AuthHOC role={Role.Company} >
-    <div>
+    <AuthHOC role={Role.Company}>
+      <div>
         <Toaster position="bottom-center" reverseOrder={false} />
       </div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
@@ -174,7 +168,7 @@ export default function Page() {
       {isOfferListModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <OfferListModal
-            venueOfferId = {venueOfferId}
+            venueOfferId={venueOfferId}
             isOpenModal={isOfferListModal}
             onClose={closeOfferListModal}
             offers={offers}
@@ -273,7 +267,7 @@ export default function Page() {
                               onClick={() => {
                                 setOfferListModal(true);
                                 setVenueId(ven._id);
-                                setVenueOfferId(ven.offerId)
+                                setVenueOfferId(ven.offerId);
                               }}
                               className="bg-slate-700 hover:bg-black transition-transform duration-300 hover:scale-110 text-white text-xs p-2 rounded-xl h-5 flex items-center"
                             >
@@ -334,8 +328,12 @@ export default function Page() {
             )}
           </div>
           <div className="">
-        <Pagination currentPage={1} totalPages={1} onPageChange={pageChange}/>
-        </div>
+            <Pagination
+              currentPage={1}
+              totalPages={1}
+              onPageChange={pageChange}
+            />
+          </div>
         </div>
       </div>
     </AuthHOC>

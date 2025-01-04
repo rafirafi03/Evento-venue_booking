@@ -1,4 +1,6 @@
 import mongoose, { Document, Schema} from 'mongoose';
+import { IVenue } from './venueModel';
+import { IUser } from './userModel';
 
 export interface IBooking extends Document {
     _id: string;

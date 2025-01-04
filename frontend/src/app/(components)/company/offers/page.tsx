@@ -14,16 +14,23 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import Pagination from "components/userComponents/pagination";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
+import { IOffer } from "types/types";
 
 export default function Page() {
   const router = useRouter();
   const companyId = getUserIdFromToken("authCompanyToken");
 
-  const {
-    data: offers,
-    error: offerFetchError,
-    refetch,
-  } = useGetOffersQuery(companyId);
+  const { data: offers, error: offerFetchError } = useGetOffersQuery(companyId);
+
+  const [offersArray, setOffersArray] = useState<IOffer[]>([]);
+
+  useEffect(() => {
+    const fetchOffer = async () => {
+      setOffersArray(offers);
+    };
+
+    fetchOffer();
+  }, [offers]);
 
   useEffect(() => {
     if (offerFetchError && "status" in offerFetchError) {
@@ -42,7 +49,6 @@ export default function Page() {
   const [modalButton, setModalButton] = useState<string>("");
   const [isConfirmModal, setConfirmModal] = useState<boolean>(false);
   const [offerId, setOfferId] = useState<string>("");
-
 
   const handleChange = () => {
     router.push("/company/addOffer");
@@ -71,12 +77,14 @@ export default function Page() {
 
       if (response.success) {
         toast.success(<b>Offer deleted Successfully!</b>);
-        refetch();
+        setOffersArray((prev) =>
+          prev?.filter((offer) => offer._id !== offerId)
+        );
       } else {
         toast.error(<b>Could not delete.</b>);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast.dismiss();
       toast.error(<b>Error Occured.</b>);
     }
@@ -120,7 +128,7 @@ export default function Page() {
                 />
               </button>
             </div>
-            {offers?.length > 0 ? (
+            {offersArray?.length > 0 ? (
               <>
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                   <table className="w-full text-sm text-center rtl:text-right text-black dark:text-black">
@@ -147,7 +155,7 @@ export default function Page() {
                       </tr>
                     </thead>
                     <tbody className="dark:text-black font-bold">
-                      {offers.map((offer, index) => (
+                      {offersArray.map((offer, index) => (
                         <tr
                           key={index}
                           className="bg-slate-100 dark:bg-slate-100 hover:bg-slate-200 border-b-2 border"

@@ -6,7 +6,7 @@ export interface IChat extends Document {
     receiverId: string;
     text: string;
     sender: string;
-    timestamp: string;
+    timestamp: Date;
 }
 
 const ChatSchema: Schema = new Schema<IChat>({
@@ -27,7 +27,7 @@ const ChatSchema: Schema = new Schema<IChat>({
         required: true
       },
       timestamp: {
-        type: String,
+        type: Date,
         required: true,
       }
 })

@@ -112,6 +112,14 @@ export interface IBookingData {
     };
 }
 
+export interface IOffer {
+  _id: string;
+  companyId: string;
+  name: string;
+  percentage: number;
+  validity: number;
+}
+
 // export interface User {
 
 // }

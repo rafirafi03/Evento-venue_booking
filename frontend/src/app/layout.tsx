@@ -3,6 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./store/provider";
 import Script from "next/script";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import dotenv from 'dotenv';
+
+dotenv.config()
+
+const clientId = process.env.GOOGLE_AUTH_CLIENT_ID as string;
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          {children}
+          <GoogleOAuthProvider clientId={clientId}>{children}</GoogleOAuthProvider>
           <Script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js" />
         </Providers>
       </body>

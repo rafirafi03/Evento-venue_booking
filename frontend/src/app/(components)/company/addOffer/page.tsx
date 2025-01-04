@@ -35,6 +35,7 @@ export default function Page() {
 
         if (response.success) {
           toast.success(<b>Offer Added Successfully!</b>);
+          router.push('/company/offers');
         } else {
           toast.error(<b>Could not Add.</b>);
         }

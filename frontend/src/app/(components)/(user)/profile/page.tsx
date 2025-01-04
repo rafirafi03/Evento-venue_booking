@@ -19,7 +19,7 @@ import {
   useGetFavouritesQuery,
   useDeleteFromFavouritesMutation,
 } from "app/store/slices/userApiSlices";
-import { IBooking, IFavourite, IReview } from 'types/types'
+import { IBooking, IFavourite, IReview } from "types/types";
 import { useGetUserBookingsQuery } from "app/store/slices/bookingApiSlices";
 import { useCancelBookingMutation } from "app/store/slices/bookingApiSlices";
 import { useGetRatingsByUserIdQuery } from "app/store/slices/companyApiSlices";
@@ -40,10 +40,8 @@ export default function UserProfile() {
 
   const userId = getUserIdFromToken("authUserToken");
 
-  const {
-    data: userDetails,
-    error: userFetchError,
-  } = useGetUserDetailsQuery(userId);
+  const { data: userDetails, error: userFetchError } =
+    useGetUserDetailsQuery(userId);
 
   const { data: userReview } = useGetRatingsByUserIdQuery(userId);
 
@@ -59,12 +57,10 @@ export default function UserProfile() {
     }
   }, [userFetchError, router]);
 
-  const { data: initialBookings } =
-    useGetUserBookingsQuery(userId);
-    console.log(initialBookings," initialbookingsssss")
+  const { data: initialBookings } = useGetUserBookingsQuery(userId);
+  console.log(initialBookings, " initialbookingsssss");
 
-  const { data: initialFavourites } =
-    useGetFavouritesQuery(userId);
+  const { data: initialFavourites } = useGetFavouritesQuery(userId);
 
   console.log(initialFavourites, "favrts in frontend");
   const [resetPass] = useResetPasswordMutation();
@@ -87,7 +83,9 @@ export default function UserProfile() {
   const [bookingId, setBookingId] = useState<string>("");
   const [initialUserName, setInitialUserName] = useState(userName);
   const [bookings, setBookings] = useState<IBooking[]>(initialBookings || []);
-  const [favourites, setFavourites] = useState<IFavourite[]>(initialFavourites || []);
+  const [favourites, setFavourites] = useState<IFavourite[]>(
+    initialFavourites || []
+  );
 
   // Set initial values when component mounts
   useEffect(() => {
@@ -96,32 +94,22 @@ export default function UserProfile() {
       setInitialUserName(userDetails.userName);
     }
   }, [userDetails]);
-  
 
-  useEffect(()=> {
-    if(initialBookings) {
-      setBookings(initialBookings)
+  useEffect(() => {
+    if (initialBookings) {
+      setBookings(initialBookings);
     }
-  },[initialBookings])
+  }, [initialBookings]);
 
-  useEffect(()=> {
-    if(initialFavourites) {
-      setFavourites(initialFavourites)
+  useEffect(() => {
+    if (initialFavourites) {
+      setFavourites(initialFavourites);
     }
-  },[initialFavourites])
-
+  }, [initialFavourites]);
 
   const [activeTab, setActiveTab] = useState("upcoming");
 
-  const user = {
-    name: "Alex Johnson",
-    email: "alex@example.com",
-    avatar: "/placeholder.svg?height=100&width=100",
-    memberSince: "January 2023",
-  };
-
   const handleEditUserProfile = async () => {
-
     if (userName === initialUserName) {
       console.log("No changes detected.");
       return; // Exit if no change
@@ -207,9 +195,7 @@ export default function UserProfile() {
     }
   };
 
-  const handleDeleteFromFavourites = async (
-    venueId: string
-  ) => {
+  const handleDeleteFromFavourites = async (venueId: string) => {
     try {
       const loadingToast = toast.loading("removing from favourites...");
       const response = await deleteFromFavourites({ userId, venueId }).unwrap();
@@ -217,9 +203,11 @@ export default function UserProfile() {
 
       if (response.success) {
         toast.success(<b>Succesfully removed!</b>);
-        setFavourites((prevFavourites: IFavourite[]) => 
-          prevFavourites.filter((favourites: IFavourite) => favourites.venueId !== venueId)
-        )
+        setFavourites((prevFavourites: IFavourite[]) =>
+          prevFavourites.filter(
+            (favourites: IFavourite) => favourites.venueId !== venueId
+          )
+        );
       } else {
         toast.error(<b>failed to remove from favourites!</b>);
       }
@@ -288,8 +276,13 @@ export default function UserProfile() {
                 <div className="text-center p-6">
                   <div className="w-32 h-32 mx-auto bg-gray-100 rounded-full overflow-hidden">
                     <Image
-                      src="/assets/images/homepage-image.jpg"
-                      alt={user.name}
+                      src={
+                        userDetails?.image ||
+                        `https://ui-avatars.com/api/?name=${
+                          userName ? userName : userDetails?.userName || "User"
+                        }&background=random`
+                      }
+                      alt={userName ? userName : userDetails?.userName}
                       className="w-full h-full object-cover"
                       width={500}
                       height={500}
@@ -302,10 +295,7 @@ export default function UserProfile() {
                 </div>
                 <div className="px-6 pb-6">
                   <div className="flex flex-col items-center space-y-4">
-                    <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                      <CalendarDays className="w-4 h-4 mr-2" />
-                      Member since {user.memberSince}
-                    </span>
+                    
                     <button
                       onClick={() => setActiveTab("settings")}
                       className="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
@@ -363,7 +353,7 @@ export default function UserProfile() {
                   <div className="space-y-4">
                     {bookings?.length > 0 ? (
                       <>
-                        {bookings?.map((booking : IBooking) => (
+                        {bookings?.map((booking: IBooking) => (
                           <div
                             key={booking._id}
                             className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
@@ -486,7 +476,7 @@ export default function UserProfile() {
                 )}
                 {activeTab === "reviews" && (
                   <div className="space-y-4">
-                    {userReview.map((review : IReview) => (
+                    {userReview.map((review: IReview) => (
                       <div
                         key={review._id}
                         className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
@@ -515,7 +505,7 @@ export default function UserProfile() {
                   <div className="space-y-4">
                     {favourites?.length > 0 ? (
                       <>
-                        {favourites?.map((fav : IFavourite) => (
+                        {favourites?.map((fav: IFavourite) => (
                           <div
                             key={fav._id}
                             className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
@@ -551,9 +541,7 @@ export default function UserProfile() {
                               </button>
                               <button
                                 onClick={() =>
-                                  handleDeleteFromFavourites(
-                                    fav.venueId
-                                  )
+                                  handleDeleteFromFavourites(fav.venueId)
                                 }
                                 className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
                               >

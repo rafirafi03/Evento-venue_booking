@@ -101,7 +101,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
             <div className="min-h-screen bg-white shadow-lg rounded-lg">
               <div className="relative h-64 bg-gray-200 rounded-lg">
                 <Image
-                  src={booking?.venueId?.image}
+                  src={booking?.venueDetails?.image}
                   alt="Venue cover"
                   className="w-full h-full object-cover rounded-lg"
                   width={500}
@@ -123,12 +123,12 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
                     <div className="space-y-4">
                       <div className="flex items-center">
                         <Building className="w-5 h-5 mr-2 text-red-600" />
-                        <span>{booking?.venueId.name}</span>
+                        <span>{booking?.venueDetails?.name}</span>
                       </div>
                       <div className="flex items-center">
                         <MapPin className="w-5 h-5 mr-2 text-red-600" />
                         <span>
-                          {booking?.venueId.city}, {booking?.venueId.state}
+                          {booking?.venueDetails?.city}, {booking?.venueDetails?.state}
                         </span>
                       </div>
                       <div className="flex items-center">
@@ -196,15 +196,15 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
                       <div className="space-y-4">
                         <div className="flex items-center">
                           <User className="w-5 h-5 mr-2 text-red-600" />
-                          <span>{booking?.userId.name}</span>
+                          <span>{booking?.userDetails?.name}</span>
                         </div>
                         <div className="flex items-center">
                           <Phone className="w-5 h-5 mr-2 text-red-600" />
-                          <span>{booking?.userId.phone}</span>
+                          <span>{booking?.userDetails?.phone}</span>
                         </div>
                         <div className="flex items-center">
                           <Mail className="w-5 h-5 mr-2 text-red-600" />
-                          <span>{booking?.userId.email}</span>
+                          <span>{booking?.userDetails?.email}</span>
                         </div>
                       </div>
                     </div>
@@ -213,7 +213,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
                       <button
                         onClick={() =>
                           router.push(
-                            `/company/venueDetails/${booking?.venueId._id}`
+                            `/company/venueDetails/${booking?.venueId}`
                           )
                         }
                         className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center"

@@ -23,7 +23,7 @@ export class UserLoginUseCase {
         if(user.isBlocked) {
           return {success: false, error: 'this account is blocked by admin'}
         }
-        const pass = await bcrypt.compare(password, user.password);
+        const pass =  bcrypt.compare(password, user.password as string);
 
         if (!pass) {
           return {success: false, error: 'incorrect password entered'}

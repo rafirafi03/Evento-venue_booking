@@ -23,6 +23,13 @@ export const userApiSlice = createApi({
         body: postData,
       }),
     }),
+    googleLogin: builder.mutation({
+      query: (googleToken) => ({
+        url: '/user/googleLogin',
+        method: HttpMethod.POST,
+        body: {token: googleToken}
+      })
+    }),
     verifyOtp: builder.mutation({
       query: (postData) => ({
         url: "/user/verify-otp",
@@ -161,4 +168,5 @@ export const {
   useChangePasswordMutation,
   useUserLogoutMutation,
   useAdminLogoutMutation,
+  useGoogleLoginMutation
 } = userApiSlice;

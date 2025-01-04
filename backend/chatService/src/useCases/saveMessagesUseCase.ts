@@ -9,6 +9,8 @@ export class SaveMessagesUseCase {
   async execute(message: Chat): Promise<{ success: boolean }> {
     try {
 
+      console.log(message,"messageeee")
+
         this._chatRepository.saveMessage(message)
       
       return { success: true };

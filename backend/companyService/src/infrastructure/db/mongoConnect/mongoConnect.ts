@@ -3,11 +3,11 @@ import dotenv from 'dotenv';
 
 dotenv.config()
 
-const mongoURI = process.env.MONGO_URI as string
+const mongoURL = process.env.MONGO_URI as string
 
 export const connectDB = async () => {
     try {
-        await mongoose.connect(mongoURI, {
+        await mongoose.connect(mongoURL, {
             serverSelectionTimeoutMS: 5000,
             tlsAllowInvalidCertificates: false
         })

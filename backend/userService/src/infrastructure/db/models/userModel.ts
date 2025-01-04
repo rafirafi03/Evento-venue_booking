@@ -3,17 +3,19 @@ import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IWalletHistory {
   amount: number;
-  transactionType: 'credit' | 'debit'; // Define transaction type
+  transactionType: 'credit' | 'debit';
   date: Date;
 }
 
 export interface IUser extends Document {
   _id: string;
+  googleId?: string;
   userName: string;
   email: string;
-  password: string;
-  phone: number;
+  password?: string;
+  phone?: number;
   wallet : number;
+  image?: string;
   walletHistory: IWalletHistory[];
   isBlocked: boolean;
   isVerified: boolean;
@@ -21,6 +23,10 @@ export interface IUser extends Document {
 
 
 const UserSchema: Schema = new Schema<IUser>({
+  googleId: {
+    type: String,
+    unique: true
+  },
   userName: {
     type: String,
     required: true,
@@ -31,11 +37,9 @@ const UserSchema: Schema = new Schema<IUser>({
   },
   password: {
     type: String,
-    required: true,
   },
   phone: {
     type: Number,
-    required: true,
   },
   isBlocked: {
     type: Boolean,
@@ -48,6 +52,9 @@ const UserSchema: Schema = new Schema<IUser>({
   wallet : {
     type: Number,
     default: 0
+  },
+  image: {
+    type: String
   },
   walletHistory: [
     {

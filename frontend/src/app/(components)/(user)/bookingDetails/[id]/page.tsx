@@ -128,7 +128,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
         <div className="min-h-screen bg-white shadow-lg rounded-lg">
           <div className="relative h-64 bg-gray-200 rounded-lg">
             <Image
-              src={booking?.venueId?.image}
+              src={booking?.venueDetails?.image}
               alt="Venue cover"
               className="w-full h-full object-cover rounded-lg"
               width={500}
@@ -146,12 +146,12 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <Building className="w-5 h-5 mr-2 text-red-600" />
-                    <span>{booking?.venueId.name}</span>
+                    <span>{booking?.venueDetails.name}</span>
                   </div>
                   <div className="flex items-center">
                     <MapPin className="w-5 h-5 mr-2 text-red-600" />
                     <span>
-                      {booking?.venueId.city}, {booking?.venueId.state}
+                      {booking?.venueDetails.city}, {booking?.venueDetails.state}
                     </span>
                   </div>
                   <div className="flex items-center">
@@ -167,6 +167,26 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
                       {new Date(booking?.bookingDateEnd).toLocaleDateString()}
                     </span>
                   </div>
+                  
+                </div>
+                {/* <div className="mt-6">
+                    <h3 className="text-xl font-semibold mb-2">Amenities</h3>
+                    <ul className="list-disc list-inside text-gray-600">
+                      <li>Free Wi-Fi</li>
+                      <li>On-site parking</li>
+                      <li>Catering services</li>
+                      <li>AV equipment</li>
+                      <li>Wheelchair accessible</li>
+                    </ul>
+                  </div> */}
+              </div>
+
+              <div className="space-y-6">
+                <div className="bg-white rounded-lg shadow-md border p-6">
+                  <h3 className="text-xl font-semibold mb-4">
+                    Payment Information
+                  </h3>
+                  <div className="space-y-4">
                   {booking?.status == "confirmed" ? (
                     <>
                       <div className="flex items-center">
@@ -194,33 +214,6 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
                       </span>
                     </div>
                   )}
-                </div>
-                {/* <div className="mt-6">
-                    <h3 className="text-xl font-semibold mb-2">Amenities</h3>
-                    <ul className="list-disc list-inside text-gray-600">
-                      <li>Free Wi-Fi</li>
-                      <li>On-site parking</li>
-                      <li>Catering services</li>
-                      <li>AV equipment</li>
-                      <li>Wheelchair accessible</li>
-                    </ul>
-                  </div> */}
-              </div>
-
-              <div className="space-y-6">
-                <div className="bg-white rounded-lg shadow-md border p-6">
-                  <h3 className="text-xl font-semibold mb-4">
-                    Contact Information
-                  </h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center">
-                      <Phone className="w-5 h-5 mr-2 text-red-600" />
-                      <span>dfsfd</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Mail className="w-5 h-5 mr-2 text-red-600" />
-                      <span>info@grandballroom.com</span>
-                    </div>
                   </div>
                 </div>
 

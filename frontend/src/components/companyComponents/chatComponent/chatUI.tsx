@@ -16,7 +16,7 @@ type Message = {
   id: number;
   text: string;
   sender: "company" | "user";
-  timestamp: string;
+  timestamp: Date;
   senderId: string | null;
   receiverId: string | undefined;
 };
@@ -31,9 +31,9 @@ type User = {
 export default function ChatComponent() {
   const searchParams = useSearchParams();
   const filter = {
-    search : searchParams.get("search")
-  }
-    
+    search: searchParams.get("search"),
+  };
+
   const router = useRouter();
   const companyId = getUserIdFromToken("authCompanyToken");
 
@@ -42,12 +42,19 @@ export default function ChatComponent() {
     setSearchValue(search);
   }, [searchParams]);
 
-  const { data: user } = useGetUsersQuery(filter);
+  const { data: user, error: userFetchError } = useGetUsersQuery(filter);
 
-  console.log("users:", user);
+  useEffect(() => {
+    if (userFetchError && "status" in userFetchError) {
+      if (userFetchError.status === 401) {
+        console.warn("Session expired. Logging out...");
+        localStorage.removeItem("authCompanyToken");
+        router.push("/company/login");
+      }
+    }
+  }, [userFetchError, router]);
 
   const users = user?.users?.users;
-  console.log("users:", users);
 
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -74,12 +81,20 @@ export default function ChatComponent() {
     return () => handelFilter.cancel();
   }, [searchValue, handelFilter]);
 
-  const { data: chatMessages } = useGetMessagesQuery({
+  const { data: chatMessages, error: messageFetchError } = useGetMessagesQuery({
     userId: companyId,
     receiverId: selectedUserId,
   });
 
-  console.log(chatMessages, "chatmessagesssss");
+  useEffect(() => {
+    if (messageFetchError && "status" in messageFetchError) {
+      if (messageFetchError.status === 401) {
+        console.warn("Session expired. Logging out...");
+        localStorage.removeItem("authCompanyToken");
+        router.push("/company/login");
+      }
+    }
+  }, [messageFetchError, router]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -93,6 +108,7 @@ export default function ChatComponent() {
   };
 
   useEffect(() => {
+    console.log(chatMessages,"chatmessagesssss")
     if (chatMessages) {
       setMessages(chatMessages?.response);
     }
@@ -100,20 +116,36 @@ export default function ChatComponent() {
 
   useEffect(() => {
     // Connect to socket
-    socket.connect();
+    if(!socket.connected) {
+      socket.connect();
+
+    }
 
     // Listen for messages
-    socket.on("receive_message", (message: Message) => {
+    const handleMessage = (message: Message) => {
+      console.log(message, 'received messageeee')
       if (message.sender !== "company") {
-        setMessages((prevMessages) => [...prevMessages, message]);
+        setMessages((prevMessages) => {
+          const messageTime = new Date(message.timestamp).getTime();
+          const lastMessageTime = prevMessages.length > 0 
+            ? new Date(prevMessages[prevMessages.length - 1].timestamp).getTime()
+            : 0;
+          
+          if (messageTime > lastMessageTime) {
+            return [...prevMessages, message];
+          }
+          return prevMessages;
+        });
       }
-    });
+    };
+
+    socket.on("receive_message", handleMessage);
 
     return () => {
-      socket.off("receive_message");
+      socket.off("receive_message", handleMessage); // Make sure it's cleaned up properly
       socket.disconnect();
     };
-  }, []);
+  }, []); // Empty dependency ensures it's connected only once
 
   useEffect(() => {
     scrollToBottom();
@@ -132,10 +164,7 @@ export default function ChatComponent() {
         id: Date.now(),
         text: inputMessage,
         sender: "company",
-        timestamp: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
+        timestamp: new Date(),
         senderId: companyId,
         receiverId: selectedUser?._id,
       };
@@ -240,7 +269,11 @@ export default function ChatComponent() {
                             : "text-gray-400"
                         }`}
                       >
-                        {message.timestamp}
+                        {new Intl.DateTimeFormat("en-US", {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          hour12: true,
+                        }).format(new Date(message.timestamp))}
                       </p>
                     </div>
                   </div>

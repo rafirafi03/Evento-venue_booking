@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { IBookingData, Booking, User, Venue, IVenueData, IUserData } from "../../entities";
 import { IBooking, BookingModel, VenueModel, UserModel, IVenue  } from "../../infrastructure/db";
 import { IBookingRepository } from "../interfaces";
@@ -141,21 +142,48 @@ export class BookingRepository implements IBookingRepository {
         }
     }
 
-    async getBookingDetails(id: string): Promise<IBookingData | null> {
+    async getBookingDetails(id: string): Promise<any> {
         try {
-            const booking = await BookingModel.findById({_id:id}).populate('userId').populate('venueId').exec()
-
-            console.log(booking," booking in reporrroror")
-
-            if (!booking) {
+            const booking = await BookingModel.aggregate([
+                { $match: { _id: new mongoose.Types.ObjectId(id) } }, // Match the booking ID
+                {
+                    $addFields: {
+                        venueObjectId: { $toObjectId: '$venueId' },
+                        userObjectId: {$toObjectId: '$userId'},
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'users', // The collection name for UserModel
+                        localField: 'userObjectId', // Field in BookingModel
+                        foreignField: '_id', // Field in UserModel
+                        as: 'userDetails', // Output field
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'venues', // The collection name for VenueModel
+                        localField: 'venueObjectId', // Field in BookingModel
+                        foreignField: '_id', // Field in VenueModel
+                        as: 'venueDetails', // Output field
+                    },
+                },
+                { $unwind: { path: '$userDetails', preserveNullAndEmptyArrays: true } }, // Flatten the userDetails array
+                { $unwind: { path: '$venueDetails', preserveNullAndEmptyArrays: true } }, // Flatten the venueDetails array
+            ]);
+    
+            if (!booking || booking.length === 0) {
                 throw new Error('Booking not found');
             }
+
+            console.log(booking[0]," booking in repoooo 123")
     
-            return booking;
+            return booking[0]; // Since aggregate returns an array, get the first element
         } catch (error) {
             throw new Error('Error: ' + error);
         }
     }
+    
 
     async getBookings(): Promise<IBookingData[]> {
         try {

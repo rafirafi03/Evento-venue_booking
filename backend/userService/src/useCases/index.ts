@@ -17,3 +17,4 @@ export * from './deleteFromFavouritesUseCase';
 export * from './getFavouritesUseCase';
 export * from './forgetPasswordRequestUseCase';
 export * from './updateWalletUseCase'
+export * from './googleAuthUseCase'

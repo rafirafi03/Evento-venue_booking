@@ -1,6 +1,6 @@
 "use client";
 
-import { FaLock, FaUserAlt, FaGoogle, FaFacebook } from "react-icons/fa";
+import { FaLock, FaUserAlt } from "react-icons/fa";
 import Header from "../../login-header/header";
 import Image from "next/image";
 import { useState } from "react";
@@ -9,6 +9,9 @@ import { useLoginPostMutation } from "app/store/slices/userApiSlices";
 import EmailModal from 'app/(components)/(user)/emailModal/page'
 import AuthHOC, {Role} from "components/common/auth/authHoc";
 import toast, {Toaster} from "react-hot-toast";
+import GoogleSignup from "components/userComponents/googleSignIn";
+import { useGoogleLoginMutation } from "app/store/slices/userApiSlices";
+
 
 const Page = () => {
   const router = useRouter();
@@ -58,6 +61,30 @@ const Page = () => {
       } else {
         setPassError("");
       }
+    }
+  };
+
+  const [googleAuth, { isLoading, isError, isSuccess }] =
+    useGoogleLoginMutation();
+
+  const handleSuccess = async (credentialResponse: any) => {
+    try {
+      const loadingToast = toast.loading('logging in...')
+      const result = await googleAuth(credentialResponse.credential).unwrap();
+      toast.dismiss(loadingToast)
+
+      if(result.success) {
+        toast.success(<b>Login successfull!</b>)
+        const token = res.token;
+        localStorage.setItem('authUserToken', token)
+        router.push("/");
+      } else {
+        toast.error(<b>Login failed!</b>)
+        setError(res.error)
+      }
+      console.log("Google login successful:", result);
+    } catch (error) {
+      console.error("Error during Google authentication:", error);
     }
   };
 
@@ -218,20 +245,10 @@ const Page = () => {
             <hr className="shadow-md mt-5" />
 
             <div className="mt-6">
-              <p className="text-center text-gray-600 mb-2">Or sign in with</p>
-              <div className="flex flex-col space-y-4">
-                <button className="flex items-center justify-start bg-white text-black py-2 px-4 rounded-lg font-semibold border border-gray-200 shadow-md hover:bg-blue-600 hover:text-white transform transition duration-300 w-full">
-                  <FaGoogle className="mr-2" />
-                  <span className="flex-grow text-center">
-                    Sign in with Google
-                  </span>
-                </button>
-                <button className="flex items-center justify-start bg-white text-black border border-gray-200 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-800 hover:text-white transform transition duration-300 w-full">
-                  <FaFacebook className="mr-2" />
-                  <span className="flex-grow text-center">
-                    Sign in with Facebook
-                  </span>
-                </button>
+              <p className="text-center text-gray-600 mb-2">Or</p>
+              <div className="flex items-center justify-center">
+              <GoogleSignup/>
+                
               </div>
             </div>
           </div>

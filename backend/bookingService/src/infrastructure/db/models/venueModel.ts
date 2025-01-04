@@ -9,6 +9,7 @@ export interface IVenue extends Document {
     image: string;
 }
 
+
 const VenueSchema: Schema = new Schema<IVenue>({
     name: {
         type: String,

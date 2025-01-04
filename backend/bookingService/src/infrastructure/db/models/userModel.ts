@@ -7,6 +7,7 @@ export interface IUser extends Document {
   phone: number;
 }
 
+
 const UserSchema: Schema = new Schema<IUser>({
   name: {
     type: String,
@@ -18,7 +19,6 @@ const UserSchema: Schema = new Schema<IUser>({
   },
   phone: {
     type: Number,
-    required: true,
   },
 });
 

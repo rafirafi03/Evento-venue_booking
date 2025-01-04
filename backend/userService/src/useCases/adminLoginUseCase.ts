@@ -28,7 +28,7 @@ export class AdminLoginUseCase {
                 return { success: false, error: 'User is not verified' };
             }
     
-            const pass = await bcrypt.compare(password, user.password);
+            const pass = await bcrypt.compare(password, user.password as string);
     
             if (!pass) {
                 return { success: false, error: 'Incorrect password' };
