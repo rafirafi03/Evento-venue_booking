@@ -27,7 +27,7 @@ export class BookingController {
 
   async makePaymentRequest(req: Request, res: Response): Promise<void> {
     try {
-      const { userId, venueId, event, guests, bookingDuration, paymentMethod } =
+      const { userId, venueId, event, guests, bookingDuration, paymentMethod, offerPercentage } =
         req.body;
 
         console.log(req.body,"reqbdyyyyyyy 4545454545")
@@ -37,7 +37,8 @@ export class BookingController {
         event,
         guests,
         bookingDuration,
-        paymentMethod
+        paymentMethod,
+        offerPercentage
       );
 
       res.status(HttpStatusCode.OK).json(response);

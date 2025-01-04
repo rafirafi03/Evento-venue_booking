@@ -12,8 +12,7 @@ import { IVenue } from "types/types";
 
 const Page = () => {
   const userId = getUserIdFromToken("authUserToken");
-  const [searchValue, setSearchValue] = useState<string>('');
-
+  const [searchValue, setSearchValue] = useState<string>("");
 
   const { data: venues } = useGetListedVenuesQuery(undefined);
 
@@ -21,18 +20,17 @@ const Page = () => {
 
   const router = useRouter();
 
-  const handleSearch = ()=> {
-    if(searchValue.trim()== "") {
-      return
-    } 
+  const handleSearch = () => {
+    if (searchValue.trim() == "") {
+      return;
+    }
 
     const params = new URLSearchParams();
 
-    params.set('search', searchValue);
+    params.set("search", searchValue);
 
-    router.push(`/venues?${params}`)
-  }
-
+    router.push(`/venues?${params}`);
+  };
 
   return (
     <div className="bg-slate-50">
@@ -70,7 +68,7 @@ const Page = () => {
                 </div>
                 <input
                   type="text"
-                  onChange={(e)=> setSearchValue(e.target.value)}
+                  onChange={(e) => setSearchValue(e.target.value)}
                   id="voice-search"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:placeholder-gray-400 "
                   placeholder="Search venues for your event..."
@@ -125,7 +123,11 @@ const Page = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {venue?.length && (
             <>
-              {venue?.map((ven: IVenue, index: number) => (
+              {venue?.map((ven: IVenue, index: number) => {
+                const discountedPrice = ven?.offerDetails?.percentage
+                ? ven.amount - (ven.amount * ven.offerDetails.percentage) / 100
+                : undefined;
+                return (
                 <VenueCard
                   key={index}
                   title={ven?.name}
@@ -135,10 +137,13 @@ const Page = () => {
                   capacity={ven?.capacity}
                   description={ven?.description}
                   price={ven?.amount}
+                  offerPrice={discountedPrice}
+                  offerPercentage={ven?.offerDetails?.percentage}
                   venueId={ven?._id}
                   userId={userId as string}
                 />
-              ))}
+                )
+              })}
             </>
           )}
         </div>

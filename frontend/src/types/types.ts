@@ -28,7 +28,8 @@ export interface IVenue {
   state: string;
   capacity: number;
   description: string;
-  amount: string;
+  amount: number;
+  offerDetails?: IOffer
 
 }
 

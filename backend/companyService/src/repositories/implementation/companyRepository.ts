@@ -33,7 +33,6 @@ export class CompanyRepository implements ICompanyRepository {
 
   async findById(id: string): Promise<ICompany | null> {
     try {
-      console.log(id, "id in cmpny implementation");
       const company = await companyModel.findById({ _id: id });
       console.log(id, "idd123 at cmpnyrepo");
       console.log(company, "cmpny123 at cmpnyrepo");
@@ -101,18 +100,42 @@ export class CompanyRepository implements ICompanyRepository {
 
   async getListedVenues(): Promise<IVenue[]> {
     try {
-      const venues = await venueModel.find({isListed: true, isCompanyBlocked: false});
-
+      const venues = await venueModel.aggregate([
+        {
+          $match: { isListed: true, isCompanyBlocked: false }, // Filter listed and unblocked venues
+        },
+        {
+          $addFields: {
+              offerObjectId: { $toObjectId: '$offerId' },
+          },
+      },
+        {
+          $lookup: {
+            from: "offers", // Name of the offers collection
+            localField: "offerObjectId", // Field in venues referencing offers
+            foreignField: "_id", // Field in offers that matches localField
+            as: "offerDetails", // The resulting field in the output
+          },
+        },
+        {
+          $unwind: {
+            path: "$offerDetails", // Flatten offerDetails array
+            preserveNullAndEmptyArrays: true, // Keep venues without offers
+          },
+        }
+      ]);
+  
       return venues as IVenue[];
     } catch (error) {
       console.error("Error fetching venues:", error);
       throw new Error("Failed to fetch venues");
     }
   }
+  
 
   async findVenueById(id: string): Promise<IVenue | null> {
     try {
-      const venue = await venueModel.findById({ _id: id });
+      const venue = await venueModel.findById({ _id: id }).populate('offerId').exec();
       if (!venue) return null;
       return venue;
     } catch (error) {

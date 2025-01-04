@@ -5,10 +5,7 @@ export interface IOffer extends Document {
     companyId: string;
     name: string;
     percentage: number;
-    eligibility: string;
     validity: number;
-    isListed: boolean;
-    isCompanyBlocked: boolean;
 }
 
 const OfferSchema: Schema = new Schema<IOffer>({

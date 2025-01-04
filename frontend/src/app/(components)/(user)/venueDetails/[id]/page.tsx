@@ -4,9 +4,12 @@ import React, { useEffect, useState } from "react";
 import Header from "../../../../../components/userComponents/header";
 import Footer from "../../../../../components/userComponents/footer";
 import { useGetVenueDetailsQuery } from "app/store/slices/companyApiSlices";
-import AuthHOC, {Role} from "components/common/auth/authHoc";
+import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { loadStripe } from "@stripe/stripe-js";
-import { useGetBookedDatesQuery, useMakePaymentMutation } from "app/store/slices/bookingApiSlices";
+import {
+  useGetBookedDatesQuery,
+  useMakePaymentMutation,
+} from "app/store/slices/bookingApiSlices";
 import dotenv from "dotenv";
 import BookingModal from "components/userComponents/bookingModal";
 import PaymentModal from "components/common/modals/paymentModal";
@@ -35,10 +38,10 @@ export default function Page({ params }: { params: { id: string } }) {
   const [isPaymentModal, setPaymentModal] = useState<boolean>(false);
   const [isWalletModal, setWalletModal] = useState<boolean>(false);
   const [bookingAmount, setBookingAmount] = useState<number>(0);
-  const [balance, setBalance] = useState<number>(0)
+  const [balance, setBalance] = useState<number>(0);
   const [event, setEvent] = useState<string>("");
   const [guests, setGuests] = useState<number>(0);
-  const [bookedDates, setBookedDates] = useState<string[]>([])
+  const [bookedDates, setBookedDates] = useState<string[]>([]);
   const [bookingDuration, setBookingDuration] = useState<RangeValue<DateValue>>(
     {
       start: parseDate("2024-04-08"),
@@ -55,28 +58,33 @@ export default function Page({ params }: { params: { id: string } }) {
 
   const { data: venue } = useGetVenueDetailsQuery(venueId);
   const { data: user } = useGetUserDetailsQuery(userId);
-  const {data: fetchedDates} = useGetBookedDatesQuery({})
+  const { data: fetchedDates } = useGetBookedDatesQuery({});
 
   console.log(venue, "venue in frontend");
 
   const images = venue?.images;
 
   useEffect(() => {
-    if (venue?.amount) {
-      const calculatedAmount = venue.amount * 0.1; // Calculate 10% of venue amount
+    if (venue?.offerId) {
+      const discountPrice =
+        venue?.amount - venue?.amount * (venue.offerId?.percentage / 100); // Subtract the discount
+      const finalAmount = discountPrice * 0.1; // Apply the 10% discount on the discounted price
+      setBookingAmount(finalAmount); // Set the final amount after both discounts
+    } else {
+      const calculatedAmount = venue?.amount * 0.1;
       setBookingAmount(calculatedAmount);
     }
   }, [venue]);
 
-  useEffect(()=> {
-    setBookedDates(fetchedDates)
-  },[fetchedDates])
+  useEffect(() => {
+    setBookedDates(fetchedDates);
+  }, [fetchedDates]);
 
-  useEffect(()=> {
-    if(user?.wallet) {
-      setBalance(user.wallet)
+  useEffect(() => {
+    if (user?.wallet) {
+      setBalance(user.wallet);
     }
-  },[user])
+  }, [user]);
 
   const isClose = () => {
     setBookingModal(false);
@@ -89,7 +97,6 @@ export default function Page({ params }: { params: { id: string } }) {
     guests: number,
     bookingDuration: RangeValue<DateValue>
   ) => {
-
     const startDate = new Date(
       Date.UTC(
         bookingDuration.start.year,
@@ -104,17 +111,17 @@ export default function Page({ params }: { params: { id: string } }) {
         bookingDuration.start.day
       )
     );
-  
+
     // Calculate the number of booking days
     const timeDiff = endDate.getTime() - startDate.getTime();
     const days = timeDiff / (1000 * 3600 * 24) + 1; // +1 to include the start day
-  
+
     // Calculate the booking amount
-    let amount =  bookingAmount * days;
+    let amount = bookingAmount * days;
 
-    amount = Math.min(amount, 25000)
+    amount = Math.min(amount, 25000);
 
-    console.log('hiiiii123123')
+    console.log("hiiiii123123");
     setEvent(event);
     setGuests(guests);
     setBookingDuration(bookingDuration);
@@ -151,6 +158,7 @@ export default function Page({ params }: { params: { id: string } }) {
           guests,
           bookingDuration,
           paymentMethod,
+          offerPercentage: venue?.offerId?.percentage || 0
         }).unwrap();
         toast.dismiss(loadingToast);
 
@@ -161,9 +169,9 @@ export default function Page({ params }: { params: { id: string } }) {
         if (response.success) {
           toast.success(<b>Payment completed!</b>);
         } else {
-         console.log(response,"response in frontendddddddd123123123")
-          if(response.message) {
-            toast.error(<b>{response.message}</b>)
+          console.log(response, "response in frontendddddddd123123123");
+          if (response.message) {
+            toast.error(<b>{response.message}</b>);
           } else {
             toast.error(<b>Payment failed</b>);
           }
@@ -183,6 +191,7 @@ export default function Page({ params }: { params: { id: string } }) {
           guests,
           bookingDuration,
           paymentMethod,
+          offerPercentage: venue?.offerId?.percentage || 0
         }).unwrap();
         toast.dismiss(loadingToast);
 
@@ -190,9 +199,9 @@ export default function Page({ params }: { params: { id: string } }) {
           setBalance((prevBalance) => Math.max(prevBalance - bookingAmount, 0)); // Ensures balance doesn't go negative
           toast.success(<b>Payment completed!</b>);
         } else {
-          console.log(response,"response in frontendddddddd123123123")
-          if(response.message) {
-            toast.error(<b>{response.message}</b>)
+          console.log(response, "response in frontendddddddd123123123");
+          if (response.message) {
+            toast.error(<b>{response.message}</b>);
           } else {
             toast.error(<b>Payment failed</b>);
           }
@@ -234,19 +243,19 @@ export default function Page({ params }: { params: { id: string } }) {
               closeModal={isClose}
               handlePaymentMethod={handlePaymentMethod}
               balance={balance}
-              bookingAmount={bookingAmount} 
+              bookingAmount={bookingAmount}
             />
           )}
 
-            {isWalletModal && (
-              <WalletModal
-                isOpen={isWalletModal}
-                isClose={isClose}
-                balance={balance}
-                bookingAmount={bookingAmount}
-                handlePayment={handlePayment}
-              />
-            )}
+          {isWalletModal && (
+            <WalletModal
+              isOpen={isWalletModal}
+              isClose={isClose}
+              balance={balance}
+              bookingAmount={bookingAmount}
+              handlePayment={handlePayment}
+            />
+          )}
 
           <div className="flex max-w-full my-auto mt-5">
             <div className="grid gap-4 w-3/4">
@@ -295,9 +304,28 @@ export default function Page({ params }: { params: { id: string } }) {
               </p>
 
               <a className="block my-3 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                  Price per day ₹{venue?.amount}
-                </h5>
+                {venue?.offerId ? (
+                  <>
+                    <span className="text-xs text-red-500 line-through block">
+                      Price per day ₹ {venue?.amount}
+                    </span>
+                    <div className="flex flex-wrap">
+                      <span className="text-xs text-white bg-green-500 rounded-md px-1 py-1">
+                        {venue.offerId?.percentage}% off
+                      </span>
+                      <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                        Price per day ₹
+                        {venue.amount -
+                          venue.amount * (venue.offerId?.percentage / 100)}
+                      </h5>
+                    </div>
+                  </>
+                ) : (
+                  <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
+                    Price per day ₹{venue?.amount}
+                  </h5>
+                )}
+
                 <hr className="my-2" />
                 <p className="font-normal text-gray-700 dark:text-gray-400">
                   upto {venue?.capacity} guests

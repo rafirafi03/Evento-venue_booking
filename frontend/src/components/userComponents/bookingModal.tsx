@@ -85,7 +85,7 @@ export default function App({ isOpen,isClose, handleBooking, capacity, bookedDat
     const todayString = todayDate.toISOString().split('T')[0];
   
     // Disable past dates and booked dates
-    if (dateString <= todayString || bookedDates.includes(dateString)) {
+    if (dateString <= todayString || ( bookedDates && bookedDates.includes(dateString))) {
       return true; // Return true to disable the date
     }
     return false; // Return false to enable the date

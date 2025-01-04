@@ -74,7 +74,7 @@ router.get('/getAdminDashboard',authMiddleware(['admin']), (req, res) => {
   bookingController.adminDashboardDetails(req, res)
 })
 
-router.get('/getBookedDates', authMiddleware(['user']), (req, res) => {
+router.get('/getBookedDates', (req, res) => {
   bookingController.getBookedDates(req, res)
 })
 

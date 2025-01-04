@@ -47,18 +47,20 @@ export class GetListedVenuesUseCase {
           if (!venues || venues.length === 0) {
             return null;
           } else {
-            return await Promise.all(
+            const resolvedVenues =  await Promise.all(
               venues.map(async (venue) => {
                 const signedUrls = await Promise.all(
                   venue.images.map((imageName: string) => generateSignedUrl(imageName))
                 );
     
                 return {
-                  ...venue.toObject(),
+                  ...venue,
                   images: signedUrls,
                 };
               })
             );
+
+            return resolvedVenues as IVenue[];
           }
         } catch (error) {
           throw new Error("Error: " + error);

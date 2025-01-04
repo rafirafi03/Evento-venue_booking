@@ -26,7 +26,8 @@ export class MakePaymentUseCase {
     event: string,
     guests: number,
     bookingDuration: RangeValue<DateValue>,
-    paymentMethod: string
+    paymentMethod: string,
+    offerPercentage: number
   ): Promise<any> {
     try {
 
@@ -44,15 +45,9 @@ export class MakePaymentUseCase {
           bookingDuration.end.day
         )
       );
-
-      console.log(bookingDuration,"bokingggduragionnnnnnnnn");
-
-      console.log(startDate,"startDAte")
-      console.log(endDate,"endDAte")
       
       const overlappingBookings = await this._bookingRepository.findOverlappingBookings(venueId, startDate, endDate);
 
-      console.log('overlappingBookings: ' , overlappingBookings)
 
       if (overlappingBookings.length > 0) {
         return {success: false, message: 'inavlid date. try again later'}
@@ -60,14 +55,17 @@ export class MakePaymentUseCase {
 
       const userDetails = await getUserDetails(userId); //grpc
       const venueDetails = await getVenueDetails(venueId); //grpc
+
+      console.log(venueDetails,"venueDetails through grpcccccc")
       startDate.setUTCHours(0, 0, 0, 0);
       endDate.setUTCHours(0, 0, 0, 0);
 
       const timeDiff = endDate.getTime() - startDate.getTime();
       const days = timeDiff / (1000 * 3600 * 24) + 1;
 
-      const totalAmount = venueDetails.venueAmount * days;
-
+      const totalAmount = offerPercentage !== 0 
+      ? (venueDetails.venueAmount - (venueDetails.venueAmount * (offerPercentage / 100))) * days
+      : venueDetails.venueAmount * days;
       let finalAmount = totalAmount * 0.10;
 
       if (finalAmount > 25000) {

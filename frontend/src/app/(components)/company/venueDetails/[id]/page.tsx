@@ -9,6 +9,7 @@ import {
   Edit,
   Calendar,
   Trash,
+  TagIcon
 } from "lucide-react";
 import Header from "app/(components)/login-header/header";
 import Aside from "components/companyComponents/aside/page";
@@ -19,7 +20,7 @@ import {
 import ConfirmModal from "../../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import AuthHOC,{Role} from "components/common/auth/authHoc";
+import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { isApiError } from "utils/errors";
 import Image from "next/image";
 
@@ -58,7 +59,7 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
       }
     } catch (error: unknown) {
       console.error(error);
-    
+
       if (isApiError(error) && error.status === 401) {
         localStorage.removeItem("authCompanyToken");
         router.push("/company/login");
@@ -69,7 +70,7 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
   };
 
   return (
-    <AuthHOC role={Role.Company} >
+    <AuthHOC role={Role.Company}>
       {isConfirmModal && (
         <ConfirmModal
           title={modalTitle}
@@ -84,7 +85,7 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
       </nav>
       <div className="flex mt-[64px]">
         <aside className="w-64 bg-slate-white dark:bg-gray-800">
-          <Aside/>
+          <Aside />
         </aside>
         <div className="flex-1 p-4 bg-slate-100 my-3">
           <div className="min-h-screen bg-white shadow-lg rounded-lg">
@@ -108,18 +109,33 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
                   <div className="space-y-4">
                     <div className="flex items-center">
                       <MapPin className="w-5 h-5 mr-2 text-red-600" />
-                      <span>
+                      <span className="text-md font-semibold tracking-tight text-gray-900 dark:text-white">
                         {venue?.address}, {venue?.city}, {venue?.state}
                       </span>
                     </div>
                     <div className="flex items-center">
                       <Users className="w-5 h-5 mr-2 text-red-600" />
-                      <span>Capacity: {venue?.capacity} guests</span>
+                      <span className="text-md font-semibold tracking-tight text-gray-900 dark:text-white">Capacity: {venue?.capacity} guests</span>
                     </div>
                     <div className="flex items-center">
                       <DollarSign className="w-5 h-5 mr-2 text-red-600" />
-                      <span>Price: ₹{venue?.amount} / hour</span>
+                      {venue?.offerId ? (
+                        <>
+                        <span className="text-md font-semibold tracking-tight text-gray-900 dark:text-white">Price: ₹{venue.amount -
+                          venue.amount * (venue.offerId?.percentage / 100)} / hour</span>
+                          <span className="text-xs text-red-500 line-through block ml-2">₹{venue?.amount} / hour</span>
+                        </>
+                      ) : (
+                        <span className="text-md font-semibold tracking-tight text-gray-900 dark:text-white">Price: ₹{venue?.amount} / hour</span>
+                      )}
                     </div>
+                      {venue?.offerId && 
+                        
+                        <div className="flex items-center">
+                        <TagIcon className="w-5 h-5 mr-2 text-red-600" />
+                        <span className="text-md font-semibold tracking-tight text-gray-900 dark:text-white">{venue?.offerId?.percentage} % off</span>
+                        </div>
+                    }
                   </div>
                   <div className="mt-6">
                     <h3 className="text-xl font-semibold mb-2">Description</h3>

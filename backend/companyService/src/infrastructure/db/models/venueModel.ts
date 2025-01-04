@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema} from 'mongoose';
+import { IOffer } from './offerModel';
 
 export interface IVenue extends Document {
     _id: mongoose.Types.ObjectId;
@@ -16,6 +17,7 @@ export interface IVenue extends Document {
     isListed: boolean;
     offerId: string;
     isCompanyBlocked: boolean;
+    offerDetails?: IOffer
 }
 
 const VenueSchema: Schema = new Schema<IVenue>({
@@ -68,7 +70,8 @@ const VenueSchema: Schema = new Schema<IVenue>({
         default: true
       },
       offerId: {
-        type: String
+        type: String,
+        ref: 'Offer'
       },
       isCompanyBlocked: {
         type: Boolean,
