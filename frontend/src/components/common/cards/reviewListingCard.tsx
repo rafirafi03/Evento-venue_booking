@@ -3,6 +3,7 @@ import React,{useState} from "react";
 import { useGetRatingsQuery } from "app/store/slices/companyApiSlices";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import Image from "next/image";
+import { IRating } from "types/types";
 
 interface pageProps {
   venueId: string;
@@ -23,7 +24,7 @@ export default function ReviewListingCard({ venueId }: pageProps) {
       {ratings && ratings.length ? (
         <>
         <div className="grid mb-8 border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 md:grid-cols-2 bg-white dark:bg-gray-800">
-          {reviewsToShow?.map((rating, index) => (
+          {reviewsToShow?.map((rating: IRating, index: number) => (
             <>
               <figure
                 key={index}
@@ -60,7 +61,7 @@ export default function ReviewListingCard({ venueId }: pageProps) {
                     src={`https://ui-avatars.com/api/?name=${
                       rating.userName || "User"
                     }&background=random`}
-                    alt={`${rating.name || "User"}'s profile picture`}
+                    alt={`${rating.userName || "User"}'s profile picture`}
                     width={500}
                     height={500}
                   />

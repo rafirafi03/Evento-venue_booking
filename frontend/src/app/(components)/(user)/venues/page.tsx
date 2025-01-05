@@ -1,13 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Header from "components/userComponents/header";
 import FilterSection from "components/userComponents/filterSection";
 import VenueList from "components/userComponents/venueList";
 import Pagination from "components/userComponents/pagination";
+import Loader from "components/common/loader/loader";
 
 export default function Page() {
-  const pageChange = (arg) => {
+  const pageChange = (arg: number) => {
     console.log("hii", arg);
   };
   return (
@@ -15,10 +16,14 @@ export default function Page() {
       <Header />
       <div className="flex p-4 space-x-4">
         <div className="">
-          <FilterSection />
+          <Suspense fallback={<Loader />}>
+            <FilterSection />
+          </Suspense>
         </div>
         <div className="mt-20 px-5">
-          <VenueList />
+          <Suspense fallback={<Loader />}>
+            <VenueList />
+          </Suspense>
         </div>
       </div>
       <div className="-mt-10">

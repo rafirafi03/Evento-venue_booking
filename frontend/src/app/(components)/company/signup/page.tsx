@@ -9,7 +9,7 @@ import {
   useConfirmOtpMutation,
   useRegisterPostMutation,
 } from "app/store/slices/companyApiSlices";
-import OtpModal from "../otpModal/page";
+import OtpModal from "../../../../components/companyComponents/modals/otpModal/page";
 import { useRouter } from "next/navigation";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 
@@ -215,7 +215,9 @@ const Page = () => {
     } else {
       console.log("ressuccessssss");
       const token = response.token;
+      if (typeof window !== "undefined") {
       localStorage.setItem("authToken", token);
+      }
       setModal(false);
       router.push("/company/signup");
     }

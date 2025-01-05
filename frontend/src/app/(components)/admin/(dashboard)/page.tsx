@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Header from "../../login-header/header";
+import Header from "../../../../components/common/login-header/header";
 import Aside from "components/adminComponents/aside";
 import CardWithTab from "components/common/cards/cardWithTab";
 import BarChart from "components/common/charts/barChart";
@@ -10,6 +10,7 @@ import RevenueCard from "components/common/cards/revenueCard";
 // import { getUserIdFromToken } from "utils/tokenHelper";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { useGetAdminDashboardDetailsQuery } from "app/store/slices/bookingApiSlices";
+import fetchErrorCheck from "utils/fetchErrorCheck";
 
 export default function Page() {
   const router = useRouter();
@@ -22,16 +23,13 @@ export default function Page() {
   const dashboardData = dashboardDataResult?.result;
 
   useEffect(() => {
-    if (dahsboardFetchError && "status" in dahsboardFetchError) {
-      if (dahsboardFetchError.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authAdminToken");
-        router.push("/admin/login");
-      }
+    const isError = fetchErrorCheck({fetchError: dahsboardFetchError, role: 'admin'});
+
+    if(isError) {
+      router.push('/admin/login')
     }
   }, [dahsboardFetchError, router]);
 
-  console.log(dashboardData, "dahsboard datattatatattatat");
 
   return (
     <AuthHOC role={Role.Admin}>

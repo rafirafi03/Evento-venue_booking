@@ -1,6 +1,6 @@
 import { MapPin, Users } from "lucide-react";
 import Image from "next/image";
-import FavouriteButton from "app/(components)/(user)/favouriteButton/page";
+import FavouriteButton from "components/userComponents/favouriteButton/page";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 

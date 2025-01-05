@@ -9,6 +9,7 @@ import { useGetUsersQuery } from "app/store/slices/userApiSlices";
 import { useGetMessagesQuery } from "app/store/slices/chatApiSlices";
 import Image from "next/image";
 import debounce from "lodash/debounce";
+import FetchErrorCheck from "utils/fetchErrorCheck";
 
 // import socket from 'utils/socket'
 
@@ -45,12 +46,10 @@ export default function ChatComponent() {
   const { data: user, error: userFetchError } = useGetUsersQuery(filter);
 
   useEffect(() => {
-    if (userFetchError && "status" in userFetchError) {
-      if (userFetchError.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authCompanyToken");
-        router.push("/company/login");
-      }
+    const isError = FetchErrorCheck({fetchError: userFetchError, role: 'user'});
+
+    if(isError) {
+      router.push('/company/login')
     }
   }, [userFetchError, router]);
 

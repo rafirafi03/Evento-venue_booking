@@ -42,7 +42,7 @@ export default function App({venueOfferId, isOpenModal, onClose, offers, onSubmi
                             <span className="flex-1 ms-3 whitespace-nowrap">{offer?.validity} days</span>
                             { venueOfferId === offer._id ? (
                                 <span onClick={()=> {
-                                    removeOffer()
+                                    removeOffer(offer._id)
                                     onClose()
                                 }} className="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-red-500 bg-white rounded cursor-pointer dark:bg-white dark:text-red-500 transition-transform duration-150 ease-in-out hover:scale-110">Remove</span>
 

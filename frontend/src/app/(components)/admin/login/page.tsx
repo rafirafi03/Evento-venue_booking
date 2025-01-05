@@ -1,12 +1,12 @@
 "use client";
 
 import { FaLock, FaEnvelope } from "react-icons/fa";
-import Header from "../../login-header/header";
+import Header from "../../../../components/common/login-header/header";
 import Image from "next/image";
 import { useState } from "react";
 import { useAdminLoginMutation } from "app/store/slices/userApiSlices";
 import { useRouter } from "next/navigation";
-import AuthHOC from "components/common/auth/authHoc";
+import AuthHOC, {Role} from "components/common/auth/authHoc";
 
 const Page = () => {
   const [email, setEmail] = useState<string>("");
@@ -59,7 +59,9 @@ const Page = () => {
       if (res.success) {
         console.log("adminscssssss");
         const token = res.token;
+        if (typeof window !== "undefined") {
         localStorage.setItem("authAdminToken", token);
+        }
         router.push("/admin");
       } else {
         setError(res.error);
@@ -70,7 +72,7 @@ const Page = () => {
   };
 
   return (
-    <AuthHOC role="admin" isAuthPage={true}>
+    <AuthHOC role={Role.Admin} isAuthPage={true}>
       <Header />
       <div className="min-h-screen flex items-center justify-center bg-slate-100 pt-20">
         <div className="flex display-flex transform transition duration-500 hover:scale-105">

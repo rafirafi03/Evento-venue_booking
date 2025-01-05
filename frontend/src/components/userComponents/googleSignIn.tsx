@@ -18,7 +18,9 @@ const GoogleSignup: React.FC = () => {
       if (result.success) {
         toast.success(<b>Login successfull!</b>);
         const token = result.token;
-        localStorage.setItem("authUserToken", token);
+        if (typeof window !== "undefined") {
+          localStorage.setItem("authUserToken", token);
+        }
         router.push("/");
       } else {
         toast.error(<b>Login failed!</b>);

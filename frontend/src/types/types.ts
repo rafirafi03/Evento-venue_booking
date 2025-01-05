@@ -54,8 +54,8 @@ export interface IReview {
 
 export interface IDashboardData {
     
-  bookings? : IBookingData[] | [] ;
-  last7DaysSales? : ILast7DaysSales[] | [];
+  bookings? : IBookingData[] | []  ;
+  last7DaysSales? : ILast7DaysSales[] | [] | undefined;
   lastFiveYearRevenue? : ILastFiveYearRevenue[] | [];
   monthlyRevenue? : number;
   monthlyRevenueShare? : number;
@@ -121,10 +121,17 @@ export interface IOffer {
   validity: number;
 }
 
+export interface IRating {
+  _id: string;
+  userId: string;
+  venueId: string;
+  userName: string;
+  userEmail: string;
+  star: number;
+  review: string;
+}
+
 export interface GoogleCredentialsResponse {
   credentials : string
 }
 
-// export interface User {
-
-// }

@@ -1,6 +1,14 @@
 import React from "react";
 
-const ConfirmModal = ({title, button, isOpen, closeModal, confirm}) => {
+interface pageProps {
+  title: string;
+  button: string;
+  isOpen: boolean;
+  closeModal : ()=> void;
+  confirm : ()=> void
+}
+
+const ConfirmModal = ({title, button, isOpen, closeModal, confirm} : pageProps) => {
 
     if(!isOpen) {
         return null

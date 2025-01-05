@@ -158,7 +158,7 @@ export default function Page({ params }: { params: { id: string } }) {
           guests,
           bookingDuration,
           paymentMethod,
-          offerPercentage: venue?.offerId?.percentage || 0
+          offerPercentage: venue?.offerId?.percentage || 0,
         }).unwrap();
         toast.dismiss(loadingToast);
 
@@ -191,7 +191,7 @@ export default function Page({ params }: { params: { id: string } }) {
           guests,
           bookingDuration,
           paymentMethod,
-          offerPercentage: venue?.offerId?.percentage || 0
+          offerPercentage: venue?.offerId?.percentage || 0,
         }).unwrap();
         toast.dismiss(loadingToast);
 

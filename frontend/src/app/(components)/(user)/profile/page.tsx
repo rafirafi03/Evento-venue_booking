@@ -2,14 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import {
-  MapPin,
-  Star,
-  Clock,
-  Home,
-  Calendar,
-  Edit,
-} from "lucide-react";
+import { MapPin, Star, Clock, Home, Calendar, Edit } from "lucide-react";
 import Header from "components/userComponents/header";
 import {
   useGetUserDetailsQuery,
@@ -28,14 +21,10 @@ import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { editProfileSchema } from "app/schema/validation";
 import CancleBookingModal from "components/userComponents/cancelBookingModal";
 import Image from "next/image";
+import fetchErrorCheck from "utils/fetchErrorCheck";
 
 export default function UserProfile() {
-  // useAuth()
-
   const router = useRouter();
-  // const token = localStorage.getItem("authUserToken");
-
-  // const [editUserProfile] = useEditUserProfileMutation()
 
   const userId = getUserIdFromToken("authUserToken");
 
@@ -47,13 +36,11 @@ export default function UserProfile() {
   console.log(userReview);
 
   useEffect(() => {
-    if (userFetchError && "status" in userFetchError) {
-      if (userFetchError.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authUserToken");
-        router.push("/login");
+      const isError = fetchErrorCheck({fetchError : userFetchError, role: 'user'})
+
+      if(isError) {
+        router.push('/login')
       }
-    }
   }, [userFetchError, router]);
 
   const { data: initialBookings } = useGetUserBookingsQuery(userId);
@@ -294,7 +281,6 @@ export default function UserProfile() {
                 </div>
                 <div className="px-6 pb-6">
                   <div className="flex flex-col items-center space-y-4">
-                    
                     <button
                       onClick={() => setActiveTab("settings")}
                       className="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
@@ -305,27 +291,6 @@ export default function UserProfile() {
                   </div>
                 </div>
               </div>
-              {/* <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Venue Preferences</h3>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <MapPin className="w-4 h-4 mr-2 text-gray-400" />
-                <span className="text-gray-700">Preferred Location: Downtown</span>
-              </div>
-              <div className="flex items-center">
-                <Building className="w-4 h-4 mr-2 text-gray-400" />
-                <span className="text-gray-700">Venue Type: Conference Halls</span>
-              </div>
-              <div className="flex items-center">
-                <Users className="w-4 h-4 mr-2 text-gray-400" />
-                <span className="text-gray-700">Typical Group Size: 50-100</span>
-              </div>
-              <div className="flex items-center">
-                <DollarSign className="w-4 h-4 mr-2 text-gray-400" />
-                <span className="text-gray-700">Budget Range: $500 - $1000</span>
-              </div>
-            </div>
-          </div> */}
             </aside>
             <main>
               <div className="bg-white border-b border-gray-200">
@@ -606,13 +571,6 @@ export default function UserProfile() {
                           />
                         </div>
 
-                        {/* <div className="flex items-center">
-                    <input type="checkbox" id="notifications" name="notifications"
-                           className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" />
-                    <label htmlFor="notifications" className="ml-2 block text-sm text-gray-700">
-                      Receive email notifications
-                    </label>
-                  </div> */}
                         <button
                           onClick={handleEditUserProfile}
                           className="w-full px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"

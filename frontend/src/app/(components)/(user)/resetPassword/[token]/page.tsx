@@ -1,44 +1,42 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { useChangePasswordMutation } from "app/store/slices/userApiSlices";
 import { useRouter } from "next/navigation";
-import toast,{Toaster} from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Page({ params }: { params: { token: string } }) {
+  const [password, setPass] = useState<string>("");
+  const [confirmPass, setConfirmPass] = useState<string>("");
 
-    const [password, setPass] = useState<string>('');
-    const [confirmPass, setConfirmPass] = useState<string>("");
+  const [changePassword] = useChangePasswordMutation();
+  const router = useRouter();
 
-    const [changePassword] = useChangePasswordMutation();
-    const router = useRouter()
+  const { token } = params;
 
-    const { token } = params
+  const handleSubmit = async () => {
+    try {
+      const loadingToast = toast.loading("changing...");
+      const response = await changePassword({ token, password }).unwrap();
+      toast.dismiss(loadingToast);
 
-    const handleSubmit = async()=> {
-        try {
-            const loadingToast = toast.loading('changing...')
-            const response = await changePassword({token, password}).unwrap()
-            toast.dismiss(loadingToast)
-
-            if (response.success) {
-              toast.success(<b>Password chaged Successfully!</b>)
-              router.push('/login')
-            } else {
-              toast.error(<b>Failed to change password!</b>)
-            }
-            console.log(response)
-        } catch (error) {
-          toast.dismiss()
-          toast.error(<b>Error occured!</b>)
-            console.log(error)
-        }
-        
+      if (response.success) {
+        toast.success(<b>Password chaged Successfully!</b>);
+        router.push("/login");
+      } else {
+        toast.error(<b>Failed to change password!</b>);
+      }
+      console.log(response);
+    } catch (error) {
+      toast.dismiss();
+      toast.error(<b>Error occured!</b>);
+      console.log(error);
     }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen max-w-full bg-gradient-to-br from-gray-500 via-white to-red-100">
-      <Toaster position="bottom-center" reverseOrder={false}/>
+      <Toaster position="bottom-center" reverseOrder={false} />
       <div className="bg-slate-50 border w-1/2 border-gray-200 rounded-lg shadow-sm p-6 my-5">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
           Reset Password
@@ -56,7 +54,7 @@ export default function Page({ params }: { params: { token: string } }) {
               id="newPass"
               name="newPass"
               value={password}
-              onChange={(e)=> setPass(e.target.value)}
+              onChange={(e) => setPass(e.target.value)}
               placeholder="Enter new Password"
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-400 focus:border-gray-400 sm:text-sm"
             />
@@ -73,7 +71,7 @@ export default function Page({ params }: { params: { token: string } }) {
               id="confirmPass"
               name="confirmPass"
               value={confirmPass}
-              onChange={(e)=> setConfirmPass(e.target.value)}
+              onChange={(e) => setConfirmPass(e.target.value)}
               placeholder="Confirm new password"
               className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-gray-400 focus:border-gray-400 sm:text-sm"
             />

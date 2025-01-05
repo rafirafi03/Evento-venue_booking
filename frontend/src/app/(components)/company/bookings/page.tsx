@@ -1,12 +1,14 @@
 "use client";
 import React, { useEffect} from "react";
 import { useRouter } from "next/navigation";
-import Header from "app/(components)/login-header/header";
+import Header from "components/common/login-header/header";
 import Aside from "components/companyComponents/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useGetCompanyBookingsQuery } from "app/store/slices/bookingApiSlices";
 import Pagination from "components/userComponents/pagination";
 import AuthHOC,{Role} from "components/common/auth/authHoc";
+import { IBooking } from "types/types";
+import FetchErrorCheck from "utils/fetchErrorCheck";
 
 export default function Page() {
   const router = useRouter();
@@ -16,13 +18,10 @@ export default function Page() {
     useGetCompanyBookingsQuery(companyId);
 
     useEffect(() => {
-      if (bookingFetchError && "status" in bookingFetchError) {
-        console.log(bookingFetchError.status,'bookingFetchError in frontend ')
-        if (bookingFetchError.status === 401) {
-          console.warn("Session expired. Logging out...");
-          localStorage.removeItem("authCompanyToken");
-          router.push('/company/login')
-        }
+      const isError = FetchErrorCheck({fetchError: bookingFetchError, role: 'company'});
+
+      if(isError) {
+        router.push('/company/login')
       }
     }, [bookingFetchError, router]);
 
@@ -75,7 +74,7 @@ export default function Page() {
                       </tr>
                     </thead>
                     <tbody className="dark:text-black font-bold">
-                      {bookings.map((booking, index) => (
+                      {bookings.map((booking: IBooking, index: number) => (
                         <tr
                           key={index}
                           className="bg-slate-100 dark:bg-slate-100 hover:bg-slate-200 border-b-2 border"

@@ -8,7 +8,7 @@ import {
   useEditVenueMutation,
 } from "app/store/slices/companyApiSlices";
 import { useRouter } from "next/navigation";
-import Header from "app/(components)/login-header/header";
+import Header from "components/common/login-header/header";
 import Aside from "../../../../../components/companyComponents/aside/page";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { isApiError } from "utils/errors";
@@ -191,7 +191,9 @@ export default function Page({ params }: { params: { id: string } }) {
       console.error(error);
     
       if (isApiError(error) && error.status === 401) {
+        if (typeof window !== "undefined") {
         localStorage.removeItem("authCompanyToken");
+        }
         router.push("/company/login");
       } else {
         console.error("An unexpected error occurred", error);

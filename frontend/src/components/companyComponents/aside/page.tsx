@@ -12,6 +12,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useLogoutMutation } from "app/store/slices/companyApiSlices";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export default function Page() {
   const router = useRouter();
@@ -54,7 +55,7 @@ export default function Page() {
                 }`}
               >
                 <FontAwesomeIcon
-                  icon={faBuilding}
+                  icon={faBuilding as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="ms-3 ml-6">Dashboard</span>
@@ -70,7 +71,7 @@ export default function Page() {
                 }`}
               >
                 <FontAwesomeIcon
-                  icon={faUser}
+                  icon={faUser as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="ms-3 ml-6">Profile</span>
@@ -86,7 +87,7 @@ export default function Page() {
                 }`}
               >
                 <FontAwesomeIcon
-                  icon={faBuilding}
+                  icon={faBuilding as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">Venues</span>
@@ -102,7 +103,7 @@ export default function Page() {
                 }`}
               >
                 <FontAwesomeIcon
-                  icon={faFileAlt}
+                  icon={faFileAlt as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">
@@ -120,7 +121,7 @@ export default function Page() {
                 }`}
               >
                 <FontAwesomeIcon
-                  icon={faTags}
+                  icon={faTags as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">Offers</span>
@@ -136,7 +137,7 @@ export default function Page() {
                 }`}
               >
                 <FontAwesomeIcon
-                  icon={faComments}
+                  icon={faComments as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">Inbox</span>
@@ -149,7 +150,7 @@ export default function Page() {
             <li className="cursor-pointer" onClick={handleLogout}>
               <a className="flex items-center p-2 text-gray-900 rounded-lg font-extrabold hover:bg-gray-100 group">
                 <FontAwesomeIcon
-                  icon={faSignOutAlt}
+                  icon={faSignOutAlt as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">Log out</span>

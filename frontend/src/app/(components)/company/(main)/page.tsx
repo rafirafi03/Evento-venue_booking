@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Header from "../../login-header/header";
+import Header from "../../../../components/common/login-header/header";
 import Aside from "../../../../components/companyComponents/aside/page";
 import CardWithTab from "components/common/cards/cardWithTab";
 import BarChart from "components/common/charts/barChart";
@@ -10,6 +10,7 @@ import RevenueCard from "components/common/cards/revenueCard";
 import { useGetCompanyDashboardDetailsQuery } from "app/store/slices/bookingApiSlices";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
+import fetchErrorCheck from "utils/fetchErrorCheck";
 
 export default function Page() {
   const router = useRouter();
@@ -24,17 +25,14 @@ export default function Page() {
     console.log(dashboardData," dashboarddatatatatatatatatatat")
 
 useEffect(() => {
-  if (dashboardFetchError && "status" in dashboardFetchError) {
-    if (dashboardFetchError.status === 401) {
-      console.warn("Session expired. Logging out...");
-      localStorage.removeItem("authCompanyToken");
-      router.push("/company/login");
-    }
+  const isError = fetchErrorCheck({fetchError: dashboardFetchError, role: 'company'})
+
+  if(isError) {
+    router.push('/company/login')
   }
 }, [dashboardFetchError, router]);
 
 
-  console.log(dashboardData, "dahsboard datattatatattatat");
 
   return (
     <AuthHOC role={Role.Company}>

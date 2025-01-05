@@ -7,6 +7,7 @@ import {
 } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWallet, faMoneyCheck } from "@fortawesome/free-solid-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 interface pageProps {
   isOpen: boolean;
@@ -56,7 +57,7 @@ export default function App({
                         } dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white`}
                       >
                         <FontAwesomeIcon
-                          icon={faWallet}
+                          icon={faWallet as IconProp}
                           className={`flex-shrink-0 w-5 h-5 ${
                             balance < bookingAmount ? "text-gray-400" : "text-orange-400"
                           } transition duration-75 dark:text-${
@@ -79,7 +80,7 @@ export default function App({
                     <li onClick={() => handlePaymentMethod("online")}>
                       <div className="flex items-center p-3 text-base font-bold cursor-pointer text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
                         <FontAwesomeIcon
-                          icon={faMoneyCheck}
+                          icon={faMoneyCheck as IconProp}
                           className="flex-shrink-0 w-5 h-5 text-blue-800 transition duration-75 dark:text-blue-800 group-hover:text-gray-900"
                         />
                         <span className="flex-1 ms-3 whitespace-nowrap">

@@ -3,7 +3,7 @@
 import "@radix-ui/themes/styles.css";
 import { useAddOfferMutation } from "app/store/slices/companyApiSlices";
 import { useRouter } from "next/navigation";
-import Header from "app/(components)/login-header/header";
+import Header from "components/common/login-header/header";
 import Aside from "components/companyComponents/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import { useFormik } from "formik";
@@ -44,7 +44,9 @@ export default function Page() {
         toast.dismiss();
         toast.error(<b>Error occurred.</b>);
         if (isApiError(error) && error.status === 401) {
+          if (typeof window !== "undefined") {
           localStorage.removeItem("authCompanyToken");
+          }
           router.push("/company/login");
         } else {
           console.error("An unexpected error occurred", error);

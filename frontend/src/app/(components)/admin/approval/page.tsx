@@ -5,13 +5,14 @@ import {
   useCompanyApprovalMutation,
   useGetRequestsQuery,
 } from "app/store/slices/companyApiSlices";
-import Modal from "../modal/page";
+import Modal from "../../../../components/adminComponents/modal/page";
 // import ErrorPage from "components/common/ErrorPage/errorPage";
-import Header from "app/(components)/login-header/header";
+import Header from "components/common/login-header/header";
 import Aside from "components/adminComponents/aside";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { useRouter } from "next/navigation";
 import { isApiError } from "utils/errors";
+import fetchErrorCheck from "utils/fetchErrorCheck";
 
 export default function Page() {
   interface IVerification {
@@ -42,12 +43,10 @@ export default function Page() {
   } = useGetRequestsQuery(undefined);
 
   useEffect(() => {
-    if (requestFetchError && "status" in requestFetchError) {
-      if (requestFetchError.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authAdminToken");
-        router.push("/admin/login");
-      }
+    const isError = fetchErrorCheck({fetchError: requestFetchError, role: 'admin'})
+
+    if(isError) {
+      router.push('/admin/login')
     }
   }, [requestFetchError, router]);
 
@@ -57,7 +56,6 @@ export default function Page() {
   const [license, setLicense] = useState("");
   const [userId, setUserId] = useState("");
 
-  console.log(requests, "reqssss");
 
   const user = requests?.requests?.requests || [];
 
@@ -88,7 +86,9 @@ export default function Page() {
       console.error(error);
 
       if (isApiError(error) && error.status === 401) {
+        if (typeof window !== "undefined") {
         localStorage.removeItem("authAdminToken");
+        }
         router.push("/admin/login");
       } else {
         console.error("An unexpected error occurred", error);

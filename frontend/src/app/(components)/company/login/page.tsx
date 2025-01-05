@@ -72,7 +72,9 @@ const Page = () => {
         setError(res.error)
       } else {
         const token = res.token;
+        if (typeof window !== "undefined") {
         localStorage.setItem('authCompanyToken', token)
+        }
         router.push('/company')
       }
 

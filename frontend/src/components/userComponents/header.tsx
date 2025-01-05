@@ -26,7 +26,9 @@ export default function Page() {
   };
 
   const handleLogout = async () => {
-    localStorage.removeItem("authUserToken");
+    if(typeof window !== 'undefined') {
+      localStorage.removeItem("authUserToken");
+    }
     await userLogout({})
     setToken(false);
     router.push("/login");

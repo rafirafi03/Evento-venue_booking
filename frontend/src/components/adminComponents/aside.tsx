@@ -1,14 +1,16 @@
 import React from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBuilding,
-  faComment,
   faDashboard,
   faSignOutAlt,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from '@fortawesome/free-regular-svg-icons';
+
 import { useAdminLogoutMutation } from "app/store/slices/userApiSlices";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export default function Page() {
   const pathname = usePathname();
@@ -43,7 +45,7 @@ export default function Page() {
                 }`}
               >
                 <FontAwesomeIcon
-                  icon={faDashboard}
+                  icon={faDashboard as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="ms-3 ml-6">Dashboard</span>
@@ -59,7 +61,7 @@ export default function Page() {
                 }`}
               >
                 <FontAwesomeIcon
-                  icon={faBuilding}
+                  icon={faBuilding as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="flex-1 ms-3 ml-6 whitespace-nowrap">
@@ -78,7 +80,7 @@ export default function Page() {
                 }`}
               >
                 <FontAwesomeIcon
-                  icon={faUsers}
+                  icon={faUsers as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">
@@ -111,7 +113,7 @@ export default function Page() {
             <li className="cursor-pointer" onClick={handleLogout}>
               <a className="flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group">
                 <FontAwesomeIcon
-                  icon={faSignOutAlt}
+                  icon={faSignOutAlt as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-black transition duration-75 group-hover:text-gray-900"
                 />
                 <span className="flex-1 ms-3 whitespace-nowrap ml-6">

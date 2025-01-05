@@ -72,8 +72,8 @@ export default function RatingCard({ handleRatingSubmit }: pageProps) {
           id="message"
           value={review}
           onChange={(e) => setReview(e.target.value)}
-          rows="4"
-          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-red-300 focus:border-red-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-300 dark:focus:border-red-300"
+          rows={4}
+          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-red-300 focus:border-red-300 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-300 dark:focus:border-red-300"
           placeholder="Write your thoughts here..."
         ></textarea>
 

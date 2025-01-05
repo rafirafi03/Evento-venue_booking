@@ -5,13 +5,14 @@ import {
   useBlockCompanyMutation,
 } from "app/store/slices/companyApiSlices";
 import ConfirmModal from "../../../../components/common/modals/confirmModal";
-import LicenseModal from "../licenseModal/page";
+import LicenseModal from "../../../../components/adminComponents/licenseModal/page";
 import Pagination from "components/userComponents/pagination";
-import Header from "app/(components)/login-header/header";
+import Header from "components/common/login-header/header";
 import Aside from "components/adminComponents/aside";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { useRouter } from "next/navigation";
 import { isApiError } from "utils/errors";
+import fetchErrorCheck from "utils/fetchErrorCheck";
 
 export default function Page() {
   interface IVerification {
@@ -53,12 +54,10 @@ export default function Page() {
   } = useGetCompaniesQuery(undefined);
 
   useEffect(() => {
-    if (companiesFetchError && "status" in companiesFetchError) {
-      if (companiesFetchError.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authAdminToken");
-        router.push("/admin/login");
-      }
+    const isError = fetchErrorCheck({fetchError : companiesFetchError, role: 'company'})
+
+    if(isError) {
+      router.push('/admin/login')
     }
   }, [companiesFetchError, router]);
 
@@ -108,7 +107,9 @@ export default function Page() {
       }
     } catch (error: unknown) {
       if (isApiError(error) && error.status === 401) {
+        if (typeof window !== "undefined") {
         localStorage.removeItem("authCompanyToken");
+        }
         router.push("/company/login");
       } else {
         console.error("An unexpected error occurred", error);

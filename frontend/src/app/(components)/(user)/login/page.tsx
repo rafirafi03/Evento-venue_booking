@@ -1,12 +1,12 @@
 "use client";
 
 import { FaLock, FaUserAlt } from "react-icons/fa";
-import Header from "../../login-header/header";
+import Header from "../../../../components/common/login-header/header";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLoginPostMutation } from "app/store/slices/userApiSlices";
-import EmailModal from 'app/(components)/(user)/emailModal/page'
+import EmailModal from 'components/common/modals/emailModal/page'
 import AuthHOC, {Role} from "components/common/auth/authHoc";
 import toast, {Toaster} from "react-hot-toast";
 import GoogleSignup from "components/userComponents/googleSignIn";
@@ -71,7 +71,9 @@ const Page = () => {
       if (res.success) {
         toast.success(<b>Login successfull!</b>)
         const token = res.token;
+        if (typeof window !== "undefined") {
         localStorage.setItem('authUserToken', token)
+        }
         router.push("/");
       } else {
         toast.error(<b>Login failed!</b>)

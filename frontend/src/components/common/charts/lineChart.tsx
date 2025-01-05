@@ -2,11 +2,12 @@
 
 import React from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { ILast7DaysSales, ILastFiveYearRevenue, IMonthlySalesData } from 'types/types';
 
 
 interface pageProps {
     title: string;
-    data: string[];
+    data: ILast7DaysSales[] | ILastFiveYearRevenue[] | IMonthlySalesData[] | undefined | [];
     dataKey: string;
 }
 

@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react";
-import Header from "app/(components)/login-header/header";
+import Header from "components/common/login-header/header";
 import ChatUI from "components/companyComponents/chatComponent/chatUI";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 

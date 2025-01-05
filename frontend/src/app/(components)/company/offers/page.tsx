@@ -4,7 +4,7 @@ import { faAdd, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ConfirmModal from "../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
-import Header from "app/(components)/login-header/header";
+import Header from "components/common/login-header/header";
 import Aside from "components/companyComponents/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import {
@@ -15,6 +15,8 @@ import toast, { Toaster } from "react-hot-toast";
 import Pagination from "components/userComponents/pagination";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { IOffer } from "types/types";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import fetchErrorCheck from "utils/fetchErrorCheck";
 
 export default function Page() {
   const router = useRouter();
@@ -33,12 +35,9 @@ export default function Page() {
   }, [offers]);
 
   useEffect(() => {
-    if (offerFetchError && "status" in offerFetchError) {
-      if (offerFetchError.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authCompanyToken");
-        router.push("/company/login");
-      }
+    const isError = fetchErrorCheck({fetchError: offerFetchError, role: 'company'});
+    if(isError) {
+      router.push('/company/login')
     }
   }, [offerFetchError, router]);
 
@@ -123,7 +122,7 @@ export default function Page() {
               >
                 Add Offer
                 <FontAwesomeIcon
-                  icon={faAdd}
+                  icon={faAdd as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-white ml-2"
                 />
               </button>
@@ -177,7 +176,7 @@ export default function Page() {
 
                           <td className="px-6 py-4">
                             <FontAwesomeIcon
-                              icon={faTrash}
+                              icon={faTrash as IconProp}
                               onClick={() =>
                                 handleConfrimModal(
                                   "want to delete this offer",

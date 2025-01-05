@@ -7,6 +7,7 @@ import { useGetMessagesQuery } from "app/store/slices/chatApiSlices";
 import Image from "next/image";
 import AuthHOC, { Role } from "../auth/authHoc";
 import { useRouter } from "next/navigation";
+import fetchErrorCheck from "utils/fetchErrorCheck";
 
 type Message = {
   id: number;
@@ -33,12 +34,10 @@ export default function ChatComponent({ receiverId }: pageProps) {
   });
 
   useEffect(() => {
-    if (messageFetchError && "status" in messageFetchError) {
-      if (messageFetchError.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authUserToken");
-        router.push("/login");
-      }
+    const isError = fetchErrorCheck({ fetchError: messageFetchError, role: "user" });
+
+    if(isError) {
+      router.push('/login')
     }
   }, [messageFetchError, router]);
 
@@ -64,37 +63,39 @@ export default function ChatComponent({ receiverId }: pageProps) {
   }, [chatMessages]);
 
   useEffect(() => {
-      // Connect to socket
-      if(!socket.connected) {
-        socket.connect();
-  
-      }
-  
-      // Listen for messages
-      const handleMessage = (message: Message) => {
-        console.log(message, 'received messageeee')
-        if (message.sender !== "user") {
-          setMessages((prevMessages) => {
-            const messageTime = new Date(message.timestamp).getTime();
-            const lastMessageTime = prevMessages.length > 0 
-              ? new Date(prevMessages[prevMessages.length - 1].timestamp).getTime()
+    // Connect to socket
+    if (!socket.connected) {
+      socket.connect();
+    }
+
+    // Listen for messages
+    const handleMessage = (message: Message) => {
+      console.log(message, "received messageeee");
+      if (message.sender !== "user") {
+        setMessages((prevMessages) => {
+          const messageTime = new Date(message.timestamp).getTime();
+          const lastMessageTime =
+            prevMessages.length > 0
+              ? new Date(
+                  prevMessages[prevMessages.length - 1].timestamp
+                ).getTime()
               : 0;
-            
-            if (messageTime > lastMessageTime) {
-              return [...prevMessages, message];
-            }
-            return prevMessages;
-          });
-        }
-      };
-  
-      socket.on("receive_message", handleMessage);
-  
-      return () => {
-        socket.off("receive_message", handleMessage); // Make sure it's cleaned up properly
-        socket.disconnect();
-      };
-    }, []); // Empty dependency ensures it's connected only once
+
+          if (messageTime > lastMessageTime) {
+            return [...prevMessages, message];
+          }
+          return prevMessages;
+        });
+      }
+    };
+
+    socket.on("receive_message", handleMessage);
+
+    return () => {
+      socket.off("receive_message", handleMessage); // Make sure it's cleaned up properly
+      socket.disconnect();
+    };
+  }, []); // Empty dependency ensures it's connected only once
 
   useEffect(() => {
     scrollToBottom();

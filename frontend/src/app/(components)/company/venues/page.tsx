@@ -10,13 +10,15 @@ import {
 } from "app/store/slices/companyApiSlices";
 import ConfirmModal from "../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
-import Header from "app/(components)/login-header/header";
+import Header from "components/common/login-header/header";
 import Aside from "components/companyComponents/aside/page";
 import { getUserIdFromToken } from "utils/tokenHelper";
 import OfferListModal from "components/companyComponents/modals/offerListModal";
 import toast, { Toaster } from "react-hot-toast";
 import Pagination from "components/userComponents/pagination";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import fetchErrorCheck from "utils/fetchErrorCheck";
 
 interface IVenue {
   _id: string;
@@ -52,12 +54,10 @@ export default function Page() {
   const [venuesArray, setVenuesArray] = useState<IVenue[]>([]);
 
   useEffect(() => {
-    if (venuesFetchError && "status" in venuesFetchError) {
-      if (venuesFetchError.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authCompanyToken");
-        router.push("/company/login");
-      }
+    const isError = fetchErrorCheck({fetchError: venuesFetchError, role: 'company'})
+
+    if(isError) {
+      router.push('/company/login')
     }
   }, [venuesFetchError, router]);
 
@@ -201,7 +201,7 @@ export default function Page() {
               >
                 Add Venue
                 <FontAwesomeIcon
-                  icon={faAdd}
+                  icon={faAdd as IconProp}
                   className="flex-shrink-0 w-5 h-5 text-white transition duration-75 dark:text-white group-hover:text-white ml-2"
                 />
               </button>

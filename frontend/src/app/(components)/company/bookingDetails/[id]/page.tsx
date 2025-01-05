@@ -25,6 +25,7 @@ import {
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 import Image from "next/image";
 import { isApiError } from "utils/errors";
+import fetchErrorCheck from "utils/fetchErrorCheck";
 
 export default function BookingDetails({ params }: { params: { id: string } }) {
   const router = useRouter();
@@ -39,12 +40,10 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
   console.log(booking," image in forntedndndndnndnd")
 
   useEffect(() => {
-    if (bookingFetchError && "status" in bookingFetchError) {
-      if (bookingFetchError.status === 401) {
-        console.warn("Session expired. Logging out...");
-        localStorage.removeItem("authCompanyToken");
-        router.push("/company/login");
-      }
+    const isError = fetchErrorCheck({fetchError: bookingFetchError, role: 'company'});
+
+    if(isError) {
+      router.push('/company/login')
     }
   }, [bookingFetchError, router]);
 
@@ -71,7 +70,9 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
       console.error(error);
 
       if (isApiError(error) && error.status === 401) {
+        if (typeof window !== "undefined") {
         localStorage.removeItem("authCompanyToken");
+        }
         router.push("/company/login");
       } else {
         console.error("An unexpected error occurred", error);
