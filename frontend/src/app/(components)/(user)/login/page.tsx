@@ -10,8 +10,6 @@ import EmailModal from 'app/(components)/(user)/emailModal/page'
 import AuthHOC, {Role} from "components/common/auth/authHoc";
 import toast, {Toaster} from "react-hot-toast";
 import GoogleSignup from "components/userComponents/googleSignIn";
-import { useGoogleLoginMutation } from "app/store/slices/userApiSlices";
-
 
 const Page = () => {
   const router = useRouter();
@@ -61,30 +59,6 @@ const Page = () => {
       } else {
         setPassError("");
       }
-    }
-  };
-
-  const [googleAuth, { isLoading, isError, isSuccess }] =
-    useGoogleLoginMutation();
-
-  const handleSuccess = async (credentialResponse: any) => {
-    try {
-      const loadingToast = toast.loading('logging in...')
-      const result = await googleAuth(credentialResponse.credential).unwrap();
-      toast.dismiss(loadingToast)
-
-      if(result.success) {
-        toast.success(<b>Login successfull!</b>)
-        const token = res.token;
-        localStorage.setItem('authUserToken', token)
-        router.push("/");
-      } else {
-        toast.error(<b>Login failed!</b>)
-        setError(res.error)
-      }
-      console.log("Google login successful:", result);
-    } catch (error) {
-      console.error("Error during Google authentication:", error);
     }
   };
 

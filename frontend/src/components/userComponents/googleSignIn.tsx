@@ -1,6 +1,6 @@
 // src/components/GoogleSignup.tsx
 import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleCredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useGoogleLoginMutation } from "app/store/slices/userApiSlices";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,7 @@ const GoogleSignup: React.FC = () => {
   const router = useRouter();
   const [googleAuth] = useGoogleLoginMutation();
 
-  const handleSuccess = async (credentialResponse: any) => {
+  const handleSuccess = async (credentialResponse: GoogleCredentialResponse) => {
     try {
       const loadingToast = toast.loading("logging in...");
       const result = await googleAuth(credentialResponse.credential).unwrap();

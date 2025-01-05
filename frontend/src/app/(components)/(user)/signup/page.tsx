@@ -6,7 +6,6 @@ import {
   FaUserAlt,
   FaEnvelope,
   FaPhone,
-  FaGoogle,
 } from "react-icons/fa";
 import Header from "../../login-header/header";
 import OtpModal from "../OtpModal/page";

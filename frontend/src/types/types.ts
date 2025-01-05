@@ -121,6 +121,10 @@ export interface IOffer {
   validity: number;
 }
 
+export interface GoogleCredentialsResponse {
+  credentials : string
+}
+
 // export interface User {
 
 // }

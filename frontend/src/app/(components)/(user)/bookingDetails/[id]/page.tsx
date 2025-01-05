@@ -4,8 +4,6 @@ import {
   MapPin,
   Users,
   IndianRupee,
-  Phone,
-  Mail,
   Calendar,
   XCircle,
   Building,
