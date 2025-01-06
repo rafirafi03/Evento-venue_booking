@@ -2,7 +2,7 @@
 import React from "react";
 import { GoogleCredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useGoogleLoginMutation } from "app/store/slices/userApiSlices";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 const GoogleSignup: React.FC = () => {
@@ -37,7 +37,6 @@ const GoogleSignup: React.FC = () => {
 
   return (
     <div>
-      <Toaster position="bottom-center" reverseOrder={false} />
       <GoogleLogin onSuccess={handleSuccess} onError={handleError} />
     </div>
   );

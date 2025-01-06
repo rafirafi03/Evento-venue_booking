@@ -8,9 +8,9 @@ import { connectDB } from "./infrastructure/db";
 import bookingRoute from "./infrastructure/express/route";
 import cookieParser from 'cookie-parser'
 import mongoose from "mongoose";
-// import { startGrpcBookingServer } from "./infrastructure/grpc/grpcServices/grpcBookingServer";
 
 const PORT = process.env.PORT;
+const FRONTEND_PORT=process.env.FRONTEND_PORT
 
 const app = express();
 
@@ -18,7 +18,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: FRONTEND_PORT,
     credentials: true,
   })
 );
@@ -58,5 +58,4 @@ app.get('/health', async (req, res) => {
 
 app.listen(PORT, () => {
   logger.info(`server is running on http://localhost:${PORT}`);
-  // startGrpcBookingServer()
 });

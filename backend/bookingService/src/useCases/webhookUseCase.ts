@@ -3,7 +3,6 @@ import { IBookingRepository } from "../repositories/interfaces";
 import { Booking, User, Venue } from "../entities";
 import { Types } from "mongoose";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 export class WebhookUseCase {
   constructor(private _bookingRepository: IBookingRepository) {}

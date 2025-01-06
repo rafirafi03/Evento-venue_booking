@@ -6,19 +6,17 @@ import { Booking, User, Venue } from "../entities";
 import { IBookingRepository } from "../repositories/interfaces";
 import { Types } from "mongoose";
 import { publishRefundMessage } from "../infrastructure/messaging/publisher";
+import dotenv from "dotenv";
 
+dotenv.config();
 
 type RangeValue<T> = {
   start: T;
   end: T;
 };
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
-
 export class MakePaymentUseCase {
-  constructor(
-    private _bookingRepository : IBookingRepository
-  ) {}
+  constructor(private _bookingRepository: IBookingRepository) {}
 
   async execute(
     userId: string,
@@ -30,6 +28,11 @@ export class MakePaymentUseCase {
     offerPercentage: number
   ): Promise<any> {
     try {
+      const stripeSecretKey = process.env.STRIPE_SECRET_KEY as string;
+
+      console.log(stripeSecretKey, "stripeee secrettttt keyyyyyyyyyyy");
+
+      const stripe = new Stripe(stripeSecretKey);
 
       const startDate = new Date(
         Date.UTC(
@@ -45,34 +48,41 @@ export class MakePaymentUseCase {
           bookingDuration.end.day
         )
       );
-      
-      const overlappingBookings = await this._bookingRepository.findOverlappingBookings(venueId, startDate, endDate);
 
+      const overlappingBookings =
+        await this._bookingRepository.findOverlappingBookings(
+          venueId,
+          startDate,
+          endDate
+        );
 
       if (overlappingBookings.length > 0) {
-        return {success: false, message: 'inavlid date. try again later'}
+        return { success: false, message: "inavlid date. try again later" };
       }
 
       const userDetails = await getUserDetails(userId); //grpc
       const venueDetails = await getVenueDetails(venueId); //grpc
 
-      console.log(venueDetails,"venueDetails through grpcccccc")
+      console.log(venueDetails, "venueDetails through grpcccccc");
       startDate.setUTCHours(0, 0, 0, 0);
       endDate.setUTCHours(0, 0, 0, 0);
 
       const timeDiff = endDate.getTime() - startDate.getTime();
       const days = timeDiff / (1000 * 3600 * 24) + 1;
 
-      const totalAmount = offerPercentage !== 0 
-      ? (venueDetails.venueAmount - (venueDetails.venueAmount * (offerPercentage / 100))) * days
-      : venueDetails.venueAmount * days;
-      let finalAmount = totalAmount * 0.10;
+      const totalAmount =
+        offerPercentage !== 0
+          ? (venueDetails.venueAmount -
+              venueDetails.venueAmount * (offerPercentage / 100)) *
+            days
+          : venueDetails.venueAmount * days;
+      let finalAmount = totalAmount * 0.1;
 
       if (finalAmount > 25000) {
         finalAmount = 25000;
       }
 
-      if(paymentMethod == 'wallet') {
+      if (paymentMethod == "wallet") {
         const booking = new Booking({
           userId,
           venueId,
@@ -83,14 +93,13 @@ export class MakePaymentUseCase {
           bookingDateStart: startDate,
           bookingDateEnd: endDate,
           paymentMethod: paymentMethod,
-          status: 'confirmed'
+          status: "confirmed",
         });
 
         await this._bookingRepository.save(booking);
 
-
-        const findUser = await this._bookingRepository.findUser(userId)
-        const findVenue = await this._bookingRepository.findVenue(venueId)
+        const findUser = await this._bookingRepository.findUser(userId);
+        const findVenue = await this._bookingRepository.findVenue(venueId);
 
         if (!findUser) {
           const user = new User({
@@ -101,10 +110,9 @@ export class MakePaymentUseCase {
           });
 
           await this._bookingRepository.saveUser(user);
-          
         }
 
-        if(!findVenue) {
+        if (!findVenue) {
           const venue = new Venue({
             _id: venueId,
             name: venueDetails.venueName,
@@ -114,18 +122,16 @@ export class MakePaymentUseCase {
             image: venueDetails.venueImage,
           });
           await this._bookingRepository.saveVenue(venue);
-
         }
 
         await publishRefundMessage({
           userId: userId,
           amount: finalAmount,
-          transactionType : 'debit',
-          date: new Date().toISOString()
+          transactionType: "debit",
+          date: new Date().toISOString(),
         });
 
-        return {success: true}
-
+        return { success: true };
       } else {
         const lineItems = [
           {
@@ -134,12 +140,12 @@ export class MakePaymentUseCase {
               product_data: {
                 name: "Advance amount",
               },
-              unit_amount : finalAmount, // Total amount based on the number of guests (in cents)
+              unit_amount: finalAmount, // Total amount based on the number of guests (in cents)
             },
-            quantity: 1, 
+            quantity: 1,
           },
         ];
-  
+
         // Create a session in Stripe
         const session = await stripe.checkout.sessions.create({
           payment_method_types: ["card"],
@@ -152,20 +158,19 @@ export class MakePaymentUseCase {
             venueDetails: JSON.stringify(venueDetails),
             userId: userId,
             venueId: venueId,
-            eventName:event,
+            eventName: event,
             finalAmount: JSON.stringify(finalAmount),
             paymentMethod: paymentMethod,
             guests: JSON.stringify(guests),
             bookingDateStart: startDate.toISOString(),
             bookingDateEnd: endDate.toISOString(),
-          }
+          },
         });
-  
+
         return { id: session.id, success: true };
       }
 
-
-       // Return the session ID to the frontend for redirection
+      // Return the session ID to the frontend for redirection
     } catch (error) {
       throw new Error("Internal server error: ");
     }
