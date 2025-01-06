@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import { useUserLogoutMutation } from "app/store/slices/userApiSlices"; 
+import { useUserLogoutMutation } from "app/store/slices/userApiSlices";
 
 export default function Page() {
   const router = useRouter();
   const pathname = usePathname(); // Get the current pathname
-  const [userLogout] = useUserLogoutMutation()
+  const [userLogout] = useUserLogoutMutation();
 
   const [isToken, setToken] = useState(false);
 
@@ -26,10 +26,10 @@ export default function Page() {
   };
 
   const handleLogout = async () => {
-    if(typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       localStorage.removeItem("authUserToken");
     }
-    await userLogout({})
+    await userLogout({});
     setToken(false);
     router.push("/login");
   };
@@ -72,12 +72,20 @@ export default function Page() {
                 </p>
               </>
             ) : (
-              <p
-                onClick={() => handleOnClick("login")}
-                className="text-black cursor-pointer focus:ring-4 focus:outline-none font-bold rounded-full text-base px-3 py-2 text-center hover:text-[rgb(255,0,0)]"
-              >
-                Login
-              </p>
+              <>
+                <p
+                  onClick={() => router.push("/company/login")}
+                  className="text-black cursor-pointer focus:ring-4 focus:outline-none font-bold rounded-full text-base px-3 py-2 text-center hover:text-[rgb(255,0,0)]"
+                >
+                  Company
+                </p>
+                <p
+                  onClick={() => handleOnClick("login")}
+                  className="text-black cursor-pointer focus:ring-4 focus:outline-none font-bold rounded-full text-base px-3 py-2 text-center hover:text-[rgb(255,0,0)]"
+                >
+                  Login
+                </p>
+              </>
             )}
           </div>
           <div
@@ -109,9 +117,7 @@ export default function Page() {
                 </a>
               </li>
               <li>
-                <a
-                  className="block py-2 px-3 font-bold text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-500 md:p-0 dark:text-black dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 cursor-pointer"
-                >
+                <a className="block py-2 px-3 font-bold text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-500 md:p-0 dark:text-black dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 cursor-pointer">
                   Contact
                 </a>
               </li>
