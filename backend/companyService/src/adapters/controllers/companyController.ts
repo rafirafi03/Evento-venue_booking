@@ -70,7 +70,10 @@ export class CompanyController {
   async login(req: Request, res: Response): Promise<void> {
     try {
       const { email, password } = req.body;
+      console.log(req.body," req,bodydydydydydydydy")
       const response = await this._loginUseCase.execute(email, password);
+
+      console.log(response,"responseseeeeeeeee123123")
 
       res.cookie("companyToken", response?.token, {
         httpOnly: true,

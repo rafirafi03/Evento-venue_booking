@@ -8,7 +8,7 @@ class RabbitMQ {
     if (this.connection) return;
 
     try {
-      this.connection = await amqplib.connect("amqp://localhost");
+      this.connection = await amqplib.connect("amqp://host.docker.internal:5672");
       this.channel = await this.connection.createChannel();
       console.log("RabbitMQ connected!");
     } catch (error) {

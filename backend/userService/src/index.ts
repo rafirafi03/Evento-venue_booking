@@ -36,6 +36,9 @@ app.use(express.json());
 app.use(cookieParser())
 
 app.use("/", userRoute);
+app.get('/', (req, res) => {
+  res.send('user service running')
+})
 app.get('/health', async (req, res) => {
   try {
     const dbStatus = mongoose.connection.readyState === 1 ? 'UP' : 'DOWN';

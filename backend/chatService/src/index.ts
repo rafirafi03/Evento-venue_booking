@@ -42,6 +42,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 
 app.use("/",chatRoute);
+app.get('/', (req, res) => {
+  res.send('chat server is running')
+})
 app.get('/health', async (req, res) => {
   try {
     const dbStatus = mongoose.connection.readyState === 1 ? 'UP' : 'DOWN';

@@ -11,6 +11,7 @@ import { startGrpcVenueServer } from "./infrastructure/grpc/grpcServices/grpcVen
 import mongoose from "mongoose";
 
 const PORT = process.env.PORT;
+const FRONTEND_PORT = process.env.FRONTEND_PORT;
 
 const app = express();
 
@@ -18,7 +19,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: FRONTEND_PORT,
     credentials: true,
   })
 );
@@ -35,10 +36,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 
+app.get('/', (req, res) => {
+  res.send('Company service is running')
+});
+
 app.use("/",companyRoute);
 app.get('/health', async (req, res) => {
   try {
-    let dbStatus = mongoose.connection.readyState === 1 ? 'UP' : 'DOWN';
+    const dbStatus = mongoose.connection.readyState === 1 ? 'UP' : 'DOWN';
 
     res.status(200).json({
       status: 'UP',
