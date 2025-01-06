@@ -1,3 +1,5 @@
+"use client"
+
 import React from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,7 +20,10 @@ export default function Page() {
   const [adminLogout] = useAdminLogoutMutation()
 
   const handleLogout = async() => {
-    localStorage.removeItem("authAdminToken");
+    if(typeof window !== "undefined") {
+      localStorage.removeItem("authAdminToken");
+
+    }
     await adminLogout({})
     router.push("/admin/login");
   };

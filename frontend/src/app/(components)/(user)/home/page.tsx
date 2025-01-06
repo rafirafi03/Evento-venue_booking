@@ -103,7 +103,7 @@ const Page = () => {
           <Image
             className="rounded-r-xl"
             src="/assets/images/homepage-image.jpg"
-            alt="/assets/images/intrologin-user.jpeg"
+            alt="Home page img"
             layout="fill"
             objectFit="cover"
           />
