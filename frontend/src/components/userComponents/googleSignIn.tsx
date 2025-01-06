@@ -2,7 +2,6 @@
 import React from "react";
 import { GoogleCredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useGoogleLoginMutation } from "app/store/slices/userApiSlices";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 const GoogleSignup: React.FC = () => {
@@ -11,19 +10,14 @@ const GoogleSignup: React.FC = () => {
 
   const handleSuccess = async (credentialResponse: GoogleCredentialResponse) => {
     try {
-      const loadingToast = toast.loading("logging in...");
       const result = await googleAuth(credentialResponse.credential).unwrap();
-      toast.dismiss(loadingToast);
 
       if (result.success) {
-        toast.success(<b>Login successfull!</b>);
         const token = result.token;
         if (typeof window !== "undefined") {
           localStorage.setItem("authUserToken", token);
         }
         router.push("/");
-      } else {
-        toast.error(<b>Login failed!</b>);
       }
       console.log("Google login successful:", result);
     } catch (error) {
