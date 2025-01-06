@@ -13,7 +13,7 @@ import Image from "next/image";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
 import { useRouter } from "next/navigation";
 import { isApiError } from "utils/errors";
-import { fetchErrorCheck } from "utils/fetchErrorCheck";
+import  fetchErrorCheck  from "utils/fetchErrorCheck";
 
 export default function Page() {
   const router = useRouter();
