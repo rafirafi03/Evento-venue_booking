@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chat-deployment
+  name: chat-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: chat
+      app: chat-service
   template:
     metadata:
       labels:
-        app: chat
+        app: chat-service
     spec:
       containers:
-        - name: chat
-          image: rafi03/chat-service:latest
-          ports:
-            - containerPort: 3002
+      - name: chat-service
+        image: rafi03/chat-service:latest
+        ports:
+        - containerPort: 4004
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: chat-service
 spec:
-  type: ClusterIP
   selector:
-    app: chat
+    app: chat-service
   ports:
-    - port: 3002
-      targetPort: 3002
+  - port: 80
+    targetPort: 4004
+  type: ClusterIP

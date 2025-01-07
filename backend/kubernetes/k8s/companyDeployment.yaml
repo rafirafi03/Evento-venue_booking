@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: company-deployment
+  name: company-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
-      app: company
+      app: company-service
   template:
     metadata:
       labels:
-        app: company
+        app: company-service
     spec:
       containers:
-        - name: company
-          image: rafi03/company-service:latest
-          ports:
-            - containerPort: 3002
+      - name: company-service
+        image: rafi03/company-service:latest
+        ports:
+        - containerPort: 4001
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: company-service
 spec:
-  type: ClusterIP
   selector:
-    app: company
+    app: company-service
   ports:
-    - port: 3002
-      targetPort: 3002
+  - port: 80
+    targetPort: 4001
+  type: ClusterIP
