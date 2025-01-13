@@ -1,14 +1,18 @@
 import amqplib, { Channel, Connection } from "amqplib";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 class RabbitMQ {
   private connection: Connection | null = null;
   private channel: Channel | null = null;
-
+  
   async connect(): Promise<void> {
     if (this.connection) return;
 
     try {
-      this.connection = await amqplib.connect("amqp://host.docker.internal:5672");
+      const RABBITMQ_URL= process.env.RABBITMQ_URL as string
+      this.connection = await amqplib.connect(RABBITMQ_URL);
       this.channel = await this.connection.createChannel();
       console.log("RabbitMQ connected!");
     } catch (error) {

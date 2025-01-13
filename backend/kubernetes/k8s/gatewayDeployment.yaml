@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: api-gateway
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: api-gateway
@@ -17,6 +17,17 @@ spec:
         image: rafi03/api-gateway:latest
         ports:
         - containerPort: 5000
+        env:
+            - name: USER_SERVICE_URL
+              value: "http://user-service:4000"
+            - name: COMPANY_SERVICE_URL
+              value: "http://company-service:4001"
+            - name: BOOKING_SERVICE_URL
+              value: "http://booking-service:4003"
+            - name: CHAT_SERVICE_URL
+              value: "http://chat-service:4004"
+            - name: FRONTEND_URL
+              value: "http://frontend:3000"
 ---
 apiVersion: v1
 kind: Service
@@ -26,6 +37,6 @@ spec:
   selector:
     app: api-gateway
   ports:
-  - port: 80
+  - port: 5000
     targetPort: 5000
   type: ClusterIP
