@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/enable-websocket: "true"
     nginx.ingress.kubernetes.io/enable-cors: "true"
     nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "https://evento-booking.vercel.app"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "https://eventobooking.free.nf"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
 spec:
   rules:
