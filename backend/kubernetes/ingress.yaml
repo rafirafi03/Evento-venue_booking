@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/enable-websocket: "true"
 spec:
   rules:
-  - host: localhost
+  - host: 
     http:
       paths:
       - path: /api(/|$)(.*)
