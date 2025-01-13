@@ -12,6 +12,7 @@ import { consumeRefundMessages } from "./infrastructure/messaging/consumer";
 import mongoose from "mongoose";
 
 const PORT = process.env.PORT;
+const FRONTEND_PORT = process.env.FRONTEND_PORT as string
 
 const app = express();
 
@@ -19,7 +20,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: FRONTEND_PORT,
     credentials: true,
   })
 );
