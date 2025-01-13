@@ -10,9 +10,16 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
     nginx.ingress.kubernetes.io/enable-websocket: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
+  tls:
+  - hosts:
+    - a6e33a2c39c3f4dde9b422a60c740f1e-6b4e549281c893bf.elb.us-east-1.amazonaws.com
+    secretName: evento-tls
   rules:
-  - host: 
+  - host: a6e33a2c39c3f4dde9b422a60c740f1e-6b4e549281c893bf.elb.us-east-1.amazonaws.com
     http:
       paths:
       - path: /api(/|$)(.*)
