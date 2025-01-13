@@ -162,7 +162,7 @@ const Page = () => {
                 onClick={handleLogin}
                 className="bg-[rgba(255,0,0)] hover:bg-black text-white font-bold py-2 w-full px-4 rounded-lg shadow-md transform transition duration-300 hover:scale-105"
               >
-                Loginn
+                Login
               </button>
             </div>
 
