@@ -16,7 +16,7 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
 spec:
   rules:
-  - host: a6e33a2c39c3f4dde9b422a60c740f1e-6b4e549281c893bf.elb.us-east-1.amazonaws.com
+  - host: eventobooking.free.nf
     http:
       paths:
       - path: /api(/|$)(.*)
