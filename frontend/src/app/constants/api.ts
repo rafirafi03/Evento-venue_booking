@@ -1,1 +1,1 @@
-export const baseUrl = 'eventobooking.free.nf';
+export const baseUrl = 'https://eventobooking.free.nf';
