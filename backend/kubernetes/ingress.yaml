@@ -14,11 +14,9 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE"
     nginx.ingress.kubernetes.io/cors-allow-origin: "https://evento-booking.vercel.app"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
-    cert-manager.io/cluster-issuer: letsencrypt-prod
-
 spec:
   rules:
-  - host: eventobooking.free.nf
+  - host: a6e33a2c39c3f4dde9b422a60c740f1e-6b4e549281c893bf.elb.us-east-1.amazonaws.com
     http:
       paths:
       - path: /api(/|$)(.*)
@@ -56,7 +54,3 @@ spec:
             name: chat-service
             port:
               number: 80
-  tls:
-  - hosts:
-    - eventobooking.free.nf
-    secretName: eventobooking-tls
