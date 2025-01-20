@@ -6,6 +6,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
     kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/proxy-http-version: "1.1"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
@@ -15,8 +16,13 @@ metadata:
     nginx.ingress.kubernetes.io/cors-allow-origin: "https://evento-booking.vercel.app"
     nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
 spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - eventobooking.free.nf
+    secretName: eventobooking-tls
   rules:
-  - host: a6e33a2c39c3f4dde9b422a60c740f1e-6b4e549281c893bf.elb.us-east-1.amazonaws.com
+  - host: eventobooking.free.nf
     http:
       paths:
       - path: /api(/|$)(.*)

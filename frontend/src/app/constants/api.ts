@@ -1,1 +1,1 @@
-export const baseUrl = 'http://a6e33a2c39c3f4dde9b422a60c740f1e-6b4e549281c893bf.elb.us-east-1.amazonaws.com';
+export const baseUrl = 'https://eventobooking.free.nf';
