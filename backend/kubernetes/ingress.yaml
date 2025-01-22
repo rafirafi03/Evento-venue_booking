@@ -19,10 +19,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - eventobooking.free.nf
+    - api.eventobooking.site
     secretName: eventobooking-tls
   rules:
-  - host: eventobooking.free.nf
+  - host: api.eventobooking.site
     http:
       paths:
       - path: /api(/|$)(.*)
