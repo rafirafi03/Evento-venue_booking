@@ -1,1 +1,1 @@
-export const baseUrl = 'https://api.eventobooking.site';
+export const baseUrl = 'https://api.eventobooking.site/api';
