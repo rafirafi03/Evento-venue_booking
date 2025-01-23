@@ -46,7 +46,7 @@ export default function VenueList() {
       </p>
       <hr className="my-3" />
       <p className="text-gray-400 font-sans text-xs font-bold my-2">
-        result 10 of 80
+        result {venue?.length > 9 ? 10 : venue?.length} of {venue?.length}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {venue?.length && (
