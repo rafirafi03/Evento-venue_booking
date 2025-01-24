@@ -11,7 +11,11 @@ on:
 jobs:
   # Step 1: Build Docker Images
   build-backend:
-    runs-on: ubuntu-latestc
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:20.10.16
+        options: --privileged
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
