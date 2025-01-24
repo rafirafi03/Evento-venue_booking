@@ -183,7 +183,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
       if (response.success) {
         console.log("succes true in frontend");
-        router.push("/company/main");
+        router.push("/company");
       }
 
       console.log(response);

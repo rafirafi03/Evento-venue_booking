@@ -55,7 +55,7 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
       const response = await deleteVenue(id).unwrap();
 
       if (response.success) {
-        router.push("/company/main");
+        router.push("/company");
       }
     } catch (error: unknown) {
       console.error(error);
