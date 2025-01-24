@@ -1,0 +1,109 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Step 1: Build Docker Images
+  build-backend:
+    runs-on: ubuntu-latest
+    services:
+      docker:
+        image: docker:20.10.16
+        options: --privileged
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+      - name: Build and push userService Docker image
+        run: |
+          docker build -t $DOCKER_USERNAME/user-service:$GITHUB_SHA backend/userService
+          docker push $DOCKER_USERNAME/user-service:$GITHUB_SHA
+
+      - name: Build and push companyService Docker image
+        run: |
+          docker build -t $DOCKER_USERNAME/company-service:$GITHUB_SHA backend/companyService
+          docker push $DOCKER_USERNAME/company-service:$GITHUB_SHA
+
+      - name: Build and push bookingService Docker image
+        run: |
+          docker build -t $DOCKER_USERNAME/booking-service:$GITHUB_SHA backend/bookingService
+          docker push $DOCKER_USERNAME/booking-service:$GITHUB_SHA
+
+      - name: Build and push chatService Docker image
+        run: |
+          docker build -t $DOCKER_USERNAME/chat-service:$GITHUB_SHA
+          docker push $DOCKER_USERNAME/chat-service:$GITHUB_SHA
+
+  # Step 2: Lint and Test Backend
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Run Lint
+        run: npm run lint
+
+      - name: Run Tests
+        run: npm test
+
+  # Step 3: Deploy Backend to AWS EKS
+  deploy-backend:
+    needs: build-backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1
+
+      - name: Apply Kubernetes manifests
+        run: |
+          echo $KUBECONFIG | base64 --decode > kubeconfig.yaml
+          kubectl --kubeconfig=kubeconfig.yaml apply -f backend/kubernetes/
+
+  # Step 4: Deploy Frontend to Vercel
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Deploy to Vercel
+        run: |
+          npm install -g vercel
+          vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
