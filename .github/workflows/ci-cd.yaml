@@ -9,7 +9,6 @@ on:
       - main
 
 jobs:
-  # Step 1: Build Docker Images
   build-backend:
     runs-on: ubuntu-latest
     services:
@@ -33,20 +32,19 @@ jobs:
 
       - name: Build and push companyService Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/company-service:$GITHUB_SHA backend/companyService
-          docker push $DOCKER_USERNAME/company-service:$GITHUB_SHA
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/company-service:${{ github.sha }} backend/companyService
+          docker push ${{ secrets.DOCKER_USERNAME }}/company-service:${{ github.sha }}
 
       - name: Build and push bookingService Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/booking-service:$GITHUB_SHA backend/bookingService
-          docker push $DOCKER_USERNAME/booking-service:$GITHUB_SHA
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/booking-service:${{ github.sha }} backend/bookingService
+          docker push ${{ secrets.DOCKER_USERNAME }}/booking-service:${{ github.sha }}
 
       - name: Build and push chatService Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/chat-service:$GITHUB_SHA backend/chatService
-          docker push $DOCKER_USERNAME/chat-service:$GITHUB_SHA
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/chat-service:${{ github.sha }} backend/chatService
+          docker push ${{ secrets.DOCKER_USERNAME }}/chat-service:${{ github.sha }}
 
-  # Step 2: Lint and Test Backend
   test-backend:
     runs-on: ubuntu-latest
     steps:
@@ -69,9 +67,8 @@ jobs:
       - name: Run Tests
         run: npm test
 
-  # Step 3: Deploy Backend to AWS EKS
   deploy-backend:
-    needs: build-backend
+    needs: [build-backend, test-backend]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -82,15 +79,19 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: us-east-1
+          aws-region: us-east-1
 
-      - name: Apply Kubernetes manifests
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Deploy to EKS
         run: |
-          echo $KUBECONFIG | base64 --decode > kubeconfig.yaml
-          kubectl --kubeconfig=kubeconfig.yaml apply -f backend/kubernetes/
+          echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig
+          export KUBECONFIG=./kubeconfig
+          kubectl apply -f backend/kubernetes/
 
-  # Step 4: Deploy Frontend to Vercel
   deploy-frontend:
+    needs: deploy-backend
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
