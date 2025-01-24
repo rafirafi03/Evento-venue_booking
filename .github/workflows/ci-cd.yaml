@@ -27,6 +27,8 @@ jobs:
 
       - name: Build and push userService Docker image
         run: |
+          ls backend/userService
+          pwd
           docker build -t ${{ secrets.DOCKER_USERNAME }}/user-service:${{ github.sha }} backend/userService
           docker push ${{ secrets.DOCKER_USERNAME }}/user-service:${{ github.sha }}
 
