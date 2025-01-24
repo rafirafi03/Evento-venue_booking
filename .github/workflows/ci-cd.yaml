@@ -28,23 +28,23 @@ jobs:
 
       - name: Build and push userService Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/user-service:$GITHUB_SHA backend/userService
-          docker push $DOCKER_USERNAME/user-service:$GITHUB_SHA
+          docker build -t $DOCKER_USERNAME/user-service:latest backend/userService
+          docker push $DOCKER_USERNAME/user-service:latest
 
       - name: Build and push companyService Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/company-service:$GITHUB_SHA backend/companyService
-          docker push $DOCKER_USERNAME/company-service:$GITHUB_SHA
+          docker build -t $DOCKER_USERNAME/company-service:latest backend/companyService
+          docker push $DOCKER_USERNAME/company-service:latest
 
       - name: Build and push bookingService Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/booking-service:$GITHUB_SHA backend/bookingService
-          docker push $DOCKER_USERNAME/booking-service:$GITHUB_SHA
+          docker build -t $DOCKER_USERNAME/booking-service:latest backend/bookingService
+          docker push $DOCKER_USERNAME/booking-service:latest
 
       - name: Build and push chatService Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/chat-service:$GITHUB_SHA
-          docker push $DOCKER_USERNAME/chat-service:$GITHUB_SHA
+          docker build -t $DOCKER_USERNAME/chat-service:latest
+          docker push $DOCKER_USERNAME/chat-service:latest
 
   # Step 2: Lint and Test Backend
   test-backend:
