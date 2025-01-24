@@ -34,17 +34,23 @@ jobs:
 
       - name: Build and push companyService Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/company-service:${{ github.sha }} backend/companyService
+          cd backend/companyService
+          mv DockerFile Dockerfile
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/company-service:${{ github.sha }} .
           docker push ${{ secrets.DOCKER_USERNAME }}/company-service:${{ github.sha }}
 
       - name: Build and push bookingService Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/booking-service:${{ github.sha }} backend/bookingService
+          cd backend/bookingService
+          mv DockerFile Dockerfile
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/booking-service:${{ github.sha }} .
           docker push ${{ secrets.DOCKER_USERNAME }}/booking-service:${{ github.sha }}
 
       - name: Build and push chatService Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/chat-service:${{ github.sha }} backend/chatService
+          cd backend/chatService
+          mv DockerFile Dockerfile
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/chat-service:${{ github.sha }} .
           docker push ${{ secrets.DOCKER_USERNAME }}/chat-service:${{ github.sha }}
 
   test-backend:
