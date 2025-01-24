@@ -49,11 +49,13 @@ app.get('/health', async (req, res) => {
       database: dbStatus,
       timestamp: new Date().toISOString(),
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+
     res.status(500).json({
       status: 'DOWN',
       database: 'DOWN',
-      error: error.message,
+      error: errorMessage,
       timestamp: new Date().toISOString(),
     });
   }

@@ -17,12 +17,32 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   oneofs: true,
 });
 
-const userProto = grpc.loadPackageDefinition(packageDefinition) as any;
+interface GetUserDetailsRequest {
+  userId: string;
+}
+
+interface GetUserDetailsResponse {
+  id: string;
+  name: string;
+  email: string;
+  phone: number | undefined;
+}
+
+interface UserServiceHandlers extends grpc.UntypedServiceImplementation {
+  GetUserDetails: grpc.handleUnaryCall<GetUserDetailsRequest, GetUserDetailsResponse>;
+}
+
+interface UserProtoType {
+  user: {
+    UserService: grpc.ServiceDefinition<UserServiceHandlers>;
+  };
+}
+
+const userProto = grpc.loadPackageDefinition(packageDefinition) as unknown as UserProtoType;
 
 console.log('request successfully reached in userSErvice')
 // Implementation of the gRPC methods
-const getUserDetails = async (call: any, callback: any) => {
-
+const getUserDetails: grpc.handleUnaryCall<GetUserDetailsRequest, GetUserDetailsResponse> = async (call, callback) => {
     console.log(call,'inside getuserdetails userService hureeeyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
     try {
       const userId = call.request.userId;
@@ -59,7 +79,7 @@ const getUserDetails = async (call: any, callback: any) => {
 // Start gRPC server
 export function startGrpcUserServer() {
   const server = new grpc.Server();
-  server.addService(userProto.user.UserService.service, { GetUserDetails: getUserDetails });
+  server.addService(userProto.user.UserService, { GetUserDetails: getUserDetails });
   const port = "7000"; // Change this port if necessary
   server.bindAsync(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure(), () => {
     console.log(`gRPC server running at http://0.0.0.0:${port}`);

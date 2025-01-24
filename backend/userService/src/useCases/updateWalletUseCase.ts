@@ -1,5 +1,4 @@
 import { IUserRepository } from "../repositories";
-import { IWalletHistory } from "../infrastructure/db";
 
 export class UpdateWalletUseCase {
     constructor(
