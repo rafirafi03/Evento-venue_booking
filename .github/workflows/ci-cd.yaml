@@ -43,7 +43,7 @@ jobs:
 
       - name: Build and push chatService Docker image
         run: |
-          docker build -t $DOCKER_USERNAME/chat-service:$GITHUB_SHA
+          docker build -t $DOCKER_USERNAME/chat-service:$GITHUB_SHA backend/chatService
           docker push $DOCKER_USERNAME/chat-service:$GITHUB_SHA
 
   # Step 2: Lint and Test Backend
