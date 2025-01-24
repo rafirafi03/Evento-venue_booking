@@ -28,8 +28,8 @@ jobs:
 
       - name: Build and push userService Docker image
         run: |
-          docker build -t ${DOCKER_USERNAME}/user-service:$GITHUB_SHA backend/userService
-          docker push ${DOCKER_USERNAME}/user-service:$GITHUB_SHA
+          docker build -f "backend/userService/Dockerfile" -t "${DOCKER_USERNAME}/user-service:$GITHUB_SHA" "backend/userService"
+          docker push "${DOCKER_USERNAME}/user-service:$GITHUB_SHA"
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
 
