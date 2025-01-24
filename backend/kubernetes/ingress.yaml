@@ -38,25 +38,25 @@ spec:
           service:
             name: user-service
             port:
-              number: 80
+              number: 4000
       - path: /company(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
           service:
             name: company-service
             port:
-              number: 80
+              number: 4001
       - path: /booking(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
           service:
             name: booking-service
             port:
-              number: 80
+              number: 4003
       - path: /chat(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
           service:
             name: chat-service
             port:
-              number: 80
+              number: 4004

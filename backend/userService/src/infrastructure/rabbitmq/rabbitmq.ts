@@ -11,8 +11,12 @@ class RabbitMQ {
     if (this.connection) return;
 
     try {
-      const RABBITMQ_URL= process.env.RABBITMQ_URL as string
-      this.connection = await amqplib.connect(RABBITMQ_URL);
+      this.connection = await amqplib.connect({
+        hostname: "rabbitmq",
+        port: 5672,
+        username: "admin",
+        password: "password",
+      });
       this.channel = await this.connection.createChannel();
       console.log("RabbitMQ connected!");
     } catch (error) {
