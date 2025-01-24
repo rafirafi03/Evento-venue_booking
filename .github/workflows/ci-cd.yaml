@@ -52,18 +52,17 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/chat-service:${{ github.sha }}
 
   test-backend:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    # Lint each service
-    - name: Run Lint for userService
+      - name: Run Lint for userService
       run: |
         cd backend/userService
         npm install
@@ -86,6 +85,11 @@ jobs:
         cd backend/chatService
         npm install
         npm run lint
+
+    # Run tests (if applicable)
+    - name: Run Tests
+      run: |
+        echo "Add your test commands here, if any"
 
   deploy-backend:
     needs: [build-backend, test-backend]
