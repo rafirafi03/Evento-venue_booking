@@ -69,7 +69,7 @@ const Page = () => {
       toast.dismiss(loadingToast)
 
       if (res.success) {
-        toast.success(<b>{res.message}.,.,</b>)
+        toast.success(<b>Login successfull!</b>)
         const token = res.token;
         if (typeof window !== "undefined") {
         localStorage.setItem('authUserToken', token)
@@ -83,7 +83,7 @@ const Page = () => {
       toast.dismiss()
       toast.error(<b>Error Occured!</b>)
       console.log(error);
-      setError("something went wrong");
+      setError("Invalid email or password");
     }
   };
 
