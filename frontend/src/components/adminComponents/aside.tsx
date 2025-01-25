@@ -58,7 +58,7 @@ export default function Page() {
             </li>
             <li
               className="cursor-pointer"
-              onClick={() => router.push("/admin/companylist")}
+              onClick={() => router.push("/admin/companyList")}
             >
               <a
                 className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-gray-100 group ${
@@ -77,7 +77,7 @@ export default function Page() {
 
             <li
               className="cursor-pointer"
-              onClick={() => router.push("/admin/usersList")}
+              onClick={() => router.push("/admin/userslist")}
             >
               <a
                 className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${
