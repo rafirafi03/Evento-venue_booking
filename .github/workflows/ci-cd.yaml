@@ -96,6 +96,7 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig
           export KUBECONFIG=./kubeconfig
           kubectl apply -f backend/kubernetes/
+          kubectl apply -f backend/kubernetes/k8s
 
   deploy-frontend:
     needs: deploy-backend
