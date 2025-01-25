@@ -47,7 +47,7 @@ export class UserLoginUseCase {
       return null;
     } catch (error) {
       console.log(error);
-      throw new Error("error" + error);
+      return { success: false, error: 'error occured' }
     }
   }
 }
