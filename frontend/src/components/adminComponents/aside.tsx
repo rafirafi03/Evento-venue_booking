@@ -81,7 +81,7 @@ export default function Page() {
             >
               <a
                 className={`flex items-center p-2 text-gray-900 rounded-lg dark:text-black font-extrabold hover:bg-gray-100 dark:hover:bg-red-200 group ${
-                  isActivePage("usersList") ? "bg-gray-200" : ""
+                  isActivePage("userslist") ? "bg-gray-200" : ""
                 }`}
               >
                 <FontAwesomeIcon
