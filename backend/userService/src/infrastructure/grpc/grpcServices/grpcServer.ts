@@ -25,7 +25,7 @@ interface GetUserDetailsResponse {
   id: string;
   name: string;
   email: string;
-  phone: number | undefined;
+  phone: string;
 }
 
 interface UserServiceHandlers extends grpc.UntypedServiceImplementation {
@@ -58,7 +58,7 @@ const getUserDetails: grpc.handleUnaryCall<GetUserDetailsRequest, GetUserDetails
           id: user._id.toString(),
           name: user.userName,
           email: user.email,
-          phone: user.phone
+          phone: user.phone ? user.phone.toString() : "",
         });
       } else {
         callback({
