@@ -69,7 +69,7 @@ const Page = () => {
       toast.dismiss(loadingToast)
 
       if (res.success) {
-        toast.success(<b>{res.error}...</b>)
+        toast.success(<b>...</b>)
         const token = res.token;
         if (typeof window !== "undefined") {
         localStorage.setItem('authUserToken', token)
