@@ -40,7 +40,7 @@ export class UserLoginUseCase {
             role: 'user'
           }, refreshTokenTimer)
 
-          return { success: true, token, refreshToken };
+          return { success: true, token, refreshToken, message: 'login successfull' };
         }
       }
 
