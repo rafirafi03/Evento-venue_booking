@@ -3,4 +3,5 @@ export interface ILoginResponse {
     token?: string;
     refreshToken?: string;
     error?: string;
+    message?: string;
   }

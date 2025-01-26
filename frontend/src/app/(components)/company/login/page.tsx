@@ -6,6 +6,8 @@ import { useLoginPostMutation } from "app/store/slices/companyApiSlices";
 // import OtpModal from "../otpModal/page";
 import { useRouter } from "next/navigation";
 import AuthHOC, { Role } from "components/common/auth/authHoc";
+import toast, {Toaster} from "react-hot-toast";
+
 
 const Page = () => {
   const [loginMutation] = useLoginPostMutation();
@@ -58,7 +60,6 @@ const Page = () => {
         hasError = true;
       }
 
-
       if (hasError) {
         return;
       } 
@@ -68,6 +69,7 @@ const Page = () => {
       if (!res.success) {
         setError(res.error);
       } else {
+        toast.success(<b>{res.message}</b>)
         const token = res.token;
         if (typeof window !== "undefined") {
           localStorage.setItem("authCompanyToken", token);
@@ -83,6 +85,9 @@ const Page = () => {
 
   return (
     <AuthHOC role={Role.Company} isAuthPage={true}>
+      <div>
+        <Toaster position="bottom-center" reverseOrder={false} />
+      </div>
       <div className="flex h-screen">
         <div className="w-1/3 h-full">
           <Image

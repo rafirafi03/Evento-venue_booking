@@ -67,7 +67,7 @@ export class LoginUseCase {
 
       console.log('return successs777777')
 
-      return { success: true, token, refreshToken };
+      return { success: true, token, refreshToken, message: 'login successfull from company side' };
     } catch (error) {
       console.log(error);
       throw new Error("Error: " + error);
