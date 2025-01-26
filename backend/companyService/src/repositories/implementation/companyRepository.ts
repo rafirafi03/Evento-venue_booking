@@ -8,6 +8,7 @@ import {
   ratingModel,
   IOffer
 } from "../../infrastructure/db";
+import { IEditVenue } from "../../utils/intefaces";
 import { ICompanyRepository } from "../interfaces/companyInterface";
 
 export class CompanyRepository implements ICompanyRepository {
@@ -143,7 +144,7 @@ export class CompanyRepository implements ICompanyRepository {
     }
   }
 
-  async updateVenue(venueId: string, venueData: IVenue): Promise<void> {
+  async updateVenue(venueId: string, venueData: IEditVenue): Promise<void> {
     try {
       await venueModel.findByIdAndUpdate(venueId, venueData, { new: true });
     } catch (error) {

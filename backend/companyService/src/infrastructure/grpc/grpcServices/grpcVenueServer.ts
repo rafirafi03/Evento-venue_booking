@@ -17,34 +17,12 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   oneofs: true,
 });
 
-interface GetVenueDetailsRequest {
-  venueId: string;
-}
 
-interface GetVenueDetailsResponse {
-  venueName: string;
-  venueAmount: number;
-  venueCity: string;
-  venueState: string;
-  venueImage: string;
-  companyId: string;
-}
-
-interface VenueServiceHandlers extends grpc.UntypedServiceImplementation {
-  GetVenueDetails: grpc.handleUnaryCall<GetVenueDetailsRequest, GetVenueDetailsResponse>;
-}
-
-interface VenueProtoType {
-  venue: {
-    CompanyService: grpc.ServiceDefinition<VenueServiceHandlers>;
-  };
-}
-
-const venueProto = grpc.loadPackageDefinition(packageDefinition) as unknown as VenueProtoType;
+const venueProto = grpc.loadPackageDefinition(packageDefinition) as any;
 
 console.log('request successfully reached in venueSErvice')
 // Implementation of the gRPC methods
-const getVenueDetails: grpc.handleUnaryCall<GetVenueDetailsRequest, GetVenueDetailsResponse> = async (call, callback) => {
+const getVenueDetails = async (call: any, callback: any) => {
 
     console.log(call,'inside getuserdetails userService hureeeyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
     try {
@@ -83,7 +61,7 @@ const getVenueDetails: grpc.handleUnaryCall<GetVenueDetailsRequest, GetVenueDeta
 // Start gRPC server
 export function startGrpcVenueServer() {
   const server = new grpc.Server();
-  server.addService(venueProto.venue.CompanyService, { GetVenueDetails: getVenueDetails });
+  server.addService(venueProto.venue.CompanyService.service, { GetVenueDetails: getVenueDetails });
   const port = "7001"; // Change this port if necessary
   server.bindAsync(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure(), () => {
     console.log(`gRPC server running at http://0.0.0.0:${port}`);

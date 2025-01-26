@@ -29,27 +29,27 @@ jobs:
         run: |
           cd backend/userService
           mv DockerFile Dockerfile
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/user-service:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/user-service:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/user-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/user-service:latest
 
       - name: Build and push companyService Docker image
         run: |
           cd backend/companyService
           mv DockerFile Dockerfile
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/company-service:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/company-service:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/company-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/company-service:latest
 
       - name: Build and push bookingService Docker image
         run: |
           cd backend/bookingService
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/booking-service:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/booking-service:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/booking-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/booking-service:latest
 
       - name: Build and push chatService Docker image
         run: |
           cd backend/chatService
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/chat-service:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/chat-service:${{ github.sha }}
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/chat-service:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/chat-service:latest
 
   test-backend:
     runs-on: ubuntu-latest
@@ -97,6 +97,22 @@ jobs:
           export KUBECONFIG=./kubeconfig
           kubectl apply -f backend/kubernetes/
           kubectl apply -f backend/kubernetes/k8s
+
+      - name: Restart user-service pods
+        run: |
+          kubectl rollout restart deployment user-service -n evento
+
+      - name: Restart company-service pods
+        run: |
+          kubectl rollout restart deployment company-service -n evento
+
+      - name: Restart booking-service pods
+        run: |
+          kubectl rollout restart deployment booking-service -n evento
+
+      - name: Restart chat-service pods
+        run: |
+          kubectl rollout restart deployment chat-service -n evento
 
   deploy-frontend:
     needs: deploy-backend
