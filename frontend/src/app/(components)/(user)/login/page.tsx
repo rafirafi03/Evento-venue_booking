@@ -83,7 +83,6 @@ const Page = () => {
       toast.dismiss()
       toast.error(<b>Error Occured!</b>)
       console.log(error);
-      setError("Invalid email or password");
     }
   };
 

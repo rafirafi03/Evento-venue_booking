@@ -12,6 +12,7 @@ import AuthHOC, {Role} from "components/common/auth/authHoc";
 import Image from "next/image";
 import { ResizeImage } from "utils/resizeImage";
 import { isApiError } from "utils/errors";
+import { compressImage } from "utils/imageCompression";
 
 export default function Page() {
 
@@ -49,31 +50,37 @@ export default function Page() {
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImageError('')
+      setImageError('');
       const filesArray = Array.from(e.target.files);
   
-      if (imageToReplace !== null) {
-        // Resize the image before replacing it
-        const resizedImage = await ResizeImage(filesArray[0], 5000, 3000); // Adjust width and height as needed
+      try {
+        if (imageToReplace !== null) {
+          // Compress and resize the image before replacing it
+          const compressedImage = await compressImage(filesArray[0]);
+          const resizedImage = await ResizeImage(compressedImage, 5000, 3000);
   
-        if (resizedImage) {
-          const updatedFiles = [...selectedImages];
-          updatedFiles[imageToReplace] = resizedImage; // Only assign if resizedImage is not null
-          setSelectedImages(updatedFiles);
-          setImageToReplace(null);
+          if (resizedImage) {
+            const updatedFiles = [...selectedImages];
+            updatedFiles[imageToReplace] = resizedImage;
+            setSelectedImages(updatedFiles);
+            setImageToReplace(null);
+          }
         } else {
-          console.error("Failed to resize image.");
-        }
-      } else {
-        const newFiles = await Promise.all(
-          filesArray.map((file) => ResizeImage(file, 5000, 3000)) // Resize each file
-        );
+          // Process multiple images
+          const processedImages = await Promise.all(
+            filesArray.map(async (file) => {
+              const compressed = await compressImage(file);
+              return ResizeImage(compressed, 5000, 3000);
+            })
+          );
   
-        // Filter out any null values in case resizing failed for any image
-        setSelectedImages((prevFiles) => [
-          ...prevFiles,
-          ...newFiles.filter((file): file is File => file !== null),
-        ].slice(0, 6));
+          setSelectedImages((prevFiles) => [
+            ...prevFiles,
+            ...processedImages.filter((file): file is File => file !== null),
+          ].slice(0, 6));
+        }
+      } catch (error) {
+        console.error("Error processing images:", error);
       }
     }
   };
