@@ -57,9 +57,11 @@ export default function Page() {
         if (imageToReplace !== null) {
           // Compress and resize the image before replacing it
           const compressedImage = await compressImage(filesArray[0]);
+          console.log("compressedImage:" , compressedImage)
           const resizedImage = await ResizeImage(compressedImage, 5000, 3000);
   
           if (resizedImage) {
+            console.log("resizedImage:", resizedImage)
             const updatedFiles = [...selectedImages];
             updatedFiles[imageToReplace] = resizedImage;
             setSelectedImages(updatedFiles);
@@ -70,6 +72,7 @@ export default function Page() {
           const processedImages = await Promise.all(
             filesArray.map(async (file) => {
               const compressed = await compressImage(file);
+              console.log('compressed:', compressed)
               return ResizeImage(compressed, 5000, 3000);
             })
           );
