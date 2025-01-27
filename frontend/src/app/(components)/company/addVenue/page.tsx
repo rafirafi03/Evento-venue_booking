@@ -188,8 +188,17 @@ export default function Page() {
     formData.append("city", city);
     formData.append("state", state);
     formData.append("folderName", "venueImages");
-    selectedImages.forEach((image) => {
+
+    let totalSize = 0;
+    selectedImages.forEach(image => {
+      totalSize += image.size;
       formData.append("images", image);
+    });
+
+    console.log('Total payload size:', totalSize / 1024, 'KB');
+    console.log('Number of images:', selectedImages.length);
+    selectedImages.forEach((img, index) => {
+      console.log(`Image ${index + 1} size:`, img.size / 1024, 'KB');
     });
 
     const response = await addVenue(formData).unwrap();
