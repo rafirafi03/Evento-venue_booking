@@ -55,13 +55,11 @@ export default function Page() {
   
       try {
         if (imageToReplace !== null) {
-          // Compress and resize the image before replacing it
-          const compressedImage = await compressImage(filesArray[0]);
-          console.log("compressedImage:" , compressedImage)
-          const resizedImage = await ResizeImage(compressedImage, 5000, 3000);
+          // Compress single image for replacement
+          const { file: compressedImage } = await compressImage(filesArray[0], 0.3); // 300KB target
+          const resizedImage = await ResizeImage(compressedImage, 2000, 2000); // Reduced dimensions
   
           if (resizedImage) {
-            console.log("resizedImage:", resizedImage)
             const updatedFiles = [...selectedImages];
             updatedFiles[imageToReplace] = resizedImage;
             setSelectedImages(updatedFiles);
@@ -71,9 +69,8 @@ export default function Page() {
           // Process multiple images
           const processedImages = await Promise.all(
             filesArray.map(async (file) => {
-              const compressed = await compressImage(file);
-              console.log('compressed:', compressed)
-              return ResizeImage(compressed, 5000, 3000);
+              const { file: compressed } = await compressImage(file, 0.3);
+              return ResizeImage(compressed, 2000, 2000);
             })
           );
   
@@ -84,6 +81,7 @@ export default function Page() {
         }
       } catch (error) {
         console.error("Error processing images:", error);
+        setImageError('Error processing images. Please try again.');
       }
     }
   };
