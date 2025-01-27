@@ -12,7 +12,6 @@ import AuthHOC, {Role} from "components/common/auth/authHoc";
 import Image from "next/image";
 import { ResizeImage } from "utils/resizeImage";
 import { isApiError } from "utils/errors";
-import { compressImage } from "utils/imageCompression";
 
 export default function Page() {
 
@@ -50,39 +49,31 @@ export default function Page() {
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImageError('');
+      setImageError('')
       const filesArray = Array.from(e.target.files);
-  
-      try {
-        if (imageToReplace !== null) {
-          // Compress single image for replacement
-          const { file: compressedImage } = await compressImage(filesArray[0], 0.3); // 300KB target
-          const resizedImage = await ResizeImage(compressedImage, 2000, 2000); // Reduced dimensions
-  
-          if (resizedImage) {
-            const updatedFiles = [...selectedImages];
-            updatedFiles[imageToReplace] = resizedImage;
-            setSelectedImages(updatedFiles);
-            setImageToReplace(null);
-          }
+
+      if (imageToReplace !== null) {
+        // Resize the image before replacing it
+        const resizedImage = await ResizeImage(filesArray[0], 5000, 3000); // Adjust width and height as needed
+
+        if (resizedImage) {
+          const updatedFiles = [...selectedImages];
+          updatedFiles[imageToReplace] = resizedImage; // Only assign if resizedImage is not null
+          setSelectedImages(updatedFiles);
+          setImageToReplace(null);
         } else {
-          // Process multiple images
-          const processedImages = await Promise.all(
-            filesArray.map(async (file) => {
-              const { file: compressed } = await compressImage(file, 0.3);
-              console.log('compressed:',compressed)
-              return ResizeImage(compressed, 2000, 2000);
-            })
-          );
-  
-          setSelectedImages((prevFiles) => [
-            ...prevFiles,
-            ...processedImages.filter((file): file is File => file !== null),
-          ].slice(0, 6));
+          console.error("Failed to resize image.");
         }
-      } catch (error) {
-        console.error("Error processing images:", error);
-        setImageError('Error processing images. Please try again.');
+      } else {
+        const newFiles = await Promise.all(
+          filesArray.map((file) => ResizeImage(file, 5000, 3000)) // Resize each file
+        );
+
+        // Filter out any null values in case resizing failed for any image
+        setSelectedImages((prevFiles) => [
+          ...prevFiles,
+          ...newFiles.filter((file): file is File => file !== null),
+        ].slice(0, 6));
       }
     }
   };
@@ -189,16 +180,8 @@ export default function Page() {
     formData.append("state", state);
     formData.append("folderName", "venueImages");
 
-    let totalSize = 0;
     selectedImages.forEach(image => {
-      totalSize += image.size;
       formData.append("images", image);
-    });
-
-    console.log('Total payload size:', totalSize / 1024, 'KB');
-    console.log('Number of images:', selectedImages.length);
-    selectedImages.forEach((img, index) => {
-      console.log(`Image ${index + 1} size:`, img.size / 1024, 'KB');
     });
 
     const response = await addVenue(formData).unwrap();
