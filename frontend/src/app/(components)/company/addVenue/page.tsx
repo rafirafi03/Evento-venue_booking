@@ -70,6 +70,7 @@ export default function Page() {
           const processedImages = await Promise.all(
             filesArray.map(async (file) => {
               const { file: compressed } = await compressImage(file, 0.3);
+              console.log('compressed:',compressed)
               return ResizeImage(compressed, 2000, 2000);
             })
           );
