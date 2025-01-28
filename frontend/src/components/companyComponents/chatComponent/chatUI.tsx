@@ -116,6 +116,7 @@ export default function ChatComponent() {
   useEffect(() => {
     // Connect to socket
     if(!socket.connected) {
+      console.log('socket not connected')
       socket.connect();
 
     }
