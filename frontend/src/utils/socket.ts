@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-export const socket = io("wss://api.eventobooking.site/socket.io", {
+export const socket = io("wss://api.eventobooking.site", {
   transports: ["websocket"],
   autoConnect: false,
 });
