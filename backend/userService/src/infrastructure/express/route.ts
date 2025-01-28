@@ -13,7 +13,7 @@ import {
   CheckFavouritesUseCase,
   ForgetPasswordRequest,
   ChangePasswordUseCase,
-  GoogleAuthUseCase
+  GoogleAuthUseCase,
 } from "../../useCases";
 import { UserRepository, RedisClient } from "../../repositories";
 import { otpService } from "../services";
@@ -74,7 +74,7 @@ const changePasswordUseCase = new ChangePasswordUseCase(
   redisRepository
 );
 
-const googleAuthUseCase = new GoogleAuthUseCase(userRepository)
+const googleAuthUseCase = new GoogleAuthUseCase(userRepository);
 
 const userController = new UserController(
   signupUseCase,

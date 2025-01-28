@@ -20,15 +20,9 @@ spec:
         - containerPort: 15672 # Management UI port
         env:
         - name: RABBITMQ_DEFAULT_USER
-          valueFrom:
-            secretKeyRef:
-              name: rabbitmq-secret
-              key: username
+          value: "admin"
         - name: RABBITMQ_DEFAULT_PASS
-          valueFrom:
-            secretKeyRef:
-              name: rabbitmq-secret
-              key: password
+          value : "password"
 ---
 apiVersion: v1
 kind: Service

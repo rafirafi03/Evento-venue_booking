@@ -42,7 +42,7 @@ app.get("/", (req, res) => {
 });
 app.get("/health", async (req, res) => {
   try {
-    let dbStatus = mongoose.connection.readyState === 1 ? "UP" : "DOWN";
+    const dbStatus = mongoose.connection.readyState === 1 ? "UP" : "DOWN";
 
     res.status(200).json({
       status: "UP",

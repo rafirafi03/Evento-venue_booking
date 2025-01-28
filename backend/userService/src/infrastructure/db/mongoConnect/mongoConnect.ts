@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 const mongoURI = process.env.mongo_URI as string
+console.log(mongoURI,"mongouri in consoleeee")
 
 export const connectDB = async () => {
     try {

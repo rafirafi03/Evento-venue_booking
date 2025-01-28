@@ -1,7 +1,4 @@
 import amqplib, { Channel, Connection } from "amqplib";
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 class RabbitMQ {
   private connection: Connection | null = null;
@@ -9,20 +6,31 @@ class RabbitMQ {
   
   async connect(): Promise<void> {
     if (this.connection) return;
-
-    try {
-      this.connection = await amqplib.connect({
-        hostname: "rabbitmq",
-        port: 5672,
-        username: "admin",
-        password: "password",
-      });
-      this.channel = await this.connection.createChannel();
-      console.log("RabbitMQ connected!");
-    } catch (error) {
-      console.error("RabbitMQ connection error:", error);
+  
+    let retries = 5;
+    while (retries) {
+      try {
+        this.connection = await amqplib.connect({
+          hostname: "rabbitmq",
+          port: 5672,
+          username: "admin",
+          password: "password",
+        });
+        this.channel = await this.connection.createChannel();
+        console.log("RabbitMQ connected!");
+        break;
+      } catch (error) {
+        retries -= 1;
+        console.error("RabbitMQ connection error, retrying in 5s:", error);
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+      }
+    }
+  
+    if (!this.connection) {
+      throw new Error("RabbitMQ connection failed after retries");
     }
   }
+  
 
   async getChannel(): Promise<Channel> {
     if (!this.channel) {
