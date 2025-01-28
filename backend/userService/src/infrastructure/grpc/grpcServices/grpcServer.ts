@@ -80,10 +80,13 @@ const getUserDetails = async (call: any, callback: any) => {
 export function startGrpcUserServer() {
   const server = new grpc.Server();
   server.addService(userProto.user.UserService.service, { GetUserDetails: getUserDetails });
-  const port = "7000"; // Change this port if necessary
-  server.bindAsync(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure(), () => {
+  const port = "4000"; // Change this port if necessary
+  server.bindAsync(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure(), (error, port) => {
+    if (error) {
+      console.error("Error starting gRPC server:", error);
+      return;
+    }
     console.log(`gRPC server running at http://0.0.0.0:${port}`);
-    server.start();
   });
 }
 

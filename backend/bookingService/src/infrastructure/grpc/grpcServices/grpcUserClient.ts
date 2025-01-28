@@ -16,7 +16,7 @@ const userProto = grpc.loadPackageDefinition(packageDefinition) as any;
 
 // Create a client instance
 const client = new userProto.user.UserService(
-  "localhost:7000", // Update this to the `userService` host:port in production
+  "user-service:80",
   grpc.credentials.createInsecure()
 );
 

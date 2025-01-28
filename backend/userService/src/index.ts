@@ -62,7 +62,7 @@ app.get('/health', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  logger.info(`server is running on http://localhost:${PORT}`);
+  logger.info(`server is running on http://www.eventobooking.site`);
   startGrpcUserServer()
   consumeRefundMessages()
 });

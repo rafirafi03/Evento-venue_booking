@@ -172,7 +172,7 @@ export class MakePaymentUseCase {
 
       // Return the session ID to the frontend for redirection
     } catch (error) {
-      throw new Error("Internal server error: ");
+      throw new Error("Internal server error: " + error);
     }
   }
 }
