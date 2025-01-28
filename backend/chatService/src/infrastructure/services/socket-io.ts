@@ -9,8 +9,6 @@ export const initializeSocket = (httpServer: any) => {
       origin: "*",
       methods: [HttpMethod.GET, HttpMethod.POST],
     },
-    path: "/chat/",
-    transports: ["websocket", "polling"]  // Enable both transports
   });
 
   const chatRepository = new ChatRepository();
