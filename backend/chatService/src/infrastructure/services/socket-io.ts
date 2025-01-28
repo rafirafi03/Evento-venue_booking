@@ -6,10 +6,10 @@ import { ChatRepository } from "../../repository/implementation/chatRepository";
 export const initializeSocket = (httpServer: any) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: "https://www.eventobooking.site",
+      origin: "*",
       methods: [HttpMethod.GET, HttpMethod.POST],
     },
-    path: "/socket.io/",
+    path: "chat/socket.io/",
     transports: ["websocket", "polling"]  // Enable both transports
   });
 
