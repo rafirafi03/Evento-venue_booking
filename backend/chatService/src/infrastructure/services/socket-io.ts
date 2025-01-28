@@ -9,6 +9,8 @@ export const initializeSocket = (httpServer: any) => {
       origin: "https://www.eventobooking.site",
       methods: [HttpMethod.GET, HttpMethod.POST],
     },
+    path: "/socket.io/",
+    transports: ["websocket", "polling"]  // Enable both transports
   });
 
   const chatRepository = new ChatRepository();
@@ -31,7 +33,10 @@ export const initializeSocket = (httpServer: any) => {
         console.error("Error saving message:", error);
         socket.emit("error", { message: "Failed to save message" });
       }
-      io.emit("receive_message", data);
+    });
+
+    socket.on("error", (error) => {
+      console.error("Socket error:", error);  // Add error logging
     });
 
     socket.on("disconnect", () => {
