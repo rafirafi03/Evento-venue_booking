@@ -256,7 +256,7 @@ export default function ChatComponent() {
                     <div
                       className={`max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl rounded-lg p-3 ${
                         message.sender === "company"
-                          ? "bg-red-500 text-white"
+                          ? "bg-blue-500 text-white"
                           : "bg-white border border-gray-200"
                       }`}
                     >
