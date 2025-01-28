@@ -66,4 +66,5 @@ app.get('/health', async (req, res) => {
 
 httpServer.listen(PORT, () => {
   logger.info(`server is running on http://localhost:${PORT}`);
+
 });
