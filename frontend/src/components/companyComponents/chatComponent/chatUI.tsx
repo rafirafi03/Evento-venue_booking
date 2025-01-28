@@ -46,10 +46,13 @@ export default function ChatComponent() {
   const { data: user, error: userFetchError } = useGetUsersQuery(filter);
 
   useEffect(() => {
-    const isError = FetchErrorCheck({fetchError: userFetchError, role: 'user'});
+    const isError = FetchErrorCheck({
+      fetchError: userFetchError,
+      role: "user",
+    });
 
-    if(isError) {
-      router.push('/company/login')
+    if (isError) {
+      router.push("/company/login");
     }
   }, [userFetchError, router]);
 
@@ -107,30 +110,42 @@ export default function ChatComponent() {
   };
 
   useEffect(() => {
-    console.log(chatMessages,"chatmessagesssss")
+    console.log(chatMessages, "chatmessagesssss");
     if (chatMessages) {
       setMessages(chatMessages?.response);
     }
   }, [chatMessages]);
 
   useEffect(() => {
-    // Connect to socket
-    if(!socket.connected) {
-      console.log('socket not connected')
-      socket.connect();
+    // Connect to socket only if not connected
+    if (!socket.connected) {
+      console.log("Attempting socket connection");
 
+      // Add connection event listeners
+      socket.on("connect", () => {
+        console.log("Socket connected successfully", socket.id);
+      });
+
+      socket.on("connect_error", (error) => {
+        console.log("Socket connection error:", error);
+      });
+
+      socket.connect();
     }
 
     // Listen for messages
     const handleMessage = (message: Message) => {
-      console.log(message, 'received messageeee')
+      console.log("Message received:", message);
       if (message.sender !== "company") {
         setMessages((prevMessages) => {
           const messageTime = new Date(message.timestamp).getTime();
-          const lastMessageTime = prevMessages.length > 0 
-            ? new Date(prevMessages[prevMessages.length - 1].timestamp).getTime()
-            : 0;
-          
+          const lastMessageTime =
+            prevMessages.length > 0
+              ? new Date(
+                  prevMessages[prevMessages.length - 1].timestamp
+                ).getTime()
+              : 0;
+
           if (messageTime > lastMessageTime) {
             return [...prevMessages, message];
           }
@@ -141,11 +156,16 @@ export default function ChatComponent() {
 
     socket.on("receive_message", handleMessage);
 
+    // Cleanup
     return () => {
-      socket.off("receive_message", handleMessage); // Make sure it's cleaned up properly
-      socket.disconnect();
+      socket.off("receive_message", handleMessage);
+      // Only disconnect if component is actually unmounting
+      if (socket.connected) {
+        console.log("Disconnecting socket");
+        socket.disconnect();
+      }
     };
-  }, []); // Empty dependency ensures it's connected only once
+  }, []);
 
   useEffect(() => {
     scrollToBottom();

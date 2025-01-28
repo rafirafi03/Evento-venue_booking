@@ -67,6 +67,17 @@ export default function ChatComponent({ receiverId }: pageProps) {
   useEffect(() => {
     // Connect to socket
     if (!socket.connected) {
+      console.log("Attempting socket connection");
+
+      // Add connection event listeners
+      socket.on("connect", () => {
+        console.log("Socket connected successfully", socket.id);
+      });
+
+      socket.on("connect_error", (error) => {
+        console.log("Socket connection error:", error);
+      });
+
       socket.connect();
     }
 
@@ -95,7 +106,10 @@ export default function ChatComponent({ receiverId }: pageProps) {
 
     return () => {
       socket.off("receive_message", handleMessage); // Make sure it's cleaned up properly
-      socket.disconnect();
+      if (socket.connected) {
+        console.log("Disconnecting socket");
+        socket.disconnect();
+      }
     };
   }, []); // Empty dependency ensures it's connected only once
 
