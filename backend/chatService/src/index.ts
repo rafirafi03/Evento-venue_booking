@@ -19,7 +19,7 @@ app.use(cors())
 const httpServer = createServer(app);
 connectDB();
 
-initializeSocket(httpServer)
+initializeSocket(httpServer);
 
 
 app.use(

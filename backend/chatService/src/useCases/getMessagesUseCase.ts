@@ -11,8 +11,6 @@ export class GetMessagesUseCase {
 
       console.log(senderId,"senderIdddddd")
        const response = this._chatRepository.getMessages(senderId, receiverId)
-
-       console.log(response,"responseeeee");
       
       return response
     } catch (error) {

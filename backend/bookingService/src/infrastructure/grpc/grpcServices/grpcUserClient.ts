@@ -21,11 +21,14 @@ const client = new userProto.user.UserService(
 );
 
 export const getUserDetails = (userId: string): Promise<any> => {
+  console.log('inside getuserdetails grpc')
   return new Promise((resolve, reject) => {
     client.GetUserDetails({ userId }, (error: any, response: any) => {
       if (error) {
+        console.log("error:" ,error)
         return reject(error);
       }
+        console.log("response:" ,response)
         resolve(response);
     });
   });

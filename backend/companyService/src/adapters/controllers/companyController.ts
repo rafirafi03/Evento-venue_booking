@@ -99,7 +99,10 @@ export class CompanyController {
 
   async confirmOtp(req: Request, res: Response): Promise<void> {
     const { otp, name, email, phone, country, password } = req.body;
-    const license = req.file?.path;
+    console.log("req.file:",req.file);
+    const licenseDetails = req.file as Express.MulterS3.File;
+    const license = licenseDetails?.key
+    console.log("license:",license)
 
     try {
       const response = await this._verifyOtpUseCase.execute({

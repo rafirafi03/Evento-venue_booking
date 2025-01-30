@@ -21,11 +21,14 @@ const client = new venueProto.venue.CompanyService(
 );
 
 export const getVenueDetails = (venueId: string): Promise<any> => {
+  console.log('inside getvenuedetails grpc')
   return new Promise((resolve, reject) => {
     client.GetVenueDetails({ venueId }, (error: any, response: any) => {
       if (error) {
+        console.log("error:" ,error)
         return reject(error);
       }
+      console.log("response:" ,response)
         resolve(response);
     });
   });
