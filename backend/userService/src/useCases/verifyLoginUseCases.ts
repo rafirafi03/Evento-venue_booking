@@ -16,6 +16,8 @@ export class UserLoginUseCase {
       const refreshTokenTimer = process.env.REFRESH_TOKEN_TIMER as string
 
       const user = await this._userRepository.findByEmail(email);
+
+      console.log(user,"userrerere")
       
 
       if (user) {
@@ -23,7 +25,8 @@ export class UserLoginUseCase {
         if(user.isBlocked) {
           return {success: false, error: 'this account is blocked by admin'}
         }
-        const pass =  bcrypt.compare(password, user.password as string);
+        const pass = await bcrypt.compare(password, user.password as string);
+        console.log(pass,"passsss")
 
         if (!pass) {
           return {success: false, error: 'incorrect password entered'}

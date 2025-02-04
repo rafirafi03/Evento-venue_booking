@@ -19,7 +19,7 @@ export class ForgetPasswordRequest {
         throw new Error("Email is required");
       }
 
-      const userUrl = process.env.USERURL
+      const userUrl = process.env.FRONTEND_PORT
       const secretKey = process.env.JWTSECRETKEY as string
 
       const user = await this._userRepository.findByEmail(email);

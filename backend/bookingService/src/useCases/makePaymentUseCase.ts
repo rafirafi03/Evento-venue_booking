@@ -151,8 +151,8 @@ export class MakePaymentUseCase {
           payment_method_types: ["card"],
           line_items: lineItems,
           mode: "payment",
-          success_url: `http://${process.env.FRONTEND_PORT}/venueDetails/${venueId}`,
-          cancel_url: `http://${process.env.FRONTEND_PORT}/venueDetails/${venueId}`,
+          success_url: `${process.env.FRONTEND_PORT}/venueDetails/${venueId}`,
+          cancel_url: `${process.env.FRONTEND_PORT}/venueDetails/${venueId}`,
           metadata: {
             userDetails: JSON.stringify(userDetails),
             venueDetails: JSON.stringify(venueDetails),
