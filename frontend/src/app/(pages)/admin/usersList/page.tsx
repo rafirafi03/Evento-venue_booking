@@ -116,7 +116,7 @@ export default function Page() {
           <aside className="w-64 bg-white dark:bg-gray-800">
             <Aside />
           </aside>
-          <div className="flex-1 p-4 mx-5">
+          <div className="flex-1 p-4 mx-5 bg-slate-100">
             <h1 className="font-extrabold text-2xl mt-5 mb-5">Users</h1>
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
               <table className="w-full text-sm text-center rtl:text-right text-black dark:text-black">
