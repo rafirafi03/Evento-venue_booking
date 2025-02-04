@@ -144,7 +144,7 @@ export default function Page() {
         <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
           <Header />
         </nav>
-        <div className="flex mt-[64px] bg-slate-100">
+        <div className="flex mt-[64px] bg-slate-50 h-screen">
           <aside className="w-64 bg-white dark:bg-gray-800">
             <Aside />
           </aside>
