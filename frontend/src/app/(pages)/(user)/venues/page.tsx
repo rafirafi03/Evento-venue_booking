@@ -26,7 +26,7 @@ export default function Page() {
           </Suspense>
         </div>
       </div>
-      <div className="-mt-10">
+      <div className="mt-10">
         <Pagination currentPage={1} totalPages={1} onPageChange={pageChange} />
       </div>
     </div>
