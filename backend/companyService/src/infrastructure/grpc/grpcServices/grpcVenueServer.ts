@@ -62,7 +62,7 @@ const getVenueDetails = async (call: any, callback: any) => {
 export function startGrpcVenueServer() {
   const server = new grpc.Server();
   server.addService(venueProto.venue.CompanyService.service, { GetVenueDetails: getVenueDetails });
-  const port = "4001"; // Change this port if necessary
+  const port = "50052"; // Change this port if necessary
   server.bindAsync(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure(), (error,port) => {
     if (error) {
       console.error("Error starting gRPC server:", error);

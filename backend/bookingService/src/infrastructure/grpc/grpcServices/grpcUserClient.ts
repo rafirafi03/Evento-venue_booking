@@ -16,7 +16,7 @@ const userProto = grpc.loadPackageDefinition(packageDefinition) as any;
 
 // Create a client instance
 const client = new userProto.user.UserService(
-  "user-service:80",
+  "user-service:50051",
   grpc.credentials.createInsecure()
 );
 

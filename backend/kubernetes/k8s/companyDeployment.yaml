@@ -17,6 +17,7 @@ spec:
         image: rafi03/company-service:latest
         ports:
         - containerPort: 4001
+        - containerPort: 50052 #grpc port
 ---
 apiVersion: v1
 kind: Service
@@ -26,6 +27,10 @@ spec:
   selector:
     app: company-service
   ports:
-  - port: 80
-    targetPort: 4001
+  - name: http-port       # Added name for HTTP port
+    port: 4001            # HTTP port
+    targetPort: 4001      # HTTP port on the container
+  - name: grpc-port       # Added name for gRPC port
+    port: 50052           # gRPC port
+    targetPort: 50052     # gRPC port on the container
   type: ClusterIP

@@ -16,7 +16,7 @@ const venueProto = grpc.loadPackageDefinition(packageDefinition) as any;
 
 // Create a client instance
 const client = new venueProto.venue.CompanyService(
-  "company-service:80", 
+  "company-service:50052", 
   grpc.credentials.createInsecure()
 );
 

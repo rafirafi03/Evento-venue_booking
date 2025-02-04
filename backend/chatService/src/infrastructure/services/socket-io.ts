@@ -2,20 +2,15 @@ import { Server } from "socket.io";
 import { HttpMethod } from "../../constants";
 import { SaveMessagesUseCase } from "../../useCases";
 import { ChatRepository } from "../../repository/implementation/chatRepository";
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 export const initializeSocket = (httpServer: any) => {
   const io = new Server(httpServer, {
     cors: {
-      origin: process.env.FRONTEND_PORT,
+      origin: "*",
       methods: [HttpMethod.GET, HttpMethod.POST],
-      credentials: true
     },
-    path: "/chat/socket.io",
-    transports: ["websocket", "polling"],
-    
+    path: "/socket.io",
+    transports: ["websocket", "polling"]
   });
 
   const chatRepository = new ChatRepository();

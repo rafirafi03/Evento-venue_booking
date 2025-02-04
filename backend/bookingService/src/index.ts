@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 
 const PORT = process.env.PORT;
-// const FRONTEND_PORT = process.env.FRONTEND_PORT;
+const FRONTEND_PORT = process.env.FRONTEND_PORT;
 
 const app = express();
 
@@ -18,7 +18,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "*",
+    origin: FRONTEND_PORT,
     credentials: true,
   })
 );

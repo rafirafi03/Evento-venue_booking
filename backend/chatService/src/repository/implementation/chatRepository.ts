@@ -26,9 +26,7 @@ export class ChatRepository implements IChatRepository {
           { senderId: receiverId, receiverId: senderId },
         ],
       }).sort({ timestamp: 1 });
-  
-      console.log(response,"responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-  
+    
       return response;
     } catch (error) {
       throw new Error('error in DB'+ error)

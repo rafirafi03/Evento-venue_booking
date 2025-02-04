@@ -219,7 +219,7 @@ export default function BookingDetails({ params }: { params: { id: string } }) {
                   <button
                     onClick={() =>
                       router.push(
-                        `/company/venueDetails/${booking?.venueId._id}`
+                        `/venueDetails/${booking?.venueId._id}`
                       )
                     }
                     className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center"

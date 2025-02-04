@@ -1,5 +1,5 @@
 import { Toaster } from 'react-hot-toast';
-import Home from './(components)/(user)/home/page'
+import Home from './(pages)/(user)/home/page'
 
 export default function Page() {
  
