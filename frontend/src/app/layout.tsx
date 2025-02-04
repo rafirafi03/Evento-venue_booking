@@ -6,7 +6,7 @@ import Script from "next/script";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import dotenv from "dotenv";
 import { Metadata } from "next";
-import Head from "next/head";
+import { Toaster } from "react-hot-toast";
 
 dotenv.config();
 
@@ -26,17 +26,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <meta
-          http-equiv="Content-Security-Policy"
-          content="default-src 'self'; connect-src 'self' wss://api.eventobooking.site;"
-        />
-      </Head>
       <body className={inter.className}>
         <Providers>
           <GoogleOAuthProvider clientId={clientId}>
             {children}
           </GoogleOAuthProvider>
+          <Toaster position="bottom-center" reverseOrder={false} />
           <Script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js" />
         </Providers>
       </body>

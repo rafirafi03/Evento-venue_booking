@@ -80,6 +80,7 @@ export class UserController {
 
   async login(req: Request, res: Response): Promise<void> {
     const { email, password } = req.body;
+    console.log(req.body,"reqbodyyyyy")
 
     try {
       const response = await this._userLoginUseCase.execute(email, password);

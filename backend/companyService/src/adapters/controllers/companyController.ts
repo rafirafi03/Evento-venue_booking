@@ -70,10 +70,7 @@ export class CompanyController {
   async login(req: Request, res: Response): Promise<void> {
     try {
       const { email, password } = req.body;
-      console.log(req.body," req,bodydydydydydydydy")
       const response = await this._loginUseCase.execute(email, password);
-
-      console.log(response,"responseseeeeeeeee123123")
 
       res.cookie("companyToken", response?.token, {
         httpOnly: true,
@@ -99,10 +96,8 @@ export class CompanyController {
 
   async confirmOtp(req: Request, res: Response): Promise<void> {
     const { otp, name, email, phone, country, password } = req.body;
-    console.log("req.file:",req.file);
     const licenseDetails = req.file as Express.MulterS3.File;
     const license = licenseDetails?.key
-    console.log("license:",license)
 
     try {
       const response = await this._verifyOtpUseCase.execute({
@@ -182,7 +177,6 @@ export class CompanyController {
     try {
       const { companyId } = req.params;
 
-      console.log(req.params," req parmassss")
       const venues = await this._getVenues.execute(companyId);
       res.status(HttpStatusCode.OK).json({ venues });
     } catch (error) {
@@ -198,8 +192,6 @@ export class CompanyController {
       // Extract and type-check both parameters
       const { search = "", types = "", priceRange = "" } = req.query;
 
-      console.log(req.query, " reqqueryyyyyyyyyyyyyy");
-
       let decodedPriceRange = Array.isArray(priceRange) ? priceRange[0] : priceRange;
 
 // Decode the priceRange if it’s encoded
@@ -211,8 +203,6 @@ export class CompanyController {
         typeof types === "string" ? types.split(",").filter(Boolean) : [];
 
       let priceRangeArray: [number, number] = [0, 10000]; 
-
-      console.log(decodedPriceRange,"pricerange in controllerrrr")
 
       if (typeof decodedPriceRange === "string") {
         const rangeParts = decodedPriceRange
@@ -288,6 +278,9 @@ export class CompanyController {
         state,
         existingImages,
       } = req.body;
+      const extractedFilePaths = existingImages.map((url: string) => {
+        return url.replace(/^https:\/\/evento-s3bucket\.s3\.us-east-1\.amazonaws\.com\//, "").split("?")[0];
+      });
       const files = req.files as Express.Multer.File[];
 
       const imagePaths = files?.map((image) => image.path);
@@ -302,7 +295,7 @@ export class CompanyController {
         phone,
         city,
         state,
-        existingImages,
+        existingImages:extractedFilePaths,
         imagePaths,
       });
 
@@ -349,8 +342,6 @@ export class CompanyController {
     try {
       const { companyId, name, phone } = req.body;
 
-      console.log(req.body, " reqbdyy in edit company");
-
       const response = await this._editCompanyUseCase.execute({
         companyId,
         name,
@@ -371,8 +362,6 @@ export class CompanyController {
     try {
       const { companyId, values } = req.body;
       const { name, percentage, validity } = values;
-
-      console.log(req.body, "reqbdy in controller of offer");
 
       const response = await this._addOfferUseCase.execute({
         companyId,
@@ -406,7 +395,6 @@ export class CompanyController {
   async deleteOffer(req: Request, res: Response): Promise<void> {
     try {
       const { offerId } = req.params;
-      console.log(offerId, " offerId from contoller in offer");
       const response = await this._deleteOfferUseCase.execute(offerId);
       res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
@@ -450,8 +438,6 @@ export class CompanyController {
     try {
       const { userId, venueId, userName, userEmail, star, review } = req.body;
 
-      console.log(req.body," req.bddyyyyyyyyyyyy")
-
       const response = await this._addReviewUseCase.execute({
         userId,
         venueId,
@@ -473,8 +459,6 @@ export class CompanyController {
     try {
       const { venueId } = req.params;
 
-      console.log(req.params,"req paramsssssss")
-
       const response = await this._getReviewsUseCase.execute(venueId);
       res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
@@ -488,8 +472,6 @@ export class CompanyController {
   async getUserReviews(req: Request, res: Response) : Promise<void> {
     try {
       const { userId } = req.params;
-
-      console.log(req.params,"req paramsssssss")
 
       const response = await this._getUserReviewsUseCase.execute(userId);
       res.status(HttpStatusCode.OK).json(response);

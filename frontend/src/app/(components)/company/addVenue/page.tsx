@@ -12,6 +12,7 @@ import AuthHOC, {Role} from "components/common/auth/authHoc";
 import Image from "next/image";
 import { ResizeImage } from "utils/resizeImage";
 import { isApiError } from "utils/errors";
+import toast from "react-hot-toast";
 
 export default function Page() {
 
@@ -184,9 +185,13 @@ export default function Page() {
       formData.append("images", image);
     });
 
+    const loadinToast = toast.loading('saving...')
     const response = await addVenue(formData).unwrap();
-
-    router.push('/company/venues')
+    toast.dismiss(loadinToast)
+    if(response.success) {
+      toast.success(<b>successfully saved</b>)
+      router.push('/company/venues')
+    }
 
     console.log(response);
   }
@@ -197,6 +202,8 @@ export default function Page() {
         }
         router.push("/company/login");
       } else {
+        toast.dismiss()
+        toast.error(<b>Something went wrong!</b>)
         console.error("An unexpected error occurred", error);
       }
     }

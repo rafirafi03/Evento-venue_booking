@@ -38,7 +38,7 @@ app.use(cookieParser())
 
 app.use("/", userRoute);
 app.get('/', (req, res) => {
-  res.send('user service running')
+  res.send('user service running successfully')
 })
 app.get('/health', async (req, res) => {
   try {

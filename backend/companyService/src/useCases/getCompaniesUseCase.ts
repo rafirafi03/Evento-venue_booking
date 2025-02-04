@@ -1,5 +1,6 @@
 import { ICompanyRepository } from "../repositories";
 import { ICompany } from "../infrastructure/db";
+import { generateSignedUrl } from "../utils";
 
 export class GetCompaniesUseCase {
     constructor (
@@ -13,9 +14,12 @@ export class GetCompaniesUseCase {
 
             if(!companies || companies.length === 0) {
                 return null
-            } else {
+            }
+
+            for(const val of companies) {
+                val.license = await generateSignedUrl(val.license)
+            }
                 return { companies }
-            } 
         } catch (error) {
             throw new Error("Error" + error)
         }

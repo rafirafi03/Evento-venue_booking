@@ -22,8 +22,6 @@ export class GetVenueDetailsUseCase {
             venue.images.map(async (imageKey: string) => await generateSignedUrl(imageKey))
           );
 
-        console.log(imageUrls,"imageurlsss")
-
         // Return the venue details with the full S3 URLs for the images
         return {
           ...venue, // Spread the original venue object

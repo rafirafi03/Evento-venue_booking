@@ -44,5 +44,5 @@ export const initializeSocket = (httpServer: any) => {
     });
   });
 
-  return io;
+  return io;  
 };

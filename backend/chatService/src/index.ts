@@ -10,16 +10,33 @@ import cookieParser from 'cookie-parser'
 import chatRoute from './infrastructure/express/route';
 import mongoose from "mongoose";
 import { initializeSocket } from "./infrastructure/services/socket-io";
+import helmet from "helmet";
 
 const PORT = process.env.PORT;
 const FRONTEND_PORT = process.env.FRONTEND_PORT
 
 const app = express();
 app.use(cors())
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; connect-src 'self' wss://api.eventobooking.site;"
+  );
+  next();
+});
+
 const httpServer = createServer(app);
 connectDB();
 
+
+
 initializeSocket(httpServer);
+
+app.use(
+  helmet({
+    contentSecurityPolicy: false
+  })
+);
 
 
 app.use(

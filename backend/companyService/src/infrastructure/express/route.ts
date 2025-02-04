@@ -24,7 +24,7 @@ import {
   RemoveOfferUseCase,
   AddReviewUseCase,
   GetReviewsUseCase,
-  GetUserReviewsUseCase
+  GetUserReviewsUseCase,
 } from "../../useCases";
 import { AdminController, CompanyController } from "../../adapters/controllers";
 import { CompanyRepository } from "../../repositories/implementation";
@@ -64,7 +64,9 @@ const getListedVenuesUseCase = new GetListedVenuesUseCase(companyRepository);
 const getVenueDetailsUseCase = new GetVenueDetailsUseCase(companyRepository);
 const editVenueUseCase = new EditVenueUseCase(companyRepository);
 const deleteVenueUseCase = new DeleteVenueUseCase(companyRepository);
-const getCompanyDetailsUseCase = new GetCompanyDetailsUseCase(companyRepository);
+const getCompanyDetailsUseCase = new GetCompanyDetailsUseCase(
+  companyRepository
+);
 const editCompanyUseCase = new EditCompanyUseCase(companyRepository);
 const addOfferUseCase = new AddOfferUseCase(companyRepository);
 const getOffersUseCase = new GetOffersUseCase(companyRepository);
@@ -72,9 +74,8 @@ const deleteOfferUseCase = new DeleteOfferUseCase(companyRepository);
 const applyOfferUseCase = new ApplyOfferUseCase(companyRepository);
 const removeOfferUseCase = new RemoveOfferUseCase(companyRepository);
 const addReviewUseCase = new AddReviewUseCase(companyRepository);
-const getReviewsUseCase = new GetReviewsUseCase(companyRepository)
+const getReviewsUseCase = new GetReviewsUseCase(companyRepository);
 const getUserReviewsUseCase = new GetUserReviewsUseCase(companyRepository);
-
 
 const companyController = new CompanyController(
   registerUseCase,
@@ -122,27 +123,32 @@ router.post("/resendOtp", (req, res) => {
   companyController.resendOtp(req, res);
 });
 
-router.get("/getCompanies",authMiddleware(['admin']), (req, res) => {
+router.get("/getCompanies", authMiddleware(["admin"]), (req, res) => {
   adminController.getCompanies(req, res);
 });
 
-router.get("/getRequests", authMiddleware(['admin']), (req, res) => {
+router.get("/getRequests", authMiddleware(["admin"]), (req, res) => {
   adminController.getRequests(req, res);
 });
 
-router.post("/blockCompany", authMiddleware(['admin']), (req, res) => {
+router.post("/blockCompany", authMiddleware(["admin"]), (req, res) => {
   adminController.blockCompany(req, res);
 });
 
-router.patch("/companyApproval", authMiddleware(['admin']), (req, res) => {
+router.patch("/companyApproval", authMiddleware(["admin"]), (req, res) => {
   adminController.companyApproval(req, res);
 });
 
-router.post("/addVenue",authMiddleware(['company']), upload.array("images"), (req, res) => {
-  companyController.addVenue(req, res);
-});
+router.post(
+  "/addVenue",
+  authMiddleware(["company"]),
+  upload.array("images"),
+  (req, res) => {
+    companyController.addVenue(req, res);
+  }
+);
 
-router.get("/getVenues/:companyId",authMiddleware(['company']), (req, res) => {
+router.get("/getVenues/:companyId", authMiddleware(["company"]), (req, res) => {
   companyController.getVenues(req, res);
 });
 
@@ -150,66 +156,81 @@ router.get("/getListedVenues", (req, res) => {
   companyController.getListedVenues(req, res);
 });
 
-router.post("/venueStatus",authMiddleware(['company']), (req, res) => {
+router.post("/venueStatus", authMiddleware(["company"]), (req, res) => {
   companyController.updateVenueStatus(req, res);
 });
 
-router.get('/getVenueDetails/:id', (req, res) => {
-  companyController.getVenueDetails(req,res)
-})
+router.get("/getVenueDetails/:id", (req, res) => {
+  companyController.getVenueDetails(req, res);
+});
 
-router.put('/editVenue',authMiddleware(['company']), upload.array('images'), (req, res) => {
-  companyController.editVenue(req,res)
-})
+router.put(
+  "/editVenue",
+  authMiddleware(["company"]),
+  upload.array("images"),
+  (req, res) => {
+    companyController.editVenue(req, res);
+  }
+);
 
-router.delete('/deleteVenue/:venueId',authMiddleware(['company']), (req, res) => {
-  companyController.deleteVenue(req,res)
-})
+router.delete(
+  "/deleteVenue/:venueId",
+  authMiddleware(["company"]),
+  (req, res) => {
+    companyController.deleteVenue(req, res);
+  }
+);
 
-router.get('/getCompanyDetails/:companyId' ,authMiddleware(['company','admin','user']), (req, res) => {
-  companyController.getCompanyDetails(req,res)
-})
+router.get(
+  "/getCompanyDetails/:companyId",
+  authMiddleware(["company", "admin", "user"]),
+  (req, res) => {
+    companyController.getCompanyDetails(req, res);
+  }
+);
 
-router.patch('/editCompanyProfile',authMiddleware(['company']), (req,res) => {
-  companyController.editCompanyProfile(req,res)
-})
+router.patch("/editCompanyProfile", authMiddleware(["company"]), (req, res) => {
+  companyController.editCompanyProfile(req, res);
+});
 
-router.post('/addOffer',authMiddleware(['company']), (req, res) => {
+router.post("/addOffer", authMiddleware(["company"]), (req, res) => {
   companyController.addOffer(req, res);
-})
+});
 
-router.get('/getOffers/:companyId',authMiddleware(['company']), (req, res) => {
-  companyController.getOffers(req, res)
-})
+router.get("/getOffers/:companyId", authMiddleware(["company"]), (req, res) => {
+  companyController.getOffers(req, res);
+});
 
-router.delete('/deleteOffer/:offerId',authMiddleware(['company']), (req, res) => {
-  companyController.deleteOffer(req, res)
-})
+router.delete(
+  "/deleteOffer/:offerId",
+  authMiddleware(["company"]),
+  (req, res) => {
+    companyController.deleteOffer(req, res);
+  }
+);
 
-router.patch('/applyOffer',authMiddleware(['company']), (req, res) => {
-  companyController.applyOffer(req, res)
-})
+router.patch("/applyOffer", authMiddleware(["company"]), (req, res) => {
+  companyController.applyOffer(req, res);
+});
 
-router.patch('/removeOffer',authMiddleware(['company']), (req, res) => {
-  companyController.removeOffer(req, res)
-})
+router.patch("/removeOffer", authMiddleware(["company"]), (req, res) => {
+  companyController.removeOffer(req, res);
+});
 
-router.post('/addReview',authMiddleware(['user']), (req, res) => {
-  companyController.addReview(req, res)
-})
+router.post("/addReview", authMiddleware(["user"]), (req, res) => {
+  companyController.addReview(req, res);
+});
 
-router.get('/getRatings/:venueId', (req, res) => {
-  companyController.getReviews(req,res)
-})
+router.get("/getRatings/:venueId", (req, res) => {
+  companyController.getReviews(req, res);
+});
 
-router.get('/getUserReviews/:userId', (req, res) => {
-  companyController.getUserReviews(req,res)
-})
+router.get("/getUserReviews/:userId", (req, res) => {
+  companyController.getUserReviews(req, res);
+});
 
-router.post('/logout', (req, res) => {
-  companyController.logout(req, res)
-})
-
-
+router.post("/logout", (req, res) => {
+  companyController.logout(req, res);
+});
 
 export default router;
