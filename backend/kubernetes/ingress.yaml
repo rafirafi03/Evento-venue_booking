@@ -62,7 +62,7 @@ spec:
             name: booking-service
             port:
               number: 4003
-      - path: /socket.io(/|$)(.*)
+      - path: /chat(/|$)(.*)
         pathType: ImplementationSpecific
         backend:
           service:
