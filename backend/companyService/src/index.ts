@@ -37,7 +37,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cookieParser())
 
 app.get('/', (req, res) => {
-  res.send('Company service is running')
+  res.send('Company service is running successfully')
 });
 
 app.use("/",companyRoute);

@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 
 const PORT = process.env.PORT;
-const FRONTEND_PORT = process.env.FRONTEND_PORT;
+// const FRONTEND_PORT = process.env.FRONTEND_PORT;
 
 const app = express();
 
@@ -18,7 +18,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: FRONTEND_PORT,
+    origin: "*",
     credentials: true,
   })
 );
@@ -38,7 +38,7 @@ app.use(cookieParser());
 app.use("/", bookingRoute);
 
 app.get("/", (req, res) => {
-  res.send("booking server is running");
+  res.send("booking server is running successfully");
 });
 app.get("/health", async (req, res) => {
   try {
