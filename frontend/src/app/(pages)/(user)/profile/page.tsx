@@ -240,7 +240,7 @@ export default function UserProfile() {
 
   return (
     <AuthHOC role={Role.User}>
-      <div>
+      <div className="bg-slate-50 h-screen">
         <div>
           <Toaster position="bottom-center" reverseOrder={false} />
         </div>
