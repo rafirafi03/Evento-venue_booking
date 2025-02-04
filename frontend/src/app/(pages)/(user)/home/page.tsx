@@ -105,7 +105,6 @@ const Page = () => {
             src="/assets/images/homepage-image.jpg"
             alt="Home page img"
             layout="fill"
-            objectFit="cover"
           />
         </div>
       </div>
