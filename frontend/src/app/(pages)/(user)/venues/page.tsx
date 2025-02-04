@@ -12,7 +12,7 @@ export default function Page() {
     console.log("hii", arg);
   };
   return (
-    <div className="bg-slate-50">
+    <div className="bg-slate-50 h-screen">
       <Header />
       <div className="flex p-4 space-x-4">
         <div className="">
