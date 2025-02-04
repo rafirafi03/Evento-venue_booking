@@ -13,7 +13,7 @@ export const initializeSocket = (httpServer: any) => {
       methods: [HttpMethod.GET, HttpMethod.POST],
       credentials: true
     },
-    path: "/chat",
+    path: "/chat/socket.io",
     transports: ["websocket", "polling"],
     
   });
