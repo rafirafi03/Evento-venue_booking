@@ -108,7 +108,7 @@ export default function Page() {
 
   return (
     <AuthHOC role={Role.Admin}>
-      <div className="bg-slate-50">
+      <div className="bg-slate-50 w-screen h-screen">
         <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-slate-100 shadow-lg">
           <Header />
         </nav>
