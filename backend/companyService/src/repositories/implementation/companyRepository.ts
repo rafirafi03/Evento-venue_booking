@@ -144,7 +144,7 @@ export class CompanyRepository implements ICompanyRepository {
     }
   }
 
-  async updateVenue(venueId: string, venueData: IEditVenue): Promise<void> {
+  async updateVenue(venueId: string, venueData: any): Promise<void> {
     try {
       await venueModel.findByIdAndUpdate(venueId, venueData, { new: true });
     } catch (error) {

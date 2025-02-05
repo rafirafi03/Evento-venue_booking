@@ -162,6 +162,7 @@ export default function Page({ params }: { params: { id: string } }) {
       formData.append("id", id);
       formData.append("name", name);
       formData.append("type", type);
+      formData.append("amount",amount.toString());
       formData.append("description", description);
       formData.append("capacity", capacity.toString());
       formData.append("address", address);

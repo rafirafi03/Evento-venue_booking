@@ -6,10 +6,8 @@ export class GetReviewsUseCase {
 
   async execute(venueId: string): Promise<IRatingData[]> {
     try {
-        console.log(venueId,"venueidddddd")
       const response = await this._companyRepository.getReviews(venueId);
 
-      console.log(response,"response in usecaseess")
 
       if(!response.length) {
         return []

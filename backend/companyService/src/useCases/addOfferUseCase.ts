@@ -25,8 +25,6 @@ export class AddOfferUseCase {
         validity
       });
 
-      console.log(offer,"offer in use case")
-
       const savedOffer = await this._companyRepository.addOffer(offer);
       console.log(savedOffer);
       return { success: true };

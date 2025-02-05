@@ -19,7 +19,7 @@ import {
   RemoveOfferUseCase,
   AddReviewUseCase,
   GetReviewsUseCase,
-  GetUserReviewsUseCase
+  GetUserReviewsUseCase,
 } from "../../useCases";
 import { HttpStatusCode } from "../../constants";
 import { GetCompanyDetailsUseCase } from "../../useCases/getCompanyDetailsUseCase";
@@ -48,11 +48,9 @@ export class CompanyController {
     private _applyOfferUseCase: ApplyOfferUseCase,
     private _removeOfferUseCase: RemoveOfferUseCase,
     private _addReviewUseCase: AddReviewUseCase,
-    private _getReviewsUseCase : GetReviewsUseCase,
-    private _getUserReviewsUseCase : GetUserReviewsUseCase
-  ) 
-  
-    {}
+    private _getReviewsUseCase: GetReviewsUseCase,
+    private _getUserReviewsUseCase: GetUserReviewsUseCase
+  ) {}
 
   async signup(req: Request, res: Response): Promise<void> {
     const { email } = req.body;
@@ -97,7 +95,7 @@ export class CompanyController {
   async confirmOtp(req: Request, res: Response): Promise<void> {
     const { otp, name, email, phone, country, password } = req.body;
     const licenseDetails = req.file as Express.MulterS3.File;
-    const license = licenseDetails?.key
+    const license = licenseDetails?.key;
 
     try {
       const response = await this._verifyOtpUseCase.execute({
@@ -145,8 +143,7 @@ export class CompanyController {
       } = req.body;
       const files = req.files as Express.MulterS3.File[];
 
-      const imagePaths = files?.map(
-        (image) => image.key );
+      const imagePaths = files?.map((image) => image.key);
 
       console.log(
         imagePaths,
@@ -192,9 +189,11 @@ export class CompanyController {
       // Extract and type-check both parameters
       const { search = "", types = "", priceRange = "" } = req.query;
 
-      let decodedPriceRange = Array.isArray(priceRange) ? priceRange[0] : priceRange;
+      let decodedPriceRange = Array.isArray(priceRange)
+        ? priceRange[0]
+        : priceRange;
 
-// Decode the priceRange if it’s encoded
+      // Decode the priceRange if it’s encoded
       decodedPriceRange = decodeURIComponent(decodedPriceRange as string);
 
       // Convert query params to proper format
@@ -202,7 +201,7 @@ export class CompanyController {
       const typeArray =
         typeof types === "string" ? types.split(",").filter(Boolean) : [];
 
-      let priceRangeArray: [number, number] = [0, 10000]; 
+      let priceRangeArray: [number, number] = [0, 10000];
 
       if (typeof decodedPriceRange === "string") {
         const rangeParts = decodedPriceRange
@@ -211,7 +210,7 @@ export class CompanyController {
           .filter((num) => !isNaN(num));
 
         if (rangeParts.length === 2) {
-          priceRangeArray = [rangeParts[0], rangeParts[1]]; 
+          priceRangeArray = [rangeParts[0], rangeParts[1]];
         }
       }
 
@@ -270,6 +269,7 @@ export class CompanyController {
         id,
         name,
         type,
+        amount,
         description,
         capacity,
         address,
@@ -279,11 +279,21 @@ export class CompanyController {
         existingImages,
       } = req.body;
       const extractedFilePaths = existingImages.map((url: string) => {
-        return url.replace(/^https:\/\/evento-s3bucket\.s3\.us-east-1\.amazonaws\.com\//, "").split("?")[0];
+        const path = url
+          .replace(
+            /^https:\/\/evento-s3bucket\.s3\.us-east-1\.amazonaws\.com\//,
+            ""
+          )
+          .split("?")[0];
+        return decodeURIComponent(decodeURIComponent(path));
       });
-      const files = req.files as Express.Multer.File[];
+      const files = req.files as Express.MulterS3.File[];
 
-      const imagePaths = files?.map((image) => image.path);
+      const imagePaths = files?.map((image) => image.key);
+
+      console.log("reqboddtttt:", req.body);
+      console.log("reafiflessf:", req.files);
+      console.log("extracted file pathats:", extractedFilePaths);
 
       const response = await this._editVenueUseCase.execute({
         id,
@@ -292,10 +302,11 @@ export class CompanyController {
         description,
         capacity,
         address,
+        amount,
         phone,
         city,
         state,
-        existingImages:extractedFilePaths,
+        existingImages: extractedFilePaths,
         imagePaths,
       });
 
@@ -455,7 +466,7 @@ export class CompanyController {
     }
   }
 
-  async getReviews(req: Request, res: Response) : Promise<void> {
+  async getReviews(req: Request, res: Response): Promise<void> {
     try {
       const { venueId } = req.params;
 
@@ -469,7 +480,7 @@ export class CompanyController {
     }
   }
 
-  async getUserReviews(req: Request, res: Response) : Promise<void> {
+  async getUserReviews(req: Request, res: Response): Promise<void> {
     try {
       const { userId } = req.params;
 
@@ -483,21 +494,20 @@ export class CompanyController {
     }
   }
 
-  async logout(req: Request, res: Response ) : Promise<void> {
+  async logout(req: Request, res: Response): Promise<void> {
     try {
-      res.setHeader('Set-Cookie', [
-        'companyToken=; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 UTC',
-        'companyRefreshToken=; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 UTC'
-    ]);
+      res.setHeader("Set-Cookie", [
+        "companyToken=; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 UTC",
+        "companyRefreshToken=; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 UTC",
+      ]);
 
-    const message = 'logged out successfully'
-    res.status(HttpStatusCode.OK).json( message );
+      const message = "logged out successfully";
+      res.status(HttpStatusCode.OK).json(message);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        message: 'failed to send request',
+        message: "failed to send request",
       });
     }
   }
-
 }

@@ -20,8 +20,6 @@ export class LoginUseCase {
 
       const company = await this._companyRepository.findByEmail(email);
 
-      console.log(company," companyyyyyyyy6767")
-
       if (!company) {
         console.log("no company");
         return { success: false, error: "Invalid email" };
@@ -40,8 +38,6 @@ export class LoginUseCase {
       }
 
       const pass = await bcrypt.compare(password, company.password);
-
-      console.log(pass, "conpared pass777777")
 
       if (!pass) {
         console.log('no passssss777777')
@@ -67,7 +63,7 @@ export class LoginUseCase {
 
       console.log('return successs777777')
 
-      return { success: true, token, refreshToken, message: 'login successfull from company side' };
+      return { success: true, token, refreshToken, message: 'login successfull' };
     } catch (error) {
       console.log(error);
       throw new Error("Error: " + error);

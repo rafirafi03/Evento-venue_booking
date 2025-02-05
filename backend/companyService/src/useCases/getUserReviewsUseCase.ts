@@ -6,10 +6,8 @@ export class GetUserReviewsUseCase {
 
   async execute(userId: string): Promise<IRatingData[]> {
     try {
-        console.log(userId,"userIdddddd")
       const response = await this._companyRepository.getUserReviews(userId);
 
-      console.log(response,"response in usecaseess")
 
       if(!response.length) {
         return []

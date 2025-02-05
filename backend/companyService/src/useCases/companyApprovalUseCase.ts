@@ -16,7 +16,6 @@ export class CompanyApprovalUseCase {
             let subject;
             let message;
 
-            console.log(company, "companyusecase")
             if(!company) {
                 return { success: false } 
             }

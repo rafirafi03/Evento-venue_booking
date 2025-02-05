@@ -1,6 +1,5 @@
 import { Company, ICompanyData, IVenueData, Venue, Offer, IOfferData, Rating, IRatingData } from "../../entities";
 import { ICompany, IOffer, IVenue } from "../../infrastructure/db";
-import { IEditVenue } from "../../utils/intefaces";
 
 
 export interface ICompanyRepository {
@@ -13,7 +12,7 @@ export interface ICompanyRepository {
     getVenues(companyId: string) : Promise<IVenue[]>
     getListedVenues() : Promise<IVenue[]>
     findVenueById(_id: string) : Promise<IVenue | null>
-    updateVenue(venueId: string, venueData: IEditVenue): Promise<void>;
+    updateVenue(venueId: string, venueData: any): Promise<void>;
     deleteVenue(venueId: string) : Promise<void>
     findCompanyById(companyId: string) : Promise<ICompany | null>
     editCompanyProfile(companyId: string, companyData: Partial<ICompany> | null) : Promise<void>

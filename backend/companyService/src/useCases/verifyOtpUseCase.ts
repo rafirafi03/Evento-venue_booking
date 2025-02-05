@@ -41,16 +41,12 @@ export class VerifyOtpUsecase {
 
       const companyOtp = await this._verifyOtpRepository.getOTP(email);
 
-      console.log(companyOtp,"companyotp")
-      console.log(otp,"otp")
-
       if (companyOtp !== otp) {
         return { success: false, error: "Invalid Otp"}
       }
 
       await this._verifyOtpRepository.deleteOTP(email);
 
-      console.log(password, "passsverifyhash");
 
       const hashedPass = await hashPass(password);
 
@@ -63,14 +59,11 @@ export class VerifyOtpUsecase {
         license: license
       });
 
-      console.log(company,"cmpnyyyyyyyyyyyyyyyyyyyy")
-
       const savedCompany = await this._companyRepository.save(company);
 
       if (!savedCompany) {
         return { success: false, error: "Error saving company" };
       } else {
-        console.log('success saved')
         const tokenservice = new TokenService(secretKey);
 
         const token = tokenservice.generateToken({

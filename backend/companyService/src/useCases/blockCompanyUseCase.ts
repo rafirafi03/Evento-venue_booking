@@ -7,11 +7,9 @@ export class BlockCompanyUseCase {
 
     async execute(id: string) : Promise<{success: boolean}> {
         try {
-            console.log(id,"id in cpmyusecase")
             const company = await this._companyRepository.findById(id)
             const venueByCompany = await this._companyRepository.findVenueByCompanyId(id)
 
-            console.log(company, "companyusecase block cmpany")
             if(!company) {
                 return { success: false } 
             }

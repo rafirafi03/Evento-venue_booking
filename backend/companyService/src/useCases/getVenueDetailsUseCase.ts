@@ -13,8 +13,6 @@ export class GetVenueDetailsUseCase {
 
       const venue = venueDoc.toObject();
 
-      console.log(venue, "cmpniessss cmpnyusecase");
-
       if (!venue) {
         return null;
       } else {

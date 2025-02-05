@@ -7,6 +7,7 @@ interface data {
   description: string;
   capacity: number;
   address: string;
+  amount:number;
   phone: number;
   city: string;
   state: string;
@@ -24,6 +25,7 @@ export class EditVenueUseCase {
     description,
     capacity,
     address,
+    amount,
     phone,
     city,
     state,
@@ -32,20 +34,24 @@ export class EditVenueUseCase {
   }: data): Promise<{ success: boolean }> {
     try {
 
+      console.log("existingImages:",existingImages)
     const images = [...existingImages, ...imagePaths]
 
       const venueData = {
         name,
         type,
         description,
-        capacity,
+        amount,
+        capacity: Number(capacity),
         address,
-        phone,
+        phone: Number(phone),
         city,
         state,
         images,
 
       }
+
+      console.log("venueData123:", venueData)
 
       await this._companyRepository.updateVenue(id, venueData);
       

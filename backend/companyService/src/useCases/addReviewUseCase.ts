@@ -31,8 +31,6 @@ export class AddReviewUseCase {
             review
         })
 
-        console.log(rating,"ratingggg in usecaseessesese")
-
         const response = await this._companyRepository.addRating(rating);
         console.log(response)
       return { success: true };

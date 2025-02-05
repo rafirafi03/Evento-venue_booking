@@ -9,7 +9,6 @@ export class VenueStatusUseCase {
         try {
             const venue = await this._companyRepository.findVenueById(id)
 
-            console.log(venue, "venueusecase")
             if(!venue) {
                 return { success: false } 
             }
