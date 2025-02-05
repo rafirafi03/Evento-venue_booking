@@ -7,6 +7,7 @@ import {
   useUpdateVenueStatusMutation,
   useGetOffersQuery,
   useApplyOfferMutation,
+  useRemoveOfferMutation
 } from "app/store/slices/companyApiSlices";
 import ConfirmModal from "../../../../components/common/confirmModal/page";
 import { useRouter } from "next/navigation";
@@ -51,6 +52,7 @@ export default function Page() {
   const { data: offers } = useGetOffersQuery(companyId);
   const [updateVenueStatus] = useUpdateVenueStatusMutation();
   const [applyOffer] = useApplyOfferMutation();
+  const [removeOffer] = useRemoveOfferMutation();
   const [venuesArray, setVenuesArray] = useState<IVenue[]>([]);
 
   useEffect(() => {
@@ -115,17 +117,17 @@ export default function Page() {
     setOfferListModal(false);
   };
 
-  const handleRemoveOffer = async (offerId: string) => {
+  const handleRemoveOffer = async () => {
     try {
       const loadingToast = toast.loading("Removing...");
-      const res = await applyOffer({ venueId, offerId }).unwrap();
+      const res = await removeOffer({ venueId }).unwrap();
       toast.dismiss(loadingToast);
 
       if (res.success) {
-        toast.success(<b>Offer applied successfully!</b>);
+        toast.success(<b>Offer removed successfully!</b>);
         refetch();
       } else {
-        toast.error(<b>Could not apply.</b>);
+        toast.error(<b>Could not remove.</b>);
       }
     } catch (error) {
       toast.dismiss();
