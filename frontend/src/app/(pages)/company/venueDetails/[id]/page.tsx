@@ -7,7 +7,6 @@ import {
   Phone,
   Mail,
   Edit,
-  Calendar,
   Trash,
   TagIcon,
 } from "lucide-react";
