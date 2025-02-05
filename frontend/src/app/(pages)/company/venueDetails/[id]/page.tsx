@@ -193,9 +193,7 @@ export default function VenueDetails({ params }: { params: { id: string } }) {
                     >
                       <Edit className="w-4 h-4 mr-2" /> Edit Venue
                     </button>
-                    <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center">
-                      <Calendar className="w-4 h-4 mr-2" /> Manage Availability
-                    </button>
+                    
                     <button
                       onClick={() =>
                         handleConfrimModal(
