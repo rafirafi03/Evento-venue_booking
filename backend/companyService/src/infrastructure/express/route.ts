@@ -213,7 +213,7 @@ router.patch("/applyOffer", authMiddleware(["company"]), (req, res) => {
   companyController.applyOffer(req, res);
 });
 
-router.patch("/removeOffer", authMiddleware(["company"]), (req, res) => {
+router.patch("/removeOffer/:venueId", authMiddleware(["company"]), (req, res) => {
   companyController.removeOffer(req, res);
 });
 

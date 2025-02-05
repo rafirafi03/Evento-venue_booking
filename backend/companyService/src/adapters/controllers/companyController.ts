@@ -436,7 +436,7 @@ export class CompanyController {
       const { venueId } = req.params;
 
       const response = await this._removeOfferUseCase.execute(venueId);
-      res.send(HttpStatusCode.OK).json(response);
+      res.status(HttpStatusCode.OK).json(response);
     } catch (error) {
       console.log(error);
       res
