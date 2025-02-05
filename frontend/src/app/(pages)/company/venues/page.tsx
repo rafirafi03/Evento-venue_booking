@@ -120,7 +120,7 @@ export default function Page() {
   const handleRemoveOffer = async () => {
     try {
       const loadingToast = toast.loading("Removing...");
-      const res = await removeOffer({ venueId }).unwrap();
+      const res = await removeOffer(venueId).unwrap();
       toast.dismiss(loadingToast);
 
       if (res.success) {
