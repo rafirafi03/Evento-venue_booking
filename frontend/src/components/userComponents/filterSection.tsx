@@ -59,7 +59,7 @@ export default function RefinedVenueFilter() {
   }, [searchValue, selectedTypes, priceRange, handleFilter]);
 
   const checkboxOptions = useMemo(
-    () => ["Conference", "Banquet", "Auditorium", "Outdoor", "Restaurant"],
+    () => ["Conference", "Resort", "Auditorium", "Outdoor", "Restaurant"],
     []
   );
 
