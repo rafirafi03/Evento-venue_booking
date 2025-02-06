@@ -473,7 +473,7 @@ export default function UserProfile() {
                       <>
                         <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
                           <h2 className="my-10 text-center text-gray-400">
-                            No favourites
+                            No reviews
                           </h2>
                         </div>
                       </>
