@@ -36,11 +36,14 @@ export default function UserProfile() {
   console.log(userReview);
 
   useEffect(() => {
-      const isError = fetchErrorCheck({fetchError : userFetchError, role: 'user'})
+    const isError = fetchErrorCheck({
+      fetchError: userFetchError,
+      role: "user",
+    });
 
-      if(isError) {
-        router.push('/login')
-      }
+    if (isError) {
+      router.push("/login");
+    }
   }, [userFetchError, router]);
 
   const { data: initialBookings } = useGetUserBookingsQuery(userId);
@@ -440,29 +443,41 @@ export default function UserProfile() {
                 )}
                 {activeTab === "reviews" && (
                   <div className="space-y-4">
-                    {userReview.map((review: IReview) => (
-                      <div
-                        key={review._id}
-                        className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
-                      >
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                          {review.review}
-                        </h3>
-                        <div className="flex items-center mb-2">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-5 h-5 ${
-                                i < review.star
-                                  ? "text-yellow-400"
-                                  : "text-gray-300"
-                              }`}
-                            />
-                          ))}
+                    {userReview?.length > 0 ? (
+                      <>
+                        {userReview.map((review: IReview) => (
+                          <div
+                            key={review._id}
+                            className="bg-white border border-gray-200 rounded-lg shadow-sm p-6"
+                          >
+                            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                              {review.review}
+                            </h3>
+                            <div className="flex items-center mb-2">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  className={`w-5 h-5 ${
+                                    i < review.star
+                                      ? "text-yellow-400"
+                                      : "text-gray-300"
+                                  }`}
+                                />
+                              ))}
+                            </div>
+                            <p className="text-gray-700">{review.review}</p>
+                          </div>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6">
+                          <h2 className="my-10 text-center text-gray-400">
+                            No favourites
+                          </h2>
                         </div>
-                        <p className="text-gray-700">{review.review}</p>
-                      </div>
-                    ))}
+                      </>
+                    )}
                   </div>
                 )}
                 {activeTab === "favourites" && (
