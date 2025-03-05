@@ -92,9 +92,6 @@ const Page = () => {
 
   return (
     <AuthHOC role={Role.User} isAuthPage={true} >
-      <div>
-        <Toaster position="bottom-center" reverseOrder={false} />
-      </div>
       <>
       {isForgotEmailModal && (
         <EmailModal isOpen={isForgotEmailModal} />
