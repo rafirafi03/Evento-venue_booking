@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useLoginPostMutation } from "app/store/slices/userApiSlices";
 import EmailModal from 'components/common/modals/emailModal/page'
 import AuthHOC, {Role} from "components/common/auth/authHoc";
-import toast, {Toaster} from "react-hot-toast";
+import toast from "react-hot-toast";
 import GoogleSignup from "components/userComponents/googleSignIn";
 
 const Page = () => {
