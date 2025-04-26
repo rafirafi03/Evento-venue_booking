@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: company-service
-        image: rafi03/company-service:latest
+        image: us-central1-docker.pkg.dev/evento-booking-446810/eventobooking/company-service:latest
         ports:
         - containerPort: 4001
         - containerPort: 50052 #grpc port

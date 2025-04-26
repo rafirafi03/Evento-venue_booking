@@ -17,26 +17,6 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   oneofs: true,
 });
 
-// interface GetUserDetailsRequest {
-//   userId: string;
-// }
-
-// interface GetUserDetailsResponse {
-//   id: string;
-//   name: string;
-//   email: string;
-//   phone: string;
-// }
-
-// interface UserServiceHandlers extends grpc.UntypedServiceImplementation {
-//   GetUserDetails: grpc.handleUnaryCall<GetUserDetailsRequest, GetUserDetailsResponse>;
-// }
-
-// interface UserProtoType {
-//   user: {
-//     UserService: grpc.ServiceDefinition<UserServiceHandlers>;
-//   };
-// }
 
 const userProto = grpc.loadPackageDefinition(packageDefinition) as any;
 
@@ -45,7 +25,7 @@ console.log('request successfully reached in userSErvice')
 const getUserDetails = async (call: any, callback: any) => {
     console.log(call,'inside getuserdetails userService hureeeyyyyyyyyyyyyyyyyyyyyyyyyyyyyy')
     try {
-      const userId = call.request.userId;
+      const userId = call.request.userId;  
 
       // Fetch user from the database using the user model
       const user = await _userRepository.findById(userId);

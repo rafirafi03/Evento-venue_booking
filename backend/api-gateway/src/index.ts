@@ -15,7 +15,7 @@ dotenv.config();
 const app = express();
 const httpServer = createServer(app)
 const PORT = process.env.PORT || 5000;
-const frontendPort = process.env.FRONTEND_PORT
+const frontendPort = process.env.FRONTEND_URL
 
 
 

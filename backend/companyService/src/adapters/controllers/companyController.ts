@@ -95,7 +95,7 @@ export class CompanyController {
   async confirmOtp(req: Request, res: Response): Promise<void> {
     const { otp, name, email, phone, country, password } = req.body;
     const licenseDetails = req.file as Express.MulterS3.File;
-    const license = licenseDetails?.key;
+    const license = licenseDetails?.path;
 
     try {
       const response = await this._verifyOtpUseCase.execute({
@@ -143,12 +143,14 @@ export class CompanyController {
       } = req.body;
       const files = req.files as Express.MulterS3.File[];
 
-      const imagePaths = files?.map((image) => image.key);
+      console.log("files imagesss : ", files)
 
-      console.log(
-        imagePaths,
-        " image pathsssssssssssssssssssssssssssssssssssssssssssssssssssss"
-      );
+      const imagePaths = files?.map((image) => image.path);
+
+      // console.log(
+      //   imagePaths,
+      //   " image pathsssssssssssssssssssssssssssssssssssssssssssssssssssss"
+      // );
 
       const response = await this._addVenueUseCase.execute({
         companyId,

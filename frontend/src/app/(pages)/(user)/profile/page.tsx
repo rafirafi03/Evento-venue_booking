@@ -327,7 +327,7 @@ export default function UserProfile() {
                           >
                             <div className="flex items-center space-x-4">
                               <Image
-                                src={booking?.venueDetails.image}
+                                src={booking?.venueDetails?.image}
                                 alt={booking?.event}
                                 className="w-24 h-16 object-cover rounded"
                                 width={500}

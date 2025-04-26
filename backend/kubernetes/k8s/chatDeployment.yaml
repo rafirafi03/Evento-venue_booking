@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: chat-service
-        image: rafi03/chat-service:latest
+        image: us-central1-docker.pkg.dev/evento-booking-446810/eventobooking/chat-service:latest
         ports:
         - containerPort: 4004
         readinessProbe:

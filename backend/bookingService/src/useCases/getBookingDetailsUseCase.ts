@@ -1,5 +1,4 @@
 import { IBookingRepository } from "../repositories/interfaces";
-import {generateSignedUrl} from '../utils'
 
 export class GetBookingDetailsUseCase {
   constructor(
@@ -19,22 +18,9 @@ export class GetBookingDetailsUseCase {
         if (booking && booking.venueDetails && booking.venueDetails.image) {
 
           console.log('inside is okkkkkkkkkkkkkkk')
-          // Generate the signed URL for the image
-          const imageUrl = await generateSignedUrl(booking?.venueDetails?.image);
-          console.log(imageUrl," iamgeurllllll")
-
-          console.log(booking.venueDetails,"booking venuedetailsssssss")
   
-          return {
-            ...booking,
-            venueDetails: {
-              ...booking.venueDetails,
-              image: imageUrl,  
-            },
-          };
+          return booking
         }
-
-        console.log(booking," booking hurekaaaaaaa")
 
         return booking  
 

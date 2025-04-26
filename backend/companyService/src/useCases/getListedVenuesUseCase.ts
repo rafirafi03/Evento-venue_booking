@@ -1,6 +1,5 @@
 import { ICompanyRepository } from "../repositories";
 import { IVenue } from "../infrastructure/db";
-import { generateSignedUrl } from "../utils";
 
 interface SearchParams {
     search: string;
@@ -47,20 +46,8 @@ export class GetListedVenuesUseCase {
           if (!venues || venues.length === 0) {
             return null;
           } else {
-            const resolvedVenues =  await Promise.all(
-              venues.map(async (venue) => {
-                const signedUrls = await Promise.all(
-                  venue.images.map((imageName: string) => generateSignedUrl(imageName))
-                );
-    
-                return {
-                  ...venue,
-                  images: signedUrls,
-                };
-              })
-            );
 
-            return resolvedVenues as IVenue[];
+            return venues as IVenue[];
           }
         } catch (error) {
           throw new Error("Error: " + error);

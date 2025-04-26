@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@reduxjs/toolkit": "^2.5.1",
     "helmet": "^8.0.0",
+    "react-redux": "^9.2.0",
     "stripe": "^17.3.1"
   }
 }

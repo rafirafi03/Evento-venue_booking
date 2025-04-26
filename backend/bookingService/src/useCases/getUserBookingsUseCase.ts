@@ -1,5 +1,4 @@
 import { IBookingRepository } from "../repositories/interfaces";
-import { generateSignedUrl } from "../utils";
 
 export class GetUserBookingsUseCase {
   constructor(
@@ -12,23 +11,14 @@ export class GetUserBookingsUseCase {
     try {
       const bookings = await this._bookingRepository.getBookingsByUserId(userId);
 
+      console.log('boookinggg first', bookings)
+
       if (!bookings) {
         return [];
       } else {
-        return await Promise.all(
-          bookings.map(async (venue) => {
-            // Ensure you're accessing the correct nested image field
-            const signedUrl = await generateSignedUrl(venue.venueDetails?.image || "");
 
-            return {
-              ...venue,
-              venueDetails: {
-                ...venue.venueDetails,
-                image: signedUrl,  // Replace the image path with the signed URL
-              },
-            };
-          })
-        );
+        console.log("bookings 12345 :>>> " , bookings)
+        return bookings
       }
 
     } catch (error: any) {
