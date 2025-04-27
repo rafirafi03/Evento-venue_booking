@@ -140,7 +140,7 @@ export class MakePaymentUseCase {
               product_data: {
                 name: "Advance amount",
               },
-              unit_amount: finalAmount, // Total amount based on the number of guests (in cents)
+              unit_amount: Math.round(finalAmount * 100), // Total amount based on the number of guests (in cents)
             },
             quantity: 1,
           },
